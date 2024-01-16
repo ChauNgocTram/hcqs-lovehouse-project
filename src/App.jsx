@@ -1,15 +1,14 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter as Routes } from "react-router-dom";
+import { Suspense } from "react";
 import Routers from "./routes/Routers";
 
 
 function App() {
   return (
-    <div className="common">
-      <div className="h-screen w-screen">
-        <BrowserRouter>
+
           <Routers />
-        </BrowserRouter>
-      </div>
+        </Routes>
+      </Suspense>
     </div>
   );
 }
