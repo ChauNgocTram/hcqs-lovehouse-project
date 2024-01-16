@@ -1,24 +1,26 @@
-import { Route, Routes } from "react-router-dom";
-import { AdminDashboard, Auth, Home, Login } from "../pages";
+import React from "react";
+import { useRoutes } from "react-router-dom";
 import { AdminLayout, AuthLayout, HomeLayout } from "../layout";
+import { AdminDashboard, Home, Login } from "../pages";
 
-function Routers() {
-  return (
-    <Routes>
-      <Route path="/auth/*" element={<AuthLayout />}>
-        <Route index element={<Auth />} />
-        <Route path="login" element={<Login />} />
-      </Route>
+export default function Routers() {
+  const routing = useRoutes([
+    {
+      path: "/",
+      element: <HomeLayout />,
+      children: [{ path: "/", element: <Home /> }],
+    },
+    {
+      path: "auth",
+      element: <AuthLayout />,
+      children: [{ path: "login", element: <Login /> }],
+    },
+    {
+      path: "admin",
+      element: <AdminLayout />,
+      children: [{ path: "dashboard", element: <AdminDashboard /> }],
+    },
+  ]);
 
-      <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<AdminDashboard />} />
-      </Route>
-
-      <Route path="/" element={<HomeLayout />}>
-        <Route index element={<Home />} />
-      </Route>
-    </Routes>
-  );
+  return routing;
 }
-
-export default Routers;
