@@ -17,3 +17,5 @@ export { default as Avatar2 } from "./images/avatar2.jpeg";
 export { default as Avatar3 } from "./images/avatar3.avif";
 export { default as Avatar4 } from "./images/avatar4.avif";
 export { default as Avatar5 } from "./images/avatar5.avif";
+
+export { default as LoginBG } from "./images/LoginBG.webp";
