@@ -1,12 +1,9 @@
 import React from "react";
+import Navbar from "../../components/Header/Navbar/Navbar";
 
 
 function Home() {
-  return(
-    <div>
-     
-      <h1 className="text-dark">Hi.</h1>
-    </div>
+
   )
 }
 
