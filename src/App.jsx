@@ -4,7 +4,7 @@ import Routers from "./routes/Routers";
 
 function App() {
   return (
-    <div className="w-screen min-h-screen h-auto flex flex-col items-center justify-center">
+    <div className="w-screen min-h-screen h-auto ">
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Routers />
