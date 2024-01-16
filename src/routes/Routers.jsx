@@ -1,43 +1,24 @@
-import React from "react";
-import { useRoutes } from "react-router-dom";
-import { HomeLayout } from "../layout/HomeLayout.";
-import Home from "../pages/Home/Home.jsx";
+import { Route, Routes } from "react-router-dom";
+import { AdminDashboard, Auth, Home, Login } from "../pages";
+import { AdminLayout, AuthLayout, HomeLayout } from "../layout";
 
-export default function Routers() {
-    const routing = useRoutes([
-        {
-            path: "/",
-            element: <HomeLayout/>,
-            children: [
-                { path: "/", element: <Home/>},
-                // { path: "/login", element: <Login/>},
-                // { path: "/register", element: <Register /> },
-                // { path: "/resetPassword", element: <ChangePasswordLogin /> },
-                // { path: "/blog", element: <Blog /> },
-                // { path: "/blogDetail/:id", element: <BlogDetail /> },
-                // { path: "/news", element: <News /> },
-                // { path: "/newsDetail/:id", element: <NewsDetail /> },
-                // { path: "/houseProject", element: <HouseProject /> },
-                // { path: "/houseProjectDetail", element: <HouseProjectDetail /> },
-                
-            ],
-        },
-        // {
-        //     element: <CommonLayout />,
-        //     children: [
-        //       { path: "/profile", element:  },
-        //       { path: "/updateProfile", element:  },
-        //       { path: "/changePassword", element: },
-        //     ],
-        //   },
-        //   {
-        //     path: "/admin",
-        //     element: <AdminLayout />,
-        //     children: [
-        //       { path: "/admin", element:  },
-              
-        //     ],
-        //   },
-    ]);
-    return routing;
+function Routers() {
+  return (
+    <Routes>
+      <Route path="/auth/*" element={<AuthLayout />}>
+        <Route index element={<Auth />} />
+        <Route path="login" element={<Login />} />
+      </Route>
+
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route index element={<AdminDashboard />} />
+      </Route>
+
+      <Route path="/" element={<HomeLayout />}>
+        <Route index element={<Home />} />
+      </Route>
+    </Routes>
+  );
 }
+
+export default Routers;
