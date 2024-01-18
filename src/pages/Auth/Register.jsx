@@ -8,7 +8,7 @@ import { buttonClick } from "../../assets/animations";
 import { createAccount } from "../../api";
 import UserAuthInput from "./UserAuthInput";
 
-function Register({ setIsPopup }) {
+function Register({ setIsPopup, setPopupEmail }) {
   const [fristName, setFristName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -36,19 +36,20 @@ function Register({ setIsPopup }) {
           "Admin"
         );
         console.log("Register result: ", result);
-        if (result.isSuccess === true) {
+        if (result.isSuccess === false) {
           setIsPopup(true);
-          //   toast.success("Registration successful!");
+          setPopupEmail(email);
+          toast.success("Registration successful! Please verificate email.");
         } else {
           console.error(
             "Registration failed:",
             result ? result.message : "Unknown error"
           );
-          //   toast.error("Registration failed. Please try again.");
+          toast.error("Registration failed. Please try again.");
         }
       } catch (error) {
         console.error("Error signing up:", error);
-        // toast.error("An error occurred. Please try again later.");
+        toast.error("An error occurred. Please try again later.");
       }
     }
   };

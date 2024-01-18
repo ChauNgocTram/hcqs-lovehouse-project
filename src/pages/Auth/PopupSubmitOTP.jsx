@@ -1,9 +1,54 @@
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import { buttonClick } from "../../assets/animations";
+import { sendOTP } from "../../api";
+import { toast } from "react-toastify";
 
-function PopupSubmitOTP() {
+function PopupSubmitOTP({ popupEmail }) {
+  const [timer, setTimer] = useState(10);
+  const [inputs, setInputs] = useState(Array(6).fill(""));
+  const inputRefs = useRef(
+    Array(6)
+      .fill()
+      .map(() => React.createRef())
+  );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleChange = (value, index) => {
+    const newInputs = [...inputs];
+    newInputs[index] = value;
+    setInputs(newInputs);
+
+    // Tự động chuyển focus sang input tiếp theo
+    if (value.length === 1 && index < 5) {
+      inputRefs.current[index + 1].current.focus();
+    }
+  };
+
+  const handleResendOTP = async () => {
+    if (timer === 0) {
+      // Gửi lại OTP
+      const result = await sendOTP(popupEmail);
+      if (result && result.isSuccess) {
+        // Reset thời gian đếm ngược
+        toast.success("Resend OTP to email successfully");
+        setTimer(10);
+      }
+    } else {
+      toast.warn(
+        `Please wait for ${timer} seconds before resending the confirmation code`
+      );
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center m-8 rounded-md">
       <p className="text-3xl font-semibold text-headingColor">
@@ -20,64 +65,31 @@ function PopupSubmitOTP() {
               You need to wait until the timer expires to send otp
             </div>
           </div>
-          <p id="resendTime" className="pl-8 text-green">
-            2:54
-          </p>
+          <p className="pl-8 text-green">{timer}s</p>
         </div>
-        <div className="text-orange font-semibold cursor-pointer">
+        <div
+          onClick={handleResendOTP}
+          className="text-orange font-semibold cursor-pointer"
+        >
           Resend OTP
         </div>
       </div>
 
       <div className="flex flex-row items-center justify-between mx-auto w-full max-w-md">
-        <div className="w-16 h-16 ">
-          <input
-            className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-            type="text"
-            name=""
-            id=""
-          />
-        </div>
-        <div className="w-16 h-16 ">
-          <input
-            className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-            type="text"
-            name=""
-            id=""
-          />
-        </div>
-        <div className="w-16 h-16 ">
-          <input
-            className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-            type="text"
-            name=""
-            id=""
-          />
-        </div>
-        <div className="w-16 h-16 ">
-          <input
-            className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-            type="text"
-            name=""
-            id=""
-          />
-        </div>
-        <div className="w-16 h-16 ">
-          <input
-            className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-            type="text"
-            name=""
-            id=""
-          />
-        </div>
-        <div className="w-16 h-16 ">
-          <input
-            className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-            type="text"
-            name=""
-            id=""
-          />
-        </div>
+        {inputs.map((input, index) => (
+          <div className="w-16 h-16 ">
+            <input
+              key={index}
+              ref={inputRefs.current[index]}
+              className="w-full h-full flex flex-col items-center justify-center text-center 
+              px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white 
+              focus:bg-gray-50 focus:ring-1 ring-blue-700"
+              maxLength={1}
+              value={input}
+              onChange={(e) => handleChange(e.target.value, index)}
+            />
+          </div>
+        ))}
       </div>
 
       <div className="pt-4 w-full">
