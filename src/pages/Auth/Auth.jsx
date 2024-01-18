@@ -1,9 +1,9 @@
 import { useCallback } from "react";
-import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
-import { auth } from "../../config/firebase.config";
+import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
 
 import { LoginBG } from "../../assets";
+import { auth } from "../../config/firebase.config";
 
 function Auth() {
   const googleProider = new GoogleAuthProvider();

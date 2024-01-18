@@ -1,10 +1,5 @@
-import {
-  GoogleAuthProvider,
-  signInWithRedirect,
-} from "firebase/auth";
-import {
-  auth
-} from "../config/firebase.config";
+import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
+import { auth } from "../config/firebase.config";
 
 const googleProider = new GoogleAuthProvider();
 

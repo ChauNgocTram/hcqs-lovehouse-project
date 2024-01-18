@@ -1,6 +1,18 @@
 import axios from "axios";
 export const baseURL = "https://hcqs.azurewebsites.net";
 
+export const loginWithEmailPass = async (email, password) => {
+    try {
+        const res = await axios.post(`${baseURL}/account/login`, {
+            email,
+            password
+        });
+        return res.data;
+    } catch (err) {
+        return null;
+    }
+};
+
 export const createAccount = async (email, firstName, lastName, password, gender, phoneNumber, roleName) => {
     try {
         const res = await axios.post(`${baseURL}/account/create-account`, {
@@ -35,6 +47,7 @@ export const getNewToken = async (accountId, refreshToken) => {
         return null;
     }
 };
+
 export const getAccountById = async (accountId, token) => {
     try {
         const res = await axios.post(

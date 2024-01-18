@@ -1,12 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
+import { useDispatch } from "react-redux";
 import { BrowserRouter as Routes } from "react-router-dom";
-import { Suspense } from "react";
+import { jwtDecode } from "jwt-decode";
+import { ToastContainer } from "react-toastify";
+
 import Routers from "./routes/Routers";
 import { auth } from "./config/firebase.config";
+import { SET_USER, SET_USER_NULL } from "./context/actions/userActions";
 import { getAccountById, googleCallback } from "./api";
-import { jwtDecode } from "jwt-decode";
-import { useDispatch } from "react-redux";
-import { SET_USER } from "./context/actions/userActions";
 
 function App() {
   const dispatch = useDispatch();
@@ -71,7 +72,7 @@ function App() {
             });
         });
       } else {
-        setUser(null);
+        SET_USER_NULL(null);
       }
     });
 
@@ -80,6 +81,7 @@ function App() {
 
   return (
     <div className="w-screen min-h-screen h-auto ">
+      <ToastContainer position="top-right" autoClose={2000} />
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Routers />
