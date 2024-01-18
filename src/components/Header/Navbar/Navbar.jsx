@@ -6,7 +6,7 @@ export default function Navbar() {
 
   const handleSignout = () => {
     signOutAction();
-    navigate("/auth/login");
+    navigate("/auth");
   };
   return (
     <div className="bg-orange text-white">

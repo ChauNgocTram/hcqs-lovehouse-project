@@ -26,7 +26,7 @@ function Auth() {
 
   useEffect(() => {
     if (user) {
-      navigate("/", { replace: true });
+      navigate("/");
     }
   }, [user]);
 

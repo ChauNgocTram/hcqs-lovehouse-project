@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { FaEnvelope } from "react-icons/fa6";
 import { MdOutlineDriveFileRenameOutline, MdPassword } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 
@@ -10,8 +9,6 @@ import { createAccount } from "../../api";
 import UserAuthInput from "./UserAuthInput";
 
 function Register({ setIsPopup, setPopupEmail }) {
-  const navigate = useNavigate();
-
   const [fristName, setFristName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");

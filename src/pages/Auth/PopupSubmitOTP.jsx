@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import { buttonClick } from "../../assets/animations";
@@ -7,6 +7,8 @@ import { activeAccount, sendOTP } from "../../api";
 import { toast } from "react-toastify";
 
 function PopupSubmitOTP({ popupEmail }) {
+  const navigate = useNavigate();
+
   const [timer, setTimer] = useState(10);
   const [inputs, setInputs] = useState(Array(6).fill(""));
   const inputRefs = useRef(
@@ -40,7 +42,7 @@ function PopupSubmitOTP({ popupEmail }) {
     if (otp.length === 6) {
       const result = await activeAccount(popupEmail, otp);
       if (result && result.isSuccess) {
-        navigate("/auth", { replace: true });
+        navigate("/auth");
         toast.success("Account activated successfully!");
       } else {
         toast.error("Invalid OTP or failed to verify. Please try again.");
