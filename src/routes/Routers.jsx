@@ -8,7 +8,7 @@ function Routers() {
     {
       path: "/",
       element: <HomeLayout />,
-      children: [{ path: "/", element: <Home /> }],
+      children: [{ path: "/home", element: <Home /> }],
     },
     {
       path: "/auth",

@@ -15,6 +15,10 @@ import { buttonClick } from "../../assets/animations";
 import { signInWithGoogle } from "../../untils/helpers";
 import { loginWithEmailPass } from "../../api";
 
+//import alert
+import Swal from "sweetalert2";
+import { alert } from "../../components/Alert/Alert";
+
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -39,10 +43,25 @@ function Login() {
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle();
-      toast.success("Successfully signed in with Google", "success");
+      //toast.success("Successfully signed in with Google", "success");
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `<h1>Welcome </h1>`,
+        html: `<h3>Log In Successfully</h3>`,
+        showConfirmButton: false,
+        timer: 1600,
+      });
     } catch (error) {
-      toast.error("Error signing in with Google", "error");
+      //toast.error("Error signing in with Google", "error");
       console.error("Error signing in with Google:", error);
+      alert.alertFailedWithTime(
+        "Failed To Log In",
+        "This Email has not been registered",
+        3300,
+        "33",
+        () => {}
+      );
     }
   };
 
@@ -52,9 +71,25 @@ function Login() {
         .then((data) => {
           if (data.isSuccess) {
             console.log(data.result.data);
-            toast.success("Login successful.");
+            // toast.success("Login successful.");
+
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: `<h1>Welcome </h1>`,
+              html: `<h3>Log In Successfully</h3>`,
+              showConfirmButton: false,
+              timer: 1600,
+            });
           } else {
-            toast.error("Login fail!. Please check email or password");
+            //toast.error("Login fail!. Please check email or password");
+            alert.alertFailedWithTime(
+              "Failed To Log In",
+              "This Email has not been registered",
+              3300,
+              "33",
+              () => {}
+            );
           }
         })
         .catch((err) => {
