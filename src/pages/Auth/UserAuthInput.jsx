@@ -29,18 +29,22 @@ function UserAuthInput({
     <div className="flex flex-col items-start justify-start gap-1">
       <label className="text-sm text-gray-300">{lable}</label>
       <div
-        className={`border flex items-center justify-center gap-3 w-full md:w-96 rounded-md px-4 py-1 bg-gray-200 ${
+        className={`border flex items-center justify-center gap-3 w-full ${
+          placeHolder === "Frist Name" || placeHolder === "Last Name"
+            ? "md:w-44"
+            : "md:w-96"
+        } rounded-md px-4 py-1 bg-gray-200 ${
           !isEmailValid &&
           placeHolder === "Email" &&
           value.length > 0 &&
           "border-2 border-red-500"
         }`}
       >
-        <Icon className="text-text555 text-2xl" />
+        <Icon className="text-2xl" />
         <input
           type={isPass && showPass ? "password" : "text"}
           placeholder={placeHolder}
-          className="flex-1 w-full h-full py-2 outline-none border-none bg-transparent text-text555 text-lg"
+          className="flex-1 w-full h-full py-2 outline-none border-none bg-transparent text-lg"
           value={value}
           onChange={handleTextChange}
         />
@@ -52,9 +56,9 @@ function UserAuthInput({
             className="cursor-pointer"
           >
             {showPass ? (
-              <FaEyeSlash className="text-text555 text-2xl" />
+              <FaEyeSlash className="text-2xl" />
             ) : (
-              <FaEye className="text-text555 text-2xl" />
+              <FaEye className="text-2xl" />
             )}
           </motion.div>
         )}

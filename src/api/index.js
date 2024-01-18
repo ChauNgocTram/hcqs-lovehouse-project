@@ -30,6 +30,24 @@ export const createAccount = async (email, firstName, lastName, password, gender
     }
 };
 
+export const sendOTP = async (email) => {
+    try {
+        const res = await axios.post(`${baseURL}/account/send-email-for-active-account/${email}`);
+        return res.data;
+    } catch (err) {
+        return null;
+    }
+};
+
+export const activeAccount = async (email, code) => {
+    try {
+        const res = await axios.put(`${baseURL}/account/active-account?email=${email}&verifyCode=${code}`);
+        return res.data;
+    } catch (err) {
+        return null;
+    }
+};
+
 export const googleCallback = async (token) => {
     try {
         const res = await axios.post(`${baseURL}/account/google-callback?accessTokenFromGoogle=${token}`);
