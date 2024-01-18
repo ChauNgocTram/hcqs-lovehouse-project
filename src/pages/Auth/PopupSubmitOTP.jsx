@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import { buttonClick } from "../../assets/animations";
-import { sendOTP } from "../../api";
+import { activeAccount, sendOTP } from "../../api";
 import { toast } from "react-toastify";
 
 function PopupSubmitOTP({ popupEmail }) {
@@ -30,6 +30,23 @@ function PopupSubmitOTP({ popupEmail }) {
     // Tự động chuyển focus sang input tiếp theo
     if (value.length === 1 && index < 5) {
       inputRefs.current[index + 1].current.focus();
+    }
+  };
+
+  const handleVerify = async () => {
+    const otp = inputs.join("");
+    console.log("input otp: ", otp);
+
+    if (otp.length === 6) {
+      const result = await activeAccount(popupEmail, otp);
+      if (result && result.isSuccess) {
+        navigate("/auth", { replace: true });
+        toast.success("Account activated successfully!");
+      } else {
+        toast.error("Invalid OTP or failed to verify. Please try again.");
+      }
+    } else {
+      toast.warn("Please enter a valid 6-digit OTP.");
     }
   };
 
@@ -77,7 +94,7 @@ function PopupSubmitOTP({ popupEmail }) {
 
       <div className="flex flex-row items-center justify-between mx-auto w-full max-w-md">
         {inputs.map((input, index) => (
-          <div className="w-16 h-16 ">
+          <div key={index} className="w-16 h-16 ">
             <input
               key={index}
               ref={inputRefs.current[index]}
@@ -95,7 +112,7 @@ function PopupSubmitOTP({ popupEmail }) {
       <div className="pt-4 w-full">
         <motion.button
           {...buttonClick}
-          // onClick={handleVerify}
+          onClick={handleVerify}
           className="w-full px-4 py-2 rounded-md bg-[rgba(251,146,60)] cursor-pointer text-white text-xl capitalize hover:bg-[rgba(249,115,22)] transition-all duration-150"
         >
           Verify
