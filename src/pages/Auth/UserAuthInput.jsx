@@ -31,11 +31,11 @@ function UserAuthInput({
         {lable} <span className="text-red-500 required-dot">*</span>
       </label>
       <div
-        className={`border flex items-center justify-center gap-3 w-full ${
+        className={`border border-gray-500 flex items-center justify-center gap-3 w-full ${
           placeHolder === "Frist Name" || placeHolder === "Last Name"
             ? "md:w-44"
             : "md:w-96"
-        } rounded-md px-4 py-1 bg-gray-200 ${
+        } rounded-md px-4 py-1 ${
           !isEmailValid &&
           placeHolder === "Email" &&
           value.length > 0 &&
@@ -46,7 +46,7 @@ function UserAuthInput({
         <input
           type={isPass && showPass ? "password" : "text"}
           placeholder={placeHolder}
-          className="flex-1 w-full h-full py-2 outline-none border-none bg-transparent text-lg"
+          className="flex-1 w-full h-full py-2 outline-none border-none bg-transparent text-lg placeholder-gray-700"
           value={value}
           onChange={handleTextChange}
           autoComplete={isPass ? "current-password" : "off"}

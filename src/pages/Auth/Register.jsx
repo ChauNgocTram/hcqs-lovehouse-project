@@ -62,97 +62,100 @@ function Register({ setIsPopup, setPopupEmail, setIsLoading }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <>
       <p className="text-xl text-textColor -mt-6">Sign Up with following</p>
-      <div className="flex items-center justify-between w-full md:w-96">
-        {/* frist name  */}
+      <form onSubmit={handleSubmit}>
+        <div className="flex items-center justify-between w-full md:w-96">
+          {/* frist name  */}
+          <UserAuthInput
+            lable="Frist Name"
+            placeHolder="Frist Name"
+            isPass={false}
+            key="FristName"
+            setStateFunction={setFristName}
+            Icon={MdOutlineDriveFileRenameOutline}
+          />
+
+          {/* Last name  */}
+          <UserAuthInput
+            lable="Last Name"
+            placeHolder="Last Name"
+            isPass={false}
+            key="LastName"
+            setStateFunction={setLastName}
+            Icon={MdOutlineDriveFileRenameOutline}
+          />
+        </div>
+
+        {/* email */}
         <UserAuthInput
-          lable="Frist Name"
-          placeHolder="Frist Name"
+          lable="Email"
+          placeHolder="Email"
           isPass={false}
-          key="FristName"
-          setStateFunction={setFristName}
-          Icon={MdOutlineDriveFileRenameOutline}
+          key="Email"
+          setStateFunction={setEmail}
+          Icon={FaEnvelope}
+          setGetEmailValidationStatus={setGetEmailValidationStatus}
         />
 
-        {/* Last name  */}
+        {/* phone number */}
         <UserAuthInput
-          lable="Last Name"
-          placeHolder="Last Name"
+          lable="Phone Number"
+          placeHolder="012......"
           isPass={false}
-          key="LastName"
-          setStateFunction={setLastName}
-          Icon={MdOutlineDriveFileRenameOutline}
+          key="PhoneNumber"
+          setStateFunction={setPhoneNumber}
+          Icon={FaEnvelope}
+          setGetEmailValidationStatus={setGetEmailValidationStatus}
         />
-      </div>
 
-      {/* email */}
-      <UserAuthInput
-        lable="Email"
-        placeHolder="Email"
-        isPass={false}
-        key="Email"
-        setStateFunction={setEmail}
-        Icon={FaEnvelope}
-        setGetEmailValidationStatus={setGetEmailValidationStatus}
-      />
+        {/* gender  */}
+        <div className="flex flex-col items-start justify-start gap-1">
+          <label className="text-sm text-gray-700">
+            Gender<span className="text-red-500 required-dot">*</span>
+          </label>
+          <select
+            className="border border-gray-500 flex items-center justify-center gap-3
+            w-full md:w-96 rounded-md px-4 py-3 bg-gray-200 bg-transparent outline-none selection:text-2xl"
+            defaultValue="true"
+            onChange={handleGenderChange}
+          >
+            <option value="true">Male</option>
+            <option value="false">Female</option>
+          </select>
+        </div>
 
-      {/* phone number */}
-      <UserAuthInput
-        lable="Phone Number"
-        placeHolder="012......"
-        isPass={false}
-        key="PhoneNumber"
-        setStateFunction={setPhoneNumber}
-        Icon={FaEnvelope}
-        setGetEmailValidationStatus={setGetEmailValidationStatus}
-      />
+        {/* password */}
+        <UserAuthInput
+          lable="Password"
+          placeHolder="Password"
+          isPass={true}
+          key="Password"
+          setStateFunction={setPassword}
+          Icon={MdPassword}
+        />
 
-      {/* gender  */}
-      <div className="flex flex-col items-start justify-start gap-1">
-        <label className="text-sm text-gray-300">Gender</label>
-        <select
-          className="border flex items-center justify-center gap-3
-      w-full md:w-96 rounded-md px-4 py-3.5 bg-gray-200 bg-transparent
-      outline-none"
-          defaultValue="true"
-          onChange={handleGenderChange}
-        >
-          <option value="true">Male</option>
-          <option value="false">Female</option>
-        </select>
-      </div>
+        {/* confirm password  */}
+        <UserAuthInput
+          lable="Confirm Password"
+          placeHolder="Confirm Password"
+          isPass={true}
+          key="ConfirmPassword"
+          setStateFunction={setPassword}
+          Icon={MdPassword}
+        />
 
-      {/* password */}
-      <UserAuthInput
-        lable="Password"
-        placeHolder="Password"
-        isPass={true}
-        key="Password"
-        setStateFunction={setPassword}
-        Icon={MdPassword}
-      />
-
-      {/* confirm password  */}
-      <UserAuthInput
-        lable="Confirm Password"
-        placeHolder="Confirm Password"
-        isPass={true}
-        key="ConfirmPassword"
-        setStateFunction={setPassword}
-        Icon={MdPassword}
-      />
-
-      {/* button section  */}
-      <motion.button
-        {...buttonClick}
-        className="w-full px-4 py-2 rounded-md bg-[rgba(251,146,60)] cursor-pointer text-white text-xl capitalize
+        {/* button section  */}
+        <motion.button
+          {...buttonClick}
+          className="w-full px-4 py-2 rounded-md bg-[rgba(251,146,60)] cursor-pointer text-white text-xl capitalize
         hover:bg-[rgba(249,115,22)] transition-all duration-150 mt-4"
-        type="submit"
-      >
-        Sign Up
-      </motion.button>
-    </form>
+          type="submit"
+        >
+          Sign Up
+        </motion.button>
+      </form>
+    </>
   );
 }
 

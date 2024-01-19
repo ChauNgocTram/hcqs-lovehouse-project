@@ -3,10 +3,15 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import { buttonClick } from "../../assets/animations";
-import { activeAccount, sendOTP } from "../../api";
+import { activeAccount, sendOTP, submitOTPResetPass } from "../../api";
 import { toast } from "react-toastify";
 
-function PopupSubmitOTP({ popupEmail, setIsLoading }) {
+function PopupSubmitOTP({
+  popupEmail,
+  setIsLoading,
+  forgotMail,
+  forgotPassword,
+}) {
   const [timer, setTimer] = useState(10);
   const [inputs, setInputs] = useState(Array(6).fill(""));
   const inputRefs = useRef(
@@ -27,21 +32,6 @@ function PopupSubmitOTP({ popupEmail, setIsLoading }) {
     if (otp.length === 6) {
       handleVerify();
     }
-  }, [inputs]);
-
-  useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      if (inputs.some((input) => input !== "")) {
-        const message =
-          "You have unsaved changes. Are you sure you want to leave?";
-        event.returnValue = message; // Hiển thị cảnh báo cho người dùng
-        return message;
-      }
-    };
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
   }, [inputs]);
 
   const handleChange = (value, index) => {
@@ -70,12 +60,26 @@ function PopupSubmitOTP({ popupEmail, setIsLoading }) {
     console.log("input otp: ", otp);
     setIsLoading(true);
     if (otp.length === 6) {
-      const result = await activeAccount(popupEmail, otp);
-      if (result && result.isSuccess) {
-        toast.success("Account activated successfully!");
-        window.location.reload();
+      if (forgotPassword) {
+        const result = await submitOTPResetPass(
+          forgotMail,
+          otp,
+          forgotPassword
+        );
+        if (result && result.isSuccess) {
+          toast.success("Reset account successfully!");
+          window.location.reload();
+        } else {
+          toast.error("Invalid OTP or failed to verify. Please try again.");
+        }
       } else {
-        toast.error("Invalid OTP or failed to verify. Please try again.");
+        const result = await activeAccount(popupEmail, otp);
+        if (result && result.isSuccess) {
+          toast.success("Account activated successfully!");
+          window.location.reload();
+        } else {
+          toast.error("Invalid OTP or failed to verify. Please try again.");
+        }
       }
       setIsLoading(false);
     } else {
@@ -124,11 +128,11 @@ function PopupSubmitOTP({ popupEmail, setIsLoading }) {
               You need to wait until the timer expires to send otp
             </div>
           </div>
-          <p className="pl-8 text-green">{timer}s</p>
+          <p className="pl-8 text-baseGreen">{timer}s</p>
         </div>
         <div
           onClick={handleResendOTP}
-          className="text-orange font-semibold cursor-pointer"
+          className="text-baseOrange font-semibold cursor-pointer"
         >
           Resend OTP
         </div>
@@ -166,7 +170,7 @@ function PopupSubmitOTP({ popupEmail, setIsLoading }) {
 
       <div className="flex items-center w-full">
         <p>Having problems?</p>
-        <Link to={"/"} className="mx-2 text-orange font-semibold ">
+        <Link to={"/"} className="mx-2 text-baseOrange font-semibold ">
           Know more
         </Link>
       </div>

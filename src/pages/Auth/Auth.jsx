@@ -5,16 +5,16 @@ import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
 import { FcGoogle } from "react-icons/fc";
-import { toast } from "react-toastify";
-
 import { LoginBG, Logo } from "../../assets";
 import { buttonClick } from "../../assets/animations";
 import { signInWithGoogle } from "../../untils/helpers";
 import { alert } from "../../components/Alert/Alert";
+import { MutatingDots } from "../../components";
+
 import Register from "./Register";
 import Login from "./Login";
 import PopupSubmitOTP from "./PopupSubmitOTP";
-import { MutatingDots } from "../../components";
+import ResetPassword from "./ResetPassword";
 
 function Auth() {
   const navigate = useNavigate();
@@ -25,6 +25,10 @@ function Auth() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [isPopup, setIsPopup] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isForgot, setIsForgot] = useState(false);
+
+  const [forgotMail, setForgotMail] = useState("");
+  const [forgotPassword, setForgotPassword] = useState("");
 
   useEffect(() => {
     if (user) {
@@ -79,33 +83,9 @@ function Auth() {
               setIsLoading={setIsLoading}
             />
           ) : (
-            <Login setIsLoading={setIsLoading} />
+            <Login setIsLoading={setIsLoading} setIsForgot={setIsForgot} />
           )}
         </div>
-
-        {!isSignUp ? (
-          <p>
-            Doesn't have an account:{" "}
-            <motion.button
-              {...buttonClick}
-              className="text-[rgba(251,146,60)] underline cursor-pointer bg-transparent"
-              onClick={() => setIsSignUp(true)}
-            >
-              Create one
-            </motion.button>
-          </p>
-        ) : (
-          <p>
-            Already have an account:{" "}
-            <motion.button
-              {...buttonClick}
-              className="text-[rgba(251,146,60)] underline cursor-pointer bg-transparent"
-              onClick={() => setIsSignUp(false)}
-            >
-              Sign-in here
-            </motion.button>
-          </p>
-        )}
 
         <div className="flex items-center justify-between gap-16">
           <div className="w-24 h-[1px] rounded-md bg-slate-400"></div>
@@ -123,14 +103,62 @@ function Auth() {
             Signin with Google
           </p>
         </motion.div>
+
+        <div className="flex w-full px-8">
+          {!isSignUp ? (
+            <p>
+              Doesn't have an account ?
+              <motion.button
+                {...buttonClick}
+                className="text-[rgba(251,146,60)] cursor-pointer bg-transparent px-2 font-semibold"
+                onClick={() => setIsSignUp(true)}
+              >
+                Create one
+              </motion.button>
+            </p>
+          ) : (
+            <p>
+              Already have an account ?
+              <motion.button
+                {...buttonClick}
+                className="text-[rgba(251,146,60)] cursor-pointer bg-transparent px-2 font-semibold"
+                onClick={() => setIsSignUp(false)}
+              >
+                Sign-in here
+              </motion.button>
+            </p>
+          )}
+        </div>
       </div>
-      {/* popup  */}
+
+      {/* reset password popup  */}
+      {isForgot && (
+        <div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+          items-center justify-center bg-white bg-opacity-95 rounded-xl z-20 p-10"
+        >
+          <ResetPassword
+            setIsForgot={setIsForgot}
+            setIsLoading={setIsLoading}
+            setIsPopup={setIsPopup}
+            setForgotMail={setForgotMail}
+            setForgotPassword={setForgotPassword}
+          />
+        </div>
+      )}
+
+      {/* otp popup  */}
       {isPopup && (
         <div
           className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
   items-center justify-center w-656 bg-white bg-opacity-90 rounded-xl z-20"
         >
-          <PopupSubmitOTP popupEmail={popupEmail} setIsLoading={setIsLoading} />
+          <PopupSubmitOTP
+            popupEmail={popupEmail}
+            setIsLoading={setIsLoading}
+            forgotMail={forgotMail}
+            forgotPassword={forgotPassword}
+          />
         </div>
       )}
 

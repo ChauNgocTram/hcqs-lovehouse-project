@@ -83,3 +83,25 @@ export const getAccountById = async (accountId, token) => {
         return null;
     }
 };
+
+export const sendResetPassOTP = async (email) => {
+    try {
+        const res = await axios.post(`${baseURL}/account/send-email-forgot-password/${email}`);
+        return res.data;
+    } catch (err) {
+        return null;
+    }
+};
+
+export const submitOTPResetPass = async (email, recoveryCode, newPassword) => {
+    try {
+        const res = await axios.put(`${baseURL}/account/forgot-password`, {
+            email,
+            recoveryCode,
+            newPassword
+        });
+        return res.data;
+    } catch (err) {
+        return null;
+    }
+};
