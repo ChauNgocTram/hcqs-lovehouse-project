@@ -44,16 +44,6 @@ function PopupSubmitOTP({ popupEmail, setIsLoading }) {
     };
   }, [inputs]);
 
-  const handleBackspace = (event, index) => {
-    if (event.key === "Backspace" && inputs[index] === "" && index > 0) {
-      // Xóa ký tự ở input trước đó và chuyển focus
-      const newInputs = [...inputs];
-      newInputs[index - 1] = "";
-      setInputs(newInputs);
-      inputRefs.current[index - 1].current.focus();
-    }
-  };
-
   const handleChange = (value, index) => {
     const newInputs = [...inputs];
     newInputs[index] = value;
@@ -62,6 +52,16 @@ function PopupSubmitOTP({ popupEmail, setIsLoading }) {
     // Tự động chuyển focus sang input tiếp theo nếu không phải là xóa
     if (value.length === 1 && index < 5) {
       inputRefs.current[index + 1].current.focus();
+    }
+  };
+
+  const handleBackspace = (event, index) => {
+    if (event.key === "Backspace" && inputs[index] === "" && index > 0) {
+      // Xóa ký tự ở input trước đó và chuyển focus
+      const newInputs = [...inputs];
+      newInputs[index - 1] = "";
+      setInputs(newInputs);
+      inputRefs.current[index - 1].current.focus();
     }
   };
 

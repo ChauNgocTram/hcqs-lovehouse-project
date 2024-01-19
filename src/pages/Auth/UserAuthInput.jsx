@@ -49,6 +49,7 @@ function UserAuthInput({
           className="flex-1 w-full h-full py-2 outline-none border-none bg-transparent text-lg"
           value={value}
           onChange={handleTextChange}
+          autoComplete={isPass ? "current-password" : "off"}
         />
 
         {isPass && (

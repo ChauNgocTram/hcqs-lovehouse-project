@@ -79,7 +79,7 @@ function Auth() {
               setIsLoading={setIsLoading}
             />
           ) : (
-            <Login />
+            <Login setIsLoading={setIsLoading} />
           )}
         </div>
 

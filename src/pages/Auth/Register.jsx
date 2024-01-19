@@ -23,6 +23,11 @@ function Register({ setIsPopup, setPopupEmail, setIsLoading }) {
     setGender(selectedGender);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleSignUp();
+  };
+
   const handleSignUp = async () => {
     if (getEmailValidationStatus) {
       setIsLoading(true);
@@ -57,7 +62,7 @@ function Register({ setIsPopup, setPopupEmail, setIsLoading }) {
   };
 
   return (
-    <>
+    <form onSubmit={handleSubmit}>
       <p className="text-xl text-textColor -mt-6">Sign Up with following</p>
       <div className="flex items-center justify-between w-full md:w-96">
         {/* frist name  */}
@@ -143,11 +148,11 @@ function Register({ setIsPopup, setPopupEmail, setIsLoading }) {
         {...buttonClick}
         className="w-full px-4 py-2 rounded-md bg-[rgba(251,146,60)] cursor-pointer text-white text-xl capitalize
         hover:bg-[rgba(249,115,22)] transition-all duration-150 mt-4"
-        onClick={handleSignUp}
+        type="submit"
       >
         Sign Up
       </motion.button>
-    </>
+    </form>
   );
 }
 
