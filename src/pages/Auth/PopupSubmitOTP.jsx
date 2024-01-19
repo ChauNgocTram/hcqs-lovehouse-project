@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import { buttonClick } from "../../assets/animations";
-import { activeAccount, sendOTP, submitOTPResetPass } from "../../api";
+import {
+  activeAccount,
+  sendOTP,
+  sendResetPassOTP,
+  submitOTPResetPass,
+} from "../../api";
 import { toast } from "react-toastify";
 
 function PopupSubmitOTP({
@@ -91,13 +96,24 @@ function PopupSubmitOTP({
     if (timer === 0) {
       setIsLoading(true);
       try {
-        const result = await sendOTP(popupEmail);
-        if (result && result.isSuccess) {
-          toast.success("Resend OTP to email successfully");
-          setInputs(Array(6).fill("")); // Clear các input
-          setTimer(10); // Reset thời gian đếm ngược
+        if (forgotPassword) {
+          const result = await sendResetPassOTP(forgotMail);
+          if (result && result.isSuccess) {
+            toast.success("Resend OTP to email successfully");
+            setInputs(Array(6).fill(""));
+            setTimer(10);
+          } else {
+            toast.error("Failed to resend OTP. Please try again later.");
+          }
         } else {
-          toast.error("Failed to resend OTP. Please try again later.");
+          const result = await sendOTP(popupEmail);
+          if (result && result.isSuccess) {
+            toast.success("Resend OTP to email successfully");
+            setInputs(Array(6).fill(""));
+            setTimer(10);
+          } else {
+            toast.error("Failed to resend OTP. Please try again later.");
+          }
         }
       } catch (error) {
         console.error("Error resending OTP:", error);
@@ -109,6 +125,18 @@ function PopupSubmitOTP({
       toast.warn(
         `Please wait for ${timer} seconds before resending the confirmation code`
       );
+    }
+  };
+
+  const handlePaste = async (event) => {
+    event.preventDefault();
+    const text = (event.clipboardData || window.clipboardData).getData("text");
+
+    if (text.length === 6 && /^[a-zA-Z0-9]*$/.test(text)) {
+      const chars = text.split("");
+      setInputs(chars);
+    } else {
+      toast.warn("Please paste a valid 6-digit code.");
     }
   };
 
@@ -151,6 +179,7 @@ function PopupSubmitOTP({
               value={input}
               onChange={(e) => handleChange(e.target.value, index)}
               onKeyDown={(e) => handleBackspace(e, index)}
+              onPaste={handlePaste}
             />
           </div>
         ))}
