@@ -1,14 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import { buttonClick } from "../../assets/animations";
 import { activeAccount, sendOTP } from "../../api";
 import { toast } from "react-toastify";
 
-function PopupSubmitOTP({ popupEmail }) {
-  const navigate = useNavigate();
-
+function PopupSubmitOTP({ popupEmail, setIsLoading }) {
   const [timer, setTimer] = useState(10);
   const [inputs, setInputs] = useState(Array(6).fill(""));
   const inputRefs = useRef(
@@ -24,6 +22,23 @@ function PopupSubmitOTP({ popupEmail }) {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      if (inputs.some((input) => input !== "")) {
+        const message =
+          "You have unsaved changes. Are you sure you want to leave?";
+        event.returnValue = message; // Hiển thị cảnh báo cho người dùng
+        return message;
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [inputs]);
+
   const handleChange = (value, index) => {
     const newInputs = [...inputs];
     newInputs[index] = value;
@@ -38,15 +53,16 @@ function PopupSubmitOTP({ popupEmail }) {
   const handleVerify = async () => {
     const otp = inputs.join("");
     console.log("input otp: ", otp);
-
+    setIsLoading(true);
     if (otp.length === 6) {
       const result = await activeAccount(popupEmail, otp);
       if (result && result.isSuccess) {
-        navigate("/auth");
         toast.success("Account activated successfully!");
+        window.location.reload();
       } else {
         toast.error("Invalid OTP or failed to verify. Please try again.");
       }
+      setIsLoading(false);
     } else {
       toast.warn("Please enter a valid 6-digit OTP.");
     }
@@ -54,12 +70,21 @@ function PopupSubmitOTP({ popupEmail }) {
 
   const handleResendOTP = async () => {
     if (timer === 0) {
-      // Gửi lại OTP
-      const result = await sendOTP(popupEmail);
-      if (result && result.isSuccess) {
-        // Reset thời gian đếm ngược
-        toast.success("Resend OTP to email successfully");
-        setTimer(10);
+      setIsLoading(true);
+      try {
+        const result = await sendOTP(popupEmail);
+        if (result && result.isSuccess) {
+          toast.success("Resend OTP to email successfully");
+          setInputs(Array(6).fill("")); // Clear các input
+          setTimer(10); // Reset thời gian đếm ngược
+        } else {
+          toast.error("Failed to resend OTP. Please try again later.");
+        }
+      } catch (error) {
+        console.error("Error resending OTP:", error);
+        toast.error("An error occurred. Please try again later.");
+      } finally {
+        setIsLoading(false);
       }
     } else {
       toast.warn(

@@ -11,3 +11,9 @@ body {
         "Open Sans", "Helvetica Neue", sans-serif;
     margin: 0;
 }
+
+/* CSS để ẩn icon "mắt" trong các trường nhập mật khẩu */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    display: none;
+}

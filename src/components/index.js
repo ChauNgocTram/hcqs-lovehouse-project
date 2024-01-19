@@ -1,1 +1,5 @@
-export { default as Spinner } from "./Loading/Spinner";
+export {
+  MutiDots as MutatingDots,
+  ColorCircle as ColorRing,
+  Circle as Circles,
+} from "./Loading/Spinner";

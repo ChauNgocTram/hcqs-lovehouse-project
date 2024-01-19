@@ -70,7 +70,8 @@ function Login() {
       <motion.button
         {...buttonClick}
         onClick={handleLogin}
-        className="w-full px-4 py-2 rounded-md bg-[rgba(251,146,60)] cursor-pointer text-white text-xl capitalize hover:bg-[rgba(249,115,22)] transition-all duration-150"
+        className="w-full px-4 py-2 rounded-md bg-[rgba(251,146,60)] cursor-pointer text-white text-xl capitalize 
+        hover:bg-[rgba(249,115,22)] transition-all duration-150 mt-4"
       >
         Sign in
       </motion.button>

@@ -14,6 +14,7 @@ import { alert } from "../../components/Alert/Alert";
 import Register from "./Register";
 import Login from "./Login";
 import PopupSubmitOTP from "./PopupSubmitOTP";
+import { MutatingDots } from "../../components";
 
 function Auth() {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ function Auth() {
 
   const [isSignUp, setIsSignUp] = useState(false);
   const [isPopup, setIsPopup] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -69,9 +71,13 @@ function Auth() {
 
         {/* welcome text */}
         <p className="text-3xl font-semibold text-headingColor">Welcome Back</p>
-        <div className=" w-full flex flex-col items-center justify-center gap-6 px-4 md:px-12 py-4">
+        <div className=" w-full flex flex-col items-center justify-center px-4 md:px-12 pt-4">
           {isSignUp ? (
-            <Register setIsPopup={setIsPopup} setPopupEmail={setPopupEmail} />
+            <Register
+              setIsPopup={setIsPopup}
+              setPopupEmail={setPopupEmail}
+              setIsLoading={setIsLoading}
+            />
           ) : (
             <Login />
           )}
@@ -124,7 +130,14 @@ function Auth() {
           className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
   items-center justify-center w-656 bg-white bg-opacity-90 rounded-xl z-20"
         >
-          <PopupSubmitOTP popupEmail={popupEmail} />
+          <PopupSubmitOTP popupEmail={popupEmail} setIsLoading={setIsLoading} />
+        </div>
+      )}
+
+      {/* loading  */}
+      {isLoading && (
+        <div className="absolute z-30 bg-white bg-opacity-20 w-full h-full flex items-center justify-center">
+          <MutatingDots />
         </div>
       )}
     </div>

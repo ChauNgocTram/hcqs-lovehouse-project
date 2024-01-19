@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaEnvelope, FaEye, FaEyeSlash } from "react-icons/fa6";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { motion } from "framer-motion";
 
 function UserAuthInput({
@@ -11,7 +11,7 @@ function UserAuthInput({
   Icon,
 }) {
   const [value, setValue] = useState("");
-  const [showPass, setShowPass] = useState(false);
+  const [showPass, setShowPass] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(false);
 
   const handleTextChange = (e) => {
@@ -27,7 +27,9 @@ function UserAuthInput({
 
   return (
     <div className="flex flex-col items-start justify-start gap-1">
-      <label className="text-sm text-gray-300">{lable}</label>
+      <label className="text-sm text-gray-700 py-2">
+        {lable} <span className="text-red-500 required-dot">*</span>
+      </label>
       <div
         className={`border flex items-center justify-center gap-3 w-full ${
           placeHolder === "Frist Name" || placeHolder === "Last Name"

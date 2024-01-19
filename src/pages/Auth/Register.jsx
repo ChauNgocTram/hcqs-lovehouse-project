@@ -8,7 +8,7 @@ import { buttonClick } from "../../assets/animations";
 import { createAccount } from "../../api";
 import UserAuthInput from "./UserAuthInput";
 
-function Register({ setIsPopup, setPopupEmail }) {
+function Register({ setIsPopup, setPopupEmail, setIsLoading }) {
   const [fristName, setFristName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -25,6 +25,7 @@ function Register({ setIsPopup, setPopupEmail }) {
 
   const handleSignUp = async () => {
     if (getEmailValidationStatus) {
+      setIsLoading(true);
       try {
         const result = await createAccount(
           email,
@@ -47,6 +48,7 @@ function Register({ setIsPopup, setPopupEmail }) {
           );
           toast.error("Registration failed. Please try again.");
         }
+        setIsLoading(false);
       } catch (error) {
         console.error("Error signing up:", error);
         toast.error("An error occurred. Please try again later.");
@@ -139,7 +141,8 @@ function Register({ setIsPopup, setPopupEmail }) {
       {/* button section  */}
       <motion.button
         {...buttonClick}
-        className="w-full px-4 py-2 rounded-md bg-[rgba(251,146,60)] cursor-pointer text-white text-xl capitalize hover:bg-[rgba(249,115,22)] transition-all duration-150"
+        className="w-full px-4 py-2 rounded-md bg-[rgba(251,146,60)] cursor-pointer text-white text-xl capitalize
+        hover:bg-[rgba(249,115,22)] transition-all duration-150 mt-4"
         onClick={handleSignUp}
       >
         Sign Up
