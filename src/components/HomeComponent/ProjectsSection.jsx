@@ -1,63 +1,36 @@
-import { Swiper, SwiperSlide } from "swiper/react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode, Pagination, Autoplay } from "swiper/modules";
+import { RxArrowRight } from "react-icons/rx";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/free-mode";
 import "swiper/css/autoplay";
 
-import { FreeMode, Pagination, Autoplay } from "swiper/modules";
-
-import { RxArrowRight } from "react-icons/rx";
 
 import BtnViewMore from "../Button/BtnViewMore";
+import { getAllProjects } from "../../constants/apiProject";
 
-import banner1 from "../../assets/images/banner1.png";
-import banner2 from "../../assets/images/banner2.png";
-import banner3 from "../../assets/images/banner3.png";
-
-
-const imgList = [
-  {
-    img: banner1,
-    name: "item1",
-  },
-  {
-    img: banner2,
-    name: "item2",
-  },
-  {
-    img: banner3,
-    name: "item3",
-  },
-  {
-    img: banner1,
-    name: "item4",
-  },
-  {
-    img: banner2,
-    name: "item5",
-  },
-  {
-    img: banner3,
-    name: "item6",
-  },
-  {
-    img: banner1,
-    name: "item7",
-  },
-  {
-    img: banner2,
-    name: "item8",
-  },
-  {
-    img: banner3,
-    name: "item9",
-  },
-];
 
 function ProjectsSection() {
-  const firstEightItems = imgList.slice(0, 8);
+  
+const [projectData, setProjectData] = useState([]);
+
+useEffect(() => {
+  const fetchProjects = async () => {
+    const data = await getAllProjects();
+    if (data && data.result) {
+      setProjectData(data.result.data);
+    }
+  };
+
+  fetchProjects();
+}, []);
+
+
+  const firstEightItems = projectData.slice(0, 8);
 
   const slideItems = [
     firstEightItems.slice(0, 4), 
@@ -102,13 +75,13 @@ function ProjectsSection() {
           }}
           modules={[FreeMode, Pagination, Autoplay]}
         >
-          {slideItems.map((items, slideIndex) => (
+          {slideItems.map((firstEightItems, slideIndex) => (
             <SwiperSlide key={slideIndex} className="mb-14">
               <div className="grid grid-cols-2 gap-4 px-10">
-                {items.map((item, index) => (
+                {firstEightItems.map((project, index) => (
                   <div className="relative group" key={index}>
                     <img
-                      src={item.img}
+                      src={project.imageUrl}
                       alt="purple image"
                       className="rounded-md h-[240px] w-[240px] object-cover"
                     />

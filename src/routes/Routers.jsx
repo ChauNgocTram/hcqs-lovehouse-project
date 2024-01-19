@@ -2,6 +2,8 @@ import React from "react";
 import { useRoutes } from "react-router-dom";
 import { HomeLayout } from "../layout/HomeLayout.";
 import Home from "../pages/Home/Home.jsx";
+// import News from "../pages/News/News"
+// import NewsDetail from "../pages/News/"
 import HouseProject from "../pages/HouseProjects/HouseProject"
 
 export default function Routers() {
@@ -11,7 +13,9 @@ export default function Routers() {
             element: <HomeLayout/>,
             children: [
                 { path: "/", element: <Home/>},
-                { path: "/sample-project", element: <HouseProject/>},
+                // { path: "/news", element: <News/>},
+                // { path: "/newsDetail/:id", element: <NewsDetail /> },
+                { path: "/houseProject", element: <HouseProject /> },
                 // { path: "/register", element: <Register /> },
                 // { path: "/resetPassword", element: <ChangePasswordLogin /> },
                 // { path: "/blog", element: <Blog /> },

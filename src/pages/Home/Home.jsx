@@ -21,7 +21,7 @@ function Home() {
       <QuoteSection/>
       <ProjectsSection/>
       <WhySection/>
-      <NewsSection/>
+      {/* <NewsSection/> */}
       
       <Footer />
       
