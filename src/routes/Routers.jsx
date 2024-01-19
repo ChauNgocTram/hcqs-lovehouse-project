@@ -2,6 +2,7 @@ import React from "react";
 import { useRoutes } from "react-router-dom";
 import { HomeLayout } from "../layout/HomeLayout.";
 import Home from "../pages/Home/Home.jsx";
+import HouseProject from "../pages/HouseProjects/HouseProject"
 
 export default function Routers() {
     const routing = useRoutes([
@@ -10,7 +11,7 @@ export default function Routers() {
             element: <HomeLayout/>,
             children: [
                 { path: "/", element: <Home/>},
-                // { path: "/login", element: <Login/>},
+                { path: "/sample-project", element: <HouseProject/>},
                 // { path: "/register", element: <Register /> },
                 // { path: "/resetPassword", element: <ChangePasswordLogin /> },
                 // { path: "/blog", element: <Blog /> },

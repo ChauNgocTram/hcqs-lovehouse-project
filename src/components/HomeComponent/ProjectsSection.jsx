@@ -76,7 +76,7 @@ function ProjectsSection() {
           reflects a commitment to excellence, showcasing a harmonious blend of
           modern design and sustainable practices.
         </p>
-        <NavLink to={"/projects"}>
+        <NavLink to={"/sample-project"}>
           <BtnViewMore/>
         </NavLink>
       </div>
