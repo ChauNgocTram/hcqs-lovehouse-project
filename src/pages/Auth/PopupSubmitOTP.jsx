@@ -23,6 +23,13 @@ function PopupSubmitOTP({ popupEmail, setIsLoading }) {
   }, []);
 
   useEffect(() => {
+    const otp = inputs.join("");
+    if (otp.length === 6) {
+      handleVerify();
+    }
+  }, [inputs]);
+
+  useEffect(() => {
     const handleBeforeUnload = (event) => {
       if (inputs.some((input) => input !== "")) {
         const message =
@@ -31,20 +38,28 @@ function PopupSubmitOTP({ popupEmail, setIsLoading }) {
         return message;
       }
     };
-
     window.addEventListener("beforeunload", handleBeforeUnload);
-
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [inputs]);
+
+  const handleBackspace = (event, index) => {
+    if (event.key === "Backspace" && inputs[index] === "" && index > 0) {
+      // Xóa ký tự ở input trước đó và chuyển focus
+      const newInputs = [...inputs];
+      newInputs[index - 1] = "";
+      setInputs(newInputs);
+      inputRefs.current[index - 1].current.focus();
+    }
+  };
 
   const handleChange = (value, index) => {
     const newInputs = [...inputs];
     newInputs[index] = value;
     setInputs(newInputs);
 
-    // Tự động chuyển focus sang input tiếp theo
+    // Tự động chuyển focus sang input tiếp theo nếu không phải là xóa
     if (value.length === 1 && index < 5) {
       inputRefs.current[index + 1].current.focus();
     }
@@ -131,6 +146,7 @@ function PopupSubmitOTP({ popupEmail, setIsLoading }) {
               maxLength={1}
               value={input}
               onChange={(e) => handleChange(e.target.value, index)}
+              onKeyDown={(e) => handleBackspace(e, index)}
             />
           </div>
         ))}
