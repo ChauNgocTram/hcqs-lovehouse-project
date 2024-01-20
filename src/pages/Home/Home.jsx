@@ -9,7 +9,7 @@ import ProjectsSection from "../../components/HomeComponent/ProjectsSection";
 import QuoteSection from "../../components/HomeComponent/QuoteSection";
 import WhySection from "../../components/HomeComponent/WhySection";
 import Slider2 from "../../components/Slider/Slider2";
-import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
+
 
 
 function Home() {
@@ -17,7 +17,7 @@ function Home() {
     <>
     <div className="content-wrapper max-w-screen-2xl text-base ">
     <Navbar />
-    <Breadcrumb/>
+    
       {/* <Slider /> */}
       <Slider2/>
       <IntroSection/>
