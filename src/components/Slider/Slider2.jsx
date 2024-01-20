@@ -42,11 +42,8 @@ function Slider2() {
   };
 
   return (
-    <div className="slider-container w-full overflow-hidden relative mt-0">
-    
-
-      <div className="flex items-center justify-center flex-col mt-[-100px] h-screen ">
-        
+    <div className="slider-container overflow-hidden relative mt-0">
+      <div className="flex items-center justify-center flex-col mt-6 w-full ">
         <Swiper
           ref={swiperRef}
           breakpoints={{
@@ -68,14 +65,15 @@ function Slider2() {
             disableOnInteraction: false,
           }}
           modules={[FreeMode, Pagination, Autoplay]}
-          className="max-w-[100%] lg:max-w-[80%]"
+          className="w-full max-w-[100%] lg:max-w-[80%]"
         >
           {imgList.map((item, index) => (
             <SwiperSlide key={index}>
               <img
                 src={item.img}
                 alt={item.name}
-                className="flex-none w-full md:h-[510px] object-cover object-left-top rounded-md transition-all duration-100"
+                className="flex-none w-full md:h-[510px] object-cover object-left-top rounded-md  transition-all duration-100"
+                
               />
             </SwiperSlide>
           ))}
