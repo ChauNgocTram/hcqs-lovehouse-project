@@ -2,6 +2,8 @@ import React from "react";
 import { useRoutes } from "react-router-dom";
 import { HomeLayout } from "../layout/HomeLayout.";
 import Home from "../pages/Home/Home.jsx";
+import News from "../pages/News/News";
+import NewsDetail from "../pages/News/NewsDetail"
 
 export default function Routers() {
     const routing = useRoutes([
