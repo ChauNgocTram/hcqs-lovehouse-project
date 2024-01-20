@@ -9,3 +9,12 @@ export const getAllNews = async (fieldName, ascending) => {
       return null;
   }
 };
+
+export const getNewsDetail = async (id) => {
+  try {
+      const res = await axios.get(`${baseURL}/news/get-news-by-id/${id}`);
+      return res.data;
+  } catch (err) {
+      return null;
+  }
+};

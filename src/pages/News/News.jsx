@@ -55,14 +55,14 @@ export default function News() {
                   {formatNewsDate(newsItem.date)}
                 </h4>
                 <h3 className="mb-10 text-2xl">
-                  <NavLink to={`/news/${newsItem.id}`}>
+                  <NavLink to={`/newsDetail/${newsItem.id}`}>
                     {newsItem.header.length >= 70
                       ? newsItem.header.substring(0, 50).trim() + "..."
                       : newsItem.header}
                   </NavLink>
                 </h3>
                 <NavLink
-                  to={`/news/${newsItem.id}`}
+                  to={`/newsDetail/${newsItem.id}`}
                   className="hover:bg-orange-600 transition-all text-sm inline-flex rounded-md px-4 py-2 text-center border-2 border-orange-600"
                 >
                   Read more
