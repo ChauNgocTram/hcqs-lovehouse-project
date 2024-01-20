@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { getAllNews } from "../../constant/apiNews";
+import NewsBanner from "../../components/Banner/NewsBanner";
 
 export default function News() {
   const [newsData, setNewsData] = useState([]);
@@ -35,7 +36,8 @@ export default function News() {
 
   return (
     <>
-      <div className="text-center font-bold my-8">News</div>
+    <NewsBanner/>
+      
       <div className="container mx-auto px-4 sm:px-0">
         <div className="grid sm:grid-cols-3 gap-5 ">
           {newsData.map((newsItem, index) => (
