@@ -10,8 +10,8 @@ export default function Routers() {
             element: <HomeLayout/>,
             children: [
                 { path: "/", element: <Home/>},
-                // { path: "/login", element: <Login/>},
-                // { path: "/register", element: <Register /> },
+                { path: "/news", element: <News/>},
+                { path: "/newsDetail/:id", element: <NewsDetail /> },
                 // { path: "/resetPassword", element: <ChangePasswordLogin /> },
                 // { path: "/blog", element: <Blog /> },
                 // { path: "/blogDetail/:id", element: <BlogDetail /> },
