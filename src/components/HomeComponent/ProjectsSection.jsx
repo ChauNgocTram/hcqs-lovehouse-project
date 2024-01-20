@@ -9,33 +9,26 @@ import "swiper/css/pagination";
 import "swiper/css/free-mode";
 import "swiper/css/autoplay";
 
-
 import BtnViewMore from "../Button/BtnViewMore";
 import { getAllProjects } from "../../constants/apiProject";
 
-
 function ProjectsSection() {
-  
-const [projectData, setProjectData] = useState([]);
+  const [projectData, setProjectData] = useState([]);
 
-useEffect(() => {
-  const fetchProjects = async () => {
-    const data = await getAllProjects();
-    if (data && data.result) {
-      setProjectData(data.result.data);
-    }
-  };
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const data = await getAllProjects();
+      if (data && data.result) {
+        setProjectData(data.result.data);
+      }
+    };
 
-  fetchProjects();
-}, []);
-
+    fetchProjects();
+  }, []);
 
   const firstEightItems = projectData.slice(0, 8);
 
-  const slideItems = [
-    firstEightItems.slice(0, 4), 
-    firstEightItems.slice(4, 8), 
-  ];
+  const slideItems = [firstEightItems.slice(0, 4), firstEightItems.slice(4, 8)];
 
   return (
     <div className="h-[600px] flex flex-col md:flex-row gap-5 items-center justify-center pt-28 mt-12 mb-24">
@@ -49,8 +42,8 @@ useEffect(() => {
           reflects a commitment to excellence, showcasing a harmonious blend of
           modern design and sustainable practices.
         </p>
-        <NavLink to={"/sample-project"}>
-          <BtnViewMore/>
+        <NavLink to={"/houseProject"}>
+          <BtnViewMore />
         </NavLink>
       </div>
       <div className="w-[70%] md:w-[40%]">
@@ -87,7 +80,9 @@ useEffect(() => {
                     />
                     <div className="cursor-pointer absolute inset-0 bg-gradient-to-r max-w-[240px] rounded-md from-purple-800 via-pink-500 to-purple-800 opacity-0 group-hover:opacity-70" />
                     <div className="absolute text-white inset-0 flex items-center justify-center cursor-pointer opacity-0 group-hover:opacity-100 transition-all">
-                      View Project
+                      <NavLink to={`/houseProject/${project.id}`}>
+                        View Project
+                      </NavLink>
                       <RxArrowRight className="ml-2 w-[24px] h-[24px]" />
                     </div>
                   </div>

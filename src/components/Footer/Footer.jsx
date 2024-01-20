@@ -18,10 +18,10 @@ function Footer() {
             </a>
            
             <div className="flex " >
-            <a href="/" className=" py-5 mr-2 hover:text-orange"><SiFacebook size={25}/></a>
-            <a href="/" className="px-4 py-5 mr-2 hover:text-orange"><SiZalo size={25}/></a>
-            <a href="/" className="px-4 py-5 mr-2 hover:text-orange"><SiYoutube size={25}/></a>
-            <a href="/" className="px-4 py-5 hover:text-orange"><SiInstagram size={25}/></a>
+            <a href="/" className=" py-5 mr-2 hover:text-baseOrange"><SiFacebook size={25}/></a>
+            <a href="/" className="px-4 py-5 mr-2 hover:text-baseOrange"><SiZalo size={25}/></a>
+            <a href="/" className="px-4 py-5 mr-2 hover:text-baseOrange"><SiYoutube size={25}/></a>
+            <a href="/" className="px-4 py-5 hover:text-baseOrange"><SiInstagram size={25}/></a>
 
             </div>
           </div>
@@ -34,41 +34,41 @@ function Footer() {
               <li>
                 <a
                   href=""
-                  className="hover:text-orange transition-all duration-500 ease-in-out"
+                  className="hover:text-baseOrange transition-all duration-500 ease-in-out"
                 >
-                  Giới thiệu
+                  About us
                 </a>
               </li>
               <li>
                 <a
                   href=""
-                  className="hover:text-orange transition-all duration-500 ease-in-out"
+                  className="hover:text-baseOrange transition-all duration-500 ease-in-out"
                 >
-                  Dự án
+                  Projects
                 </a>
               </li>
               <li>
                 <a
                   href=""
-                  className="hover:text-orange transition-all duration-500 ease-in-out"
+                  className="hover:text-baseOrange transition-all duration-500 ease-in-out"
                 >
-                  Báo giá thi công
+                  Construction Quotes
                 </a>
               </li>
               <li>
                 <a
                   href=""
-                  className="hover:text-orange transition-all duration-500 ease-in-out"
+                  className="hover:text-baseOrange transition-all duration-500 ease-in-out"
                 >
-                  Tin tức
+                  News
                 </a>
               </li>
               <li>
                 <a
                   href=""
-                  className="hover:text-orange transition-all duration-500 ease-in-out"
+                  className="hover:text-baseOrange transition-all duration-500 ease-in-out"
                 >
-                  Cẩm nang
+                  Blogs
                 </a>
               </li>
             </ul>
@@ -82,7 +82,7 @@ function Footer() {
               <li>
                 <a
                   href=""
-                  className="hover:text-orange transition-all duration-500 ease-in-out"
+                  className="hover:text-baseOrange transition-all duration-500 ease-in-out"
                 >
                   Term of Services
                 </a>
@@ -90,7 +90,7 @@ function Footer() {
               <li>
                 <a
                   href=""
-                  className="hover:text-orange transition-all duration-500 ease-in-out"
+                  className="hover:text-baseOrange transition-all duration-500 ease-in-out"
                 >
                   Privacy Policy
                 </a>
@@ -98,7 +98,7 @@ function Footer() {
               <li>
                 <a
                   href=""
-                  className="hover:text-orange transition-all duration-500 ease-in-out"
+                  className="hover:text-baseOrange transition-all duration-500 ease-in-out"
                 >
                   Documentation
                 </a>
@@ -115,7 +115,7 @@ function Footer() {
               <li>
                 <p
                   href=""
-                  className="hover:text-orange transition-all duration-500 ease-in-out"
+                  className="hover:text-baseOrange transition-all duration-500 ease-in-out"
                 >
                   No. 10, Street 7, Binh Thuan Ward, District 7, Ho Chi Minh
                   City.
@@ -124,7 +124,7 @@ function Footer() {
               <li>
                 <p
                   href=""
-                  className="hover:text-orange transition-all duration-500 ease-in-out"
+                  className="hover:text-baseOrange transition-all duration-500 ease-in-out"
                 >
                   Hotline: 1900 638 535
                 </p>
@@ -132,7 +132,7 @@ function Footer() {
               <li>
                 <p
                   href=""
-                  className="hover:text-orange transition-all duration-500 ease-in-out"
+                  className="hover:text-baseOrange transition-all duration-500 ease-in-out"
                 >
                   Email: lovehouse@gmai.com
                 </p>

@@ -12,7 +12,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className="navbar relative px-4 py-4 flex justify-between items-center h-24 mx-auto uppercase text-white bg-orange">
+    <div className="navbar relative px-4 py-4 flex justify-between items-center h-24 mx-auto uppercase text-white bg-baseOrange">
       <a href="">
         <img src={mainlogo} alt="" className="h-80 w-200 m-3 " />
       </a>
@@ -50,8 +50,8 @@ export default function Navbar() {
       <div
         className={
           nav
-            ? "fixed left-0 top-0 w-[60%] h-full border-r border-r-gray-900 bg-orange ease-in-out duration-500 "
-            : "fixed left-[-100%] top-0 w-[60%] h-full border-r border-r-gray-900 bg-orange ease-in-out duration-500"
+            ? "fixed left-0 top-0 w-[60%] h-full border-r border-r-gray-900 bg-baseOrange ease-in-out duration-500 "
+            : "fixed left-[-100%] top-0 w-[60%] h-full border-r border-r-gray-900 bg-baseOrange ease-in-out duration-500"
         }
       >
         <a href="">
