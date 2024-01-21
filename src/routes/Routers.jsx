@@ -1,43 +1,31 @@
-import React from "react";
 import { useRoutes } from "react-router-dom";
-import { HomeLayout } from "../layout/HomeLayout.";
-import Home from "../pages/Home/Home.jsx";
+import { Account, Auth, Home, Password, Profile, Setting } from "../pages";
+import { AuthLayout, HomeLayout } from "../layout";
 
-export default function Routers() {
-    const routing = useRoutes([
-        {
-            path: "/",
-            element: <HomeLayout/>,
-            children: [
-                { path: "/", element: <Home/>},
-                // { path: "/login", element: <Login/>},
-                // { path: "/register", element: <Register /> },
-                // { path: "/resetPassword", element: <ChangePasswordLogin /> },
-                // { path: "/blog", element: <Blog /> },
-                // { path: "/blogDetail/:id", element: <BlogDetail /> },
-                // { path: "/news", element: <News /> },
-                // { path: "/newsDetail/:id", element: <NewsDetail /> },
-                // { path: "/houseProject", element: <HouseProject /> },
-                // { path: "/houseProjectDetail", element: <HouseProjectDetail /> },
-                
-            ],
-        },
-        // {
-        //     element: <CommonLayout />,
-        //     children: [
-        //       { path: "/profile", element:  },
-        //       { path: "/updateProfile", element:  },
-        //       { path: "/changePassword", element: },
-        //     ],
-        //   },
-        //   {
-        //     path: "/admin",
-        //     element: <AdminLayout />,
-        //     children: [
-        //       { path: "/admin", element:  },
-              
-        //     ],
-        //   },
-    ]);
-    return routing;
+function Routers() {
+  const routing = useRoutes([
+    {
+      path: "/",
+      element: <HomeLayout />,
+      children: [{ path: "/", element: <Home /> }],
+    },
+    {
+      path: "/auth",
+      element: <AuthLayout />,
+      children: [{ path: "/auth", element: <Auth /> }],
+    },
+    {
+      path: "/setting",
+      element: <Setting />,
+      children: [
+        { path: "profile", element: <Profile /> },
+        { path: "password", element: <Password /> },
+        { path: "account", element: <Account /> },
+      ],
+    },
+  ]);
+
+  return routing;
 }
+
+export default Routers;
