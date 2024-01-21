@@ -4,6 +4,7 @@ import { Account, Auth, Home, Password, Profile, Setting } from "../pages";
 import { AuthLayout, HomeLayout } from "../layout";
 import News from "../pages/News/News";
 import NewsDetail from "../pages/News/NewsDetail";
+import HouseProject from "../pages/HouseProjects/HouseProject"
 
 function Routers() {
   const routing = useRoutes([
@@ -14,6 +15,7 @@ function Routers() {
         { path: "/", element: <Home /> },
         { path: "/news", element: <News /> },
         { path: "/newsDetail/:id", element: <NewsDetail /> },
+        { path: "/houseProject", element: <HouseProject /> },
       ],
     },
     {

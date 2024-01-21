@@ -16,7 +16,6 @@ module.exports = {
         "baseWhite": "#fff",
         "baseGray": "#666666",
         "bg-button": "#f3f3f3",
-        "baseOrange": "#E48824",
         headingColor: "#2e2e2e",
         textColor: "#515151",
         primary2: "#f3f3f3",
@@ -80,5 +79,7 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-no-scrollbar')
+  ],
 }
