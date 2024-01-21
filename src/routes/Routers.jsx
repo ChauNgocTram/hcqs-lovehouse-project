@@ -1,5 +1,5 @@
 import { useRoutes } from "react-router-dom";
-import { Auth, Home, Login } from "../pages";
+import { Account, Auth, Home, Password, Profile, Setting } from "../pages";
 import { AuthLayout, HomeLayout } from "../layout";
 
 function Routers() {
@@ -13,6 +13,15 @@ function Routers() {
       path: "/auth",
       element: <AuthLayout />,
       children: [{ path: "/auth", element: <Auth /> }],
+    },
+    {
+      path: "/setting",
+      element: <Setting />,
+      children: [
+        { path: "profile", element: <Profile /> },
+        { path: "password", element: <Password /> },
+        { path: "account", element: <Account /> },
+      ],
     },
   ]);
 

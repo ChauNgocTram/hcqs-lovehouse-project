@@ -9,4 +9,10 @@ export { default as BlogDetail } from "./Blogs/BlogDetail";
 export { default as Home } from "./Home/Home";
 
 export { default as HouseProject } from "./HouseProjects/HouseProject";
+
 export { default as HouseProjectDetail } from "./HouseProjects/HouseProjectDetail";
+
+export { default as Setting } from "./Setting/Setting";
+export { default as Profile } from "./Setting/Profile";
+export { default as Password } from "./Setting/Password";
+export { default as Account } from "./Setting/Account";

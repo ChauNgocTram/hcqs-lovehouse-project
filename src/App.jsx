@@ -5,78 +5,53 @@ import { jwtDecode } from "jwt-decode";
 import { ToastContainer } from "react-toastify";
 
 import Routers from "./routes/Routers";
-import { auth } from "./config/firebase.config";
-import { SET_USER, SET_USER_NULL } from "./context/actions/userActions";
-import { getAccountById, googleCallback } from "./api";
+import { getAccountById, getNewToken } from "./api";
+import { SET_USER } from "./context/actions/userActions";
 
 function App() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (userCred) => {
-      if (userCred) {
-        userCred.getIdToken().then(async (token) => {
-          console.log("token: ", token);
-          googleCallback(token)
-            .then(async (result) => {
-              console.log("callback: ", result);
-              const refreshToken = result?.result?.data?.refreshToken;
-              const accessToken = result?.result?.data?.token;
+  const fetchData = async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
 
-              if (accessToken) {
-                console.log("refreshToken: ", refreshToken);
-                try {
-                  const decodedToken = jwtDecode(accessToken);
-                  const accountId = decodedToken?.AccountId;
-                  console.log("jwtDecode: ", decodedToken);
-                  console.log("exp: ", decodedToken.exp);
-                  console.log("accountId: ", accountId);
+    if (accessToken) {
+      try {
+        const decodedToken = jwtDecode(accessToken);
+        const accountId = decodedToken?.AccountId;
 
-                  const currentTime = new Date().getTime() / 1000;
-                  if (decodedToken.exp < currentTime) {
-                    console.log("Token expired. Refreshing token...");
-                    const newTokenResult = await getNewToken(
-                      accountId,
-                      refreshToken
-                    );
-                    if (newTokenResult) {
-                      console.log("New token received: ", newTokenResult);
-                    } else {
-                      console.log("Failed to refresh token.");
-                    }
-                  }
+        const currentTime = new Date().getTime() / 1000;
+        if (decodedToken.exp < currentTime) {
+          console.log("Token expired. Refreshing token...");
+          const newTokenResult = await getNewToken(accountId, refreshToken);
+          if (newTokenResult) {
+            console.log("New token received: ", newTokenResult);
+            dispatch(SET_USER(newTokenResult.result.data));
+          } else {
+            console.log("Failed to refresh token.");
+          }
+        } else {
+          console.log("Bearer ", accessToken);
 
-                  console.log("Bearer ", accessToken);
-
-                  // Gọi getAccountById và sử dụng giá trị trả về
-                  if (accountId) {
-                    const accountData = await getAccountById(
-                      accountId,
-                      accessToken
-                    );
-                    console.log("account data: ", accountData.result.data);
-                    dispatch(SET_USER(accountData.result.data));
-                  } else {
-                    console.log("Invalid account ID. Handle accordingly.");
-                  }
-                } catch (err) {
-                  console.error("Error decoding token: ", err);
-                  return false;
-                }
-              } else {
-                console.log("No access token received.");
-              }
-            })
-            .catch((error) => {
-              console.error("Error in Google Callback: ", error);
-            });
-        });
-      } else {
-        SET_USER_NULL(null);
+          if (accountId) {
+            const accountData = await getAccountById(accountId, accessToken);
+            console.log("account data: ", accountData.result.data);
+            dispatch(SET_USER(accountData.result.data));
+          } else {
+            console.log("Invalid account ID. Handle accordingly.");
+          }
+        }
+      } catch (err) {
+        console.error("Error decoding token: ", err);
+        return false;
       }
-    });
+    } else {
+      console.log("No access token received.");
+    }
+  };
 
-    return () => unsubscribe();
+  useEffect(() => {
+    fetchData();
   }, []);
 
   return (
@@ -90,4 +65,5 @@ function App() {
     </div>
   );
 }
+
 export default App;

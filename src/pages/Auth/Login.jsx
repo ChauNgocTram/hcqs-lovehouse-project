@@ -25,7 +25,11 @@ function Login({ setIsLoading, setIsForgot }) {
       try {
         const data = await loginWithEmailPass(email, password);
         if (data.isSuccess) {
+          localStorage.setItem("accessToken", data.result.data.token);
+          localStorage.setItem("refreshToken", data.result.data.refreshToken);
           console.log(data.result.data);
+          window.location.reload();
+
           Swal.fire({
             position: "center",
             icon: "success",

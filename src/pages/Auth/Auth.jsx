@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import { FcGoogle } from "react-icons/fc";
 import { LoginBG, Logo } from "../../assets";
 import { buttonClick } from "../../assets/animations";
-import { signInWithGoogle } from "../../untils/helpers";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { alert } from "../../components/Alert/Alert";
 import { MutatingDots } from "../../components";
 
@@ -15,10 +15,14 @@ import Register from "./Register";
 import Login from "./Login";
 import PopupSubmitOTP from "./PopupSubmitOTP";
 import ResetPassword from "./ResetPassword";
+import { auth } from "../../config/firebase.config";
+import { googleCallback } from "../../api";
 
 function Auth() {
   const navigate = useNavigate();
   const user = useSelector((state) => state?.user?.user);
+
+  const googleProider = new GoogleAuthProvider();
 
   const [popupEmail, setPopupEmail] = useState("");
 
@@ -38,7 +42,31 @@ function Auth() {
 
   const handleGoogleSignIn = async () => {
     try {
-      await signInWithGoogle();
+      const userCred = await signInWithPopup(auth, googleProider);
+      console.log("userCred: ", userCred);
+
+      if (userCred) {
+        const accessToken = userCred._tokenResponse.idToken;
+        console.log("Google Access Token: ", accessToken);
+
+        googleCallback(accessToken)
+          .then(async (result) => {
+            console.log("callback: ", result);
+            localStorage.setItem("accessToken", result?.result?.data?.token);
+            localStorage.setItem(
+              "refreshToken",
+              result?.result?.data?.refreshToken
+            );
+
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          })
+          .catch((error) => {
+            console.error("Error in Google Callback: ", error);
+          });
+      }
+
       Swal.fire({
         position: "center",
         icon: "success",
