@@ -2,6 +2,8 @@ import React from "react";
 import { useRoutes } from "react-router-dom";
 import { HomeLayout } from "../layout/HomeLayout.";
 import Home from "../pages/Home/Home.jsx";
+import Blog from "../pages/Blogs/Blog";
+import BlogDetail from "../pages/Blogs/BlogDetail";
 
 export default function Routers() {
     const routing = useRoutes([
@@ -13,8 +15,8 @@ export default function Routers() {
                 // { path: "/login", element: <Login/>},
                 // { path: "/register", element: <Register /> },
                 // { path: "/resetPassword", element: <ChangePasswordLogin /> },
-                // { path: "/blog", element: <Blog /> },
-                // { path: "/blogDetail/:id", element: <BlogDetail /> },
+                { path: "/blog", element: <Blog/>},
+                { path: "/blogDetail/:id", element: <BlogDetail/> },
                 // { path: "/news", element: <News /> },
                 // { path: "/newsDetail/:id", element: <NewsDetail /> },
                 // { path: "/houseProject", element: <HouseProject /> },
