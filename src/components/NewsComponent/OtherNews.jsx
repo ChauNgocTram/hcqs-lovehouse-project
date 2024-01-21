@@ -40,7 +40,7 @@ export default function OtherNews() {
   const firstSixItems = newsData.slice(0, 6);
   return (
     <>
-      <div className="container mx-auto px-4 sm:px-0">
+      <div className="container mx-auto px-4 sm:px-0  mb-24">
         <h1 className="font-semibold uppercase text-4xl mt-24 mb-12 text-center">
           Others News
         </h1>
