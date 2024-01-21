@@ -6,7 +6,8 @@ import { ToastContainer } from "react-toastify";
 
 import Routers from "./routes/Routers";
 import { getAccountById, getNewToken } from "./api";
-import { SET_USER } from "./context/actions/userActions";
+import { SET_USER, SET_USER_NULL } from "./context/actions/userActions";
+import { logout } from "./context/actions/authActions";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,7 +29,8 @@ function App() {
             console.log("New token received: ", newTokenResult);
             dispatch(SET_USER(newTokenResult.result.data));
           } else {
-            console.log("Failed to refresh token.");
+            dispatch(logout());
+            dispatch(SET_USER_NULL());
           }
         } else {
           console.log("Bearer ", accessToken);
