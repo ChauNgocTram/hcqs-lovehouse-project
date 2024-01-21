@@ -12,30 +12,30 @@ export default function Navbar() {
   };
 
   return (
-    <div className="navbar relative px-4 py-4 flex justify-between items-center h-24 mx-auto uppercase text-white bg-baseOrange">
+    <div className="px-4 py-4 flex justify-between items-center h-24 mx-auto uppercase text-white bg-baseOrange z-20">
       <a href="">
         <img src={mainlogo} alt="" className="h-80 w-200 m-3 " />
       </a>
 
       <ul className="hidden md:flex">
-      <li className="p-4 hover:underline underline-offset-8">
-            <NavLink to="/">Home</NavLink>
-          </li>
-          <li className="p-4 hover:underline underline-offset-8">
-            <NavLink to="/aboutus">About Us</NavLink>
-          </li>
-          <li className="p-4 hover:underline underline-offset-8">
-            <NavLink to="/projects">Projects</NavLink>
-          </li>
-          <li className="p-4 hover:underline underline-offset-8">
-            <NavLink to="/quotation">Construction Quotes</NavLink>
-          </li>
-          <li className="p-4 hover:underline underline-offset-8">
-            <NavLink to="/news">News</NavLink>
-          </li>
-          <li className="p-4 hover:underline underline-offset-8">
-            <NavLink to="/blogs">Blogs</NavLink>
-          </li>
+        <li className="p-4 hover:underline underline-offset-8">
+          <NavLink to="/">Home</NavLink>
+        </li>
+        <li className="p-4 hover:underline underline-offset-8">
+          <NavLink to="/aboutus">About Us</NavLink>
+        </li>
+        <li className="p-4 hover:underline underline-offset-8">
+          <NavLink to="/projects">Projects</NavLink>
+        </li>
+        <li className="p-4 hover:underline underline-offset-8">
+          <NavLink to="/quotation">Construction Quotes</NavLink>
+        </li>
+        <li className="p-4 hover:underline underline-offset-8">
+          <NavLink to="/news">News</NavLink>
+        </li>
+        <li className="p-4 hover:underline underline-offset-8">
+          <NavLink to="/blogs">Blogs</NavLink>
+        </li>
       </ul>
 
       <div className="hidden md:flex">
@@ -60,7 +60,7 @@ export default function Navbar() {
 
         <ul className=" uppercase p-4">
           <li className="p-4">
-            <NavLink to="/" >Home</NavLink>
+            <NavLink to="/">Home</NavLink>
           </li>
           <li className="p-4">
             <NavLink to="/aboutus">About Us</NavLink>

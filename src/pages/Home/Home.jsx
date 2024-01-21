@@ -13,7 +13,7 @@ import Slider2 from "../../components/Slider/Slider2";
 function Home() {
   return (
     <>
-      <div className="content-wrapper max-w-screen-2xl text-base ">
+      <div className="content-wrapper max-w-screen-2xl text-base relative">
         <Navbar />
 
         {/* <Slider /> */}

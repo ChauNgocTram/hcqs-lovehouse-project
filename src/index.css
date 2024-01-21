@@ -13,6 +13,12 @@ body {
   margin: 0;
 }
 
+/* CSS để ẩn icon "mắt" trong các trường nhập mật khẩu */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
 .navbar {
   position: relative;
   z-index: 10;
@@ -20,10 +26,5 @@ body {
 }
 
 .lh-button {
-  @apply text-center uppercase tracking-wider py-4 px-8 text-[13px] font-semibold cursor-pointer rounded-md hover: bg-opacity-90 bg-baseOrange text-white w-max
+  @layer text-center uppercase tracking-wider py-4 px-8 text-[13px] font-semibold cursor-pointer rounded-md hover: bg-opacity-90 hover:bg-baseOrange text-white w-max;
 }
-
-/* CSS để ẩn icon "mắt" trong các trường nhập mật khẩu */
-input[type="password"]::-ms-reveal,
-input[type="password"]::-ms-clear {
-  display: none;

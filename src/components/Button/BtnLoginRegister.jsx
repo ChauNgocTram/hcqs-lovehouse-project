@@ -1,17 +1,21 @@
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import UserProfileDetails from "../Navbar/UserProfileDetails";
 export default function BtnLoginRegister() {
+  const user = useSelector((state) => state?.user?.user);
   return (
     <>
-      <NavLink to={"/login"}>
-        <button className="px-4 uppercase hover:bg-baseDark font-mediums rounded-md my-6 mx-auto py-3 transition duration-200">
-          Sign In
-        </button>
-      </NavLink>
-      <NavLink to={"/register"}>
-        <button className="px-4 uppercase bg-white text-baseDark font-bold rounded-md my-6 mr-6 mx-auto py-3">
-          Sign Up
-        </button>
-      </NavLink>
+      {!user ? (
+        <NavLink to={"/auth"}>
+          <button className="px-4 uppercase bg-white text-baseDark font-bold rounded-md my-6 mr-6 mx-auto py-3">
+            Sign In
+          </button>
+        </NavLink>
+      ) : (
+        <div>
+          <UserProfileDetails />
+        </div>
+      )}
     </>
   );
 }
