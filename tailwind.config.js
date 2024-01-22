@@ -5,6 +5,9 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    container: {
+      container: true,
+    },
     extend: {
       colors: {
         "baseGreen": "#88B844",
@@ -13,7 +16,6 @@ module.exports = {
         "baseGray": "#666666",
         "bg-button": "#f3f3f3",
         "baseOrange": "#E48824",
-        
         headingColor: "#2e2e2e",
         textColor: "#515151",
         primary2: "#f3f3f3",
