@@ -34,7 +34,7 @@ export default function Navbar() {
             <NavLink to="/news">News</NavLink>
           </li>
           <li className="p-4 hover:underline underline-offset-8">
-            <NavLink to="/blogs">Blogs</NavLink>
+            <NavLink to="/blog">Blogs</NavLink>
           </li>
       </ul>
 

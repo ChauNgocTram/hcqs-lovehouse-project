@@ -3,7 +3,7 @@ import React from "react";
 export default function NewsBanner() {
   return (
     <div
-      className="relative bg-cover bg-no-repeat bg-center pt-28 mb-10 h-[330px]"
+      className="relative bg-cover bg-no-repeat bg-center pt-28 h-[330px]"
       style={{
         backgroundImage: `url(https://mhomevietnam.vn/vnt_upload/weblink/bgwhy.jpg)`,
       }}

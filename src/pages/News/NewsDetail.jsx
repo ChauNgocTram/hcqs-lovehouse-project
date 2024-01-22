@@ -5,6 +5,10 @@ import OtherNews from "../../components/NewsComponent/OtherNews";
 
 import { FaRegCalendarAlt } from "react-icons/fa";
 
+import Navbar from "../../components/Navbar/Navbar";
+import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
+import Footer from "../../components/Footer/Footer";
+
 export default function NewsDetail() {
   const [newsDetail, setNewsDetail] = useState({});
   const { id } = useParams();
@@ -43,6 +47,8 @@ export default function NewsDetail() {
 
   return (
     <>
+      <Navbar />
+      <Breadcrumb />
       <div className="news-detail mb-12">
         <div className="mt-35 mb-25 sm:mt-25 sm:mb-15">
           <div className="wrapper max-w-[1200px] px-4 mx-auto">
@@ -78,6 +84,7 @@ export default function NewsDetail() {
         </div>
         <OtherNews />
       </div>
+      <Footer />
     </>
   );
 }
