@@ -5,6 +5,8 @@ import Home from "../pages/Home/Home.jsx";
 import News from "../pages/News/News"
 import NewsDetail from "../pages/News/NewsDetail"
 import HouseProject from "../pages/HouseProjects/HouseProject"
+import Blog from "../pages/Blogs/Blog";
+import BlogDetail from "../pages/Blogs/BlogDetail";
 
 export default function Routers() {
     const routing = useRoutes([
@@ -18,8 +20,8 @@ export default function Routers() {
                 { path: "/houseProject", element: <HouseProject /> },
                 // { path: "/register", element: <Register /> },
                 // { path: "/resetPassword", element: <ChangePasswordLogin /> },
-                // { path: "/blog", element: <Blog /> },
-                // { path: "/blogDetail/:id", element: <BlogDetail /> },
+                { path: "/blog", element: <Blog/>},
+                { path: "/blogDetail/:id", element: <BlogDetail/> },
                 // { path: "/news", element: <News /> },
                 // { path: "/newsDetail/:id", element: <NewsDetail /> },
                 // { path: "/houseProject", element: <HouseProject /> },
