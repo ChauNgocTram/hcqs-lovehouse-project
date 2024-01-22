@@ -9,7 +9,8 @@ function Breadcrumb() {
     { label: 'Home', path: '/' },
     { label: 'News', path: '/news' },
     { label: 'News Detail', path: '/newsDetail' },
-    { label: 'Blogs', path: '/blogs' },
+    { label: 'Blogs', path: '/blog' },
+    { label: 'Blogs Detail', path: '/blogDetail' },
     { label: 'House Projects', path: '/houseProject' },
     { label: 'About Us', path: '/aboutus' },
     // Add more pages as needed

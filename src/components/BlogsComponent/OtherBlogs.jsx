@@ -96,8 +96,8 @@ export default function OtherBlogs() {
                     </h2>
                     <h1 className="text-2xl font-semibold mb-3">
                       <NavLink to={`/blogDetail/${blog.id}`}>
-                        {blog.header.length >= 70
-                          ? blog.header.substring(0, 50).trim() + "..."
+                        {blog.header.length >= 50
+                          ? blog.header.substring(0, 30).trim() + "..."
                           : blog.header}
                       </NavLink>
                     </h1>

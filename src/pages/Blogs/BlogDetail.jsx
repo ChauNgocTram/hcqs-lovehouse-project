@@ -3,7 +3,11 @@ import { useParams } from "react-router-dom";
 import { getBlogDetail } from "../../constant/apiBlog";
 
 import { FaRegCalendarAlt } from "react-icons/fa";
+
 import OtherBlogs from "../../components/BlogsComponent/OtherBlogs";
+import Navbar from "../../components/Navbar/Navbar"
+import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
+import Footer from "../../components/Footer/Footer"
 
 export default function BlogDetail() {
   const [blogDetail, setBlogDetail] = useState({});
@@ -43,6 +47,8 @@ export default function BlogDetail() {
 
   return (
     <>
+    <Navbar/>
+    <Breadcrumb/>
       <div className="blogs-detail mb-12">
         <div className="mt-35 mb-25 sm:mt-25 sm:mb-15">
           <div className="wrapper max-w-[1200px] px-4 mx-auto">
@@ -78,6 +84,7 @@ export default function BlogDetail() {
         </div>
         <OtherBlogs />
       </div>
+      <Footer/>
     </>
   );
 }
