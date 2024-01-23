@@ -14,19 +14,28 @@ import { getAllProjects } from "../../constants/apiProject";
 
 function ProjectsSection() {
   const [projectData, setProjectData] = useState([]);
+  const [firstEightItems, setFirstEightItems ] = useState([])
+  const [slideItems, setSlideItems ] = useState([])
 
+
+  const fetchProjects = async () => {
+    const data = await getAllProjects();
+   // console.log(data.result.data)
+    if (data && data.result) {
+      setProjectData(data.result.data);
+      setFirstEightItems(projectData?.slice(0, 8)) ;
+      setSlideItems [firstEightItems.slice(0, 4), firstEightItems.slice(4, 8)];
+
+
+    }
+  };
   useEffect(() => {
-    const fetchProjects = async () => {
-      const data = await getAllProjects();
-      if (data && data.result) {
-        setProjectData(data.result.data);
-      }
-    };
+   
 
     fetchProjects();
   }, []);
 
-  const firstEightItems = projectData.slice(0, 8);
+  console.log( "qqq", firstEightItems)
 
   // Check if projectData exists and is not an empty array
   // if (!projectData || projectData.length === 0) {
@@ -34,7 +43,7 @@ function ProjectsSection() {
   // }
 
   
-  const slideItems = [firstEightItems.slice(0, 4), firstEightItems.slice(4, 8)];
+  console.log("aa", slideItems)
 
   return (
     <div className="h-[600px] flex flex-col md:flex-row gap-5 items-center justify-center pt-28 mt-12 mb-24">
@@ -82,11 +91,11 @@ function ProjectsSection() {
                     {project.sampleProject &&
                       project.sampleProject.length > 0 && (
                         <>
-                          {/* <img
-                            src={project.sampleProject.staticFiles[0].url}
+                          <img
+                            src={project?.staticFiles[0]?.url}
                             alt="purple image"
                             className="rounded-md h-[240px] w-[240px] object-cover"
-                          /> */}
+                          />
                           <div className="cursor-pointer absolute inset-0 bg-gradient-to-r max-w-[240px] rounded-md from-purple-800 via-pink-500 to-purple-800 opacity-0 group-hover:opacity-70" />
                           <div className="absolute text-white inset-0 flex items-center justify-center cursor-pointer opacity-0 group-hover:opacity-100 transition-all">
                             <NavLink to={`/houseProject/${project.sampleProject.id}`}>
