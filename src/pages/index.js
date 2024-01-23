@@ -16,3 +16,5 @@ export { default as Setting } from "./Setting/Setting";
 export { default as Profile } from "./Setting/Profile";
 export { default as Password } from "./Setting/Password";
 export { default as Account } from "./Setting/Account";
+
+export { default as Dashboard } from "./Dashboard/Dashboard";

@@ -1,4 +1,4 @@
-import { useEffect, Suspense } from "react";
+import { useEffect, Suspense, useState } from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter as Routes } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
@@ -7,10 +7,12 @@ import { ToastContainer } from "react-toastify";
 import Routers from "./routes/Routers";
 import { getAccountById, getNewToken } from "./api";
 import { SET_USER, SET_USER_NULL } from "./context/actions/userActions";
-import { logout } from "./context/actions/authActions";
+import { logout, setTokens, setUserRole } from "./context/actions/authActions";
+import { MutatingDots } from "./components";
 
 function App() {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     const accessToken = localStorage.getItem("accessToken");
@@ -20,14 +22,22 @@ function App() {
       try {
         const decodedToken = jwtDecode(accessToken);
         const accountId = decodedToken?.AccountId;
-
+        dispatch(
+          setUserRole(
+            decodedToken[
+              "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+            ]
+          )
+        );
         const currentTime = new Date().getTime() / 1000;
         if (decodedToken.exp < currentTime) {
           console.log("Token expired. Refreshing token...");
           const newTokenResult = await getNewToken(accountId, refreshToken);
           if (newTokenResult) {
             console.log("New token received: ", newTokenResult);
-            dispatch(SET_USER(newTokenResult.result.data));
+            const newAccessToken = newTokenResult.result.data.accessToken;
+            const newRefreshToken = newTokenResult.result.data.refreshToken;
+            dispatch(setTokens(newAccessToken, newRefreshToken));
           } else {
             dispatch(logout());
             dispatch(SET_USER_NULL());
@@ -45,16 +55,26 @@ function App() {
         }
       } catch (err) {
         console.error("Error decoding token: ", err);
-        return false;
+      } finally {
+        setLoading(false);
       }
     } else {
       console.log("No access token received.");
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="absolute z-30 bg-white bg-opacity-20 w-full h-full flex items-center justify-center">
+        <MutatingDots />
+      </div>
+    );
+  }
 
   return (
     <div className="w-screen min-h-screen h-auto ">

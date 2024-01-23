@@ -16,6 +16,7 @@ module.exports = {
         "baseWhite": "#fff",
         "baseGray": "#666666",
         "bg-button": "#f3f3f3",
+        "baseDashboard": "#1c2434",
         headingColor: "#2e2e2e",
         textColor: "#515151",
         primary2: "#f3f3f3",
@@ -26,8 +27,6 @@ module.exports = {
         cartBg: "#282a2c",
         cartItem: "#2e3033",
         cartTotal: "#343739",
-        primary: "#131417",
-        secondary: "#1E1F26",
         primaryText: "#868CA0",
       },
       fontSize: {

@@ -1,5 +1,5 @@
 import axios from "axios";
-export const baseURL = "https://hcqs.azurewebsites.net";
+export const baseURL = "https://hcqs-backend.azurewebsites.net/";
 
 export const loginWithEmailPass = async (email, password) => {
     try {

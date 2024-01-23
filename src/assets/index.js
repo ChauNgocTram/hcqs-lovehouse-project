@@ -2,9 +2,12 @@ export { default as LoginBG } from "./images/LoginBG.png";
 export { default as Logo } from "./images/logo-1.png";
 export { default as Avatar } from "./images/avatar.png";
 export { default as cloud } from "./images/cloud.png";
+export { default as NotFound404 } from "./images/404.png";
+export { default as Disconect } from "./images/disconect.png";
+export { default as HouseLogo } from "./images/HouseLogo.png";
 
 export const isActiveStyles =
-  " text-2xl text-red-700 font-semibold hover:text-red-700 px-4 py-2 duration-100 transition-all ease-in-out";
+  " text-2xl text-orange-400 font-semibold hover:text-orange-500 px-4 py-2 duration-100 transition-all ease-in-out";
 
 export const isNotActiveStyles =
-  " text-xl text-textColor hover:text-red-700 duration-100 px-4 py-2 transition-all ease-in-out";
+  "pl-6 py-2 text-slate-400 hover:text-orange-400 duration-100 transition-all ease-in-out";

@@ -1,10 +1,19 @@
 import React from "react";
-import { useRoutes } from "react-router-dom";
-import { Account, Auth, Home, Password, Profile, Setting } from "../pages";
+import { Navigate, useRoutes } from "react-router-dom";
+import {
+  Account,
+  Auth,
+  Dashboard,
+  Home,
+  Password,
+  Profile,
+  Setting,
+} from "../pages";
 import { AuthLayout, HomeLayout } from "../layout";
 import News from "../pages/News/News";
 import NewsDetail from "../pages/News/NewsDetail";
-import HouseProject from "../pages/HouseProjects/HouseProject"
+import HouseProject from "../pages/HouseProjects/HouseProject";
+import { PageNotfound } from "../components";
 
 function Routers() {
   const routing = useRoutes([
@@ -24,6 +33,13 @@ function Routers() {
       children: [{ path: "/auth", element: <Auth /> }],
     },
     {
+      path: "/dashboard",
+      element: <Dashboard />,
+      children: [
+        // { path: "profile", element: <Profile /> },
+      ],
+    },
+    {
       path: "/setting",
       element: <Setting />,
       children: [
@@ -32,6 +48,11 @@ function Routers() {
         { path: "account", element: <Account /> },
       ],
     },
+    {
+      path: "/404",
+      element: <PageNotfound />,
+    },
+    { path: "*", element: <Navigate to="/404" replace /> },
   ]);
 
   return routing;

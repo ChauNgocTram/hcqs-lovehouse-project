@@ -1,6 +1,7 @@
 const initialState = {
     accessToken: localStorage.getItem('accessToken') || null,
     refreshToken: localStorage.getItem('refreshToken') || null,
+    userRole: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -13,6 +14,11 @@ const authReducer = (state = initialState, action) => {
                 accessToken: action.payload.accessToken,
                     refreshToken: action.payload.refreshToken,
             };
+        case 'SET_USER_ROLE':
+            return {
+                ...state,
+                userRole: action.payload,
+            };
         case 'LOGOUT':
             localStorage.removeItem('accessToken');
             localStorage.removeItem('refreshToken');
@@ -20,6 +26,7 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 accessToken: null,
                     refreshToken: null,
+                    userRole: null,
             };
         default:
             return state;
