@@ -5,6 +5,7 @@ export { default as cloud } from "./images/cloud.png";
 export { default as NotFound404 } from "./images/404.png";
 export { default as Disconect } from "./images/disconect.png";
 export { default as HouseLogo } from "./images/HouseLogo.png";
+export { default as BGProfile } from "./images/bgProfile.png";
 
 export const isActiveStyles =
   " text-2xl text-orange-400 font-semibold hover:text-orange-500 px-4 py-2 duration-100 transition-all ease-in-out";

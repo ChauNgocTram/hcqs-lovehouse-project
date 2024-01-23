@@ -21,7 +21,7 @@ function Setting() {
                     to={"/setting/profile"}
                     className={({ isActive }) =>
                       isActive
-                        ? "mr-6 hover:no-underline inline-block py-4 rounded-t-lg border-b-2 border-blue-600 text-blue-600 hover:text-blue-900"
+                        ? "mr-6 hover:no-underline inline-block py-4 rounded-t-lg border-b-2 border-orange-600 text-orange-600 hover:text-orange-900"
                         : "mr-6 hover:no-underline inline-block py-4 rounded-t-lg border-b-2 text-gray-500 hover:text-gray-600"
                     }
                   >
@@ -31,7 +31,7 @@ function Setting() {
                     to={"/setting/password"}
                     className={({ isActive }) =>
                       isActive
-                        ? "mr-6 hover:no-underline inline-block py-4 rounded-t-lg border-b-2 border-blue-600 text-blue-600 hover:text-blue-900"
+                        ? "mr-6 hover:no-underline inline-block py-4 rounded-t-lg border-b-2 border-orange-600 text-orange-600 hover:text-orange-900"
                         : "mr-6 hover:no-underline inline-block py-4 rounded-t-lg border-b-2 text-gray-500 hover:text-gray-600"
                     }
                   >
@@ -41,7 +41,7 @@ function Setting() {
                     to={"/setting/account"}
                     className={({ isActive }) =>
                       isActive
-                        ? "mr-6 hover:no-underline inline-block py-4 rounded-t-lg border-b-2 border-blue-600 text-blue-600 hover:text-blue-900"
+                        ? "mr-6 hover:no-underline inline-block py-4 rounded-t-lg border-b-2 border-orange-600 text-orange-600 hover:text-orange-900"
                         : "mr-6 hover:no-underline inline-block py-4 rounded-t-lg border-b-2 text-gray-500 hover:text-gray-600"
                     }
                   >

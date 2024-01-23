@@ -1,14 +1,6 @@
 import React from "react";
 import { Navigate, useRoutes } from "react-router-dom";
-import {
-  Account,
-  Auth,
-  Dashboard,
-  Home,
-  Password,
-  Profile,
-  Setting,
-} from "../pages";
+import { Account, Auth, Dashboard, Home, Password, Setting } from "../pages";
 import { AuthLayout, HomeLayout } from "../layout";
 import News from "../pages/News/News";
 import NewsDetail from "../pages/News/NewsDetail";
@@ -43,7 +35,7 @@ function Routers() {
       path: "/setting",
       element: <Setting />,
       children: [
-        { path: "profile", element: <Profile /> },
+        { path: "profile", element: <Account /> },
         { path: "password", element: <Password /> },
         { path: "account", element: <Account /> },
       ],
