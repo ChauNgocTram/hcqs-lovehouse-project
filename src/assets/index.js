@@ -7,6 +7,10 @@ export { default as Disconect } from "./images/disconect.png";
 export { default as HouseLogo } from "./images/HouseLogo.png";
 export { default as BGProfile } from "./images/bgProfile.png";
 export { default as BGResetPass } from "./images/BGResetPass.png";
+export { default as BackgroundPattern } from "./images/background-pattern.png";
+export { default as Hero } from "./images/Hero.png";
+export { default as Vision } from "./images/vision.png";
+export { default as Process } from "./images/working process.png";
 
 export const isActiveStyles =
   "text-orange-400 font-semibold hover:text-orange-500 px-4 py-2 duration-100 transition-all ease-in-out";

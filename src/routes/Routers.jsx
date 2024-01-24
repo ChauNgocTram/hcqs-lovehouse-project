@@ -1,6 +1,7 @@
 import React from "react";
 import { Navigate, useRoutes } from "react-router-dom";
 import {
+  AboutUs,
   Account,
   Auth,
   Dashboard,
@@ -26,6 +27,7 @@ function Routers() {
         { path: "/news", element: <News /> },
         { path: "/newsDetail/:id", element: <NewsDetail /> },
         { path: "/houseProject", element: <HouseProject /> },
+        { path: "/aboutus", element: <AboutUs /> },
       ],
     },
     {

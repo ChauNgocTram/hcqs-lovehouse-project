@@ -19,3 +19,5 @@ export { default as Account } from "./Setting/Account";
 
 export { default as Dashboard } from "./Dashboard/Dashboard";
 export { default as UsersList } from "./Dashboard/UsersList";
+
+export { default as AboutUs } from "./AboutUs/AboutUs";
