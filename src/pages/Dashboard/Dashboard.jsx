@@ -1,5 +1,5 @@
 import { Outlet } from "react-router";
-import { DBHeader, DBSidebar } from "../../components";
+import { DBFooter, DBHeader, DBSidebar } from "../../components";
 
 function Dashboard() {
   return (
@@ -8,7 +8,9 @@ function Dashboard() {
       <div className="col-span-4">
         <DBHeader />
         <Outlet />
-        <div>Footer</div>
+        <div className="flex-none">
+          <DBFooter />
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,15 @@
 import React from "react";
 import { Navigate, useRoutes } from "react-router-dom";
-import { Account, Auth, Dashboard, Home, Password, Setting } from "../pages";
+import {
+  Account,
+  Auth,
+  Dashboard,
+  Home,
+  Password,
+  Profile,
+  Setting,
+  UsersList,
+} from "../pages";
 import { AuthLayout, HomeLayout } from "../layout";
 import News from "../pages/News/News";
 import NewsDetail from "../pages/News/NewsDetail";
@@ -27,15 +36,13 @@ function Routers() {
     {
       path: "/dashboard",
       element: <Dashboard />,
-      children: [
-        // { path: "profile", element: <Profile /> },
-      ],
+      children: [{ path: "users-list", element: <UsersList /> }],
     },
     {
       path: "/setting",
       element: <Setting />,
       children: [
-        { path: "profile", element: <Account /> },
+        { path: "profile", element: <Profile /> },
         { path: "password", element: <Password /> },
         { path: "account", element: <Account /> },
       ],
@@ -44,7 +51,7 @@ function Routers() {
       path: "/404",
       element: <PageNotfound />,
     },
-    { path: "*", element: <Navigate to="/404" replace /> },
+    // { path: "*", element: <Navigate to="/404" replace /> },
   ]);
 
   return routing;

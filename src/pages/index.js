@@ -18,3 +18,4 @@ export { default as Password } from "./Setting/Password";
 export { default as Account } from "./Setting/Account";
 
 export { default as Dashboard } from "./Dashboard/Dashboard";
+export { default as UsersList } from "./Dashboard/UsersList";

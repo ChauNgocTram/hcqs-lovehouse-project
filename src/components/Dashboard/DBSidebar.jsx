@@ -7,7 +7,7 @@ import {
   FaChevronDown,
   FaChevronUp,
   FaRegCalendarAlt,
-  FaUser,
+  FaRegUser,
 } from "react-icons/fa";
 import { IoGridOutline } from "react-icons/io5";
 import { CiSettings } from "react-icons/ci";
@@ -33,7 +33,7 @@ function DBSidebar() {
             <img src={HouseLogo} alt="logo" className="w-10" />
             <p className="px-2 text-xl">Love House</p>
           </Link>
-          <div className="text-white">
+          <div className="text-white cursor-pointer">
             <FaArrowLeft />
           </div>
         </div>
@@ -44,18 +44,17 @@ function DBSidebar() {
             <p className="text-slate-400 uppercase font-semibold py-2">Menu</p>
 
             {/* dashboard  */}
-            <div className="flex items-center justify-between">
+            <div
+              onClick={() => {
+                setIsDashboard(!isDashboard);
+              }}
+              className="flex items-center justify-between cursor-pointer"
+            >
               <div className="flex items-center justify-start py-2">
                 <IoGridOutline className="" />
                 <div className="pl-2">Dashboard</div>
               </div>
-              <div
-                onClick={() => {
-                  setIsDashboard(!isDashboard);
-                }}
-              >
-                {isDashboard ? <FaChevronUp /> : <FaChevronDown />}
-              </div>
+              <div>{isDashboard ? <FaChevronDown /> : <FaChevronUp />}</div>
             </div>
 
             {/* navlink  */}
@@ -70,7 +69,7 @@ function DBSidebar() {
                         : isNotActiveStyles
                     }
                   >
-                    Users
+                    Home
                   </NavLink>
                   <NavLink
                     to={"/"}
@@ -97,18 +96,17 @@ function DBSidebar() {
             )}
 
             {/* user management  */}
-            <div className="flex items-center justify-between">
+            <div
+              onClick={() => {
+                setIsUser(!isUser);
+              }}
+              className="flex items-center justify-between cursor-pointer"
+            >
               <div className="flex items-center justify-start py-2">
-                <IoGridOutline className="" />
+                <FaRegUser className="" />
                 <div className="pl-2">User Management</div>
               </div>
-              <div
-                onClick={() => {
-                  setIsUser(!isUser);
-                }}
-              >
-                {isUser ? <FaChevronUp /> : <FaChevronDown />}
-              </div>
+              <div>{isUser ? <FaChevronDown /> : <FaChevronUp />}</div>
             </div>
 
             {/* navlink  */}
@@ -116,10 +114,11 @@ function DBSidebar() {
               <>
                 <motion.div {...slideUpOut} className={`flex flex-col `}>
                   <NavLink
-                    to={"/user-listt"}
+                    to={"/dashboard/users-list"}
                     className={({ isActive }) =>
                       isActive
-                        ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
+                        ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 
+                        hover:bg-opacity-50  pl-16 p-2w-full font-semibold`
                         : isNotActiveStyles
                     }
                   >
