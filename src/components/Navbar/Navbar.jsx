@@ -13,7 +13,7 @@ export default function Navbar() {
 
   return (
     <div className="px-4 py-4 flex justify-between items-center h-24 mx-auto uppercase text-white bg-baseOrange z-20">
-      <a href="">
+      <a href="/">
         <img src={mainlogo} alt="" className="h-80 w-200 m-3 " />
       </a>
 
