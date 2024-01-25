@@ -59,22 +59,19 @@ export default function HouseRoofSection() {
         {firstSixItems.map((project, index) => (
           <SwiperSlide key={index}>
             <div className="flex flex-col gap-6 mb-20 group relative shadow-lg  rounded-xl px-6 py-8 h-[250px] w-[215px] lg:h-[400px] lg:w-[350px] overflow-hidden cursor-pointer">
-              <div
-                className="absolute inset-0 bg-cover bg-center "
-                style={{ backgroundImage: `url(${project.imageUrl})` }}
-              />
-              <div className="absolute inset-0 bg-cover bg-black opacity-10 group-hover:opacity-50 " />
-              <div className="relative flex flex-col gap-3">
-                <h1 className="text-xl lg:text-2xl font-semibold hover:text-white">
-                  <NavLink to={`/newsDetail/${project.id}`}>
-                    {" "}
-                    {project.sampleProject.header}
-                  </NavLink>
-                </h1>
-              </div>
-              <NavLink to={`/newsDetail/${project.id}`}>
-                <RxArrowTopRight className="absolute bottom-5 left-5 w-[35px] h-[35px] text-white group-hover:text-blue-500 group-hover:rotate-45 duration-100" />
-              </NavLink>
+            <img
+                    className="lg:h-72 md:h-48 w-full object-cover object-center"
+                    //src={project.staticFile[1].url}
+                    alt="blog"
+                  />
+              <div className="p-6 h-[315px] hover:bg-baseOrange hover:text-white transition duration-300 ease-in">
+                    
+                    <h1 className="text-2xl font-semibold mb-3">
+                      <NavLink to={`/blogDetail/${project.id}`}>
+                        {project.sampleProject.header}
+                      </NavLink>
+                    </h1>
+                    </div>
             </div>
           </SwiperSlide>
         ))}
