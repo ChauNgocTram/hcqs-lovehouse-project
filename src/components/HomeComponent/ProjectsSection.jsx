@@ -83,7 +83,7 @@ function ProjectsSection() {
                       project.staticFiles.length > 0 && (
                         <>
                           <img
-                            src={project.staticFiles[0].url}
+                            src={project.staticFiles[1].url}
                             alt="purple image"
                             className="rounded-md h-[240px] w-[240px] object-cover"
                           />
