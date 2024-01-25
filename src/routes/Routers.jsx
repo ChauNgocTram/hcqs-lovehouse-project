@@ -6,6 +6,7 @@ import {
   Auth,
   Dashboard,
   Home,
+  NewsCreate,
   Password,
   Profile,
   Setting,
@@ -39,6 +40,7 @@ function Routers() {
       path: "/dashboard",
       element: <Dashboard />,
       children: [{ path: "users-list", element: <UsersList /> }],
+      children: [{ path: "create-news", element: <NewsCreate /> }],
     },
     {
       path: "/setting",

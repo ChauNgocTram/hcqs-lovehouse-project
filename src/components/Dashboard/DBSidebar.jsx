@@ -6,6 +6,7 @@ import {
   FaArrowLeft,
   FaChevronDown,
   FaChevronUp,
+  FaProjectDiagram,
   FaRegCalendarAlt,
   FaRegUser,
 } from "react-icons/fa";
@@ -13,6 +14,7 @@ import { IoGridOutline } from "react-icons/io5";
 import { CiSettings } from "react-icons/ci";
 import { MdLogout } from "react-icons/md";
 import { AiOutlinePieChart } from "react-icons/ai";
+import { FaBlog, FaRegNewspaper } from "react-icons/fa6";
 
 import { slideUpOut } from "../../assets/animations";
 import { HouseLogo, isActiveStyles, isNotActiveStyles } from "../../assets";
@@ -20,11 +22,14 @@ import { HouseLogo, isActiveStyles, isNotActiveStyles } from "../../assets";
 function DBSidebar() {
   const [isDashboard, setIsDashboard] = useState(true);
   const [isUser, setIsUser] = useState(true);
+  const [isNews, setIsNews] = useState(true);
+  const [isProject, setIsProject] = useState(true);
+  const [isBlogs, setIsBlogs] = useState(true);
 
   return (
     <div
-      className="absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden 
-      bg-baseDashboard duration-300 ease-linear lg:static lg:translate-x-0 -translate-x-full"
+      className="sticky top-0 z-50 flex h-screen w-72.5 flex-col bg-baseDashboard overflow-y-auto
+      duration-300 ease-linear scrollbar-thin scrollbar-none scrollbar-track-gray-100"
     >
       <div className="items-center justify-between px-6 py-5.5 lg:py-6.5">
         {/* logo  */}
@@ -183,6 +188,171 @@ function DBSidebar() {
               <CiSettings className="text-xl" />
               <div className="pl-2">Setting</div>
             </NavLink>
+          </div>
+        </div>
+
+        {/* Functions  */}
+        <div className="pl-2 pt-6 text-slate-200">
+          <div className="pt-4">
+            <p className="text-slate-400 uppercase font-semibold py-2">
+              Functions
+            </p>
+
+            {/* House Project Page  */}
+            <div
+              onClick={() => {
+                setIsProject(!isProject);
+              }}
+              className="flex items-center justify-between cursor-pointer"
+            >
+              <div className="flex items-center justify-start py-2">
+                <FaProjectDiagram className="" />
+                <div className="pl-2">House Project Page</div>
+              </div>
+              <div>{isProject ? <FaChevronDown /> : <FaChevronUp />}</div>
+            </div>
+
+            {/* navlink  */}
+            {!isProject && (
+              <>
+                <motion.div {...slideUpOut} className={`flex flex-col `}>
+                  <NavLink
+                    to={"/dashboard"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
+                        : isNotActiveStyles
+                    }
+                  >
+                    News
+                  </NavLink>
+                  <NavLink
+                    to={"/"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
+                        : isNotActiveStyles
+                    }
+                  >
+                    Users
+                  </NavLink>
+                  <NavLink
+                    to={"/"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
+                        : isNotActiveStyles
+                    }
+                  >
+                    Users
+                  </NavLink>
+                </motion.div>
+              </>
+            )}
+
+            {/* News  */}
+            <div
+              onClick={() => {
+                setIsNews(!isNews);
+              }}
+              className="flex items-center justify-between cursor-pointer"
+            >
+              <div className="flex items-center justify-start py-2">
+                <FaRegNewspaper className="" />
+                <div className="pl-2">News</div>
+              </div>
+              <div>{isNews ? <FaChevronDown /> : <FaChevronUp />}</div>
+            </div>
+
+            {/* navlink  */}
+            {!isNews && (
+              <>
+                <motion.div {...slideUpOut} className={`flex flex-col `}>
+                  <NavLink
+                    to={"/dashboard/create-news"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
+                        : isNotActiveStyles
+                    }
+                  >
+                    Create News
+                  </NavLink>
+                  <NavLink
+                    to={"/"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
+                        : isNotActiveStyles
+                    }
+                  >
+                    Users
+                  </NavLink>
+                  <NavLink
+                    to={"/"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
+                        : isNotActiveStyles
+                    }
+                  >
+                    Users
+                  </NavLink>
+                </motion.div>
+              </>
+            )}
+
+            {/* Blogs  */}
+            <div
+              onClick={() => {
+                setIsBlogs(!isBlogs);
+              }}
+              className="flex items-center justify-between cursor-pointer"
+            >
+              <div className="flex items-center justify-start py-2">
+                <FaBlog className="" />
+                <div className="pl-2">Blogs</div>
+              </div>
+              <div>{isBlogs ? <FaChevronDown /> : <FaChevronUp />}</div>
+            </div>
+
+            {/* navlink  */}
+            {!isBlogs && (
+              <>
+                <motion.div {...slideUpOut} className={`flex flex-col `}>
+                  <NavLink
+                    to={"/dashboard"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
+                        : isNotActiveStyles
+                    }
+                  >
+                    News
+                  </NavLink>
+                  <NavLink
+                    to={"/"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
+                        : isNotActiveStyles
+                    }
+                  >
+                    Users
+                  </NavLink>
+                  <NavLink
+                    to={"/"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
+                        : isNotActiveStyles
+                    }
+                  >
+                    Users
+                  </NavLink>
+                </motion.div>
+              </>
+            )}
           </div>
         </div>
 

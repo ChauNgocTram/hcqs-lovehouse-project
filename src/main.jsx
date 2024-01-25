@@ -5,6 +5,7 @@ import "./index.css";
 import { Provider } from "react-redux";
 import Store from "./context/store";
 import "react-toastify/dist/ReactToastify.css";
+import "react-quill/dist/quill.snow.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

@@ -6,7 +6,9 @@ function Dashboard() {
     <div className="grid grid-cols-5">
       <DBSidebar />
       <div className="col-span-4">
-        <DBHeader />
+        <div className="sticky top-0 z-50">
+          <DBHeader />
+        </div>
         <Outlet />
         <div className="flex-none">
           <DBFooter />
