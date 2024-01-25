@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { getAllNews } from "../../constant/apiNews";
+import { getAllNews } from "../../constants/apiNews";
 import NewsBanner from "../../components/Banner/NewsBanner";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
+import LoadingOverlay from "../../components/Loading/LoadingOverlay";
 
 export default function News() {
   const [newsData, setNewsData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fetchNews = async () => {
       const data = await getAllNews();
       if (data && data.result) {
@@ -18,6 +21,7 @@ export default function News() {
           date: formatNewsDate(newsItem.date),
         }));
         setNewsData(formattedData);
+        setLoading(false);
       }
     };
 
@@ -39,6 +43,7 @@ export default function News() {
 
   return (
     <>
+    <LoadingOverlay loading={loading} />
       <Navbar />
       <NewsBanner />
       <Breadcrumb />

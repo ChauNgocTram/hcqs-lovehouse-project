@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getBlogDetail } from "../../constant/apiBlog";
+import { getBlogDetail } from "../../constants/apiBlog";
 
 import { FaRegCalendarAlt } from "react-icons/fa";
 
@@ -8,12 +8,15 @@ import OtherBlogs from "../../components/BlogsComponent/OtherBlogs";
 import Navbar from "../../components/Navbar/Navbar"
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import Footer from "../../components/Footer/Footer"
+import LoadingOverlay from "../../components/Loading/LoadingOverlay";
 
 export default function BlogDetail() {
   const [blogDetail, setBlogDetail] = useState({});
   const { id } = useParams();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fetchBlogDetail = async () => {
       try {
         const data = await getBlogDetail(id);
@@ -23,6 +26,7 @@ export default function BlogDetail() {
             date: formatNewsDate(data.result.data.date),
           };
           setBlogDetail(formattedData);
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error fetching blog detail:", error);
@@ -47,6 +51,7 @@ export default function BlogDetail() {
 
   return (
     <>
+    <LoadingOverlay loading={loading} />
     <Navbar/>
     <Breadcrumb/>
       <div className="blogs-detail mb-12">

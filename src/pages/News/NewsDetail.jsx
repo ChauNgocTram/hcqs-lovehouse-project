@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getNewsDetail } from "../../constant/apiNews";
+import { getNewsDetail } from "../../constants/apiNews";
 import OtherNews from "../../components/NewsComponent/OtherNews";
 
 import { FaRegCalendarAlt } from "react-icons/fa";
@@ -8,12 +8,15 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import Navbar from "../../components/Navbar/Navbar";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import Footer from "../../components/Footer/Footer";
+import LoadingOverlay from "../../components/Loading/LoadingOverlay";
 
 export default function NewsDetail() {
   const [newsDetail, setNewsDetail] = useState({});
   const { id } = useParams();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fetchNewsDetail = async () => {
       try {
         const data = await getNewsDetail(id);
@@ -23,6 +26,7 @@ export default function NewsDetail() {
             date: formatNewsDate(data.result.data.date),
           };
           setNewsDetail(formattedData);
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error fetching news detail:", error);
@@ -47,6 +51,7 @@ export default function NewsDetail() {
 
   return (
     <>
+    <LoadingOverlay loading={loading} />
       <Navbar />
       <Breadcrumb />
       <div className="news-detail mb-12">

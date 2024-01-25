@@ -13,9 +13,9 @@ export default function Navbar() {
 
   return (
     <div className="navbar relative px-4 py-4 flex justify-between items-center h-24 mx-auto uppercase text-white bg-baseOrange">
-      <a href="">
+      <NavLink to="/">
         <img src={mainlogo} alt="" className="h-80 w-200 m-3 " />
-      </a>
+      </NavLink>
 
       <ul className="hidden md:flex">
       <li className="p-4 hover:underline underline-offset-8">
@@ -54,9 +54,9 @@ export default function Navbar() {
             : "fixed left-[-100%] top-0 w-[60%] h-full border-r border-r-gray-900 bg-baseOrange ease-in-out duration-500"
         }
       >
-        <a href="">
+        <NavLink to="/">
           <img src={mainlogo} alt="" className="h-80 w-200 m-3" />
-        </a>
+        </NavLink>
 
         <ul className=" uppercase p-4">
           <li className="p-4">
@@ -75,7 +75,7 @@ export default function Navbar() {
             <NavLink to="/news">News</NavLink>
           </li>
           <li className="p-4">
-            <NavLink to="/blogs">Blogs</NavLink>
+            <NavLink to="/blog">Blogs</NavLink>
           </li>
         </ul>
 

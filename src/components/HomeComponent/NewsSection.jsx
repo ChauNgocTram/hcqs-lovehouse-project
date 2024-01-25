@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination, Autoplay } from "swiper/modules";
-import { RxPencil2 } from "react-icons/rx";
+
 import { RxArrowTopRight } from "react-icons/rx";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -15,8 +15,10 @@ import { getAllNews } from "../../constants/apiNews";
 
 export default function NewsSection() {
   const [newsData, setNewsData] = useState([]);
+  
 
   useEffect(() => {
+   
     const fetchNews = async () => {
       const data = await getAllNews();
       if (data && data.result) {
@@ -25,6 +27,7 @@ export default function NewsSection() {
           date: formatNewsDate(newsItem.date),
         }));
         setNewsData(formattedData);
+       
       }
     };
 
@@ -83,7 +86,7 @@ export default function NewsSection() {
               />
               <div className="absolute inset-0 bg-cover bg-black opacity-10 group-hover:opacity-50 " />
               <div className="relative flex flex-col gap-3">
-                <RxPencil2 className="text-blue-600 group-hover:text-blue-400 w-[32px] h-[32px]" />
+                
                 <h1 className="text-xl lg:text-2xl font-semibold hover:text-white">
                   <NavLink to={`/newsDetail/${news.id}`}> {news.header}</NavLink>
                 </h1>

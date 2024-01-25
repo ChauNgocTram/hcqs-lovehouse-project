@@ -8,16 +8,20 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
 
-import { getAllNews } from "../../constant/apiNews";
+import { getAllNews } from "../../constants/apiNews";
+
 
 export default function OtherNews() {
   const [newsData, setNewsData] = useState([]);
 
+
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fetchNews = async () => {
       const data = await getAllNews();
       if (data && data.result) {
         setNewsData(data.result.data);
+      
       }
     };
 
@@ -40,6 +44,7 @@ export default function OtherNews() {
   const firstSixItems = newsData.slice(0, 6);
   return (
     <>
+   
       <div className="container mx-auto px-4 sm:px-0  mb-24">
         <h1 className="font-semibold uppercase text-4xl mt-24 mb-12 text-center">
           Other News

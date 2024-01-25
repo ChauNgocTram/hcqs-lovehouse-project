@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseURL = "https://hcqs.azurewebsites.net";
+const baseURL = "https://hcqs-backend.azurewebsites.net";
 
 export const getAllBlogs = async (fieldName, ascending) => {
   try {

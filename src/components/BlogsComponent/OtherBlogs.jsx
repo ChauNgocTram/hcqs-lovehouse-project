@@ -8,7 +8,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
 
-import { getAllBlogs } from "../../constant/apiBlog";
+import { getAllBlogs } from "../../constants/apiBlog";
 
 export default function OtherBlogs() {
   const [blogData, setBlogData] = useState([]);

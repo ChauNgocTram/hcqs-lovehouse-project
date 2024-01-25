@@ -14,36 +14,27 @@ import { getAllProjects } from "../../constants/apiProject";
 
 function ProjectsSection() {
   const [projectData, setProjectData] = useState([]);
-  const [firstEightItems, setFirstEightItems ] = useState([])
-  const [slideItems, setSlideItems ] = useState([])
 
-
-  const fetchProjects = async () => {
-    const data = await getAllProjects();
-   // console.log(data.result.data)
-    if (data && data.result) {
-      setProjectData(data.result.data);
-      setFirstEightItems(projectData?.slice(0, 8)) ;
-      setSlideItems [firstEightItems.slice(0, 4), firstEightItems.slice(4, 8)];
-
-
-    }
-  };
   useEffect(() => {
-   
+    const fetchProjects = async () => {
+      const data = await getAllProjects();
+      if (data && data.result) {
+        setProjectData(data.result.data);
+      }
+    };
 
     fetchProjects();
   }, []);
 
-  console.log( "qqq", firstEightItems)
+  const firstEightItems = projectData.slice(0, 8);
 
   // Check if projectData exists and is not an empty array
-  // if (!projectData || projectData.length === 0) {
-  //   return null; // Or display a loading state or message
-  // }
+  if (!projectData || projectData.length === 0) {
+    return null; // Or display a loading state or message
+  }
 
   
-  console.log("aa", slideItems)
+  const slideItems = [firstEightItems.slice(0, 4), firstEightItems.slice(4, 8)];
 
   return (
     <div className="h-[600px] flex flex-col md:flex-row gap-5 items-center justify-center pt-28 mt-12 mb-24">
@@ -88,11 +79,11 @@ function ProjectsSection() {
               <div className="grid grid-cols-2 gap-4 px-10">
                 {firstEightItems.map((project, index) => (
                   <div className="relative group" key={index}>
-                    {project.sampleProject &&
-                      project.sampleProject.length > 0 && (
+                    {project.staticFiles &&
+                      project.staticFiles.length > 0 && (
                         <>
                           <img
-                            src={project?.staticFiles[0]?.url}
+                            src={project.staticFiles[0].url}
                             alt="purple image"
                             className="rounded-md h-[240px] w-[240px] object-cover"
                           />
