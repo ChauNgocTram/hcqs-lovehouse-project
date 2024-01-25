@@ -5,14 +5,18 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    container: {
+      container: true,
+    },
     extend: {
       colors: {
-        "orange": "#E48824",
-        "green": "#88B844",
-        "dark": "#333333",
-        "white": "#fff",
-        "gray": "#666666",
+        "baseOrange": "#E48824",
+        "baseGreen": "#88B844",
+        "baseDark": "#333333",
+        "baseWhite": "#fff",
+        "baseGray": "#666666",
         "bg-button": "#f3f3f3",
+        "baseDashboard": "#1c2434",
         headingColor: "#2e2e2e",
         textColor: "#515151",
         primary2: "#f3f3f3",
@@ -23,8 +27,6 @@ module.exports = {
         cartBg: "#282a2c",
         cartItem: "#2e3033",
         cartTotal: "#343739",
-        primary: "#131417",
-        secondary: "#1E1F26",
         primaryText: "#868CA0",
       },
       fontSize: {
@@ -76,5 +78,7 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-no-scrollbar')
+  ],
 }
