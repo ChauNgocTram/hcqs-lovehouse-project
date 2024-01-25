@@ -8,7 +8,7 @@ import { MdConstruction, MdOutlineMessage } from "react-icons/md";
 import { RiHandCoinLine, RiPencilRuler2Line } from "react-icons/ri";
 import { GiHomeGarage } from "react-icons/gi";
 
-import { BackgroundPattern, Hero, Process } from "../../assets";
+import { About, BackgroundPattern, Hero, Process } from "../../assets";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 
@@ -80,12 +80,29 @@ function AboutUs() {
                 </div>
               </div>
             </div>
-            <div className="w-full mt-8 relative px-6 mx-auto max-w-4xl sm:px-10 lg:px-0 z-10 flex items-center justify-center">
-              <img
-                src={Hero}
-                alt="cover-product"
-                className="w-full shadow-2xl rounded-xl block max-w-2xl lg:max-w-5xl"
-              />
+            <div className="grid grid-cols-2 gap-6">
+              <div>
+                <img
+                  src={About}
+                  alt="About"
+                  className="w-full shadow-2xl rounded-xl block max-w-2xl lg:max-w-5xl"
+                />
+              </div>
+              <div className="flex items-center border rounded-xl shadow-2xl">
+                <p className="text-xl p-4">
+                  Welcome to LOVEHOUSE Construction Services – Where Dreams Take
+                  Shape! At LOVEHOUSE, we are dedicated to turning your dream
+                  home into a reality. With years of experience in the
+                  construction industry, our team of skilled professionals is
+                  committed to providing top-notch services that bring your
+                  vision to life. Whether you're envisioning a modern
+                  masterpiece, a cozy family home, or a stylish urban retreat,
+                  LOVEHOUSE is here to make it happen. We prioritize quality
+                  craftsmanship, attention to detail, and a customer-centric
+                  approach to ensure that your home is not just a structure but
+                  a reflection of your lifestyle and personality.
+                </p>
+              </div>
             </div>
           </div>
         </section>
