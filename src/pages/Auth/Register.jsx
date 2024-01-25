@@ -15,16 +15,89 @@ function Register({ setIsPopup, setPopupEmail, setIsLoading }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [gender, setGender] = useState(true);
   const [password, setPassword] = useState("");
+  const [ConfirmPassword, setConfirmPassword] = useState("");
   const [getEmailValidationStatus, setGetEmailValidationStatus] =
     useState(false);
+
+  const [errors, setErrors] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    password: "",
+    confirmPassword: "",
+  });
 
   const handleGenderChange = (event) => {
     const selectedGender = event.target.value === "true";
     setGender(selectedGender);
   };
 
+  const isPasswordValid = (password) => {
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(.{8,})$/;
+    return passwordRegex.test(password);
+  };
+
+  const isPasswordMatch = (password, confirmPassword) => {
+    return password === confirmPassword;
+  };
+
+  const isPhoneNumberValid = (phoneNumber) => {
+    const phoneNumberRegex = /^\d{10}$/;
+    return phoneNumberRegex.test(phoneNumber);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const newErrors = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phoneNumber: "",
+      password: "",
+      confirmPassword: "",
+    };
+
+    if (!fristName) {
+      newErrors.firstName = "First name is required.";
+    }
+
+    if (!lastName) {
+      newErrors.lastName = "Last name is required.";
+    }
+
+    if (!email) {
+      newErrors.email = "Email is required.";
+    }
+
+    if (!isPhoneNumberValid(phoneNumber)) {
+      newErrors.phoneNumber = "Phone number must have exactly 10 digits.";
+    }
+
+    if (!isPasswordValid(password)) {
+      newErrors.password =
+        "Password must have at least 8 characters, 1 uppercase letter, and 1 special character.";
+    }
+
+    if (!isPasswordMatch(password, ConfirmPassword)) {
+      newErrors.confirmPassword = "Passwords do not match.";
+    }
+
+    // Kiểm tra xem có lỗi nào không
+    if (
+      newErrors.firstName ||
+      newErrors.lastName ||
+      newErrors.email ||
+      newErrors.phoneNumber ||
+      newErrors.password ||
+      newErrors.confirmPassword
+    ) {
+      setErrors(newErrors);
+      return;
+    }
+
+    // Nếu không có lỗi, tiến hành đăng ký
     handleSignUp();
   };
 
@@ -45,7 +118,7 @@ function Register({ setIsPopup, setPopupEmail, setIsLoading }) {
         if (result.isSuccess === true) {
           setIsPopup(true);
           setPopupEmail(email);
-          toast.success("Registration successful! Please verificate email.");
+          toast.success("Registration successful! Please verify email.");
         } else {
           console.error(
             "Registration failed:",
@@ -65,18 +138,19 @@ function Register({ setIsPopup, setPopupEmail, setIsLoading }) {
     <>
       <p className="text-xl text-textColor -mt-6">Sign Up with following</p>
       <form onSubmit={handleSubmit}>
-        <div className="flex items-center justify-between w-full md:w-96">
-          {/* frist name  */}
+        {/* <div className="flex items-center justify-between w-full md:w-96">
           <UserAuthInput
-            lable="Frist Name"
-            placeHolder="Frist Name"
+            lable="First Name"
+            placeHolder="First Name"
             isPass={false}
-            key="FristName"
+            key="FirstName"
             setStateFunction={setFristName}
             Icon={MdOutlineDriveFileRenameOutline}
           />
+          {errors.firstName && (
+            <p className="text-red-500">{errors.firstName}</p>
+          )}
 
-          {/* Last name  */}
           <UserAuthInput
             lable="Last Name"
             placeHolder="Last Name"
@@ -85,9 +159,39 @@ function Register({ setIsPopup, setPopupEmail, setIsLoading }) {
             setStateFunction={setLastName}
             Icon={MdOutlineDriveFileRenameOutline}
           />
-        </div>
+          {errors.lastName && <p className="text-red-500">{errors.lastName}</p>}
+        </div> */}
+        <div className="flex items-center justify-between w-full md:w-96">
+          {/* frist name  */}
+          <div>
+            <UserAuthInput
+              lable="Frist Name"
+              placeHolder="Frist Name"
+              isPass={false}
+              key="FristName"
+              setStateFunction={setFristName}
+              Icon={MdOutlineDriveFileRenameOutline}
+            />
+            {errors.firstName && (
+              <p className="text-red-500">{errors.firstName}</p>
+            )}
+          </div>
 
-        {/* email */}
+          <div>
+            {/* Last name  */}
+            <UserAuthInput
+              lable="Last Name"
+              placeHolder="Last Name"
+              isPass={false}
+              key="LastName"
+              setStateFunction={setLastName}
+              Icon={MdOutlineDriveFileRenameOutline}
+            />
+            {errors.lastName && (
+              <p className="text-red-500">{errors.lastName}</p>
+            )}
+          </div>
+        </div>
         <UserAuthInput
           lable="Email"
           placeHolder="Email"
@@ -97,19 +201,21 @@ function Register({ setIsPopup, setPopupEmail, setIsLoading }) {
           Icon={FaEnvelope}
           setGetEmailValidationStatus={setGetEmailValidationStatus}
         />
+        {errors.email && <p className="text-red-500">{errors.email}</p>}
 
-        {/* phone number */}
         <UserAuthInput
           lable="Phone Number"
-          placeHolder="012......"
+          placeHolder="0123456789"
           isPass={false}
           key="PhoneNumber"
           setStateFunction={setPhoneNumber}
           Icon={FaEnvelope}
           setGetEmailValidationStatus={setGetEmailValidationStatus}
         />
+        {errors.phoneNumber && (
+          <p className="text-red-500">{errors.phoneNumber}</p>
+        )}
 
-        {/* gender  */}
         <div className="flex flex-col items-start justify-start gap-1">
           <label className="text-sm text-gray-700">
             Gender<span className="text-red-500 required-dot">*</span>
@@ -125,7 +231,6 @@ function Register({ setIsPopup, setPopupEmail, setIsLoading }) {
           </select>
         </div>
 
-        {/* password */}
         <UserAuthInput
           lable="Password"
           placeHolder="Password"
@@ -134,18 +239,20 @@ function Register({ setIsPopup, setPopupEmail, setIsLoading }) {
           setStateFunction={setPassword}
           Icon={MdPassword}
         />
+        {errors.password && <p className="text-red-500">{errors.password}</p>}
 
-        {/* confirm password  */}
         <UserAuthInput
           lable="Confirm Password"
           placeHolder="Confirm Password"
           isPass={true}
           key="ConfirmPassword"
-          setStateFunction={setPassword}
+          setStateFunction={setConfirmPassword}
           Icon={MdPassword}
         />
+        {errors.confirmPassword && (
+          <p className="text-red-500">{errors.confirmPassword}</p>
+        )}
 
-        {/* button section  */}
         <motion.button
           {...buttonClick}
           className="w-full px-4 py-2 rounded-md bg-[rgba(251,146,60)] cursor-pointer text-white text-xl capitalize
