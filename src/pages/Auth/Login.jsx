@@ -21,37 +21,65 @@ function Login({ setIsLoading, setIsForgot }) {
 
   const handleLogin = async () => {
     setIsLoading(true);
-    if (getEmailValidationStatus) {
-      try {
-        const data = await loginWithEmailPass(email, password);
-        if (data.isSuccess) {
-          localStorage.setItem("accessToken", data.result.data.token);
-          localStorage.setItem("refreshToken", data.result.data.refreshToken);
-          console.log(data.result.data);
-          window.location.reload();
+    // Kiểm tra xem cả email và password có được nhập không
+    if (!email || !password) {
+      alert.alertFailedWithTime(
+        "Failed To Log In",
+        "Please enter both email and password.",
+        3300,
+        "33",
+        () => {}
+      );
+      setIsLoading(false);
+      return;
+    }
 
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: `<h1>Welcome </h1>`,
-            html: `<h3>Log In Successfully</h3>`,
-            showConfirmButton: false,
-            timer: 1600,
-          });
-        } else {
-          alert.alertFailedWithTime(
-            "Failed To Log In",
-            "Please check email or password",
-            3300,
-            "33",
-            () => {}
-          );
-        }
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setIsLoading(false);
+    // Kiểm tra mật khẩu
+    if (
+      password.length < 8 ||
+      !/[A-Z]/.test(password) ||
+      !/[!@#$%^&*(),.?":{}|<>]/.test(password)
+    ) {
+      alert.alertFailedWithTime(
+        "Failed To Log In",
+        "Please check the password. It should be at least 8 characters long and include at least one uppercase letter and one special character.",
+        3300,
+        "33",
+        () => {}
+      );
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const data = await loginWithEmailPass(email, password);
+      if (data.isSuccess) {
+        localStorage.setItem("accessToken", data.result.data.token);
+        localStorage.setItem("refreshToken", data.result.data.refreshToken);
+        console.log(data.result.data);
+        window.location.reload();
+
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: `<h1>Welcome </h1>`,
+          html: `<h3>Log In Successfully</h3>`,
+          showConfirmButton: false,
+          timer: 1600,
+        });
+      } else {
+        alert.alertFailedWithTime(
+          "Failed To Log In",
+          "Please check email or password",
+          3300,
+          "33",
+          () => {}
+        );
       }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 

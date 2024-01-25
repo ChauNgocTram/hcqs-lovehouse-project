@@ -27,6 +27,23 @@ function ResetPassword({
   };
 
   const handleSendOTP = async () => {
+    if (!email || !newPassword) {
+      toast.error("Please enter both email and new password.");
+      return;
+    }
+
+    // Kiểm tra mật khẩu
+    if (
+      newPassword.length < 8 ||
+      !/[A-Z]/.test(newPassword) ||
+      !/[!@#$%^&*(),.?":{}|<>]/.test(newPassword)
+    ) {
+      toast.error(
+        "Please check the new password. It should be at least 8 characters long and include at least one uppercase letter and one special character."
+      );
+      return;
+    }
+
     if (getEmailValidationStatus) {
       setIsLoading(true);
       try {
@@ -38,7 +55,7 @@ function ResetPassword({
           setIsLoading(false);
           setIsForgot(false);
           setIsPopup(true);
-          toast.success("Send OTP Reset successful! Please verificate email.");
+          toast.success("Send OTP Reset successful! Please verify email.");
         } else {
           console.error(
             "Send OTP Reset failed:",
@@ -47,11 +64,12 @@ function ResetPassword({
           toast.error("Send OTP Reset failed. Please try again.");
         }
       } catch (error) {
-        console.error("Error signing up:", error);
+        console.error("Error sending OTP:", error);
         toast.error("An error occurred. Please try again later.");
       }
     }
   };
+
   return (
     <div className="relative">
       <div className="absolute top-4 right-4">
@@ -100,7 +118,7 @@ function ResetPassword({
             <div className="w-full mt-2">
               <div
                 onClick={handleSendOTP}
-                className="w-full my-3 py-2 px-4 bg-orange-400 hover:bg-orange-500 text-white text-center text-base font-medium rounded-lg "
+                className="w-full my-3 py-2 px-4 bg-orange-400 hover:bg-orange-500 text-white text-center text-base font-medium rounded-lg cursor-pointer"
               >
                 <span className="no-underline mx-auto">Reset password</span>
               </div>
