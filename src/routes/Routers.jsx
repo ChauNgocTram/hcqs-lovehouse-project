@@ -17,13 +17,9 @@ export default function Routers() {
                 { path: "/", element: <Home/>},
                 { path: "/news", element: <News/>},
                 { path: "/newsDetail/:id", element: <NewsDetail /> },
-                { path: "/houseProject", element: <HouseProject /> },
-                // { path: "/register", element: <Register /> },
-                // { path: "/resetPassword", element: <ChangePasswordLogin /> },
                 { path: "/blog", element: <Blog/>},
                 { path: "/blogDetail/:id", element: <BlogDetail/> },
-                // { path: "/news", element: <News /> },
-                // { path: "/newsDetail/:id", element: <NewsDetail /> },
+              
                 // { path: "/houseProject", element: <HouseProject /> },
                 // { path: "/houseProjectDetail", element: <HouseProjectDetail /> },
                 

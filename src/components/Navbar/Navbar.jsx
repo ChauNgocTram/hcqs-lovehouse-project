@@ -11,6 +11,8 @@ export default function Navbar() {
     setNav(!nav);
   };
 
+  
+
   return (
     <div className="navbar relative px-4 py-4 flex justify-between items-center h-24 mx-auto uppercase text-white bg-baseOrange">
       <NavLink to="/">
@@ -41,7 +43,7 @@ export default function Navbar() {
       <div className="hidden md:flex">
         <BtnLoginRegister />
       </div>
-      {/* <img src="https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745" alt="" className="w-[40px] rounded-full"/> */}
+      
 
       <div onClick={handleNav} className="block md:hidden px-10">
         {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}

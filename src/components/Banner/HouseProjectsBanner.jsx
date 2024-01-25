@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function NewsBanner() {
+export default function HouseProjectsBanner() {
   return (
     <div
       className="relative bg-cover bg-no-repeat bg-center pt-28 h-[330px]"
@@ -15,7 +15,7 @@ export default function NewsBanner() {
           className="absolute inset-0 flex flex-col items-center justify-center text-white uppercase font-bold text-4xl"
           style={{ zIndex: 1000 }}
         >
-          LOVEHOUSE'S News
+          LOVEHOUSE'S Project
         </div>
       </div>
     </div>
