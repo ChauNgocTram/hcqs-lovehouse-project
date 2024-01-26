@@ -21,9 +21,9 @@ export default function Routers() {
       children: [
         { path: "/", element: <Home /> },
         { path: "/news", element: <News /> },
-        { path: "/newsDetail/:id", element: <NewsDetail /> },
+        { path: "/news/newsDetail/:id", element: <NewsDetail /> },
         { path: "/blog", element: <Blog /> },
-        { path: "/blogDetail/:id", element: <BlogDetail /> },
+        { path: "/blog/blogDetail/:id", element: <BlogDetail /> },
         { path: "/houseProject", element: <HouseProject /> },
         { path: "/house-roof-projects", element: <HouseRoof /> },        {
           path: "/house-roof-projects/details/:id",

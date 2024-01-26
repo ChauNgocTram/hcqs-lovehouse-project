@@ -84,14 +84,14 @@ export default function OtherNews() {
                     {formatNewsDate(news.date)}
                   </h4>
                   <h3 className="mb-10 text-2xl">
-                    <NavLink to={`/newsDetail/${news.id}`}>
+                    <NavLink to={`/news/newsDetail/${news.id}`}>
                       {news.header.length >= 70
                         ? news.header.substring(0, 50).trim() + "..."
                         : news.header}
                     </NavLink>
                   </h3>
                   <NavLink
-                    to={`/newsDetail/${news.id}`}
+                    to={`/news/newsDetail/${news.id}`}
                     className="hover:bg-orange-600 transition-all text-sm inline-flex rounded-md px-4 py-2 text-center border-2 border-orange-600"
                   >
                     Read more

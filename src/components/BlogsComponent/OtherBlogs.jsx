@@ -95,7 +95,7 @@ export default function OtherBlogs() {
                       {formatBlogDate(blog.date)}
                     </h2>
                     <h1 className="text-2xl font-semibold mb-3">
-                      <NavLink to={`/blogDetail/${blog.id}`}>
+                      <NavLink to={`/blog/blogDetail/${blog.id}`}>
                         {blog.header.length >= 50
                           ? blog.header.substring(0, 30).trim() + "..."
                           : blog.header}
@@ -111,7 +111,7 @@ export default function OtherBlogs() {
 
                     <div className="flex items-center flex-wrap ">
                       <NavLink
-                        to={`/blogDetail/${blog.id}`}
+                        to={`/blog/blogDetail/${blog.id}`}
                         className="text-indigo-300 hover:text-neutral-600 inline-flex items-center md:mb-2 lg:mb-0"
                       >
                         Read More
