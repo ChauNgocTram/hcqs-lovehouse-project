@@ -10,14 +10,14 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 
 //import BtnViewMore from "../Button/BtnViewMore";
-import { getHouseRoof } from "../../constants/apiHouseProject";
+import { getAllProjects } from "../../constants/apiHouseProject";
 
 export default function HouseRoofSection() {
   const [projectData, setProjectData] = useState([]);
 
   useEffect(() => {
     const fetchProject = async () => {
-      const data = await getHouseRoof();
+      const data = await getAllProjects();
       if (data && data.result) {
         setProjectData(data.result.data);
       }
@@ -96,7 +96,7 @@ export default function HouseRoofSection() {
           ))}
         </Swiper>
         <NavLink
-          to="/houseProjects?type=1"
+          to="/house-roof-projects"
           className="hover:bg-orange-600 transition-all text-sm inline-flex rounded-md px-4 py-2 text-center border-2 border-orange-600"
         >
           View all

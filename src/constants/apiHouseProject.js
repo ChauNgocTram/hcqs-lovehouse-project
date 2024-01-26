@@ -25,9 +25,9 @@ export const getHouseRoof = async (fieldName, ascending) => {
   }
 };
 
-export const getNewsDetail = async (Id) => {
+export const getProjectDetail = async (Id) => {
   try {
-      const res = await axios.get(`${baseURL}/news/get-news-by-id/${Id}`);
+      const res = await axios.get(`${baseURL}/sample-project/get-sample-project-by-id/${Id}`);
       return res.data;
   } catch (err) {
       return null;
