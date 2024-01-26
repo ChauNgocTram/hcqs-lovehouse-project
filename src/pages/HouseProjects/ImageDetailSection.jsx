@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { getProjectDetail } from "../../../constants/apiHouseProject";
+import { getProjectDetail } from "../../constants/apiHouseProject";
 
 export default function ImageDetailSection() {
     const { id } = useParams();
-    const [houseRoofDetail, setHouseRoofDetail] = useState({});
+    const [houseProjectDetail, setHouseProjectDetail] = useState({});
     const [positionIndexes, setPositionIndexes] = useState([0, 1, 2, 3, 4]);
   
     useEffect(() => {
-      const fetchHouseRoofDetail = async () => {
+      const fetchHouseProjectDetail = async () => {
         try {
           const data = await getProjectDetail(id);
           if (data && data.result) {
-            setHouseRoofDetail(data.result.data);
+            setHouseProjectDetail(data.result.data);
           } else {
             console.error("Invalid data format:", data);
           }
@@ -22,16 +22,14 @@ export default function ImageDetailSection() {
         }
       };
   
-      fetchHouseRoofDetail();
+      fetchHouseProjectDetail();
     }, [id]);
   
-    if (!houseRoofDetail || !houseRoofDetail.staticFiles) {
+    if (!houseProjectDetail || !houseProjectDetail.staticFiles) {
       return null;
     }
   
-    //   const filteredProjects = houseRoofDetail.filter(
-    //     (project) => project.sampleProject.projectType === 1
-    //   );
+ 
   
     const handleNext = () => {
       setPositionIndexes((prevIndexes) =>
@@ -56,11 +54,11 @@ export default function ImageDetailSection() {
     };
   return (
     <div className="flex items-center flex-col justify-center  h-screen relative">
-        {houseRoofDetail.staticFiles.map((image, index) => (
+        {houseProjectDetail.staticFiles.map((image, index) => (
           <motion.img
             key={image.id}
             src={image.url}
-            alt={houseRoofDetail.sampleProject.id}
+            alt={houseProjectDetail.sampleProject.id}
             className="rounded-[12px]"
             initial="center"
             animate={positions[positionIndexes[index]]}

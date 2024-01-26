@@ -24,7 +24,7 @@ export default function OtherSection() {
   }, []);
 
   const filteredProjects = projectData.filter(
-    (project) => project.sampleProject.projectType === 1
+    (project) => project.sampleProject.projectType === 1  /// NHỚ SỬA LẠI === 0
   );
 
   const firstSixItems = filteredProjects.slice(0, 5);

@@ -7,6 +7,9 @@ import Home from "../pages/Home/Home.jsx";
 import HouseProject from "../pages/HouseProjects/HouseProject"
 import HouseRoof from "../pages/HouseProjects/HouseRoof/HouseRoof";
 import HouseRoofDetail from "../pages/HouseProjects/HouseRoof/HouseRoofDetail";
+import TownHouse from "../pages/HouseProjects/TownHouse/TownHouse";
+import TownHouseDetail from "../pages/HouseProjects/TownHouse/TownHouseDetail";
+
 // import Blog from "../pages/Blogs/Blog";
 // import BlogDetail from "../pages/Blogs/BlogDetail";
 
@@ -23,9 +26,11 @@ export default function Routers() {
                 // { path: "/blogDetail/:id", element: <BlogDetail/> },
               
                 { path: "/houseProject", element: <HouseProject /> },
-               // { path: "/houseProjectDetail", element: <HouseProjectDetail /> },
+              
                { path: "/house-roof-projects", element: <HouseRoof/> },
                { path: "/house-roof-projects/details/:id", element: <HouseRoofDetail/>},
+               { path: "/town-house-projects", element: <TownHouse/> },
+               { path: "/town-house-projects/details/:id", element: <TownHouseDetail/>},
             ],
         },
         // {

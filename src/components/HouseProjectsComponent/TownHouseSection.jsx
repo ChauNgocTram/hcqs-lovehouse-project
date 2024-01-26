@@ -93,6 +93,12 @@ export default function TownHouseSection() {
           </SwiperSlide>
         ))}
       </Swiper>
+      <NavLink
+          to="/town-house-projects"
+          className="hover:bg-orange-600 transition-all text-sm inline-flex rounded-md px-4 py-2 text-center border-2 border-orange-600"
+        >
+          View all
+        </NavLink>
     </div>
   </>)
 }
