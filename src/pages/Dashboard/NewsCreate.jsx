@@ -1,15 +1,29 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+} from "@firebase/storage";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 
+import { MdDelete } from "react-icons/md";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 
-import { TextEditorBar, modules, formats } from "../../components";
-import "../../assets/Styles/Snow.css";
+import {
+  TextEditorBar,
+  modules,
+  formats,
+  MutatingDots,
+} from "../../components";
 import { buttonClick } from "../../assets/animations";
 import { NewFormCreate } from "../../assets";
+import { storage } from "../../config/firebase.config";
+import "../../assets/Styles/Snow.css";
 
 function NewsCreate() {
   const user = useSelector((state) => state?.user?.user);
@@ -23,6 +37,69 @@ function NewsCreate() {
   const [isLoading, setisLoading] = useState(false);
   const [progress, setProgress] = useState(null);
   const [imageDownloadURL, setImageDownloadURL] = useState(null);
+
+  const uploadImage = (e) => {
+    setisLoading(true);
+    const imageFile = e.target.files[0];
+    const storageRef = ref(storage, `Images/${Date.now()}_${imageFile.name}`);
+
+    const uploadTask = uploadBytesResumable(storageRef, imageFile);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        setProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+      },
+      (error) => {
+        toast.error("Error Uploaded to the cloud : ", error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setImageDownloadURL(downloadURL);
+          setisLoading(false);
+          setProgress(null);
+          toast.success("Image Uploaded to the cloud ~");
+        });
+      }
+    );
+  };
+
+  const deleteImageFromFirebase = () => {
+    setisLoading(true);
+    const deleteRef = ref(storage, imageDownloadURL);
+
+    deleteObject(deleteRef).then(() => {
+      setImageDownloadURL(null);
+      setisLoading(false);
+      toast.success("Image removed from the cloud~");
+    });
+  };
+
+  const submitNews = async () => {
+    // const userId = user.uid;
+    // const feedbackData = {
+    //   title,
+    //   content,
+    //   campusId: selectedCampus,
+    //   roomId: selectedRoom,
+    //   facilityId: selectedFacility,
+    //   imageURL: imageDownloadURL,
+    // };
+    // const response = await createFeedback(userId, feedbackData);
+
+    // if (response) {
+    //   console.log("Feedback created successfully:", response);
+    //   toast.success("Feedback created successfully");
+    // } else {
+    //   console.error("Failed to create feedback.");
+    //   toast.warning(
+    //     "Cannot provide feedback for the same facility because have a user feedback the same"
+    //   );
+    // }
+    // getFeedbackWithUser(user?.uid).then((data) => {
+    //   dispatch(setFeedback(data));
+    // });
+    navigate("/dashboard/list-news");
+  };
 
   return (
     <div className="flex flex-col">
@@ -123,7 +200,7 @@ function NewsCreate() {
                     <div className="w-full bg-card backdrop-blur-md h-370 rounded-md border-2 border-dotted border-gray-300 cursor-pointer">
                       {isLoading ? (
                         <div className="w-full h-full flex flex-col items-center justify-evenly px-24">
-                          <Spinner />
+                          <MutatingDots />
                           {Math.round(progress > 0) && (
                             <div className=" w-full flex flex-col items-center justify-center gap-2">
                               <div className="flex justify-between w-full">
@@ -167,7 +244,7 @@ function NewsCreate() {
                                   type="file"
                                   name="upload-image"
                                   accept="image/*"
-                                  //   onChange={uploadImage}
+                                  onChange={uploadImage}
                                   className=" w-0 h-0"
                                 />
                               </label>
@@ -185,9 +262,9 @@ function NewsCreate() {
                                   {...buttonClick}
                                   type="button"
                                   className="absolute top-3 right-3 p-3 rounded-full bg-red-500 text-xl cursor-pointer outline-none hover:shadow-md duration-500 transition-all ease-in-out"
-                                  //   onClick={() =>
-                                  //     deleteImageFromFirebase(imageDownloadURL)
-                                  //   }
+                                  onClick={() =>
+                                    deleteImageFromFirebase(imageDownloadURL)
+                                  }
                                 >
                                   <MdDelete className="-rotate-0" />
                                 </motion.button>
@@ -201,7 +278,7 @@ function NewsCreate() {
                   <div className="flex flex-wrap justify-center w-full">
                     <motion.div
                       {...buttonClick}
-                      //   onClick={submitFeedback}
+                      onClick={submitNews}
                       className="px-4 py-2 border rounded-md text-white bg-gray-500 hover:bg-gray-600 font-semibold shadow-md cursor-pointer"
                     >
                       Submit

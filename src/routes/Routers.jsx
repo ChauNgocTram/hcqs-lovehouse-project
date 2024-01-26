@@ -4,9 +4,11 @@ import {
   AboutUs,
   Account,
   Auth,
+  DBHome,
   Dashboard,
   Home,
   NewsCreate,
+  NewsList,
   Password,
   Profile,
   Setting,
@@ -39,8 +41,12 @@ function Routers() {
     {
       path: "/dashboard",
       element: <Dashboard />,
-      children: [{ path: "users-list", element: <UsersList /> }],
-      children: [{ path: "create-news", element: <NewsCreate /> }],
+      children: [
+        { path: "home", element: <DBHome /> },
+        { path: "users-list", element: <UsersList /> },
+        { path: "create-news", element: <NewsCreate /> },
+        { path: "list-news", element: <NewsList /> },
+      ],
     },
     {
       path: "/setting",

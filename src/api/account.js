@@ -107,3 +107,12 @@ export const submitOTPResetPass = async (email, recoveryCode, newPassword) => {
         return null;
     }
 };
+
+export const getAllAccount = async (pageIndex, pageSize) => {
+    try {
+        const res = await axios.post(`${baseURL}/account/get-all-account?pageIndex=${pageIndex}&pageSize=${pageSize}`, []);
+        return res.data;
+    } catch (err) {
+        return null;
+    }
+};

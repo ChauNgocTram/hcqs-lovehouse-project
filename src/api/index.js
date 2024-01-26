@@ -1,5 +1,6 @@
 import axios from "axios";
 export const baseURL = "https://hcqs-backend.azurewebsites.net/";
+export const usertoken = localStorage.accessToken;
 
 //account
 export {
@@ -11,15 +12,13 @@ export {
     loginWithEmailPass,
     sendOTP,
     sendResetPassOTP,
-    submitOTPResetPass
+    submitOTPResetPass,
+    getAllAccount
 }
 from "./account";
 
-export const getAllAccount = async (pageIndex, pageSize) => {
-    try {
-        const res = await axios.post(`${baseURL}/account/get-all-account?pageIndex=${pageIndex}&pageSize=${pageSize}`, []);
-        return res.data;
-    } catch (err) {
-        return null;
-    }
-};
+//news
+export {
+    getAllNews
+}
+from "./news";

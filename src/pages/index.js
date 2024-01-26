@@ -20,5 +20,7 @@ export { default as Account } from "./Setting/Account";
 export { default as Dashboard } from "./Dashboard/Dashboard";
 export { default as UsersList } from "./Dashboard/UsersList";
 export { default as NewsCreate } from "./Dashboard/NewsCreate";
+export { default as NewsList } from "./Dashboard/NewsList";
+export { default as DBHome } from "./Dashboard/DBHome";
 
 export { default as AboutUs } from "./AboutUs/AboutUs";

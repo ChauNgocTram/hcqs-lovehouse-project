@@ -20,7 +20,7 @@ import { slideUpOut } from "../../assets/animations";
 import { HouseLogo, isActiveStyles, isNotActiveStyles } from "../../assets";
 
 function DBSidebar() {
-  const [isDashboard, setIsDashboard] = useState(true);
+  const [isDashboard, setIsDashboard] = useState(false);
   const [isUser, setIsUser] = useState(true);
   const [isNews, setIsNews] = useState(true);
   const [isProject, setIsProject] = useState(true);
@@ -67,7 +67,7 @@ function DBSidebar() {
               <>
                 <motion.div {...slideUpOut} className={`flex flex-col `}>
                   <NavLink
-                    to={"/dashboard"}
+                    to={"/dashboard/home"}
                     className={({ isActive }) =>
                       isActive
                         ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
@@ -279,24 +279,14 @@ function DBSidebar() {
                     Create News
                   </NavLink>
                   <NavLink
-                    to={"/"}
+                    to={"/dashboard/list-news"}
                     className={({ isActive }) =>
                       isActive
                         ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
                         : isNotActiveStyles
                     }
                   >
-                    Users
-                  </NavLink>
-                  <NavLink
-                    to={"/"}
-                    className={({ isActive }) =>
-                      isActive
-                        ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
-                        : isNotActiveStyles
-                    }
-                  >
-                    Users
+                    News List
                   </NavLink>
                 </motion.div>
               </>
