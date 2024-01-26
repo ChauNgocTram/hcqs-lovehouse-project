@@ -1,21 +1,26 @@
 import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { motion } from "framer-motion";
 import { getProjectDetail } from "../../../constants/apiHouseProject";
+import ImageDetailSection from "./ImageDetailSection";
+
+import { FaFacebookF } from "react-icons/fa";
+import { SiZalo } from "react-icons/si";
+import { FaInstagram } from "react-icons/fa";
+
+import OtherSection from "./OtherSection";
 
 export default function HouseRoofDetail() {
   const { id } = useParams();
   const [houseRoofDetail, setHouseRoofDetail] = useState({});
-  const [positionIndexes, setPositionIndexes] = useState([0, 1, 2, 3, 4]);
 
   useEffect(() => {
-    const fetchHouseRoof = async () => {
+    const fetchHouseRoofDetail = async () => {
       try {
         const data = await getProjectDetail(id);
-        if (data && data.result && Array.isArray(data.result.data)) {
+        if (data && data.result) {
           setHouseRoofDetail(data.result.data);
         } else {
-          // Handle the case where data is not an array
           console.error("Invalid data format:", data);
         }
       } catch (error) {
@@ -23,72 +28,193 @@ export default function HouseRoofDetail() {
       }
     };
 
-    fetchHouseRoof();
+    fetchHouseRoofDetail();
   }, [id]);
 
-  if (!houseRoofDetail || !Array.isArray(houseRoofDetail)) {
-    // If data is not available or not an array, you can render a loading state or return null
+  if (!houseRoofDetail || !houseRoofDetail.staticFiles) {
     return null;
   }
 
-  const filteredProjects = houseRoofDetail.filter(
-    (project) => project.sampleProject.projectType === 1
-  );
-
-  const handleNext = () => {
-    setPositionIndexes((prevIndexes) =>
-      prevIndexes.map((prevIndex) => (prevIndex + 1) % 5)
-    );
-  };
-
-  const handleBack = () => {
-    setPositionIndexes((prevIndexes) =>
-      prevIndexes.map((prevIndex) => (prevIndex + 4) % 5)
-    );
-  };
-
-  const positions = ["center", "left1", "left", "right", "right1"];
-
-  const imageVariants = {
-    center: { x: "0%", scale: 1, zIndex: 5 },
-    left1: { x: "-50%", scale: 0.7, zIndex: 4 },
-    left: { x: "-90%", scale: 0.5, zIndex: 1 },
-    right: { x: "90%", scale: 0.5, zIndex: 1 },
-    right1: { x: "50%", scale: 0.7, zIndex: 4 },
+  //   const filteredProjects = houseRoofDetail.filter(
+  //     (project) => project.sampleProject.projectType === 1
+  //   );
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(amount);
   };
 
   return (
     <>
       <div>HouseRoofDetail</div>
-      <div className="flex items-center flex-col justify-center bg-black h-screen relative">
-        {filteredProjects.map((image, index) => (
-          <motion.img
-            key={image.sampleProject.id}
-            src={image.staticFiles[0]?.url || ""}
-            alt={image.sampleProject.id}
-            className="rounded-[12px]"
-            initial="center"
-            animate={positions[positionIndexes[index]]}
-            variants={imageVariants}
-            transition={{ duration: 0.5 }}
-            style={{ width: "40%", position: "absolute" }}
-          />
-        ))}
-        <div className="flex flex-row gap-3 mt-24">
-          <button
-            className="text-black mt-[400px] bg-indigo-400 rounded-md py-2 px-4"
-            onClick={handleBack}
-          >
-            Back
-          </button>
-          <button
-            className="text-black mt-[400px] bg-indigo-400 rounded-md py-2 px-4"
-            onClick={handleNext}
-          >
-            Next
-          </button>
+      <ImageDetailSection />
+
+      <div className="detail wrapper py-4 mx-auto mt-12">
+        <div className="wraps max-w-[970px] mx-auto">
+          <div className="tpdetail">
+            <div className="grpgh flex flex-wrap mx-[-15px]">
+              <div className="leftcol w-full lg:w-[calc(100%-300px)] p-4">
+                <div className="lldetailpgh">
+                  <div className="theinfo mb-5">
+                    <ul className="flex flex-wrap -mx-2">
+                      <li class="flex w-1/2 px-2 mb-4">
+                        <div className="icon w-[20px]">
+                          <img
+                            src="https://mhomevietnam.vn/vnt_upload/project/08_2022/hh1.png"
+                            alt=""
+                          />
+                        </div>
+
+                        <div className="text w-full pl-2">
+                          <strong>Total area: </strong>
+                          {houseRoofDetail.sampleProject.totalArea} m&#178;
+                        </div>
+                      </li>
+                      <li class="flex w-1/2 px-2 mb-4">
+                        <div className="icon w-[20px]">
+                          <img
+                            src="https://mhomevietnam.vn/vnt_upload/project/08_2022/hh6.png"
+                            alt=""
+                          />
+                        </div>
+
+                        <div className="text w-full pl-2">
+                          <strong>Construction area: </strong>
+                          {houseRoofDetail.sampleProject.constructionArea}{" "}
+                          m&#178;
+                        </div>
+                      </li>
+                      <li class="flex w-1/2 px-2 mb-4">
+                        <div className="icon w-[20px]">
+                          <img
+                            src="https://mhomevietnam.vn/vnt_upload/project/08_2022/hh7.png"
+                            alt=""
+                          />
+                        </div>
+
+                        <div className="text w-full pl-2">
+                          <strong>Number of floor: </strong>
+                          {houseRoofDetail.sampleProject.numOfFloor}
+                        </div>
+                      </li>
+                      <li class="flex w-1/2 px-2 mb-4">
+                        <div className="icon w-[20px]">
+                          <img
+                            src="https://mhomevietnam.vn/vnt_upload/project/08_2022/hh2.png"
+                            alt=""
+                          />
+                        </div>
+
+                        <div className="text w-full pl-2">
+                          <strong>Description: </strong>
+                          {houseRoofDetail.sampleProject.function}
+                        </div>
+                      </li>
+                      <li class="flex w-1/2 px-2 mb-4">
+                        <div className="icon w-[20px]">
+                          <img
+                            src="https://mhomevietnam.vn/vnt_upload/project/08_2022/hh4.png"
+                            alt=""
+                          />
+                        </div>
+
+                        <div className="text w-full pl-2">
+                          <strong>Location: </strong>
+                          {houseRoofDetail.sampleProject.location}
+                        </div>
+                      </li>
+                      <li class="flex w-1/2 px-2 mb-4">
+                        <div className="icon w-[20px]">
+                          <img
+                            src="https://mhomevietnam.vn/vnt_upload/project/08_2022/hh8.png"
+                            alt=""
+                          />
+                        </div>
+
+                        <div className="text w-full pl-2">
+                          <strong>Estimate Price: </strong>
+                          {formatCurrency(
+                            houseRoofDetail.sampleProject.estimatePrice
+                          )}
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="thedesc ">
+                    <div
+                      className="para text-justify"
+                      dangerouslySetInnerHTML={{
+                        __html: houseRoofDetail.sampleProject.content,
+                      }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rightcol w-300 p-4">
+                <div className="rrdetailpgh">
+                  <div className="lhlinkregis mb-4">
+                    <NavLink
+                      to="/your-route"
+                      className="flex items-center content-center px-4 py-2 text-sm font-bold uppercase border border-baseOrange-500 bg-baseOrange-500 text-white rounded"
+                    >
+                      <span className="img mr-4">
+                        <img
+                          src="https://mhomevietnam.vn/skins/default/images/dk.png"
+                          alt=""
+                        />
+                      </span>
+                      <span>Sign up for advice</span>
+                    </NavLink>
+                  </div>
+
+                  <div className="lhinfotool bg-gray-200 rounded-md overflow-hidden">
+                    <div className="fxpoptool">
+                      <div className="itpop flex">
+                        <div className="ptxt">Hotline:</div>
+                        <div className="pnum flex items-center">
+                          <div className="nicon mr-3">
+                            <img
+                              src="/vnt_upload/project/08_2022/iphone.png"
+                              alt=""
+                            />
+                          </div>
+
+                          <div className="ntell line-height-6 font-bold text-gray-800">
+                            <a href="">1900 638 535</a>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="itpop flex">
+                        <div className="ptxt">Share</div>
+
+                        <div className="psha">
+                          <ul className="flex flex-wrap items-center content-center">
+                            <li className="ml-3 w-9 h-9 flex items-center content-center justify-center bg-white rounded-full">
+                              <FaFacebookF />
+                            </li>
+                            <li className="ml-3 w-9 h-9 flex items-center content-center justify-center bg-white rounded-full">
+                              <SiZalo />
+                            </li>
+                            <li className="ml-3 w-9 h-9 flex items-center content-center justify-center bg-white rounded-full">
+                              <FaInstagram />
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
+      <OtherSection />
     </>
   );
 }
