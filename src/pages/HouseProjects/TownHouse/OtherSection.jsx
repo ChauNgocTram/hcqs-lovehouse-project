@@ -9,15 +9,18 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 
 import { getAllProjects } from "../../../constants/apiHouseProject";
+import LoadingOverlay from "../../../components/Loading/LoadingOverlay";
 
 export default function OtherSection() {
   const [projectData, setProjectData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProject = async () => {
       const data = await getAllProjects();
       if (data && data.result) {
         setProjectData(data.result.data);
+        setLoading(false);
       }
     };
     fetchProject();
@@ -30,6 +33,7 @@ export default function OtherSection() {
   const firstSixItems = filteredProjects.slice(0, 5);
   return (
     <>
+    <LoadingOverlay loading={loading} />
       <div className=" mx-auto px-4 sm:px-0 mb-24">
         <h1 className="font-semibold text-4xl mt-24 mb-12 text-center">
           Other Projects

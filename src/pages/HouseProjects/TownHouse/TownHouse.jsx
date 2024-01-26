@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { getAllProjects } from "../../../constants/apiHouseProject";
+import LoadingOverlay from "../../../components/Loading/LoadingOverlay";
+import Navbar from "../../../components/Navbar/Navbar";
+import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb";
+import Footer from "../../../components/Footer/Footer";
+
 
 export default function TownHouse() {
   const [townHouseData, setTownHouseData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -11,6 +17,7 @@ export default function TownHouse() {
       const data = await getAllProjects();
       if (data && data.result) {
         setTownHouseData(data.result.data);
+        setLoading(false);
       }
     };
     fetchTownHouse();
@@ -21,11 +28,11 @@ export default function TownHouse() {
   );
   return (
     <>
-      {/* <LoadingOverlay loading={loading} />
-      <Navbar />
-      <Breadcrumb /> */}
+      <LoadingOverlay loading={loading} />
+      <Navbar/>
+      <Breadcrumb/>
       <section className="md:h-full flex items-center text-gray-600">
-        <div className="container px-5 py-24 mx-auto">
+        <div className="container px-2 py-24 mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-6xl text-gray-700 font-semibold">
               Town House Projects
@@ -43,7 +50,7 @@ export default function TownHouse() {
                     src={townhouse.staticFiles[1]?.url || ""}
                     alt={townhouse.sampleProject.header}
                   />
-                  <div className="p-6 hover:bg-baseOrange hover:text-baseOrange transition duration-300 ease-in">
+                  <div className="p-6 hover:bg-baseOrange hover:text-white transition duration-300 ease-in">
                     <h1 className="text-2xl font-semibold mb-3">
                       <NavLink to={`/town-house-projects/details/${townhouse.sampleProject.id}`}>
                         {townhouse.sampleProject.header.length >= 70
@@ -78,7 +85,7 @@ export default function TownHouse() {
           </div>
         </div>
       </section>
-      {/* <Footer /> */}
+      <Footer/>
     </>
   );
 }

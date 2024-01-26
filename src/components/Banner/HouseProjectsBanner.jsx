@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 export default function HouseProjectsBanner() {
   return (
@@ -15,11 +15,9 @@ export default function HouseProjectsBanner() {
           className="absolute inset-0 flex flex-col items-center justify-center text-white font-bold text-5xl"
           style={{ zIndex: 1000 }}
         >
-          
-CONSTRUCTION & FINISHING
+          CONSTRUCTION & FINISHING
         </div>
       </div>
     </div>
-  )
+  );
 }
-

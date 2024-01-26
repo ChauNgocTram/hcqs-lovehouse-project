@@ -4,22 +4,24 @@ import { NavLink } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination, Autoplay } from "swiper/modules";
 
-import { RxArrowTopRight } from "react-icons/rx";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
 
-//import BtnViewMore from "../Button/BtnViewMore";
+import BtnViewMore from "../Button/BtnViewMore";
 import { getAllProjects } from "../../constants/apiHouseProject";
+import LoadingOverlay from "../Loading/LoadingOverlay";
 
 export default function HouseRoofSection() {
   const [projectData, setProjectData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProject = async () => {
       const data = await getAllProjects();
       if (data && data.result) {
         setProjectData(data.result.data);
+        setLoading(false);
       }
     };
     fetchProject();
@@ -32,8 +34,9 @@ export default function HouseRoofSection() {
   const firstSixItems = filteredProjects.slice(0, 6);
   return (
     <>
+     <LoadingOverlay loading={loading} />
       <div className=" mx-auto px-4 sm:px-0 mb-24">
-        <h1 className="font-semibold uppercase text-4xl mt-24 mb-12 text-center">
+        <h1 className="font-semibold uppercase text-4xl my-12 text-center">
           House Roof
         </h1>
         <Swiper
@@ -95,11 +98,9 @@ export default function HouseRoofSection() {
             </SwiperSlide>
           ))}
         </Swiper>
-        <NavLink
-          to="/house-roof-projects"
-          className="hover:bg-orange-600 transition-all text-sm inline-flex rounded-md px-4 py-2 text-center border-2 border-orange-600"
-        >
-          View all
+
+        <NavLink to="/house-roof-projects" className="flex justify-center">
+          <BtnViewMore />
         </NavLink>
       </div>
     </>

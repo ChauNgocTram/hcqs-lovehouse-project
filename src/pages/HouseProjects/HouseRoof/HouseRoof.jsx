@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { getAllProjects } from "../../../constants/apiHouseProject";
+import Navbar from "../../../components/Navbar/Navbar";
+import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb";
+import Footer from "../../../components/Footer/Footer";
+import LoadingOverlay from "../../../components/Loading/LoadingOverlay";
 
 export default function HouseRoof() {
   const [houseRoofData, setHouseRoofData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -11,6 +16,7 @@ export default function HouseRoof() {
       const data = await getAllProjects();
       if (data && data.result) {
         setHouseRoofData(data.result.data);
+        setLoading(false);
       }
     };
     fetchHouseRoof();
@@ -21,9 +27,9 @@ export default function HouseRoof() {
   );
   return (
     <>
-      {/* <LoadingOverlay loading={loading} />
-      <Navbar />
-      <Breadcrumb /> */}
+      <LoadingOverlay loading={loading} />
+      <Navbar/>
+      <Breadcrumb/>
       <section className="md:h-full flex items-center text-gray-600">
         <div className="container px-5 py-24 mx-auto">
           <div className="text-center mb-12">
@@ -43,7 +49,7 @@ export default function HouseRoof() {
                     src={houseroof.staticFiles[1]?.url || ""}
                     alt={houseroof.sampleProject.header}
                   />
-                  <div className="p-6 hover:bg-baseOrange hover:text-baseOrange transition duration-300 ease-in">
+                  <div className="p-6 hover:bg-baseOrange hover:text-white transition duration-300 ease-in">
                     <h1 className="text-2xl font-semibold mb-3">
                       <NavLink to={`/house-roof-projects/details/${houseroof.sampleProject.id}`}>
                         {houseroof.sampleProject.header.length >= 70
@@ -78,7 +84,7 @@ export default function HouseRoof() {
           </div>
         </div>
       </section>
-      {/* <Footer /> */}
+     <Footer/>
     </>
   );
 }

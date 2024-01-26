@@ -9,7 +9,7 @@ import LoadingOverlay from "../../components/Loading/LoadingOverlay";
 
 export default function Blog() {
   const [blogData, setBlogData] = useState([]);
-    const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -22,7 +22,7 @@ export default function Blog() {
             date: formatBlogDate(blog.date),
           }));
           setBlogData(formattedData);
-           setLoading(false);
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error fetching blogs:", error);
@@ -55,7 +55,7 @@ export default function Blog() {
 
   return (
     <>
-    <LoadingOverlay loading={loading} />
+      <LoadingOverlay loading={loading} />
       <Navbar />
       <Breadcrumb />
       <section className="md:h-full flex items-center text-gray-600">

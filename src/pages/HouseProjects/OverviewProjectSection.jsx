@@ -7,9 +7,12 @@ import { FaFacebookF } from "react-icons/fa";
 import { SiZalo } from "react-icons/si";
 import { FaInstagram } from "react-icons/fa";
 
+import LoadingOverlay from "../../components/Loading/LoadingOverlay";
+
 export default function OverviewProjectSection() {
   const { id } = useParams();
   const [houseProjectDetail, setHouseProjectDetail] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchHouseProjectDetail = async () => {
@@ -17,6 +20,7 @@ export default function OverviewProjectSection() {
         const data = await getProjectDetail(id);
         if (data && data.result) {
           setHouseProjectDetail(data.result.data);
+          setLoading(false);
         } else {
           console.error("Invalid data format:", data);
         }
@@ -39,6 +43,8 @@ export default function OverviewProjectSection() {
     }).format(amount);
   };
   return (
+    <>
+    <LoadingOverlay loading={loading} />
     <div className="detail wrapper py-4 mx-auto mt-12">
       <div className="wraps max-w-[970px] mx-auto">
         <div className="tpdetail">
@@ -147,7 +153,7 @@ export default function OverviewProjectSection() {
                 <div className="lhlinkregis mb-4">
                   <NavLink
                     to="/your-route"
-                    className="flex items-center content-center px-4 py-2 text-sm font-bold uppercase border border-baseOrange-500 bg-baseOrange-500 text-white rounded"
+                    className="flex items-center content-center px-4 py-2 text-sm font-bold uppercase border border-baseOrange bg-baseOrange text-white rounded"
                   >
                     <span className="img mr-4">
                       <img
@@ -159,7 +165,7 @@ export default function OverviewProjectSection() {
                   </NavLink>
                 </div>
 
-                <div className="lhinfotool bg-gray-200 rounded-md overflow-hidden">
+                <div className="lhinfotool bg-gray-200 rounded-md overflow-hidden p-4 flex justify-center">
                   <div className="fxpoptool">
                     <div className="itpop flex">
                       <div className="ptxt">Hotline:</div>
@@ -172,13 +178,13 @@ export default function OverviewProjectSection() {
                         </div>
 
                         <div className="ntell line-height-6 font-bold text-gray-800">
-                          <a href="">1900 638 535</a>
+                          <a href="" className="hover:text-baseOrange">1900 638 535</a>
                         </div>
                       </div>
                     </div>
 
-                    <div className="itpop flex">
-                      <div className="ptxt">Share</div>
+                    <div className="itpop flex items-center mt-4 ">
+                      <div className="ptxt">Share:</div>
 
                       <div className="psha">
                         <ul className="flex flex-wrap items-center content-center">
@@ -202,5 +208,7 @@ export default function OverviewProjectSection() {
         </div>
       </div>
     </div>
+    </>
+    
   );
 }
