@@ -27,7 +27,7 @@ export default function Navbar() {
             <NavLink to="/aboutus">About Us</NavLink>
           </li>
           <li className="p-4 hover:underline underline-offset-8">
-            <NavLink to="/projects">Projects</NavLink>
+            <NavLink to="/houseProject">Projects</NavLink>
           </li>
           <li className="p-4 hover:underline underline-offset-8">
             <NavLink to="/quotation">Construction Quotes</NavLink>
@@ -68,7 +68,7 @@ export default function Navbar() {
             <NavLink to="/aboutus">About Us</NavLink>
           </li>
           <li className="p-4">
-            <NavLink to="/projects">Project</NavLink>
+            <NavLink to="/houseProject">Project</NavLink>
           </li>
           <li className="p-4">
             <NavLink to="/quotation">Construction Quotes</NavLink>

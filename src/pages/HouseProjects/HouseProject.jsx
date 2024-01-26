@@ -1,13 +1,15 @@
 import React from 'react'
-import Breadcrumb from '../../components/Breadcrumb/Breadcrumb'
+import HouseProjectsBanner from '../../components/Banner/HouseProjectsBanner'
+import HouseRoofSection from '../../components/HouseProjectsComponent/HouseRoofSection'
+import TownHouseSection from '../../components/HouseProjectsComponent/TownHouseSection'
 
 function HouseProject() {
   return (
-    <>
-    <Breadcrumb currentPage="House Projects"/>
-    <div>HouseProject</div>
-    </>
-    
+   <>
+   <HouseProjectsBanner/>
+   <HouseRoofSection/>
+   <TownHouseSection/>
+   </>
   )
 }
 
