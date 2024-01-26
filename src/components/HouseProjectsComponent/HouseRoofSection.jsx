@@ -10,14 +10,14 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 
 //import BtnViewMore from "../Button/BtnViewMore";
-import { getAllProjects } from "../../constants/apiHouseProject";
+import { getHouseRoof } from "../../constants/apiHouseProject";
 
 export default function HouseRoofSection() {
   const [projectData, setProjectData] = useState([]);
 
   useEffect(() => {
     const fetchProject = async () => {
-      const data = await getAllProjects();
+      const data = await getHouseRoof();
       if (data && data.result) {
         setProjectData(data.result.data);
       }
@@ -25,60 +25,83 @@ export default function HouseRoofSection() {
     fetchProject();
   }, []);
 
-  const filteredProjects = projectData.filter(project => project.sampleProject.projectType === 1);
+  const filteredProjects = projectData.filter(
+    (project) => project.sampleProject.projectType === 1
+  );
 
-  const firstSixItems = projectData.slice(0, 6);
+  const firstSixItems = filteredProjects.slice(0, 6);
   return (
-    <div className="flex items-center justify-center flex-col h-screen ">
-      <h1 className="font-semibold uppercase text-4xl mb-12">
-        House Roof
-      </h1>
-
-      <Swiper
-        breakpoints={{
-          340: {
-            slidesPerView: 2,
-            spaceBetween: 15,
-          },
-          700: {
-            slidesPerView: 3,
-            spaceBetween: 15,
-          },
-        }}
-        freeMode={true}
-        pagination={{
-          clickable: true,
-        }}
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
-        }}
-        modules={[FreeMode, Pagination, Autoplay]}
-        className="max-w-[90%] lg:max-w-[80%]"
-      >
-        {firstSixItems.map((project, index) => (
-          <SwiperSlide key={index}>
-            <div className="flex flex-col gap-6 mb-20 group relative shadow-lg  rounded-xl px-6 py-8 h-[250px] w-[215px] lg:h-[400px] lg:w-[350px] overflow-hidden cursor-pointer">
-            <img
-                    className="lg:h-72 md:h-48 w-full object-cover object-center"
-                    //src={project.staticFile[1].url}
-                    alt="blog"
-                  />
-              <div className="p-6 h-[315px] hover:bg-baseOrange hover:text-white transition duration-300 ease-in">
-                    
-                    <h1 className="text-2xl font-semibold mb-3">
-                      <NavLink to={`/blogDetail/${project.id}`}>
-                        {project.sampleProject.header}
-                      </NavLink>
-                    </h1>
-                    </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-      <NavLink to={"/news"}>
-        {/* <BtnViewMore /> */}
-      </NavLink>
-    </div>
+    <>
+      <div className=" mx-auto px-4 sm:px-0 mb-24">
+        <h1 className="font-semibold uppercase text-4xl mt-24 mb-12 text-center">
+          House Roof
+        </h1>
+        <Swiper
+          breakpoints={{
+            340: {
+              slidesPerView: 2,
+              spaceBetween: 15,
+            },
+            700: {
+              slidesPerView: 3,
+              spaceBetween: 15,
+            },
+          }}
+          freeMode={true}
+          pagination={{
+            clickable: true,
+          }}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
+          modules={[FreeMode, Pagination, Autoplay]}
+          className="max-w-[90%] lg:max-w-[80%]"
+        >
+          {firstSixItems.map((project, index) => (
+            <SwiperSlide key={index}>
+              <div className="card rounded-md  overflow-hidden relative group">
+                <img
+                  src={project.staticFiles[1]?.url || ""}
+                  alt={project.sampleProject.header}
+                  className="w-full h-[330px] transition-all transform group-hover:scale-110"
+                />
+                <div className="group-hover:bottom-0 transition-all absolute -bottom-20 left-0 text-white p-6 z-20">
+                  <h3 className="mb-10 text-2xl">
+                    <NavLink
+                      to={`/houseProjectDetail/${project.sampleProject.id}`}
+                    >
+                      {project.sampleProject.header &&
+                        (project.sampleProject.header.length >= 70
+                          ? project.sampleProject.header
+                              .substring(0, 50)
+                              .trim() + "..."
+                          : project.sampleProject.header)}
+                    </NavLink>
+                  </h3>
+                  <NavLink
+                    to={`/houseProjectDetail/${project.sampleProject.id}`}
+                    className="hover:bg-orange-600 transition-all text-sm inline-flex rounded-md px-4 py-2 text-center border-2 border-orange-600"
+                  >
+                    View details
+                  </NavLink>
+                </div>
+                <div className="z-10 h-1/2 absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent"></div>
+                <a
+                  href="#"
+                  className="absolute z-0 inset-0 bg-orange-600 opacity-0 group-hover:opacity-80 transition-all"
+                ></a>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        <NavLink
+          to="/houseProjects?type=1"
+          className="hover:bg-orange-600 transition-all text-sm inline-flex rounded-md px-4 py-2 text-center border-2 border-orange-600"
+        >
+          View all
+        </NavLink>
+      </div>
+    </>
   );
 }
