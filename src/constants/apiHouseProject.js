@@ -10,20 +10,20 @@ export const getAllProjects = async (fieldName, ascending) => {
   }
 };
 
-export const getHouseRoof = async (fieldName, ascending) => {
-  try {
-    const params = {
-      // Add parameters for filtering by projectType
-      projectType: 1,
-      // You can add more parameters here if needed
-    };
+// export const getHouseRoof = async (fieldName, ascending) => {
+//   try {
+//     const params = {
+//       // Add parameters for filtering by projectType
+//       projectType: 1,
+//       // You can add more parameters here if needed
+//     };
 
-    const res = await axios.post(`${baseURL}/sample-project/get-all`, params);
-    return res.data;
-  } catch (err) {
-    return null;
-  }
-};
+//     const res = await axios.post(`${baseURL}/sample-project/get-all`, params);
+//     return res.data;
+//   } catch (err) {
+//     return null;
+//   }
+// };
 
 export const getProjectDetail = async (Id) => {
   try {

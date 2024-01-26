@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { getProjectDetail } from "../../../constants/apiHouseProject";
 
 export default function HouseRoofDetail() {
-  const [houseRoofData, setHouseRoofData] = useState([]);
+  const { id } = useParams();
+  const [houseRoofDetail, setHouseRoofDetail] = useState({});
   const [positionIndexes, setPositionIndexes] = useState([0, 1, 2, 3, 4]);
 
   useEffect(() => {
     const fetchHouseRoof = async () => {
       try {
-        const data = await getProjectDetail();
-        if (data && data.result) {
-          setHouseRoofData(data.result.data);
+        const data = await getProjectDetail(id);
+        if (data && data.result && Array.isArray(data.result.data)) {
+          setHouseRoofDetail(data.result.data);
+        } else {
+          // Handle the case where data is not an array
+          console.error("Invalid data format:", data);
         }
       } catch (error) {
         console.error("Error fetching house roof data:", error);
@@ -19,9 +24,14 @@ export default function HouseRoofDetail() {
     };
 
     fetchHouseRoof();
-  }, []);
+  }, [id]);
 
-  const filteredProjects = houseRoofData.filter(
+  if (!houseRoofDetail || !Array.isArray(houseRoofDetail)) {
+    // If data is not available or not an array, you can render a loading state or return null
+    return null;
+  }
+
+  const filteredProjects = houseRoofDetail.filter(
     (project) => project.sampleProject.projectType === 1
   );
 
@@ -41,10 +51,10 @@ export default function HouseRoofDetail() {
 
   const imageVariants = {
     center: { x: "0%", scale: 1, zIndex: 5 },
-    left1: { x: "-50%", scale: 0.7, zIndex: 4 }, // Adjust zIndex
+    left1: { x: "-50%", scale: 0.7, zIndex: 4 },
     left: { x: "-90%", scale: 0.5, zIndex: 1 },
     right: { x: "90%", scale: 0.5, zIndex: 1 },
-    right1: { x: "50%", scale: 0.7, zIndex: 4 }, // Adjust zIndex
+    right1: { x: "50%", scale: 0.7, zIndex: 4 },
   };
 
   return (
@@ -53,7 +63,7 @@ export default function HouseRoofDetail() {
       <div className="flex items-center flex-col justify-center bg-black h-screen relative">
         {filteredProjects.map((image, index) => (
           <motion.img
-           key={image.sampleProject.id}
+            key={image.sampleProject.id}
             src={image.staticFiles[0]?.url || ""}
             alt={image.sampleProject.id}
             className="rounded-[12px]"
