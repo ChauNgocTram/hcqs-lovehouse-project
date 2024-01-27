@@ -1,6 +1,7 @@
 import React from "react";
-import { useRoutes } from "react-router-dom";
+import { Navigate, useRoutes } from "react-router-dom";
 import { HomeLayout } from "../layout/HomeLayout.";
+import { AuthLayout } from "../layout/AuthLayout"
 import Home from "../pages/Home/Home.jsx";
 
 import HouseProject from "../pages/HouseProjects/HouseProject";
@@ -12,6 +13,7 @@ import News from "../pages/News/News";
 import NewsDetail from "../pages/News/NewsDetail";
 import Blog from "../pages/Blogs/Blog";
 import BlogDetail from "../pages/Blogs/BlogDetail";
+
 
 export default function Routers() {
   const routing = useRoutes([
@@ -52,6 +54,11 @@ export default function Routers() {
 
     //     ],
     //   },
+    {
+      path: "/auth",
+      element: <AuthLayout />,
+      children: [{ path: "/auth", element: <Auth /> }],
+    },
   ]);
   return routing;
 }
