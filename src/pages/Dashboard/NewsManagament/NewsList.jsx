@@ -156,7 +156,10 @@ const NewsList = () => {
                   filteredNews.map((news) => {
                     const user = allUsers.find(
                       (u) => u.user.id === news.accountId
-                    ) || { firstName: "", lastName: "" };
+                    ) || {
+                      firstName: "",
+                      lastName: "",
+                    };
 
                     return (
                       <div
@@ -202,12 +205,12 @@ const NewsList = () => {
                               </div>
 
                               <div className="absolute hidden group-hover:block right-0 top-10 bg-white text-baseDark rounded-md border">
-                                <div className="flex flex-col ">
+                                <div className="flex flex-col">
                                   {/* Edit  */}
-                                  <motion.div
-                                    {...buttonClick}
+                                  <Link
+                                    to={`/dashboard/edit-news/${news.id}`}
                                     className="flex items-center justify-start px-2 py-1 m-2 hover:bg-gray-300 
-                            rounded-md"
+                                    rounded-md"
                                   >
                                     <div className="text-2xl">
                                       <CiEdit />
@@ -218,13 +221,13 @@ const NewsList = () => {
                                         Change the News Page
                                       </p>
                                     </div>
-                                  </motion.div>
+                                  </Link>
 
                                   {/* delete  */}
                                   <motion.div
                                     {...buttonClick}
                                     className="flex items-center justify-start px-2 py-1 m-2 hover:bg-gray-300 
-                                rounded-md"
+                                    rounded-md"
                                     onClick={() => handleDeleteClick(news.id)}
                                   >
                                     <div className="text-2xl">

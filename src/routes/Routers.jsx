@@ -9,6 +9,7 @@ import {
   DBHome,
   Dashboard,
   Home,
+  NewsEdit,
   NewsCreate,
   NewsList,
   Password,
@@ -49,6 +50,7 @@ function Routers() {
 
         { path: "create-news", element: <NewsCreate /> },
         { path: "list-news", element: <NewsList /> },
+        { path: "edit-news/:id", element: <NewsEdit /> },
 
         { path: "create-blog", element: <BlogCreate /> },
         { path: "list-blogs", element: <BlogsList /> },

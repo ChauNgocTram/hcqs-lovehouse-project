@@ -3,23 +3,24 @@ export const usertoken = localStorage.accessToken;
 
 //account
 export {
-    activeAccount,
-    getAccountById,
-    getNewToken,
     createAccount,
+    getAccountById,
+    getAllAccount,
+    getNewToken,
+    activeAccount,
     googleCallback,
     loginWithEmailPass,
     sendOTP,
     sendResetPassOTP,
     submitOTPResetPass,
-    getAllAccount
 }
 from "./account";
 
 //news
 export {
-    getAllNews,
     createNews,
+    getNewsById,
+    getAllNews,
     updateNews,
     deleteNewsById
 }

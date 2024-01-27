@@ -24,6 +24,7 @@ export { default as UsersList } from "./Dashboard/UserManagament/UsersList";
 
 export { default as NewsCreate } from "./Dashboard/NewsManagament/NewsCreate";
 export { default as NewsList } from "./Dashboard/NewsManagament/NewsList";
+export { default as NewsEdit } from "./Dashboard/NewsManagament/NewsEdit";
 
 export { default as BlogCreate } from "./Dashboard/BlogManagament/BlogCreate";
 export { default as BlogsList } from "./Dashboard/BlogManagament/BlogsList";
