@@ -316,7 +316,7 @@ function DBSidebar({ setIsOpen }) {
                     Create blog
                   </NavLink>
                   <NavLink
-                    to={"/dashboard/list-blogs"}
+                    to={"/dashboard/list-blog"}
                     className={({ isActive }) =>
                       isActive
                         ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
