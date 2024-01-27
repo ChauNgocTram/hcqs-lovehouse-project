@@ -3,7 +3,7 @@ import mainlogo from "../../assets/images/mainlogo.png";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import BtnLoginRegister from "../Button/BtnLoginRegister";
 import { NavLink } from "react-router-dom";
-import { UseSelector, useSelector } from "react-redux";
+import { useSelector} from "react-redux";
 
 export default function Navbar() {
   const isAuthenticated = useSelector((state) => !!state.auth.accessToken);

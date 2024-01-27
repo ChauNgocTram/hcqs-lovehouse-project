@@ -1,14 +1,14 @@
 import { useEffect, Suspense, useState } from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter as Routes } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+
 import { ToastContainer } from "react-toastify";
 
 import Routers from "./routes/Routers";
 import { getAccountById, getNewToken } from "./api";
-import { SET_USER, SET_USER_NULL } from "./context/actions/userActions";
-import { logout, setTokens, setUserRole } from "./context/actions/authActions";
-import { MutatingDots } from "./components";
+import { SET_USER, SET_USER_NULL } from "./context2/actions/userActions";
+import { logout, setTokens, setUserRole } from "./context2/actions/authActions";
+
 
 function App() {
   const dispatch = useDispatch();
