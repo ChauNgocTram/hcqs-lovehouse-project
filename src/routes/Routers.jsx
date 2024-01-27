@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate, useRoutes } from "react-router-dom";
 import { HomeLayout } from "../layout/HomeLayout.";
-import  AuthLayout  from "../layout/AuthLayout"
+
 import Home from "../pages/Home/Home.jsx";
 
 import HouseProject from "../pages/HouseProjects/HouseProject";
@@ -54,11 +54,7 @@ export default function Routers() {
 
     //     ],
     //   },
-    {
-      path: "/auth",
-      element: <AuthLayout/>,
-      children: [{ path: "/auth", element: <Auth /> }],
-    },
+   
   ]);
   return routing;
 }
