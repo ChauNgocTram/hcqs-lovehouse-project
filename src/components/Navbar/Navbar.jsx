@@ -3,15 +3,17 @@ import mainlogo from "../../assets/images/mainlogo.png";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import BtnLoginRegister from "../Button/BtnLoginRegister";
 import { NavLink } from "react-router-dom";
+import { UseSelector, useSelector } from "react-redux";
 
 export default function Navbar() {
+  const isAuthenticated = useSelector((state) => !!state.auth.accessToken);
+  const userRole = useSelector((state) => state.auth.userRole);
+
   const [nav, setNav] = useState(false);
 
   const handleNav = () => {
     setNav(!nav);
   };
-
-  
 
   return (
     <div className="navbar relative px-4 py-4 flex justify-between items-center h-24 mx-auto uppercase text-white bg-baseOrange">
@@ -20,30 +22,32 @@ export default function Navbar() {
       </NavLink>
 
       <ul className="hidden md:flex">
-      <li className="p-4 hover:underline underline-offset-8">
-            <NavLink to="/">Home</NavLink>
-          </li>
-          <li className="p-4 hover:underline underline-offset-8">
-            <NavLink to="/aboutus">About Us</NavLink>
-          </li>
-          <li className="p-4 hover:underline underline-offset-8">
-            <NavLink to="/houseProject">Projects</NavLink>
-          </li>
+        <li className="p-4 hover:underline underline-offset-8">
+          <NavLink to="/">Home</NavLink>
+        </li>
+        <li className="p-4 hover:underline underline-offset-8">
+          <NavLink to="/aboutus">About Us</NavLink>
+        </li>
+        <li className="p-4 hover:underline underline-offset-8">
+          <NavLink to="/houseProject">Projects</NavLink>
+        </li>
+        {isAuthenticated && userRole === "user" && (
           <li className="p-4 hover:underline underline-offset-8">
             <NavLink to="/quotation">Construction Quotes</NavLink>
           </li>
-          <li className="p-4 hover:underline underline-offset-8">
-            <NavLink to="/news">News</NavLink>
-          </li>
-          <li className="p-4 hover:underline underline-offset-8">
-            <NavLink to="/blog">Blogs</NavLink>
-          </li>
+        )}
+
+        <li className="p-4 hover:underline underline-offset-8">
+          <NavLink to="/news">News</NavLink>
+        </li>
+        <li className="p-4 hover:underline underline-offset-8">
+          <NavLink to="/blog">Blogs</NavLink>
+        </li>
       </ul>
 
       <div className="hidden md:flex">
         <BtnLoginRegister />
       </div>
-      
 
       <div onClick={handleNav} className="block md:hidden px-10">
         {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
@@ -62,7 +66,7 @@ export default function Navbar() {
 
         <ul className=" uppercase p-4">
           <li className="p-4">
-            <NavLink to="/" >Home</NavLink>
+            <NavLink to="/">Home</NavLink>
           </li>
           <li className="p-4">
             <NavLink to="/aboutus">About Us</NavLink>
