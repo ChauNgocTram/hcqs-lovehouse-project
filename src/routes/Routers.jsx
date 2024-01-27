@@ -4,6 +4,8 @@ import {
   AboutUs,
   Account,
   Auth,
+  BlogCreate,
+  BlogsList,
   DBHome,
   Dashboard,
   Home,
@@ -44,8 +46,12 @@ function Routers() {
       children: [
         { path: "home", element: <DBHome /> },
         { path: "users-list", element: <UsersList /> },
+
         { path: "create-news", element: <NewsCreate /> },
         { path: "list-news", element: <NewsList /> },
+
+        { path: "create-blog", element: <BlogCreate /> },
+        { path: "list-blogs", element: <BlogsList /> },
       ],
     },
     {

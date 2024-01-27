@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import {
@@ -16,15 +17,26 @@ import { MdLogout } from "react-icons/md";
 import { AiOutlinePieChart } from "react-icons/ai";
 import { FaBlog, FaRegNewspaper } from "react-icons/fa6";
 
-import { slideUpOut } from "../../assets/animations";
+import { buttonClick, slideUpOut } from "../../assets/animations";
+import { logout } from "../../context/actions/authActions";
+import { SET_USER_NULL } from "../../context/actions/userActions";
 import { HouseLogo, isActiveStyles, isNotActiveStyles } from "../../assets";
 
-function DBSidebar() {
+function DBSidebar({ setIsOpen }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [isDashboard, setIsDashboard] = useState(false);
   const [isUser, setIsUser] = useState(true);
   const [isNews, setIsNews] = useState(true);
   const [isProject, setIsProject] = useState(true);
   const [isBlogs, setIsBlogs] = useState(true);
+
+  const handleSignout = () => {
+    dispatch(logout());
+    dispatch(SET_USER_NULL());
+    navigate("/auth");
+  };
 
   return (
     <div
@@ -38,7 +50,10 @@ function DBSidebar() {
             <img src={HouseLogo} alt="logo" className="w-10" />
             <p className="px-2 text-xl">Love House</p>
           </Link>
-          <div className="text-white cursor-pointer">
+          <div
+            className="text-white cursor-pointer"
+            onClick={() => setIsOpen(false)}
+          >
             <FaArrowLeft />
           </div>
         </div>
@@ -75,26 +90,6 @@ function DBSidebar() {
                     }
                   >
                     Home
-                  </NavLink>
-                  <NavLink
-                    to={"/"}
-                    className={({ isActive }) =>
-                      isActive
-                        ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
-                        : isNotActiveStyles
-                    }
-                  >
-                    Users
-                  </NavLink>
-                  <NavLink
-                    to={"/"}
-                    className={({ isActive }) =>
-                      isActive
-                        ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
-                        : isNotActiveStyles
-                    }
-                  >
-                    Users
                   </NavLink>
                 </motion.div>
               </>
@@ -259,7 +254,7 @@ function DBSidebar() {
             >
               <div className="flex items-center justify-start py-2">
                 <FaRegNewspaper className="" />
-                <div className="pl-2">News</div>
+                <div className="pl-2">News Management</div>
               </div>
               <div>{isNews ? <FaChevronDown /> : <FaChevronUp />}</div>
             </div>
@@ -301,7 +296,7 @@ function DBSidebar() {
             >
               <div className="flex items-center justify-start py-2">
                 <FaBlog className="" />
-                <div className="pl-2">Blogs</div>
+                <div className="pl-2">Blogs Management</div>
               </div>
               <div>{isBlogs ? <FaChevronDown /> : <FaChevronUp />}</div>
             </div>
@@ -311,34 +306,24 @@ function DBSidebar() {
               <>
                 <motion.div {...slideUpOut} className={`flex flex-col `}>
                   <NavLink
-                    to={"/dashboard"}
+                    to={"/dashboard/create-blog"}
                     className={({ isActive }) =>
                       isActive
                         ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
                         : isNotActiveStyles
                     }
                   >
-                    News
+                    Create blog
                   </NavLink>
                   <NavLink
-                    to={"/"}
+                    to={"/dashboard/list-blogs"}
                     className={({ isActive }) =>
                       isActive
                         ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
                         : isNotActiveStyles
                     }
                   >
-                    Users
-                  </NavLink>
-                  <NavLink
-                    to={"/"}
-                    className={({ isActive }) =>
-                      isActive
-                        ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
-                        : isNotActiveStyles
-                    }
-                  >
-                    Users
+                    Blogs List
                   </NavLink>
                 </motion.div>
               </>
@@ -366,10 +351,14 @@ function DBSidebar() {
             </NavLink>
 
             {/* logout  */}
-            <div className="flex items-center justify-start py-2">
+            <motion.div
+              {...buttonClick}
+              className="flex items-center justify-start py-2 cursor-pointer"
+              onClick={handleSignout}
+            >
               <MdLogout className="text-xl" />
               <div className="pl-2">Logout</div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>

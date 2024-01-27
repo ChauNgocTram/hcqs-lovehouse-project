@@ -22,7 +22,7 @@ function Login({ setIsLoading, setIsForgot }) {
   const handleLogin = async () => {
     setIsLoading(true);
     // Kiểm tra xem cả email và password có được nhập không
-    if (!email || !password) {
+    if (getEmailValidationStatus === false || !email || !password) {
       alert.alertFailedWithTime(
         "Failed To Log In",
         "Please enter both email and password.",

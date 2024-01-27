@@ -18,9 +18,14 @@ export { default as Password } from "./Setting/Password";
 export { default as Account } from "./Setting/Account";
 
 export { default as Dashboard } from "./Dashboard/Dashboard";
-export { default as UsersList } from "./Dashboard/UsersList";
-export { default as NewsCreate } from "./Dashboard/NewsCreate";
-export { default as NewsList } from "./Dashboard/NewsList";
 export { default as DBHome } from "./Dashboard/DBHome";
+
+export { default as UsersList } from "./Dashboard/UserManagament/UsersList";
+
+export { default as NewsCreate } from "./Dashboard/NewsManagament/NewsCreate";
+export { default as NewsList } from "./Dashboard/NewsManagament/NewsList";
+
+export { default as BlogCreate } from "./Dashboard/BlogManagament/BlogCreate";
+export { default as BlogsList } from "./Dashboard/BlogManagament/BlogsList";
 
 export { default as AboutUs } from "./AboutUs/AboutUs";

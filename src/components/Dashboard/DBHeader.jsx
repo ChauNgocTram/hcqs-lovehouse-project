@@ -1,16 +1,24 @@
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+
 import { FaBars } from "react-icons/fa";
-import { Avatar, HouseLogo } from "../../assets";
 import { AiOutlineMessage } from "react-icons/ai";
 import { IoMdNotificationsOutline } from "react-icons/io";
-import { Link } from "react-router-dom";
 
-function DBHeader() {
+import { Avatar, HouseLogo } from "../../assets";
+import { buttonClick } from "../../assets/animations";
+
+function DBHeader({ setIsOpen, isOpen }) {
   return (
     <div className="flex items-center justify-between w-full bg-white p-4 shadow-md">
       <div className="flex items-center justify-center py-2 ">
-        <div className="border border-gray-300 p-2 cursor-pointer">
+        <motion.div
+          {...buttonClick}
+          className="border border-gray-300 p-2 cursor-pointer"
+          onClick={() => setIsOpen(!isOpen)}
+        >
           <FaBars className="text-xl" />
-        </div>
+        </motion.div>
         <Link to={"/"} className="px-2">
           <img src={HouseLogo} alt="logo" className="w-10" />
         </Link>

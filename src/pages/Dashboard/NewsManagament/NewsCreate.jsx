@@ -1,108 +1,93 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytesResumable,
-} from "@firebase/storage";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 
 import { MdDelete } from "react-icons/md";
 import { AiOutlineCloudUpload } from "react-icons/ai";
+import { FaChevronRight, FaRegNewspaper } from "react-icons/fa6";
 
 import {
   TextEditorBar,
   modules,
   formats,
   MutatingDots,
-} from "../../components";
-import { buttonClick } from "../../assets/animations";
-import { NewFormCreate } from "../../assets";
-import { storage } from "../../config/firebase.config";
-import "../../assets/Styles/Snow.css";
+} from "../../../components";
+import { NewFormCreate } from "../../../assets";
+import { buttonClick } from "../../../assets/animations";
+import { createNews } from "../../../api";
+import "../../../assets/Styles/Snow.css";
 
 function NewsCreate() {
   const user = useSelector((state) => state?.user?.user);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-
   const [isLoading, setisLoading] = useState(false);
   const [progress, setProgress] = useState(null);
-  const [imageDownloadURL, setImageDownloadURL] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const uploadImage = (e) => {
-    setisLoading(true);
-    const imageFile = e.target.files[0];
-    const storageRef = ref(storage, `Images/${Date.now()}_${imageFile.name}`);
-
-    const uploadTask = uploadBytesResumable(storageRef, imageFile);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        setProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-      },
-      (error) => {
-        toast.error("Error Uploaded to the cloud : ", error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setImageDownloadURL(downloadURL);
-          setisLoading(false);
-          setProgress(null);
-          toast.success("Image Uploaded to the cloud ~");
-        });
-      }
-    );
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedImage(file);
+    }
+    toast.success("Upload Image Successfully");
   };
 
-  const deleteImageFromFirebase = () => {
-    setisLoading(true);
-    const deleteRef = ref(storage, imageDownloadURL);
-
-    deleteObject(deleteRef).then(() => {
-      setImageDownloadURL(null);
-      setisLoading(false);
-      toast.success("Image removed from the cloud~");
-    });
+  const deleteImage = () => {
+    setSelectedImage(null);
+    toast.success("Delete Image Successfully");
   };
 
   const submitNews = async () => {
-    // const userId = user.uid;
-    // const feedbackData = {
-    //   title,
-    //   content,
-    //   campusId: selectedCampus,
-    //   roomId: selectedRoom,
-    //   facilityId: selectedFacility,
-    //   imageURL: imageDownloadURL,
-    // };
-    // const response = await createFeedback(userId, feedbackData);
+    try {
+      setisLoading(true);
 
-    // if (response) {
-    //   console.log("Feedback created successfully:", response);
-    //   toast.success("Feedback created successfully");
-    // } else {
-    //   console.error("Failed to create feedback.");
-    //   toast.warning(
-    //     "Cannot provide feedback for the same facility because have a user feedback the same"
-    //   );
-    // }
-    // getFeedbackWithUser(user?.uid).then((data) => {
-    //   dispatch(setFeedback(data));
-    // });
-    navigate("/dashboard/list-news");
+      const formData = new FormData();
+      formData.append("Header", title);
+      formData.append("Content", content);
+      formData.append("AccountId", user?.id);
+
+      if (selectedImage) {
+        formData.append("ImgUrl", selectedImage);
+      }
+
+      const response = await createNews(formData);
+
+      if (response) {
+        toast.success("News created successfully");
+        navigate("/dashboard/list-news");
+      } else {
+        toast.error("Failed to create news");
+      }
+    } catch (error) {
+      console.error("Error creating news", error);
+      toast.error("An error occurred. Please try again later.");
+    } finally {
+      setisLoading(false);
+    }
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col p-8">
+      {/* title */}
+      <div>
+        <div className="flex items-center space-x-2 text-xl">
+          <FaRegNewspaper />
+          <div>News</div>
+          <FaChevronRight />
+          <div>Create News</div>
+          <FaChevronRight />
+        </div>
+        <div className="text-2xl text-orange-400 font-semibold py-4">
+          News Management
+        </div>
+      </div>
       {/* title  */}
       <div className="pt-12 bg-gray-50 sm:pt-16 border-b pb-[250px] relative">
         <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
@@ -116,7 +101,7 @@ function NewsCreate() {
             </div>
             <div className="flex-1 text-center md:text-left relative">
               <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                Love House Create Form
+                Love House News Create Form
               </h1>
               <div className="mt-2 text-lg font-normal text-gray-600">
                 Complete the Lovehouse Civil News creation form to share updates
@@ -227,7 +212,7 @@ function NewsCreate() {
                         </div>
                       ) : (
                         <>
-                          {!imageDownloadURL ? (
+                          {!selectedImage ? (
                             <>
                               <label>
                                 <div className=" flex flex-col items-center justify-center h-full w-full cursor-pointer">
@@ -254,7 +239,7 @@ function NewsCreate() {
                               <div className="relative w-full h-full overflow-hidden rounded-md">
                                 <motion.img
                                   whileHover={{ scale: 1.15 }}
-                                  src={imageDownloadURL}
+                                  src={URL.createObjectURL(selectedImage)}
                                   className=" w-full h-full object-cover"
                                 />
 
@@ -262,9 +247,7 @@ function NewsCreate() {
                                   {...buttonClick}
                                   type="button"
                                   className="absolute top-3 right-3 p-3 rounded-full bg-red-500 text-xl cursor-pointer outline-none hover:shadow-md duration-500 transition-all ease-in-out"
-                                  onClick={() =>
-                                    deleteImageFromFirebase(imageDownloadURL)
-                                  }
+                                  onClick={deleteImage}
                                 >
                                   <MdDelete className="-rotate-0" />
                                 </motion.button>

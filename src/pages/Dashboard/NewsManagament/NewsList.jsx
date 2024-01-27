@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 
 import { CiEdit } from "react-icons/ci";
-import { FaCaretDown } from "react-icons/fa6";
+import { FaCaretDown, FaChevronRight, FaRegNewspaper } from "react-icons/fa6";
 import { AiOutlinePlus } from "react-icons/ai";
 import { RiChatDeleteLine } from "react-icons/ri";
 
-import { About, Avatar, cloud } from "../../assets";
-import { MutatingDots } from "../../components";
-import { getAllAccount, getAllNews } from "../../api";
-import { setAllNews } from "../../context/actions/allNewsAction";
-import { setAllUsers } from "../../context/actions/allUsersAction";
+import { Avatar, cloud } from "../../../assets";
+import { MutatingDots } from "../../../components";
+import { deleteNewsById, getAllAccount, getAllNews } from "../../../api";
+import { setAllNews } from "../../../context/actions/allNewsAction";
+import { setAllUsers } from "../../../context/actions/allUsersAction";
+import { buttonClick } from "../../../assets/animations";
 
 const NewsList = () => {
   const allUsers = useSelector((state) => state?.allUsers?.allUsers);
@@ -22,6 +24,8 @@ const NewsList = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [searchInput, setSearchInput] = useState("");
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [selectedNewsId, setSelectedNewsId] = useState(null);
 
   const loadData = async () => {
     try {
@@ -48,8 +52,36 @@ const NewsList = () => {
     setSearchInput(e.target.value);
   }
 
-  // Check if allUsers and allNews are defined
-  if (!allUsers || !allNews) {
+  const handleDeleteClick = (newsId) => {
+    setSelectedNewsId(newsId);
+    setShowConfirmation(true);
+  };
+
+  const confirmDelete = async () => {
+    try {
+      setIsLoading(true);
+
+      if (selectedNewsId) {
+        const response = await deleteNewsById(selectedNewsId);
+
+        if (response?.isSuccess) {
+          loadData();
+          toast.success("News deleted successfully");
+        } else {
+          toast.error("Failed to delete news");
+        }
+      }
+    } catch (error) {
+      console.error("Error confirming delete:", error);
+      toast.error("An error occurred while deleting news");
+    } finally {
+      setIsLoading(false);
+      setShowConfirmation(false);
+      setSelectedNewsId(null);
+    }
+  };
+
+  if (!allUsers || !allNews || isLoading) {
     return (
       <div className="absolute z-30 bg-white bg-opacity-20 w-full h-full flex items-center justify-center">
         <MutatingDots />
@@ -63,9 +95,23 @@ const NewsList = () => {
   );
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col p-8">
+      {/* title */}
+      <div>
+        <div className="flex items-center space-x-2 text-xl">
+          <FaRegNewspaper />
+          <div>News</div>
+          <FaChevronRight />
+          <div>News List</div>
+          <FaChevronRight />
+        </div>
+        <div className="text-2xl text-orange-400 font-semibold py-4">
+          News Management
+        </div>
+      </div>
+
       <div className="flex bg-gray-50 ">
-        <div className="w-full md:w-4/5 lg:w-3/5 md:mx-auto md:max-w-4xl p-4">
+        <div className="w-full md:w-4/5 lg:w-3/5 md:mx-auto md:max-w-4xl">
           <div className="pt-4 pb-0">
             <div className="flex">
               <h2 className="flex-grow text-gray-900 text-2xl font-semibold">
@@ -74,9 +120,9 @@ const NewsList = () => {
               <Link
                 to={"/dashboard/create-news"}
                 className="v-btn py-2 px-4
-                bg-orange-600 hover:bg-orange-700 focus:ring-orange-500 focus:ring-offset-orange-200
-                text-white transition ease-in duration-200 text-center text-base font-medium focus:outline-none focus:ring-2
-                focus:ring-offset-2 rounded-lg flex items-center hover:no-underline"
+              bg-orange-600 hover:bg-orange-700 focus:ring-orange-500 focus:ring-offset-orange-200
+              text-white transition ease-in duration-200 text-center text-base font-medium focus:outline-none focus:ring-2
+              focus:ring-offset-2 rounded-lg flex items-center hover:no-underline"
               >
                 <span className="no-underline mx-auto flex items-center">
                   <AiOutlinePlus className="mr-2 text-xl" />
@@ -88,13 +134,6 @@ const NewsList = () => {
           </div>
         </div>
       </div>
-
-      {/* chart news nếu có thời gian  */}
-      {/* <div className="flex bg-white">
-        <div className="w-full md:w-4/5 lg:w-3/5 md:mx-auto md:max-w-4xl px-4">
-          a
-        </div>
-      </div> */}
 
       <div className="flex bg-white">
         <div className="w-full md:w-4/5 lg:w-3/5 md:mx-auto md:max-w-4xl px-4">
@@ -118,9 +157,6 @@ const NewsList = () => {
                     const user = allUsers.find(
                       (u) => u.user.id === news.accountId
                     ) || { firstName: "", lastName: "" };
-                    // Log the user and news data to debug
-                    console.log("Filtered News:", news);
-                    console.log("User:", user);
 
                     return (
                       <div
@@ -143,9 +179,9 @@ const NewsList = () => {
                               <div className="flex py-4">
                                 <motion.img
                                   whileHover={{ scale: 1.2 }}
-                                  src={About}
+                                  src={news.imageUrl}
                                   alt="news image"
-                                  className="h-24 w-40"
+                                  className="min-w-40 max-h-24"
                                 />
                                 <div className="px-2">
                                   <div>{news.header}</div>
@@ -158,7 +194,7 @@ const NewsList = () => {
 
                             <div
                               className="relative group flex items-center justify-center p-2 bg-orange-500 hover:bg-orange-600 rounded-3xl text-white
-                      cursor-pointer"
+                              cursor-pointer"
                             >
                               <div>Operation</div>
                               <div className="pl-2">
@@ -167,7 +203,9 @@ const NewsList = () => {
 
                               <div className="absolute hidden group-hover:block right-0 top-10 bg-white text-baseDark rounded-md border">
                                 <div className="flex flex-col ">
-                                  <div
+                                  {/* Edit  */}
+                                  <motion.div
+                                    {...buttonClick}
                                     className="flex items-center justify-start px-2 py-1 m-2 hover:bg-gray-300 
                             rounded-md"
                                   >
@@ -177,14 +215,17 @@ const NewsList = () => {
                                     <div className="flex flex-col text-nowrap px-4">
                                       <p className="font-semibold">Edit</p>
                                       <p className="text-sm">
-                                        Change the News Page{" "}
+                                        Change the News Page
                                       </p>
                                     </div>
-                                  </div>
+                                  </motion.div>
 
-                                  <div
+                                  {/* delete  */}
+                                  <motion.div
+                                    {...buttonClick}
                                     className="flex items-center justify-start px-2 py-1 m-2 hover:bg-gray-300 
-                            rounded-md"
+                                rounded-md"
+                                    onClick={() => handleDeleteClick(news.id)}
                                   >
                                     <div className="text-2xl">
                                       <RiChatDeleteLine />
@@ -197,7 +238,7 @@ const NewsList = () => {
                                         Delete the News and not restore
                                       </p>
                                     </div>
-                                  </div>
+                                  </motion.div>
                                 </div>
                               </div>
                             </div>
@@ -207,7 +248,6 @@ const NewsList = () => {
                     );
                   })
                 ) : (
-                  //   not News
                   <div className="flex bg-white">
                     <div className="w-full md:w-4/5 lg:w-3/5 md:mx-auto md:max-w-4xl px-4">
                       <div className="mt-8 pb-0">
@@ -226,6 +266,32 @@ const NewsList = () => {
           </div>
         </div>
       </div>
+
+      {/* Confirmation Dialog */}
+      {showConfirmation && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="bg-white p-8 w-96 rounded-md border">
+            <h2 className="text-xl font-semibold mb-4">Confirm Delete</h2>
+            <p className="text-gray-700 mb-4">
+              Are you sure you want to delete this news?
+            </p>
+            <div className="flex justify-end">
+              <button
+                className="text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md mr-4"
+                onClick={confirmDelete}
+              >
+                Delete
+              </button>
+              <button
+                className="text-gray-700 hover:text-gray-900 px-4 py-2 rounded-md"
+                onClick={() => setShowConfirmation(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

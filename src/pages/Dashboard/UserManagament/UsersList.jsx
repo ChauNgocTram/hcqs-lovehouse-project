@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import { MutatingDots, Pagination } from "../../components";
-import { getAllAccount } from "../../api";
-import { setAllUsers } from "../../context/actions/allUsersAction";
+import { MutatingDots, Pagination } from "../../../components";
+import { getAllAccount } from "../../../api";
+import { setAllUsers } from "../../../context/actions/allUsersAction";
 
 function UsersList() {
   const allUsers = useSelector((state) => state?.allUsers?.allUsers);

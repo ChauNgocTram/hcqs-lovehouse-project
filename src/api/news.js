@@ -20,3 +20,58 @@ export const getAllNews = async (pageIndex, pageSize) => {
         return null;
     }
 };
+
+export const createNews = async (formData) => {
+    try {
+        const res = await axios.post(
+            `${baseURL}/news/create-news`,
+            formData, {
+                headers: {
+                    Authorization: `Bearer ${usertoken}`,
+                    'Content-Type': 'multipart/form-data',
+                },
+                withCredentials: true,
+            }
+        );
+
+        return res.data;
+    } catch (err) {
+        return null;
+    }
+};
+
+export const updateNews = async (updateData) => {
+    try {
+        const res = await axios.put(
+            `${baseURL}/news/update-news`,
+            updateData, {
+                headers: {
+                    Authorization: `Bearer ${usertoken}`,
+                    'Content-Type': 'multipart/form-data',
+                },
+                withCredentials: true,
+            }
+        );
+
+        return res.data;
+    } catch (err) {
+        return null;
+    }
+};
+
+export const deleteNewsById = async (newsId) => {
+    try {
+        const res = await axios.delete(
+            `${baseURL}/news/delete-news-by-id/${newsId}`, {
+                headers: {
+                    Authorization: `Bearer ${usertoken}`,
+                },
+                withCredentials: true,
+            }
+        );
+
+        return res.data;
+    } catch (err) {
+        return null;
+    }
+};

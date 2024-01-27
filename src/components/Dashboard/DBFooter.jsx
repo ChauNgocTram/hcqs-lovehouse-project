@@ -3,8 +3,8 @@ import { Logo } from "../../assets";
 
 function DBFooter() {
   return (
-    <div className="w-full border-t">
-      <div className="grid grid-cols-1 md:grid-cols-3 my-8 gap-8">
+    <div className="w-full border-t bg-white">
+      <div className="grid grid-cols-1 md:grid-cols-3 py-8 gap-8">
         {/* First Section */}
         <div className="flex items-center justify-center">
           <p className="text-sm text-gray-600 text-center">

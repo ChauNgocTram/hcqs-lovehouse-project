@@ -1,4 +1,3 @@
-import axios from "axios";
 export const baseURL = "https://hcqs-backend.azurewebsites.net/";
 export const usertoken = localStorage.accessToken;
 
@@ -19,6 +18,15 @@ from "./account";
 
 //news
 export {
-    getAllNews
+    getAllNews,
+    createNews,
+    updateNews,
+    deleteNewsById
 }
 from "./news";
+
+//blog
+export {
+    getAllBlog
+}
+from "./blog";

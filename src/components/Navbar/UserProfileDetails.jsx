@@ -53,7 +53,7 @@ function UserProfileDetails() {
               className="flex items-center justify-between text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 
               w-full px-2 py-1 rounded-md cursor-pointer text-nowrap"
             >
-              <Link to={"/dashboard"}>Dashboard</Link>
+              <Link to={"/dashboard/home"}>Dashboard</Link>
               <div className="text-xs pl-2">
                 <FaChevronRight />
               </div>
