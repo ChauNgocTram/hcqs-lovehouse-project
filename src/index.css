@@ -10,6 +10,13 @@ body {
     BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
     "Open Sans", "Helvetica Neue", sans-serif;
   overflow-x: hidden;
+  margin: 0;
+}
+
+/* CSS để ẩn icon "mắt" trong các trường nhập mật khẩu */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
 }
 
 .navbar {
