@@ -1,4 +1,4 @@
-export const baseURL = "https://hcqs-backend.azurewebsites.net/";
+export const baseURL = "https://hcqs-backend.azurewebsites.net";
 export const usertoken = localStorage.accessToken;
 
 //account
@@ -28,6 +28,10 @@ from "./news";
 
 //blog
 export {
-    getAllBlog
+    createBlog,
+    getBlogById,
+    getAllBlog,
+    updateBlog,
+    deleteBlogById
 }
 from "./blog";

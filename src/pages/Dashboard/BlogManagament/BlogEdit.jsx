@@ -1,13 +1,13 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { motion } from "framer-motion";
 import ReactQuill from "react-quill";
 
 import { MdDelete } from "react-icons/md";
 import { AiOutlineCloudUpload } from "react-icons/ai";
-import { FaChevronRight, FaBlog } from "react-icons/fa6";
+import { FaBlog, FaChevronRight } from "react-icons/fa6";
 
 import {
   TextEditorBar,
@@ -15,19 +15,43 @@ import {
   formats,
   MutatingDots,
 } from "../../../components";
-import { NewFormCreate } from "../../../assets";
+import { getBlogById, updateBlog } from "../../../api";
 import { buttonClick } from "../../../assets/animations";
-import { createBlog } from "../../../api";
+import { NewFormCreate } from "../../../assets";
+
 import "../../../assets/Styles/Snow.css";
 
-function BlogCreate() {
+const BlogEdit = () => {
   const user = useSelector((state) => state?.user?.user);
 
+  const { id } = useParams();
   const navigate = useNavigate();
 
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [isLoading, setisLoading] = useState(false);
+  const [blogData, setBlogData] = useState({
+    header: "",
+    content: "",
+  });
+
+  useEffect(() => {
+    const fetchBlogData = async () => {
+      try {
+        const response = await getBlogById(id);
+
+        if (response?.isSuccess) {
+          setBlogData(response.result.data);
+        } else {
+          toast.error("Failed to fetch blog details");
+        }
+      } catch (error) {
+        console.error("Error fetching blog details:", error);
+        toast.error("An error occurred while fetching blog details");
+      }
+    };
+
+    fetchBlogData();
+  }, [id]);
+
+  const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -44,33 +68,33 @@ function BlogCreate() {
     toast.success("Delete Image Successfully");
   };
 
-  const submitBlog = async () => {
+  const handleUpdateBlog = async () => {
     try {
-      setisLoading(true);
+      setIsLoading(true);
 
       const formData = new FormData();
-      formData.append("ID", "");
-      formData.append("Header", title);
-      formData.append("Content", content);
+      formData.append("Id", id);
+      formData.append("Header", blogData.header);
+      formData.append("Content", blogData.content);
       formData.append("AccountId", user?.id);
 
       if (selectedImage) {
         formData.append("ImageUrl", selectedImage);
       }
 
-      const response = await createBlog(formData);
+      const response = await updateBlog(formData);
 
-      if (response) {
-        toast.success("Blog created successfully");
+      if (response?.isSuccess) {
+        toast.success("Blog updated successfully");
         navigate("/dashboard/list-blog");
       } else {
-        toast.error("Failed to create blog");
+        toast.error("Failed to update blog");
       }
     } catch (error) {
-      console.error("Error creating blog", error);
-      toast.error("An error occurred. Please try again later.");
+      console.error("Error updating blog:", error);
+      toast.error("An error occurred while updating blog");
     } finally {
-      setisLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -82,7 +106,7 @@ function BlogCreate() {
           <FaBlog />
           <div>Blog</div>
           <FaChevronRight />
-          <div>Create Blog</div>
+          <div>Edit Blog</div>
           <FaChevronRight />
         </div>
         <div className="text-2xl text-orange-400 font-semibold py-4">
@@ -95,26 +119,22 @@ function BlogCreate() {
           <div className="flex flex-col items-center justify-center max-w-4xl gap-8 mx-auto md:gap-12 md:flex-row">
             <div className="aspect-[4/3] shrink-0 rounded-lg shadow-md overflow-hidden group max-w-xs">
               <img
-                src={NewFormCreate}
+                src={blogData.imageUrl || NewFormCreate}
                 alt="img"
                 className="object-cover w-full h-full transition-all duration-200 group-hover:scale-110"
               />
             </div>
             <div className="flex-1 text-center md:text-left relative">
               <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                Love House Blog Create Form
+                Love House Blog Edit Form
               </h1>
               <div className="mt-2 text-lg font-normal text-gray-600">
-                Complete the Lovehouse Civil Blog creation form to share updates
-                and information, contributing to the vibrant narrative of
-                Lovehouse Civil.
+                Edit the Lovehouse Civil Blog creation form to update
+                information and keep the narrative of Lovehouse Civil.
               </div>
               <div className="flex flex-wrap items-center justify-center gap-3 mt-4 md:justify-start">
                 <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
                   Audit Forms
-                </span>
-                <span className="inline-flex items-center rounded-full bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
-                  Create Forms
                 </span>
                 <span className="inline-flex items-center rounded-full bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
                   Edit Forms
@@ -133,15 +153,13 @@ function BlogCreate() {
             </div>
             <div className="open-complete-form mb-4 p-4 bg-gray-50 border border-gray-200 border-dashed rounded-lg">
               <h1 className="mb-4 px-2 font-semibold text-2xl">
-                Love House Create Form
+                Love House Edit Form
               </h1>
               <div>
                 <div className="form-description mb-4 text-gray-700 whitespace-pre-wrap px-2">
                   <div>
-                    This comprehensive form serves the purpose of crafting
-                    informative and engaging blog content tailored specifically
-                    for Love House, ensuring the delivery of relevant and
-                    captivating updates.
+                    Edit the blog content and update information for Love House,
+                    ensuring the delivery of relevant and captivating updates.
                   </div>
                 </div>
                 <form action="">
@@ -155,8 +173,13 @@ function BlogCreate() {
                         type="text"
                         placeholder="Title"
                         className="flex-1 w-full h-full py-2 outline-none border-none bg-transparent text-text555 text-lg"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
+                        value={blogData.header}
+                        onChange={(e) =>
+                          setBlogData((prev) => ({
+                            ...prev,
+                            header: e.target.value,
+                          }))
+                        }
                       />
                     </div>
                   </div>
@@ -173,8 +196,10 @@ function BlogCreate() {
                         modules={modules("t1")}
                         formats={formats}
                         className="max-w-[48.5rem] min-h-[12.5rem] h-[12.5rem] max-h-[12.5rem] overflow-auto"
-                        value={content}
-                        onChange={(value) => setContent(value)}
+                        value={blogData.content}
+                        onChange={(value) =>
+                          setBlogData((prev) => ({ ...prev, content: value }))
+                        }
                       />
                     </div>
                   </div>
@@ -262,21 +287,18 @@ function BlogCreate() {
                   <div className="flex flex-wrap justify-center w-full">
                     <motion.div
                       {...buttonClick}
-                      onClick={submitBlog}
+                      onClick={handleUpdateBlog}
                       className="px-4 py-2 border rounded-md text-white bg-gray-500 hover:bg-gray-600 font-semibold shadow-md cursor-pointer"
                     >
-                      Submit
+                      Update
                     </motion.div>
                   </div>
                 </form>
                 <div className="text-center w-full mt-2">
-                  <Link
-                    to={"/home"}
-                    className="text-gray-400 hover:text-gray-500 cursor-pointer hover:underline text-xs"
-                  >
-                    Powered by
+                  <p className="text-gray-400 hover:text-gray-500 cursor-pointer hover:underline text-xs">
+                    Powered by{" "}
                     <span className="font-semibold mx-1">Love House</span>
-                  </Link>
+                  </p>
                 </div>
               </div>
             </div>
@@ -311,6 +333,6 @@ function BlogCreate() {
       </div>
     </div>
   );
-}
+};
 
-export default BlogCreate;
+export default BlogEdit;

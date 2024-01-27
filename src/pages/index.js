@@ -28,5 +28,6 @@ export { default as NewsEdit } from "./Dashboard/NewsManagament/NewsEdit";
 
 export { default as BlogCreate } from "./Dashboard/BlogManagament/BlogCreate";
 export { default as BlogsList } from "./Dashboard/BlogManagament/BlogsList";
+export { default as BlogEdit } from "./Dashboard/BlogManagament/BlogEdit";
 
 export { default as AboutUs } from "./AboutUs/AboutUs";

@@ -2,18 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 
 import { CiEdit } from "react-icons/ci";
+import { FaBlog, FaCaretDown, FaChevronRight } from "react-icons/fa6";
 import { AiOutlinePlus } from "react-icons/ai";
 import { RiChatDeleteLine } from "react-icons/ri";
-import { FaBlog, FaCaretDown, FaChevronRight } from "react-icons/fa6";
 
 import { Avatar, cloud } from "../../../assets";
 import { MutatingDots } from "../../../components";
-import { getAllAccount, getAllBlog } from "../../../api";
-import { buttonClick } from "../../../assets/animations";
-import { setAllUsers } from "../../../context/actions/allUsersAction";
+import { deleteBlogById, getAllAccount, getAllBlog } from "../../../api";
 import { setAllBlog } from "../../../context/actions/allBlogAction";
+import { setAllUsers } from "../../../context/actions/allUsersAction";
+import { buttonClick } from "../../../assets/animations";
 
 const BlogsList = () => {
   const allUsers = useSelector((state) => state?.allUsers?.allUsers);
@@ -23,6 +24,8 @@ const BlogsList = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [searchInput, setSearchInput] = useState("");
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [selectedBlogId, setSelectedBlogId] = useState(null);
 
   const loadData = async () => {
     try {
@@ -49,7 +52,36 @@ const BlogsList = () => {
     setSearchInput(e.target.value);
   }
 
-  if (!allUsers || !allBlog) {
+  const handleDeleteClick = (blogId) => {
+    setSelectedBlogId(blogId);
+    setShowConfirmation(true);
+  };
+
+  const confirmDelete = async () => {
+    try {
+      setIsLoading(true);
+
+      if (selectedBlogId) {
+        const response = await deleteBlogById(selectedBlogId);
+
+        if (response?.isSuccess) {
+          loadData();
+          toast.success("Blog deleted successfully");
+        } else {
+          toast.error("Failed to delete blog");
+        }
+      }
+    } catch (error) {
+      console.error("Error confirming delete:", error);
+      toast.error("An error occurred while deleting blog");
+    } finally {
+      setIsLoading(false);
+      setShowConfirmation(false);
+      setSelectedBlogId(null);
+    }
+  };
+
+  if (!allUsers || !allBlog || isLoading) {
     return (
       <div className="absolute z-30 bg-white bg-opacity-20 w-full h-full flex items-center justify-center">
         <MutatingDots />
@@ -57,10 +89,10 @@ const BlogsList = () => {
     );
   }
 
+  // Filter blog based on searchInput
   const filteredBlog = allBlog.filter((blog) =>
     blog.header.toLowerCase().includes(searchInput.toLowerCase())
   );
-  console.log("Filtered Blog:", filteredBlog);
 
   return (
     <div className="flex flex-col p-8">
@@ -88,9 +120,9 @@ const BlogsList = () => {
               <Link
                 to={"/dashboard/create-blog"}
                 className="v-btn py-2 px-4
-                bg-orange-600 hover:bg-orange-700 focus:ring-orange-500 focus:ring-offset-orange-200
-                text-white transition ease-in duration-200 text-center text-base font-medium focus:outline-none focus:ring-2
-                focus:ring-offset-2 rounded-lg flex items-center hover:no-underline"
+              bg-orange-600 hover:bg-orange-700 focus:ring-orange-500 focus:ring-offset-orange-200
+              text-white transition ease-in duration-200 text-center text-base font-medium focus:outline-none focus:ring-2
+              focus:ring-offset-2 rounded-lg flex items-center hover:no-underline"
               >
                 <span className="no-underline mx-auto flex items-center">
                   <AiOutlinePlus className="mr-2 text-xl" />
@@ -98,24 +130,17 @@ const BlogsList = () => {
                 </span>
               </Link>
             </div>
-            <small className="flex text-gray-500">Manage your News</small>
+            <small className="flex text-gray-500">Manage your Blog</small>
           </div>
         </div>
       </div>
-
-      {/* chart blog nếu có thời gian  */}
-      {/* <div className="flex bg-white">
-        <div className="w-full md:w-4/5 lg:w-3/5 md:mx-auto md:max-w-4xl px-4">
-          a
-        </div>
-      </div> */}
 
       <div className="flex bg-white">
         <div className="w-full md:w-4/5 lg:w-3/5 md:mx-auto md:max-w-4xl px-4">
           <div className="mt-8 pb-0">
             <div className="mb-6 relative">
               <div className="text-gray-700 font-semibold text-sm pb-2">
-                Search a News
+                Search a Blog
               </div>
               <div className="flex items-center justify-center gap-3 w-full h-full px-4 rounded-md border-gray-300 border bg-white">
                 <input
@@ -131,7 +156,11 @@ const BlogsList = () => {
                   filteredBlog.map((blog) => {
                     const user = allUsers.find(
                       (u) => u.user.id === blog.accountId
-                    ) || { firstName: "", lastName: "" };
+                    ) || {
+                      firstName: "",
+                      lastName: "",
+                    };
+
                     return (
                       <div
                         key={blog.id}
@@ -168,7 +197,7 @@ const BlogsList = () => {
 
                             <div
                               className="relative group flex items-center justify-center p-2 bg-orange-500 hover:bg-orange-600 rounded-3xl text-white
-                      cursor-pointer"
+                              cursor-pointer"
                             >
                               <div>Operation</div>
                               <div className="pl-2">
@@ -176,11 +205,12 @@ const BlogsList = () => {
                               </div>
 
                               <div className="absolute hidden group-hover:block right-0 top-10 bg-white text-baseDark rounded-md border">
-                                <div className="flex flex-col ">
-                                  <motion.div
-                                    {...buttonClick}
+                                <div className="flex flex-col">
+                                  {/* Edit  */}
+                                  <Link
+                                    to={`/dashboard/edit-blog/${blog.id}`}
                                     className="flex items-center justify-start px-2 py-1 m-2 hover:bg-gray-300 
-                            rounded-md"
+                                    rounded-md"
                                   >
                                     <div className="text-2xl">
                                       <CiEdit />
@@ -188,15 +218,17 @@ const BlogsList = () => {
                                     <div className="flex flex-col text-nowrap px-4">
                                       <p className="font-semibold">Edit</p>
                                       <p className="text-sm">
-                                        Change the News Page{" "}
+                                        Change the Blog Page
                                       </p>
                                     </div>
-                                  </motion.div>
+                                  </Link>
 
+                                  {/* delete  */}
                                   <motion.div
                                     {...buttonClick}
                                     className="flex items-center justify-start px-2 py-1 m-2 hover:bg-gray-300 
-                            rounded-md"
+                                    rounded-md"
+                                    onClick={() => handleDeleteClick(blog.id)}
                                   >
                                     <div className="text-2xl">
                                       <RiChatDeleteLine />
@@ -206,7 +238,7 @@ const BlogsList = () => {
                                         Delete
                                       </p>
                                       <p className="text-sm">
-                                        Delete the News and not restore
+                                        Delete the Blog and not restore
                                       </p>
                                     </div>
                                   </motion.div>
@@ -219,14 +251,13 @@ const BlogsList = () => {
                     );
                   })
                 ) : (
-                  //   not News
                   <div className="flex bg-white">
                     <div className="w-full md:w-4/5 lg:w-3/5 md:mx-auto md:max-w-4xl px-4">
                       <div className="mt-8 pb-0">
                         <div className="flex flex-wrap justify-center max-w-4xl">
                           <img src={cloud} alt="cloud" className="w-56" />
                           <h3 className="w-full mt-4 text-center text-gray-900 font-semibold">
-                            No News found
+                            No Blog found
                           </h3>
                         </div>
                       </div>
@@ -238,6 +269,32 @@ const BlogsList = () => {
           </div>
         </div>
       </div>
+
+      {/* Confirmation Dialog */}
+      {showConfirmation && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="bg-white p-8 w-96 rounded-md border">
+            <h2 className="text-xl font-semibold mb-4">Confirm Delete</h2>
+            <p className="text-gray-700 mb-4">
+              Are you sure you want to delete this blog?
+            </p>
+            <div className="flex justify-end">
+              <button
+                className="text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md mr-4"
+                onClick={confirmDelete}
+              >
+                Delete
+              </button>
+              <button
+                className="text-gray-700 hover:text-gray-900 px-4 py-2 rounded-md"
+                onClick={() => setShowConfirmation(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

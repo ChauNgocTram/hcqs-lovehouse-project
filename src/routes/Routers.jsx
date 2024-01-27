@@ -16,6 +16,7 @@ import {
   Profile,
   Setting,
   UsersList,
+  BlogEdit,
 } from "../pages";
 import { AuthLayout, HomeLayout } from "../layout";
 import News from "../pages/News/News";
@@ -53,7 +54,8 @@ function Routers() {
         { path: "edit-news/:id", element: <NewsEdit /> },
 
         { path: "create-blog", element: <BlogCreate /> },
-        { path: "list-blogs", element: <BlogsList /> },
+        { path: "list-blog", element: <BlogsList /> },
+        { path: "edit-blog/:id", element: <BlogEdit /> },
       ],
     },
     {
