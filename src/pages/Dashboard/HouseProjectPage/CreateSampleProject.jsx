@@ -336,6 +336,7 @@ function CreateSampleProject() {
                             whileHover={{ scale: 1.15 }}
                             src={URL.createObjectURL(image)}
                             className="w-full h-full object-cover"
+                            style={{ transform: "none" }} // Apply styles here
                           />
 
                           <motion.button
@@ -351,7 +352,7 @@ function CreateSampleProject() {
 
                       {[...Array(5 - selectedImages.length)].map((_, index) => (
                         <div
-                          key={index}
+                          key={`upload-placeholder-${index}`}
                           className="relative w-full h-full overflow-hidden rounded-md border-dashed border-2 border-gray-300"
                         >
                           <div className="flex items-center justify-center h-full">
@@ -370,7 +371,7 @@ function CreateSampleProject() {
                                 type="file"
                                 name={`upload-image-${index}`}
                                 accept="image/*"
-                                onChange={(e) => uploadImage(e, index)}
+                                onChange={(e) => uploadImage(e)}
                                 className="w-0 h-0"
                                 multiple
                               />

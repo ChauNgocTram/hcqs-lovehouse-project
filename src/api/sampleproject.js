@@ -24,25 +24,22 @@ export const createSampleProject = async (sampleProjectData) => {
     }
 };
 
-export const updateSampleProject = async (sampleProjectData) => {
+export const updateSampleProject = async (updateData) => {
     try {
-        const res = await axios.put(
-            `${baseURL}/sample-project/update-sample-project`,
-            sampleProjectData, {
-                headers: {
-                    Authorization: `Bearer ${usertoken}`,
-                    "Content-Type": "multipart/form-data",
-                },
-                withCredentials: true,
-            }
-        );
+        const res = await axios.put(`${baseURL}/sample-project/update-sample-project`, updateData, {
+            headers: {
+                Authorization: `Bearer ${usertoken}`,
+                "Content-Type": "multipart/form-data",
+            },
+            withCredentials: true,
+        });
 
         return res.data;
     } catch (err) {
-        console.error("Error updating sample project:", err);
         return null;
     }
 };
+
 
 export const deleteSampleProjectById = async (projectId) => {
     try {
