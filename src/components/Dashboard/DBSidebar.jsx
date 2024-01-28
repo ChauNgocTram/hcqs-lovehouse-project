@@ -7,14 +7,13 @@ import {
   FaArrowLeft,
   FaChevronDown,
   FaChevronUp,
-  FaProjectDiagram,
   FaRegCalendarAlt,
   FaRegUser,
 } from "react-icons/fa";
 import { IoGridOutline } from "react-icons/io5";
 import { CiSettings } from "react-icons/ci";
 import { MdLogout } from "react-icons/md";
-import { AiOutlinePieChart } from "react-icons/ai";
+import { AiOutlinePieChart, AiOutlineProject } from "react-icons/ai";
 import { FaBlog, FaRegNewspaper } from "react-icons/fa6";
 
 import { buttonClick, slideUpOut } from "../../assets/animations";
@@ -201,7 +200,7 @@ function DBSidebar({ setIsOpen }) {
               className="flex items-center justify-between cursor-pointer"
             >
               <div className="flex items-center justify-start py-2">
-                <FaProjectDiagram className="" />
+                <AiOutlineProject className="text-xl" />
                 <div className="pl-2">House Project Page</div>
               </div>
               <div>{isProject ? <FaChevronDown /> : <FaChevronUp />}</div>
@@ -212,34 +211,25 @@ function DBSidebar({ setIsOpen }) {
               <>
                 <motion.div {...slideUpOut} className={`flex flex-col `}>
                   <NavLink
-                    to={"/dashboard"}
+                    to={"/dashboard/create-project"}
                     className={({ isActive }) =>
                       isActive
                         ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
                         : isNotActiveStyles
                     }
                   >
-                    News
+                    Create Project
                   </NavLink>
+
                   <NavLink
-                    to={"/"}
+                    to={"/dashboard/list-project"}
                     className={({ isActive }) =>
                       isActive
                         ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
                         : isNotActiveStyles
                     }
                   >
-                    Users
-                  </NavLink>
-                  <NavLink
-                    to={"/"}
-                    className={({ isActive }) =>
-                      isActive
-                        ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
-                        : isNotActiveStyles
-                    }
-                  >
-                    Users
+                    Project List
                   </NavLink>
                 </motion.div>
               </>

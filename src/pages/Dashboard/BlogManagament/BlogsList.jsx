@@ -135,7 +135,7 @@ const BlogsList = () => {
         </div>
       </div>
 
-      <div className="flex bg-white">
+      <div className="flex bg-gray-50 ">
         <div className="w-full md:w-4/5 lg:w-3/5 md:mx-auto md:max-w-4xl px-4">
           <div className="mt-8 pb-0">
             <div className="mb-6 relative">

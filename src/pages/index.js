@@ -30,4 +30,9 @@ export { default as BlogCreate } from "./Dashboard/BlogManagament/BlogCreate";
 export { default as BlogsList } from "./Dashboard/BlogManagament/BlogsList";
 export { default as BlogEdit } from "./Dashboard/BlogManagament/BlogEdit";
 
+export { default as CreateProject } from "./Dashboard/HouseProjectPage/CreateProject";
+export { default as ProjectList } from "./Dashboard/HouseProjectPage/ProjectList";
+export { default as ProjectDetail } from "./Dashboard/HouseProjectPage/ProjectDetail";
+export { default as EditProject } from "./Dashboard/HouseProjectPage/EditProject";
+
 export { default as AboutUs } from "./AboutUs/AboutUs";

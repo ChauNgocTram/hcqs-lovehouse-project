@@ -35,3 +35,12 @@ export {
     deleteBlogById
 }
 from "./blog";
+
+//project
+export {
+    configProject,
+    getAllProjects,
+    createProjectByUser,
+    getProjectById
+}
+from "./project";
