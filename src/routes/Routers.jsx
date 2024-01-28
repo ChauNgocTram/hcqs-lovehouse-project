@@ -1,5 +1,6 @@
 import React from "react";
-import { useRoutes } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Navigate, useRoutes } from "react-router-dom";
 import HomeLayout from "../layout/HomeLayout";
 import AuthLayout from "../layout/AuthLayout";
 import Home from "../pages/Home/Home.jsx";
@@ -38,6 +39,11 @@ import { PageNotfound } from "../components";
 import QuoteRequestForm from "../pages/Quotation/QuotationForm/QuoteRequestForm";
 
 export default function Routers() {
+  const auth = useSelector((state) => state?.auth);
+
+  const isAdminOrStaff =
+    auth?.userRole?.includes("ADMIN") || auth?.userRole?.includes("STAFF");
+
   const routing = useRoutes([
     {
       path: "/",
@@ -70,7 +76,7 @@ export default function Routers() {
     },
     {
       path: "/dashboard",
-      element: <Dashboard />,
+      element: isAdminOrStaff ? <Dashboard /> : <Navigate to="/404" replace />,
       children: [
         { path: "home", element: <DBHome /> },
         { path: "users-list", element: <UsersList /> },
@@ -102,6 +108,7 @@ export default function Routers() {
       path: "/404",
       element: <PageNotfound />,
     },
+    { path: "*", element: <Navigate to="/404" replace /> },
   ]);
   return routing;
 }
