@@ -8,7 +8,7 @@
 
 ## Acknowledgements
 
-We would like to acknowledge the following individuals and projects for their contributions and inspiration to the Yoga Management System:
+We would like to acknowledge the following individuals and projects for their contributions and inspiration to the Civil Housing Construction Quotation system:
 
 ### Front-end:
 
