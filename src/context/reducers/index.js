@@ -6,7 +6,7 @@ import authReducer from "./authReducer";
 import allUserReducer from "./allUserReducer";
 import allNewsReducer from "./allNewsReducer";
 import allBlogReducer from "./allBlogReducer";
-import allProjectReducer from "./allProjectReducer";
+import allSampleProjectReducer from "./allSampleProjectReducer";
 
 const myReducer = combineReducers({
   user: userReducer,
@@ -14,7 +14,7 @@ const myReducer = combineReducers({
   allUsers: allUserReducer,
   allNews: allNewsReducer,
   allBlog: allBlogReducer,
-  allProject: allProjectReducer,
+  allSampleProject: allSampleProjectReducer,
 });
 
 export default myReducer;

@@ -12,13 +12,10 @@ import "swiper/css/autoplay";
 import BtnViewMore from "../Button/BtnViewMore";
 import { getAllNews } from "../../constants/apiNews";
 
-
 export default function NewsSection() {
   const [newsData, setNewsData] = useState([]);
-  
 
   useEffect(() => {
-   
     const fetchNews = async () => {
       const data = await getAllNews();
       if (data && data.result) {
@@ -27,7 +24,6 @@ export default function NewsSection() {
           date: formatNewsDate(newsItem.date),
         }));
         setNewsData(formattedData);
-       
       }
     };
 
@@ -54,7 +50,7 @@ export default function NewsSection() {
       <h1 className="font-semibold uppercase text-4xl mb-12">
         LoveHouse's News
       </h1>
-      
+
       <Swiper
         breakpoints={{
           340: {
@@ -86,9 +82,11 @@ export default function NewsSection() {
               />
               <div className="absolute inset-0 bg-cover bg-black opacity-10 group-hover:opacity-50 " />
               <div className="relative flex flex-col gap-3">
-                
                 <h1 className="text-xl lg:text-2xl font-semibold hover:text-white">
-                  <NavLink to={`/newsDetail/${news.id}`}> {news.header}</NavLink>
+                  <NavLink to={`/newsDetail/${news.id}`}>
+                    {" "}
+                    {news.header}
+                  </NavLink>
                 </h1>
               </div>
               <NavLink to={`/newsDetail/${news.id}`}>

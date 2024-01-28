@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 
 import { CiEdit } from "react-icons/ci";
-import { CgDetailsMore } from "react-icons/cg";
 import { FaCaretDown, FaChevronRight } from "react-icons/fa6";
 import { AiOutlinePlus, AiOutlineProject } from "react-icons/ai";
+import { RiChatDeleteLine } from "react-icons/ri";
 
 import { Avatar, cloud } from "../../../assets";
-import { getAllProjects } from "../../../api";
-import { setAllProject } from "../../../context/actions/allProjectAction";
 import { MutatingDots } from "../../../components";
+import {
+  deleteSampleProjectById,
+  getAllAccount,
+  getAllSampleProjects,
+} from "../../../api";
+import { setAllUsers } from "../../../context/actions/allUsersAction";
 import { buttonClick } from "../../../assets/animations";
+import { setAllSampleProject } from "../../../context/actions/allSampleProjectAction";
 
 const ProjectList = () => {
+  const allUsers = useSelector((state) => state?.allUsers?.allUsers);
   const allProject = useSelector((state) => state?.allProject?.allProject);
 
   const dispatch = useDispatch();
@@ -27,9 +33,13 @@ const ProjectList = () => {
 
   const loadData = async () => {
     try {
-      const [projectsData] = await Promise.all([getAllProjects(1, 100)]);
+      const [projectData, usersData] = await Promise.all([
+        getAllSampleProjects(1, 100),
+        getAllAccount(1, 100),
+      ]);
 
-      dispatch(setAllProject(projectsData.result.data));
+      dispatch(setAllSampleProject(projectData.result.data));
+      dispatch(setAllUsers(usersData.result.data));
     } catch (error) {
       console.error("Error loading data:", error);
     } finally {
@@ -56,7 +66,7 @@ const ProjectList = () => {
       setIsLoading(true);
 
       if (selectedProjectId) {
-        const response = await deleteProjectById(selectedProjectId);
+        const response = await deleteSampleProjectById(selectedProjectId);
 
         if (response?.isSuccess) {
           loadData();
@@ -75,13 +85,18 @@ const ProjectList = () => {
     }
   };
 
-  if (isLoading || !allProject) {
+  if (!allUsers || !allProject || isLoading) {
     return (
       <div className="absolute z-30 bg-white bg-opacity-20 w-full h-full flex items-center justify-center">
         <MutatingDots />
       </div>
     );
   }
+
+  // Filter project based on searchInput
+  const filteredProject = allProject.filter((project) =>
+    project.header.toLowerCase().includes(searchInput.toLowerCase())
+  );
 
   return (
     <div className="flex flex-col p-8 ">
@@ -141,89 +156,108 @@ const ProjectList = () => {
                 />
               </div>
               <div className="flex flex-col mt-4 mb-4">
-                {allProject.length > 0 ? (
-                  allProject.map((project) => (
-                    <div
-                      key={project.id}
-                      className="flex border w-full shadow-md rounded-sm my-2"
-                    >
-                      <div className="p-4 w-full">
-                        <div className="flex items-center justify-between">
-                          <div className="flex flex-col">
-                            <div className="flex items-center justify-start">
-                              <img
-                                src={Avatar}
-                                alt="avatar"
-                                className="w-8 rounded-full"
-                              />
-                              <div className="px-2">
-                                {project.account.firstName}{" "}
-                                {project.account.lastName}
+                {filteredProject.length > 0 ? (
+                  filteredProject.map((project) => {
+                    const user = allUsers.find(
+                      (u) => u.user.id === project.accountId
+                    ) || {
+                      firstName: "",
+                      lastName: "",
+                    };
+
+                    return (
+                      <div
+                        key={project.id}
+                        className="flex border w-full shadow-md rounded-sm my-2"
+                      >
+                        <div className="p-4 w-full">
+                          <div className="flex items-center justify-between">
+                            <div className="flex flex-col">
+                              <div className="flex items-center justify-start">
+                                <img
+                                  src={Avatar}
+                                  alt="avatar"
+                                  className="w-8 rounded-full"
+                                />
+                                <div className="px-2">
+                                  {user.user.firstName} {user.user.lastName}
+                                </div>
+                              </div>
+                              <div className="flex py-4">
+                                <motion.img
+                                  whileHover={{ scale: 1.2 }}
+                                  src={project.imageUrl}
+                                  alt="project image"
+                                  className="min-w-40 max-h-24"
+                                />
+                                <div className="px-2">
+                                  <div>{project.header}</div>
+                                  <div>
+                                    {new Date(
+                                      project.date
+                                    ).toLocaleDateString()}
+                                  </div>
+                                </div>
                               </div>
                             </div>
-                            <div className="flex py-4">
-                              <motion.img
-                                whileHover={{ scale: 1.2 }}
-                                src={project.landDrawingFileUrl}
-                                alt="project image"
-                                className="min-w-40 max-h-24"
-                              />
-                              <div className="px-2">
-                                <div>{`NumOfFloor: ${project.numOfFloor}`}</div>
-                                <div>{`Area: ${project.area}`}</div>
-                                <div>{`Create Date: ${new Date(
-                                  project.createDate
-                                ).toLocaleDateString()}`}</div>
+
+                            <div
+                              className="relative group flex items-center justify-center p-2 bg-orange-500 hover:bg-orange-600 rounded-3xl text-white
+                              cursor-pointer"
+                            >
+                              <div>Operation</div>
+                              <div className="pl-2">
+                                <FaCaretDown />
                               </div>
-                            </div>
-                          </div>
 
-                          <div className="relative group flex items-center justify-center p-2 bg-orange-500 hover:bg-orange-600 rounded-3xl text-white cursor-pointer">
-                            <div>Operation</div>
-                            <div className="pl-2">
-                              <FaCaretDown />
-                            </div>
-
-                            <div className="absolute hidden group-hover:block right-0 top-10 bg-white text-baseDark rounded-md border">
-                              <div className="flex flex-col">
-                                {/* Detail  */}
-                                <Link
-                                  to={`/dashboard/detail-project/${project.id}`}
-                                  className="flex items-center justify-start px-2 py-1 m-2 hover:bg-gray-300 
+                              <div className="absolute hidden group-hover:block right-0 top-10 bg-white text-baseDark rounded-md border">
+                                <div className="flex flex-col">
+                                  {/* Edit  */}
+                                  <Link
+                                    to={`/dashboard/edit-project/${project.id}`}
+                                    className="flex items-center justify-start px-2 py-1 m-2 hover:bg-gray-300 
                                     rounded-md"
-                                >
-                                  <div className="text-xl">
-                                    <CgDetailsMore />
-                                  </div>
-                                  <div className="flex flex-col text-nowrap px-4">
-                                    <p className="font-semibold">Detail</p>
-                                    <p className="text-sm">
-                                      View Detail Project
-                                    </p>
-                                  </div>
-                                </Link>
+                                  >
+                                    <div className="text-2xl">
+                                      <CiEdit />
+                                    </div>
+                                    <div className="flex flex-col text-nowrap px-4">
+                                      <p className="font-semibold">Edit</p>
+                                      <p className="text-sm">
+                                        Change the Project Page
+                                      </p>
+                                    </div>
+                                  </Link>
 
-                                {/* Edit  */}
-                                <Link
-                                  to={`/dashboard/edit-project/${project.id}`}
-                                  className="flex items-center justify-start px-2 py-1 m-2 hover:bg-gray-300 
+                                  {/* delete  */}
+                                  <motion.div
+                                    {...buttonClick}
+                                    className="flex items-center justify-start px-2 py-1 m-2 hover:bg-gray-300 
                                     rounded-md"
-                                >
-                                  <div className="text-2xl">
-                                    <CiEdit />
-                                  </div>
-                                  <div className="flex flex-col text-nowrap px-4">
-                                    <p className="font-semibold">Edit</p>
-                                    <p className="text-sm">Edit the Project</p>
-                                  </div>
-                                </Link>
+                                    onClick={() =>
+                                      handleDeleteClick(project.id)
+                                    }
+                                  >
+                                    <div className="text-2xl">
+                                      <RiChatDeleteLine />
+                                    </div>
+                                    <div className="flex flex-col text-nowrap px-4">
+                                      <p className="font-semibold text-red-500">
+                                        Delete
+                                      </p>
+                                      <p className="text-sm">
+                                        Delete the Project and not restore
+                                      </p>
+                                    </div>
+                                  </motion.div>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))
+                    );
+                  })
                 ) : (
                   <div className="flex bg-white">
                     <div className="w-full md:w-4/5 lg:w-3/5 md:mx-auto md:max-w-4xl px-4">
@@ -243,6 +277,32 @@ const ProjectList = () => {
           </div>
         </div>
       </div>
+
+      {/* Confirmation Dialog */}
+      {showConfirmation && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="bg-white p-8 w-96 rounded-md border">
+            <h2 className="text-xl font-semibold mb-4">Confirm Delete</h2>
+            <p className="text-gray-700 mb-4">
+              Are you sure you want to delete this project?
+            </p>
+            <div className="flex justify-end">
+              <button
+                className="text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md mr-4"
+                onClick={confirmDelete}
+              >
+                Delete
+              </button>
+              <button
+                className="text-gray-700 hover:text-gray-900 px-4 py-2 rounded-md"
+                onClick={() => setShowConfirmation(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

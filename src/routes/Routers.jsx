@@ -20,9 +20,9 @@ import {
   UsersList,
   BlogEdit,
   ProjectList,
-  CreateProject,
   EditProject,
   ProjectDetail,
+  CreateSampleProject,
 } from "../pages";
 
 import HouseProject from "../pages/HouseProjects/HouseProject";
@@ -83,7 +83,7 @@ export default function Routers() {
         { path: "list-blog", element: <BlogsList /> },
         { path: "edit-blog/:id", element: <BlogEdit /> },
 
-        { path: "create-project", element: <CreateProject /> },
+        { path: "create-sample-project", element: <CreateSampleProject /> },
         { path: "list-project", element: <ProjectList /> },
         { path: "detail-project/:id", element: <ProjectDetail /> },
         { path: "edit-project/:id", element: <EditProject /> },

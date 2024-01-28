@@ -38,6 +38,16 @@ from "./blog";
 
 //project
 export {
+    createSampleProject,
+    deleteSampleProjectById,
+    getAllSampleProjects,
+    getSampleProjectById,
+    updateSampleProject
+}
+from "./sampleproject";
+
+//project
+export {
     configProject,
     getAllProjects,
     createProjectByUser,
