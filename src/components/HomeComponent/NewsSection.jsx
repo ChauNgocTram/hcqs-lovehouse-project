@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination, Autoplay } from "swiper/modules";
-import { RxPencil2 } from "react-icons/rx";
+
 import { RxArrowTopRight } from "react-icons/rx";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -12,19 +12,40 @@ import "swiper/css/autoplay";
 import BtnViewMore from "../Button/BtnViewMore";
 import { getAllNews } from "../../constants/apiNews";
 
+
 export default function NewsSection() {
   const [newsData, setNewsData] = useState([]);
+  
 
   useEffect(() => {
+   
     const fetchNews = async () => {
       const data = await getAllNews();
       if (data && data.result) {
-        setNewsData(data.result.data);
+        const formattedData = data.result.data.map((newsItem) => ({
+          ...newsItem,
+          date: formatNewsDate(newsItem.date),
+        }));
+        setNewsData(formattedData);
+       
       }
     };
 
     fetchNews();
   }, []);
+
+  const formatNewsDate = (dateString) => {
+    const options = {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    };
+    const formattedDate = new Date(dateString).toLocaleString("en-US", options);
+    return formattedDate;
+  };
 
   const firstSixItems = newsData.slice(0, 6);
 
@@ -33,6 +54,7 @@ export default function NewsSection() {
       <h1 className="font-semibold uppercase text-4xl mb-12">
         LoveHouse's News
       </h1>
+      
       <Swiper
         breakpoints={{
           340: {
@@ -64,12 +86,12 @@ export default function NewsSection() {
               />
               <div className="absolute inset-0 bg-cover bg-black opacity-10 group-hover:opacity-50 " />
               <div className="relative flex flex-col gap-3">
-                <RxPencil2 className="text-blue-600 group-hover:text-blue-400 w-[32px] h-[32px]" />
+                
                 <h1 className="text-xl lg:text-2xl font-semibold hover:text-white">
-                  <NavLink to={`/news/${news.id}`}> {news.header}</NavLink>
+                  <NavLink to={`/newsDetail/${news.id}`}> {news.header}</NavLink>
                 </h1>
               </div>
-              <NavLink to={`/news/${news.id}`}>
+              <NavLink to={`/newsDetail/${news.id}`}>
                 <RxArrowTopRight className="absolute bottom-5 left-5 w-[35px] h-[35px] text-white group-hover:text-blue-500 group-hover:rotate-45 duration-100" />
               </NavLink>
             </div>

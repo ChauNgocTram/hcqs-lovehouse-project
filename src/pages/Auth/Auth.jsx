@@ -22,6 +22,9 @@ function Auth() {
   const navigate = useNavigate();
   const user = useSelector((state) => state?.user?.user);
 
+  //
+  const accountId = useSelector((state) => state?.auth?.accountId);
+
   const googleProider = new GoogleAuthProvider();
 
   const [popupEmail, setPopupEmail] = useState("");

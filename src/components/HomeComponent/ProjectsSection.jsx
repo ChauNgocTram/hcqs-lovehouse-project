@@ -79,11 +79,11 @@ function ProjectsSection() {
               <div className="grid grid-cols-2 gap-4 px-10">
                 {firstEightItems.map((project, index) => (
                   <div className="relative group" key={index}>
-                    {project.sampleProject.staticFiles &&
-                      project.sampleProject.staticFiles.length > 0 && (
+                    {project.staticFiles &&
+                      project.staticFiles.length > 0 && (
                         <>
                           <img
-                            src={project.sampleProject.staticFiles[0].url}
+                            src={project.staticFiles[1].url}
                             alt="purple image"
                             className="rounded-md h-[240px] w-[240px] object-cover"
                           />

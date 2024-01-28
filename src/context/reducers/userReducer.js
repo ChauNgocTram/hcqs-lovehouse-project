@@ -5,7 +5,10 @@ const userReducer = (state = {
         case "SET_USER":
             return {
                 ...state,
-                user: action.user,
+                user: {
+                    ...action.user,
+                    id: action.user.id, // Include id in the user object
+                },
             };
         case "SET_USER_NULL":
             return {

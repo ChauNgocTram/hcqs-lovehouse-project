@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode, Pagination, Autoplay } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/autoplay";
+
 import { getAllBlogs } from "../../constants/apiBlog";
 
-import Navbar from "../../components/Navbar/Navbar";
-import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
-import Footer from "../../components/Footer/Footer";
-import LoadingOverlay from "../../components/Loading/LoadingOverlay";
-
-export default function Blog() {
+export default function OtherBlogs() {
   const [blogData, setBlogData] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     const fetchBlog = async () => {
       try {
         const data = await getAllBlogs();
@@ -22,7 +23,6 @@ export default function Blog() {
             date: formatBlogDate(blog.date),
           }));
           setBlogData(formattedData);
-          setLoading(false);
         }
       } catch (error) {
         console.error("Error fetching blogs:", error);
@@ -52,22 +52,38 @@ export default function Blog() {
 
     return `${truncatedContent}...`;
   };
-
+  const firstSixItems = blogData.slice(0, 6);
   return (
     <>
-      <LoadingOverlay loading={loading} />
-      <Navbar />
-      <Breadcrumb />
-      <section className="md:h-full flex items-center text-gray-600">
-        <div className="container px-5 py-24 mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl text-gray-700 font-semibold">
-              Our Blogs
-            </h1>
-          </div>
-          <div className="flex flex-wrap -m-4">
-            {blogData.map((blog) => (
-              <div key={blog.id} className="p-4 sm:w-1/2 lg:w-1/3">
+      <div className="container mx-auto px-4 sm:px-0 mb-24">
+        <h1 className="font-semibold uppercase text-4xl mt-24 mb-12 text-center">
+          Other Blogs
+        </h1>
+        <Swiper
+          breakpoints={{
+            340: {
+              slidesPerView: 2,
+              spaceBetween: 15,
+            },
+            700: {
+              slidesPerView: 3,
+              spaceBetween: 15,
+            },
+          }}
+          freeMode={true}
+          pagination={{
+            clickable: true,
+          }}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
+          modules={[FreeMode, Pagination, Autoplay]}
+          className="max-w-[90%] lg:max-w-[80%]"
+        >
+          {firstSixItems.map((blog, index) => (
+            <SwiperSlide key={index}>
+              <div key={blog.id} className="relative group rounded-md">
                 <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
                   <img
                     className="lg:h-72 md:h-48 w-full object-cover object-center"
@@ -80,8 +96,8 @@ export default function Blog() {
                     </h2>
                     <h1 className="text-2xl font-semibold mb-3">
                       <NavLink to={`/blog/blogDetail/${blog.id}`}>
-                        {blog.header.length >= 70
-                          ? blog.header.substring(0, 50).trim() + "..."
+                        {blog.header.length >= 50
+                          ? blog.header.substring(0, 30).trim() + "..."
                           : blog.header}
                       </NavLink>
                     </h1>
@@ -131,11 +147,10 @@ export default function Blog() {
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      <Footer />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
     </>
   );
 }

@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { getAllNews } from "../../constant/apiNews";
+import { getAllNews } from "../../constants/apiNews";
 import NewsBanner from "../../components/Banner/NewsBanner";
+import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
+import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
+import LoadingOverlay from "../../components/Loading/LoadingOverlay";
 
 export default function News() {
   const [newsData, setNewsData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fetchNews = async () => {
       const data = await getAllNews();
       if (data && data.result) {
@@ -15,6 +21,7 @@ export default function News() {
           date: formatNewsDate(newsItem.date),
         }));
         setNewsData(formattedData);
+        setLoading(false);
       }
     };
 
@@ -36,9 +43,12 @@ export default function News() {
 
   return (
     <>
+    <LoadingOverlay loading={loading} />
+      <Navbar />
       <NewsBanner />
+      <Breadcrumb />
 
-      <div className="container mx-auto px-4 sm:px-0">
+      <div className="container mx-auto my-12 px-4 sm:px-0">
         <div className="grid sm:grid-cols-3 gap-5 ">
           {newsData.map((newsItem, index) => (
             <div
@@ -55,14 +65,14 @@ export default function News() {
                   {formatNewsDate(newsItem.date)}
                 </h4>
                 <h3 className="mb-10 text-2xl">
-                  <NavLink to={`/news/${newsItem.id}`}>
+                  <NavLink to={`/news/newsDetail/${newsItem.id}`}>
                     {newsItem.header.length >= 70
                       ? newsItem.header.substring(0, 50).trim() + "..."
                       : newsItem.header}
                   </NavLink>
                 </h3>
                 <NavLink
-                  to={`/news/${newsItem.id}`}
+                  to={`/news/newsDetail/${newsItem.id}`}
                   className="hover:bg-orange-600 transition-all text-sm inline-flex rounded-md px-4 py-2 text-center border-2 border-orange-600"
                 >
                   Read more
@@ -78,6 +88,8 @@ export default function News() {
           ))}
         </div>
       </div>
+
+      <Footer />
     </>
   );
 }

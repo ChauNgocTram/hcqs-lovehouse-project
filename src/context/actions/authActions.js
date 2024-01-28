@@ -1,8 +1,9 @@
-export const setTokens = (accessToken, refreshToken) => ({
+export const setTokens = (accessToken, refreshToken, accountId) => ({
     type: 'SET_TOKENS',
     payload: {
         accessToken,
         refreshToken,
+        accountId,
     },
 });
 
@@ -14,3 +15,4 @@ export const setUserRole = (role) => ({
 export const logout = () => ({
     type: 'LOGOUT',
 });
+

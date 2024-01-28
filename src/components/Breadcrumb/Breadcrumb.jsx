@@ -1,27 +1,24 @@
+// Breadcrumb.jsx
+
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
-function Breadcrumb({ currentPage }) {
-  const breadcrumbItems = [
-    { label: 'Home', path: '/' },
-    { label: 'News', path: '/news' },
-    { label: 'Blogs', path: '/blogs' },
-    { label: 'House Projects', path: '/houseProject' },
-    { label: 'About Us', path: '/aboutus' },
-    // Add more pages as needed
-  ];
+const Breadcrumb = () => {
+  const location = useLocation();
+ 
 
-  const getPageIndex = (path) => breadcrumbItems.findIndex((item) => item.path === path);
+  const pathSegments = location.pathname.split('/').filter((segment) => segment !== '');
+  const breadcrumbItems = [{ label: 'Home', path: '/' }];
 
-  // Filter only 'Home' and 'News' items
-  const filteredBreadcrumbItems = breadcrumbItems.filter(
-    (item) => item.label === 'Home' || item.label === 'News'
-  );
+  pathSegments.forEach((segment, index) => {
+    const path = `/${pathSegments.slice(0, index + 1).join('/')}`;
+    breadcrumbItems.push({ label: segment, path });
+  });
 
   return (
-    <nav className="bg-[#f6f6f6] mr-10 pl-40 w-full h-10 flex items-center ">
-      <ol className="list-reset flex">
-        {filteredBreadcrumbItems.map((item, index) => (
+    <nav className="bg-[#f6f6f6] mr-10 pl-40 w-full h-10 flex items-center">
+      <ol className="list-reset flex ml-6">
+        {breadcrumbItems.map((item, index) => (
           <React.Fragment key={index}>
             {index > 0 && (
               <li>
@@ -29,8 +26,8 @@ function Breadcrumb({ currentPage }) {
               </li>
             )}
             <li>
-              {index === filteredBreadcrumbItems.length - 1 ? (
-                <span className="text-baseOrange dark:text-baseOrange ">{currentPage}</span>
+              {index === breadcrumbItems.length - 1 ? (
+                <span className="text-baseOrange dark:text-baseOrange">{item.label}</span>
               ) : (
                 <NavLink
                   to={item.path}
@@ -45,6 +42,6 @@ function Breadcrumb({ currentPage }) {
       </ol>
     </nav>
   );
-}
+};
 
 export default Breadcrumb;
