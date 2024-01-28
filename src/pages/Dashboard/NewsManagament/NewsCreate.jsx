@@ -31,6 +31,29 @@ function NewsCreate() {
   const [progress, setProgress] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
 
+  const [errors, setErrors] = useState({
+    title: "",
+    content: "",
+  });
+
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = { title: "", content: "" };
+
+    if (!title.trim()) {
+      newErrors.title = "Title is required";
+      isValid = false;
+    }
+
+    if (!content.trim()) {
+      newErrors.content = "Content is required";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
   const uploadImage = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -47,6 +70,11 @@ function NewsCreate() {
   const submitNews = async () => {
     try {
       setisLoading(true);
+
+      if (!validateForm()) {
+        toast.error("Please fill in all required fields correctly.");
+        return;
+      }
 
       const formData = new FormData();
       formData.append("Header", title);
@@ -158,6 +186,11 @@ function NewsCreate() {
                         onChange={(e) => setTitle(e.target.value)}
                       />
                     </div>
+                    {errors.title && (
+                      <div className="text-red-500 text-sm mt-1">
+                        {errors.title}
+                      </div>
+                    )}
                   </div>
 
                   <div className="relative mb-3">
@@ -176,6 +209,11 @@ function NewsCreate() {
                         onChange={(value) => setContent(value)}
                       />
                     </div>
+                    {errors.content && (
+                      <div className="text-red-500 text-sm mt-1">
+                        {errors.content}
+                      </div>
+                    )}
                   </div>
                   <div className="relative mb-3">
                     <label className="text-gray-700 font-semibold text-sm">

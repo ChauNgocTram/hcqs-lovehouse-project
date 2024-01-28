@@ -333,7 +333,7 @@ function EditProject() {
                       </label>
                       <div className="flex items-center justify-center gap-3 w-full h-full px-4  rounded-lg border-gray-300 border bg-white">
                         <input
-                          type="text"
+                          type="number"
                           placeholder="Num Of Floor"
                           className="flex-1 w-full h-full outline-none border-none bg-transparent text-text555 text-lg"
                           value={numOfFloor}
@@ -354,7 +354,7 @@ function EditProject() {
                       </label>
                       <div className="flex items-center justify-center gap-3 w-full h-full px-4  rounded-lg border-gray-300 border bg-white">
                         <input
-                          type="text"
+                          type="number"
                           placeholder="Area"
                           className="flex-1 w-full h-full outline-none border-none bg-transparent text-text555 text-lg"
                           value={constructionArea}
@@ -375,7 +375,7 @@ function EditProject() {
                       </label>
                       <div className="flex items-center justify-center gap-3 w-full h-full px-4  rounded-lg border-gray-300 border bg-white">
                         <input
-                          type="text"
+                          type="number"
                           placeholder="Total Area"
                           className="flex-1 w-full h-full outline-none border-none bg-transparent text-text555 text-lg"
                           value={totalArea}
@@ -419,7 +419,7 @@ function EditProject() {
                       </label>
                       <div className="flex items-center justify-center gap-3 w-full h-12 px-4  rounded-lg border-gray-300 border bg-white">
                         <input
-                          type="text"
+                          type="number"
                           placeholder="Estimate Price"
                           className="flex-1 w-full h-full outline-none border-none bg-transparent text-text555 text-lg"
                           value={estimatePrice}

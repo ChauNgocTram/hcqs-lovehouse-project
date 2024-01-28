@@ -55,6 +55,11 @@ const BlogEdit = () => {
   const [progress, setProgress] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
 
+  const [errorsProject, setErrorsProject] = useState({
+    header: "",
+    content: "",
+  });
+
   const uploadImage = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -71,6 +76,11 @@ const BlogEdit = () => {
   const handleUpdateBlog = async () => {
     try {
       setIsLoading(true);
+
+      if (!validateProjectForm()) {
+        toast.error("Please fill in all required fields correctly.");
+        return;
+      }
 
       const formData = new FormData();
       formData.append("Id", id);
@@ -98,9 +108,33 @@ const BlogEdit = () => {
     }
   };
 
+  // Validate
+  const validateProjectForm = () => {
+    const newErrors = {
+      header: "",
+      content: "",
+    };
+
+    if (!blogData.header) {
+      newErrors.header = "Title is required.";
+    }
+
+    if (!blogData.content) {
+      newErrors.content = "Content is required.";
+    }
+
+    // Check if there are any errors
+    if (newErrors.header || newErrors.content) {
+      setErrorsProject(newErrors);
+      return false;
+    }
+
+    return true;
+  };
+
   return (
     <div className="flex flex-col p-8">
-      {/* title */}
+      {/* header */}
       <div>
         <div className="flex items-center space-x-2 text-xl">
           <FaBlog />
@@ -113,7 +147,7 @@ const BlogEdit = () => {
           Blog Management
         </div>
       </div>
-      {/* title  */}
+      {/* header  */}
       <div className="pt-12 bg-gray-50 sm:pt-16 border-b pb-[250px] relative">
         <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
           <div className="flex flex-col items-center justify-center max-w-4xl gap-8 mx-auto md:gap-12 md:flex-row">
@@ -182,6 +216,11 @@ const BlogEdit = () => {
                         }
                       />
                     </div>
+                    {errorsProject.header && (
+                      <div className="text-red-500 text-sm mt-1">
+                        {errorsProject.header}
+                      </div>
+                    )}
                   </div>
 
                   <div className="relative mb-3">
@@ -202,6 +241,11 @@ const BlogEdit = () => {
                         }
                       />
                     </div>
+                    {errorsProject.content && (
+                      <div className="text-red-500 text-sm mt-1">
+                        {errorsProject.content}
+                      </div>
+                    )}
                   </div>
                   <div className="relative mb-3">
                     <label className="text-gray-700 font-semibold text-sm">

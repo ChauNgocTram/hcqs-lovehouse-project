@@ -55,6 +55,29 @@ const NewsEdit = () => {
   const [progress, setProgress] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
 
+  const [errors, setErrors] = useState({
+    title: "",
+    content: "",
+  });
+
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = { title: "", content: "" };
+
+    if (!newsData.header.trim()) {
+      newErrors.title = "Title is required";
+      isValid = false;
+    }
+
+    if (!newsData.content.trim()) {
+      newErrors.content = "Content is required";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
   const uploadImage = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -71,6 +94,11 @@ const NewsEdit = () => {
   const handleUpdateNews = async () => {
     try {
       setIsLoading(true);
+
+      if (!validateForm()) {
+        toast.error("Please fill in all required fields correctly.");
+        return;
+      }
 
       const formData = new FormData();
       formData.append("Id", id);
@@ -182,6 +210,11 @@ const NewsEdit = () => {
                         }
                       />
                     </div>
+                    {errors.title && (
+                      <div className="text-red-500 text-sm mt-1">
+                        {errors.title}
+                      </div>
+                    )}
                   </div>
 
                   <div className="relative mb-3">
@@ -202,6 +235,11 @@ const NewsEdit = () => {
                         }
                       />
                     </div>
+                    {errors.content && (
+                      <div className="text-red-500 text-sm mt-1">
+                        {errors.content}
+                      </div>
+                    )}
                   </div>
                   <div className="relative mb-3">
                     <label className="text-gray-700 font-semibold text-sm">

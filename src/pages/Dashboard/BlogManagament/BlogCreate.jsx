@@ -31,6 +31,11 @@ function BlogCreate() {
   const [progress, setProgress] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
 
+  const [errorsProject, setErrorsProject] = useState({
+    title: "",
+    content: "",
+  });
+
   const uploadImage = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -47,6 +52,11 @@ function BlogCreate() {
   const submitBlog = async () => {
     try {
       setisLoading(true);
+
+      if (!validateProjectForm()) {
+        toast.error("Please fill in all required fields correctly.");
+        return;
+      }
 
       const formData = new FormData();
       formData.append("ID", "");
@@ -74,6 +84,29 @@ function BlogCreate() {
     }
   };
 
+  //Validate
+  const validateProjectForm = () => {
+    const newErrors = {
+      title: "",
+      content: "",
+    };
+
+    if (!title) {
+      newErrors.title = "Title is required.";
+    }
+
+    if (!content) {
+      newErrors.content = "Content is required.";
+    }
+
+    // Check if there are any errors
+    if (newErrors.title || newErrors.content) {
+      setErrorsProject(newErrors);
+      return false;
+    }
+
+    return true;
+  };
   return (
     <div className="flex flex-col p-8">
       {/* title */}
@@ -159,6 +192,11 @@ function BlogCreate() {
                         onChange={(e) => setTitle(e.target.value)}
                       />
                     </div>
+                    {errorsProject.title && (
+                      <div className="text-red-500 text-sm mt-1">
+                        {errorsProject.title}
+                      </div>
+                    )}
                   </div>
 
                   <div className="relative mb-3">
@@ -177,6 +215,11 @@ function BlogCreate() {
                         onChange={(value) => setContent(value)}
                       />
                     </div>
+                    {errorsProject.content && (
+                      <div className="text-red-500 text-sm mt-1">
+                        {errorsProject.content}
+                      </div>
+                    )}
                   </div>
                   <div className="relative mb-3">
                     <label className="text-gray-700 font-semibold text-sm">
