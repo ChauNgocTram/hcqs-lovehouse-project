@@ -39,6 +39,18 @@ function CreateSampleProject() {
 
   const [isLoading, setisLoading] = useState(false);
 
+  const [errorsProject, setErrorsProject] = useState({
+    title: "",
+    numOfFloor: "",
+    constructionArea: "",
+    totalArea: "",
+    selectedProjectType: "",
+    estimatePrice: "",
+    location: "",
+    functionProject: "",
+    content: "",
+  });
+
   const uploadImage = (e) => {
     const files = e.target.files;
     if (files.length > 0) {
@@ -61,6 +73,11 @@ function CreateSampleProject() {
   const submitProject = async () => {
     try {
       setisLoading(true);
+
+      if (!validateProjectForm()) {
+        toast.error("Please fill in all required fields correctly.");
+        return;
+      }
 
       const formData = new FormData();
       formData.append("Id", "");
@@ -95,6 +112,75 @@ function CreateSampleProject() {
     } finally {
       setisLoading(false);
     }
+  };
+
+  //Validate
+  const validateProjectForm = () => {
+    const newErrors = {
+      title: "",
+      numOfFloor: "",
+      constructionArea: "",
+      totalArea: "",
+      selectedProjectType: "",
+      estimatePrice: "",
+      location: "",
+      functionProject: "",
+      content: "",
+    };
+
+    if (!title) {
+      newErrors.title = "Title is required.";
+    }
+
+    if (!numOfFloor) {
+      newErrors.numOfFloor = "Num Of Floor is required.";
+    }
+
+    if (!constructionArea) {
+      newErrors.constructionArea = "Construction Area is required.";
+    }
+
+    if (!totalArea) {
+      newErrors.totalArea = "Total Area is required.";
+    }
+
+    if (!selectedProjectType) {
+      newErrors.selectedProjectType = "Project Type is required.";
+    }
+
+    if (!estimatePrice) {
+      newErrors.estimatePrice = "Estimate Price is required.";
+    }
+
+    if (!location) {
+      newErrors.location = "Location is required.";
+    }
+
+    if (!functionProject) {
+      newErrors.functionProject = "Function is required.";
+    }
+
+    if (!content) {
+      newErrors.content = "Content is required.";
+    }
+
+    // Check if there are any errors
+    if (
+      newErrors.title ||
+      newErrors.numOfFloor ||
+      newErrors.constructionArea ||
+      newErrors.totalArea ||
+      newErrors.selectedProjectType ||
+      newErrors.estimatePrice ||
+      newErrors.location ||
+      newErrors.functionProject ||
+      newErrors.content
+    ) {
+      setErrorsProject(newErrors);
+      return false;
+    }
+
+    return true;
   };
 
   return (
@@ -183,23 +269,33 @@ function CreateSampleProject() {
                         onChange={(e) => setTitle(e.target.value)}
                       />
                     </div>
+                    {errorsProject.title && (
+                      <div className="text-red-500 text-sm mt-1">
+                        {errorsProject.title}
+                      </div>
+                    )}
                   </div>
 
-                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 my-4">
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 ">
                     <div className="relative mb-3 col-span-1">
                       <label className="text-gray-700 font-semibold text-sm">
-                        NumOfFloor
+                        Num Of Floor
                         <span className="text-red-500 required-dot">*</span>
                       </label>
-                      <div className="flex items-center justify-center gap-3 w-full h-full px-4  rounded-lg border-gray-300 border bg-white">
+                      <div className="flex items-center justify-center gap-3 w-full h-12 px-4  rounded-lg border-gray-300 border bg-white">
                         <input
-                          type="text"
+                          type="number"
                           placeholder="Num Of Floor"
                           className="flex-1 w-full h-full outline-none border-none bg-transparent text-text555 text-lg"
                           value={numOfFloor}
                           onChange={(e) => setNumOfFloor(e.target.value)}
                         />
                       </div>
+                      {errorsProject.numOfFloor && (
+                        <div className="text-red-500 text-sm mt-1">
+                          {errorsProject.numOfFloor}
+                        </div>
+                      )}
                     </div>
 
                     <div className="relative mb-3 col-span-1">
@@ -207,15 +303,20 @@ function CreateSampleProject() {
                         Construction Area
                         <span className="text-red-500 required-dot">*</span>
                       </label>
-                      <div className="flex items-center justify-center gap-3 w-full h-full px-4  rounded-lg border-gray-300 border bg-white">
+                      <div className="flex items-center justify-center gap-3 w-full h-12 px-4  rounded-lg border-gray-300 border bg-white">
                         <input
-                          type="text"
+                          type="number"
                           placeholder="Area"
                           className="flex-1 w-full h-full outline-none border-none bg-transparent text-text555 text-lg"
                           value={constructionArea}
                           onChange={(e) => setConstructionArea(e.target.value)}
                         />
                       </div>
+                      {errorsProject.constructionArea && (
+                        <div className="text-red-500 text-sm mt-1">
+                          {errorsProject.constructionArea}
+                        </div>
+                      )}
                     </div>
 
                     <div className="relative mb-3 col-span-1">
@@ -223,15 +324,20 @@ function CreateSampleProject() {
                         Total Area
                         <span className="text-red-500 required-dot">*</span>
                       </label>
-                      <div className="flex items-center justify-center gap-3 w-full h-full px-4  rounded-lg border-gray-300 border bg-white">
+                      <div className="flex items-center justify-center gap-3 w-full h-12 px-4  rounded-lg border-gray-300 border bg-white">
                         <input
-                          type="text"
+                          type="number"
                           placeholder="Total Area"
                           className="flex-1 w-full h-full outline-none border-none bg-transparent text-text555 text-lg"
                           value={totalArea}
                           onChange={(e) => setTotalArea(e.target.value)}
                         />
                       </div>
+                      {errorsProject.totalArea && (
+                        <div className="text-red-500 text-sm mt-1">
+                          {errorsProject.totalArea}
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -250,6 +356,11 @@ function CreateSampleProject() {
                         <option value="0">0</option>
                         <option value="1">1</option>
                       </select>
+                      {errorsProject.selectedProjectType && (
+                        <div className="text-red-500 text-sm mt-1">
+                          {errorsProject.selectedProjectType}
+                        </div>
+                      )}
                     </div>
 
                     <div className="relative mb-3 col-span-1">
@@ -259,13 +370,18 @@ function CreateSampleProject() {
                       </label>
                       <div className="flex items-center justify-center gap-3 w-full h-12 px-4  rounded-lg border-gray-300 border bg-white">
                         <input
-                          type="text"
+                          type="number"
                           placeholder="Estimate Price"
                           className="flex-1 w-full h-full outline-none border-none bg-transparent text-text555 text-lg"
                           value={estimatePrice}
                           onChange={(e) => setEstimatePrice(e.target.value)}
                         />
                       </div>
+                      {errorsProject.estimatePrice && (
+                        <div className="text-red-500 text-sm mt-1">
+                          {errorsProject.estimatePrice}
+                        </div>
+                      )}
                     </div>
 
                     <div className="relative mb-3 col-span-1">
@@ -285,6 +401,11 @@ function CreateSampleProject() {
                           </option>
                         ))}
                       </select>
+                      {errorsProject.location && (
+                        <div className="text-red-500 text-sm mt-1">
+                          {errorsProject.location}
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -302,6 +423,11 @@ function CreateSampleProject() {
                         onChange={(e) => setFunctionProject(e.target.value)}
                       />
                     </div>
+                    {errorsProject.functionProject && (
+                      <div className="text-red-500 text-sm mt-1">
+                        {errorsProject.functionProject}
+                      </div>
+                    )}
                   </div>
 
                   <div className="relative mb-3">
@@ -320,6 +446,11 @@ function CreateSampleProject() {
                         onChange={(value) => setContent(value)}
                       />
                     </div>
+                    {errorsProject.content && (
+                      <div className="text-red-500 text-sm mt-1">
+                        {errorsProject.content}
+                      </div>
+                    )}
                   </div>
 
                   <div className="relative mb-3">
