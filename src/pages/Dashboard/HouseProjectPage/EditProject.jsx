@@ -88,6 +88,19 @@ function EditProject() {
     toast.success("Delete Image Successfully");
   };
 
+  const convertImageToBinary = async (image) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        resolve(event.target.result);
+      };
+      reader.onerror = (error) => {
+        reject(error);
+      };
+      reader.readAsArrayBuffer(image);
+    });
+  };
+
   const submitProject = async () => {
     try {
       setIsLoading(true);
@@ -105,9 +118,18 @@ function EditProject() {
       formData.append("Location", location);
       formData.append("AccountId", user?.id);
 
-      selectedImages.forEach((image) => {
-        formData.append(`ImageFiles`, image);
-      });
+      for (const image of selectedImages) {
+        let imageData;
+        if (typeof image === "object" && image instanceof File) {
+          imageData = await convertImageToBinary(image);
+        } else {
+          imageData = image;
+        }
+        formData.append(
+          `ImageFiles`,
+          new Blob([imageData], { type: image.type })
+        );
+      }
 
       const response = await updateSampleProject(formData);
 
@@ -124,6 +146,7 @@ function EditProject() {
       setIsLoading(false);
     }
   };
+
   return (
     <div className="flex flex-col p-8">
       {/* title */}
