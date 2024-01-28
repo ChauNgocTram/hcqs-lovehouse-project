@@ -126,7 +126,7 @@ const ProjectList = () => {
                 Your Project
               </h2>
               <Link
-                to={"/dashboard/create-project"}
+                to={"/dashboard/create-sample-project"}
                 className="v-btn py-2 px-4
               bg-orange-600 hover:bg-orange-700 focus:ring-orange-500 focus:ring-offset-orange-200
               text-white transition ease-in duration-200 text-center text-base font-medium focus:outline-none focus:ring-2

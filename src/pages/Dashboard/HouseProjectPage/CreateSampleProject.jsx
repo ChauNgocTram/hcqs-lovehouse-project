@@ -63,6 +63,7 @@ function CreateSampleProject() {
       setisLoading(true);
 
       const formData = new FormData();
+      formData.append("Id", "");
       formData.append("NumOfFloor", numOfFloor);
       formData.append("ConstructionArea", constructionArea);
       formData.append("TotalArea", totalArea);
