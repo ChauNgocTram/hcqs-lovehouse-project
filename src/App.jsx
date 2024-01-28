@@ -22,6 +22,7 @@ function App() {
       try {
         const decodedToken = jwtDecode(accessToken);
         const accountId = decodedToken?.AccountId;
+
         dispatch(
           setUserRole(
             decodedToken[
@@ -29,6 +30,7 @@ function App() {
             ]
           )
         );
+
         const currentTime = new Date().getTime() / 1000;
         if (decodedToken.exp < currentTime) {
           console.log("Token expired. Refreshing token...");
@@ -37,7 +39,7 @@ function App() {
             console.log("New token received: ", newTokenResult);
             const newAccessToken = newTokenResult.result.data.accessToken;
             const newRefreshToken = newTokenResult.result.data.refreshToken;
-            dispatch(setTokens(newAccessToken, newRefreshToken));
+            dispatch(setTokens(newAccessToken, newRefreshToken, accountId));
           } else {
             dispatch(logout());
             dispatch(SET_USER_NULL());

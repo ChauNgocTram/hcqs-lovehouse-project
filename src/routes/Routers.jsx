@@ -1,6 +1,6 @@
 import React from "react";
 import {  useRoutes } from "react-router-dom";
-import { HomeLayout } from "../layout/HomeLayout.";
+import HomeLayout from "../layout/HomeLayout"
 import  AuthLayout  from "../layout/AuthLayout"
 import Home from "../pages/Home/Home.jsx";
 import {
@@ -24,6 +24,8 @@ import NewsDetail from "../pages/News/NewsDetail";
 import Blog from "../pages/Blogs/Blog";
 import BlogDetail from "../pages/Blogs/BlogDetail";
 import { PageNotfound } from "../components";
+import QuoteRequestForm from "../pages/Quotation/QuotationForm/QuoteRequestForm";
+
 
 export default function Routers() {
   const routing = useRoutes([
@@ -47,6 +49,7 @@ export default function Routers() {
         { path: "/news/newsDetail/:id", element: <NewsDetail /> },
         { path: "/blog", element: <Blog /> },
         { path: "/blog/blogDetail/:id", element: <BlogDetail /> },
+        {path: "/quote-request", element: <QuoteRequestForm/>}
       ],
     },
     {
