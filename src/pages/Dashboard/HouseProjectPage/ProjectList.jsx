@@ -22,7 +22,9 @@ import { setAllSampleProject } from "../../../context/actions/allSampleProjectAc
 
 const ProjectList = () => {
   const allUsers = useSelector((state) => state?.allUsers?.allUsers);
-  const allProject = useSelector((state) => state?.allProject?.allProject);
+  const allSampleProject = useSelector(
+    (state) => state?.allSampleProject?.allSampleProject
+  );
 
   const dispatch = useDispatch();
 
@@ -85,7 +87,7 @@ const ProjectList = () => {
     }
   };
 
-  if (!allUsers || !allProject || isLoading) {
+  if (!allUsers || !allSampleProject || isLoading) {
     return (
       <div className="absolute z-30 bg-white bg-opacity-20 w-full h-full flex items-center justify-center">
         <MutatingDots />
@@ -94,8 +96,10 @@ const ProjectList = () => {
   }
 
   // Filter project based on searchInput
-  const filteredProject = allProject.filter((project) =>
-    project.header.toLowerCase().includes(searchInput.toLowerCase())
+  const filteredProject = allSampleProject.filter((project) =>
+    project.sampleProject.header
+      ?.toLowerCase()
+      .includes(searchInput.toLowerCase())
   );
 
   return (
@@ -159,7 +163,7 @@ const ProjectList = () => {
                 {filteredProject.length > 0 ? (
                   filteredProject.map((project) => {
                     const user = allUsers.find(
-                      (u) => u.user.id === project.accountId
+                      (u) => u.user.id === project.sampleProject.accountId
                     ) || {
                       firstName: "",
                       lastName: "",
@@ -167,7 +171,7 @@ const ProjectList = () => {
 
                     return (
                       <div
-                        key={project.id}
+                        key={project.sampleProject.id}
                         className="flex border w-full shadow-md rounded-sm my-2"
                       >
                         <div className="p-4 w-full">
@@ -186,16 +190,25 @@ const ProjectList = () => {
                               <div className="flex py-4">
                                 <motion.img
                                   whileHover={{ scale: 1.2 }}
-                                  src={project.imageUrl}
+                                  src={project.staticFiles[0].url}
                                   alt="project image"
                                   className="min-w-40 max-h-24"
                                 />
-                                <div className="px-2">
-                                  <div>{project.header}</div>
-                                  <div>
-                                    {new Date(
-                                      project.date
-                                    ).toLocaleDateString()}
+                                <div className="flex-col flex">
+                                  <div className="px-2">
+                                    <div>{project.sampleProject.header}</div>
+                                  </div>
+                                  <div className="flex px-2 space-x-4">
+                                    <div>
+                                      Area :{" "}
+                                      {project.sampleProject.constructionArea}
+                                    </div>
+                                    <div>
+                                      Type : {project.sampleProject.projectType}
+                                    </div>
+                                    <div>
+                                      Floor : {project.sampleProject.numOfFloor}
+                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -214,7 +227,7 @@ const ProjectList = () => {
                                 <div className="flex flex-col">
                                   {/* Edit  */}
                                   <Link
-                                    to={`/dashboard/edit-project/${project.id}`}
+                                    to={`/dashboard/edit-project/${project.sampleProject.id}`}
                                     className="flex items-center justify-start px-2 py-1 m-2 hover:bg-gray-300 
                                     rounded-md"
                                   >
@@ -235,7 +248,9 @@ const ProjectList = () => {
                                     className="flex items-center justify-start px-2 py-1 m-2 hover:bg-gray-300 
                                     rounded-md"
                                     onClick={() =>
-                                      handleDeleteClick(project.id)
+                                      handleDeleteClick(
+                                        project.sampleProject.id
+                                      )
                                     }
                                   >
                                     <div className="text-2xl">
