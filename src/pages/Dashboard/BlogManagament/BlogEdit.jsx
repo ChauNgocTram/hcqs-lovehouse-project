@@ -38,7 +38,30 @@ const BlogEdit = () => {
         const response = await getBlogById(id);
 
         if (response?.isSuccess) {
-          setBlogData(response.result.data);
+          const { header, content, imageUrl } = response.result.data;
+          setBlogData({ header, content });
+          // setSelectedImage(imageUrl);
+        } else {
+          toast.error("Failed to fetch blog details");
+        }
+      } catch (error) {
+        console.error("Error fetching blog details:", error);
+        toast.error("An error occurred while fetching blog details");
+      }
+    };
+
+    fetchBlogData();
+  }, [id]);
+  useEffect(() => {
+    const fetchBlogData = async () => {
+      try {
+        const response = await getBlogById(id);
+
+        if (response?.isSuccess) {
+          const { header, content, imageUrl } = response.result.data;
+          setBlogData({ header, content }); // <-- Corrected line
+          setSelectedImage(imageUrl);
+          console.log("select ", selectedImage);
         } else {
           toast.error("Failed to fetch blog details");
         }
@@ -89,7 +112,12 @@ const BlogEdit = () => {
       formData.append("AccountId", user?.id);
 
       if (selectedImage) {
-        formData.append("ImageUrl", selectedImage);
+        const imageBlob =
+          selectedImage instanceof Blob
+            ? selectedImage
+            : new Blob([selectedImage], { type: "image/*" });
+
+        formData.append("ImageUrl", imageBlob, "custom_filename.jpg");
       }
 
       const response = await updateBlog(formData);
@@ -285,7 +313,7 @@ const BlogEdit = () => {
                           {!selectedImage ? (
                             <>
                               <label>
-                                <div className=" flex flex-col items-center justify-center h-full w-full cursor-pointer">
+                                <div className="flex flex-col items-center justify-center h-full w-full cursor-pointer">
                                   <div className="flex flex-col justify-center items-center cursor-pointer">
                                     <p className="font-bold text-4xl">
                                       <AiOutlineCloudUpload className="-rotate-0" />
@@ -300,7 +328,7 @@ const BlogEdit = () => {
                                   name="upload-image"
                                   accept="image/*"
                                   onChange={uploadImage}
-                                  className=" w-0 h-0"
+                                  className="w-0 h-0"
                                 />
                               </label>
                             </>
@@ -309,8 +337,12 @@ const BlogEdit = () => {
                               <div className="relative w-full h-full overflow-hidden rounded-md">
                                 <motion.img
                                   whileHover={{ scale: 1.15 }}
-                                  src={URL.createObjectURL(selectedImage)}
-                                  className=" w-full h-full object-cover"
+                                  src={
+                                    selectedImage instanceof Blob
+                                      ? URL.createObjectURL(selectedImage)
+                                      : selectedImage
+                                  }
+                                  className="w-full h-full object-cover"
                                 />
 
                                 <motion.button

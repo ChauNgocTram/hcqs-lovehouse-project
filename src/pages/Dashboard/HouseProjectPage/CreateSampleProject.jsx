@@ -61,6 +61,7 @@ function CreateSampleProject() {
         toast.error("You can only attach up to 5 images.");
       }
     }
+    console.log("selectedImages: ", selectedImages);
   };
 
   const deleteImage = (index) => {

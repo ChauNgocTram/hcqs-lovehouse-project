@@ -33,7 +33,6 @@ function ProjectsSection() {
     return null; // Or display a loading state or message
   }
 
-  
   const slideItems = [firstEightItems.slice(0, 4), firstEightItems.slice(4, 8)];
 
   return (
@@ -80,7 +79,8 @@ function ProjectsSection() {
                 {firstEightItems.map((project, index) => (
                   <div className="relative group" key={index}>
                     {project.staticFiles &&
-                      project.staticFiles.length > 0 && (
+                      project.staticFiles.length > 1 &&
+                      project.staticFiles[1].url && (
                         <>
                           <img
                             src={project.staticFiles[1].url}
@@ -89,7 +89,9 @@ function ProjectsSection() {
                           />
                           <div className="cursor-pointer absolute inset-0 bg-gradient-to-r max-w-[240px] rounded-md from-purple-800 via-pink-500 to-purple-800 opacity-0 group-hover:opacity-70" />
                           <div className="absolute text-white inset-0 flex items-center justify-center cursor-pointer opacity-0 group-hover:opacity-100 transition-all">
-                            <NavLink to={`/houseProject/${project.sampleProject.id}`}>
+                            <NavLink
+                              to={`/houseProject/${project.sampleProject.id}`}
+                            >
                               View Project
                             </NavLink>
                             <RxArrowRight className="ml-2 w-[24px] h-[24px]" />

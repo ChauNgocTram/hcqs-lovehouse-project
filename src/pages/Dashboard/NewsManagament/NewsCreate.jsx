@@ -101,6 +101,14 @@ function NewsCreate() {
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="absolute z-30 bg-white bg-opacity-20 w-full h-full flex items-center justify-center">
+        <MutatingDots />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col p-8">
       {/* title */}

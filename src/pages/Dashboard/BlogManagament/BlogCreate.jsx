@@ -107,6 +107,7 @@ function BlogCreate() {
 
     return true;
   };
+
   return (
     <div className="flex flex-col p-8">
       {/* title */}

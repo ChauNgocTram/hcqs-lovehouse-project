@@ -33,7 +33,7 @@ function EditProject() {
   const [content, setContent] = useState("");
   const [selectedImages, setSelectedImages] = useState([]);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
 
   const [errorsProject, setErrorsProject] = useState({
     title: "",
@@ -63,12 +63,11 @@ function EditProject() {
           setLocation(projectData.sampleProject.location);
           setFunctionProject(projectData.sampleProject.function);
           setContent(projectData.sampleProject.content);
-          setSelectedImages(
-            projectData.staticFiles.map((file) => ({
-              id: file.id,
-              url: file.url, // Use the actual URL here
-            }))
-          );
+          // setSelectedImages(
+          //   projectData.staticFiles.map((file) => ({
+          //     url: file.url,
+          //   }))
+          // );
         } else {
           toast.error("Failed to fetch project details");
         }
@@ -80,6 +79,7 @@ function EditProject() {
 
     fetchProjectData();
   }, [id]);
+  console.log("setSelectedImages: ", selectedImages);
 
   const uploadImage = (e) => {
     const files = e.target.files;
@@ -100,22 +100,9 @@ function EditProject() {
     toast.success("Delete Image Successfully");
   };
 
-  const convertImageToBinary = async (image) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        resolve(event.target.result);
-      };
-      reader.onerror = (error) => {
-        reject(error);
-      };
-      reader.readAsArrayBuffer(image);
-    });
-  };
-
   const submitProject = async () => {
     try {
-      setIsLoading(true);
+      setisLoading(true);
 
       if (!validateProjectForm()) {
         toast.error("Please fill in all required fields correctly.");
@@ -135,32 +122,39 @@ function EditProject() {
       formData.append("Location", location);
       formData.append("AccountId", user?.id);
 
-      for (const image of selectedImages) {
-        let imageData;
-        if (typeof image === "object" && image instanceof File) {
-          imageData = await convertImageToBinary(image);
-        } else {
-          imageData = image;
-        }
-        formData.append(
-          `ImageFiles`,
-          new Blob([imageData], { type: image.type })
-        );
+      if (selectedImages) {
+        selectedImages.forEach((image, index) => {
+          const imageBlob =
+            image instanceof Blob
+              ? image
+              : new Blob([image], { type: "image/*" });
+
+          formData.append(
+            `ImageFiles`,
+            imageBlob,
+            `custom_filename_${index}.jpg`
+          );
+          // Log information about each appended image
+          console.log(`Appended image ${index + 1}:`, {
+            size: imageBlob.size,
+            type: imageBlob.type,
+          });
+        });
       }
 
       const response = await updateSampleProject(formData);
 
       if (response) {
-        toast.success("Project updated successfully");
+        toast.success("Project created successfully");
         navigate("/dashboard/list-project");
       } else {
-        toast.error("Failed to update project");
+        toast.error("Failed to create project");
       }
     } catch (error) {
-      console.error("Error updating project", error);
+      console.error("Error creating project", error);
       toast.error("An error occurred. Please try again later.");
     } finally {
-      setIsLoading(false);
+      setisLoading(false);
     }
   };
 
@@ -171,7 +165,6 @@ function EditProject() {
       numOfFloor: "",
       constructionArea: "",
       totalArea: "",
-      selectedProjectType: "",
       estimatePrice: "",
       location: "",
       functionProject: "",
@@ -192,10 +185,6 @@ function EditProject() {
 
     if (!totalArea) {
       newErrors.totalArea = "Total Area is required.";
-    }
-
-    if (!selectedProjectType) {
-      newErrors.selectedProjectType = "Project Type is required.";
     }
 
     if (!estimatePrice) {
@@ -220,7 +209,6 @@ function EditProject() {
       newErrors.numOfFloor ||
       newErrors.constructionArea ||
       newErrors.totalArea ||
-      newErrors.selectedProjectType ||
       newErrors.estimatePrice ||
       newErrors.location ||
       newErrors.functionProject ||
@@ -232,6 +220,7 @@ function EditProject() {
 
     return true;
   };
+
   return (
     <div className="flex flex-col p-8">
       {/* title */}
@@ -325,13 +314,13 @@ function EditProject() {
                     )}
                   </div>
 
-                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 my-4">
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 ">
                     <div className="relative mb-3 col-span-1">
                       <label className="text-gray-700 font-semibold text-sm">
-                        NumOfFloor
+                        Num Of Floor
                         <span className="text-red-500 required-dot">*</span>
                       </label>
-                      <div className="flex items-center justify-center gap-3 w-full h-full px-4  rounded-lg border-gray-300 border bg-white">
+                      <div className="flex items-center justify-center gap-3 w-full h-12 px-4  rounded-lg border-gray-300 border bg-white">
                         <input
                           type="number"
                           placeholder="Num Of Floor"
@@ -352,7 +341,7 @@ function EditProject() {
                         Construction Area
                         <span className="text-red-500 required-dot">*</span>
                       </label>
-                      <div className="flex items-center justify-center gap-3 w-full h-full px-4  rounded-lg border-gray-300 border bg-white">
+                      <div className="flex items-center justify-center gap-3 w-full h-12 px-4  rounded-lg border-gray-300 border bg-white">
                         <input
                           type="number"
                           placeholder="Area"
@@ -373,7 +362,7 @@ function EditProject() {
                         Total Area
                         <span className="text-red-500 required-dot">*</span>
                       </label>
-                      <div className="flex items-center justify-center gap-3 w-full h-full px-4  rounded-lg border-gray-300 border bg-white">
+                      <div className="flex items-center justify-center gap-3 w-full h-12 px-4  rounded-lg border-gray-300 border bg-white">
                         <input
                           type="number"
                           placeholder="Total Area"
@@ -515,8 +504,13 @@ function EditProject() {
                         >
                           <motion.img
                             whileHover={{ scale: 1.15 }}
-                            src={image.url}
+                            src={
+                              image instanceof Blob
+                                ? URL.createObjectURL(image)
+                                : image.url
+                            }
                             className="w-full h-full object-cover"
+                            style={{ transform: "none" }}
                           />
 
                           <motion.button
