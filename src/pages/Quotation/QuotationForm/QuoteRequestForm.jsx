@@ -35,26 +35,26 @@ export default function QuoteRequestForm() {
 
 
   const displaySteps = (step) => {
+    // switch (step) {
+    //   case 1:
+    //     return <Account />;
+    //   case 2:
+    //     return <Detail />;
+    //   case 3:
+    //     return <LandDrawingFile />;
+    //   case 4:
+    //     return <Final />;
+    //   default:
+    // }
+
     switch (step) {
       case 1:
-        return <Account />;
+        return <DetailAndLandDrawingFile />;
       case 2:
-        return <Detail />;
-      case 3:
-        return <LandDrawingFile />;
-      case 4:
         return <Final />;
       default:
+        return null;
     }
-
-  //   switch (step) {
-  //     case 1:
-  //       return <DetailAndLandDrawingFile />;
-  //     case 2:
-  //       return <Final />;
-  //     default:
-  //       return null;
-  //   }
    };
 
   const handleClick = async (direction) => {

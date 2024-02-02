@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { StepperContext } from "../StepperContext";
+import { Form, Input } from "antd";
 
 const DetailAndLandDrawingFile = () => {
   const { userData, setUserData } = React.useContext(StepperContext);
@@ -36,11 +37,15 @@ const DetailAndLandDrawingFile = () => {
         formData.append("LandDrawingFile", values.landDrawingFile);
         formData.append("AccountId", accountId); // Make sure to get accountId from somewhere
 
-        const res = await axios.post(`${baseURL}/project/create-project-by-user`, formData, {
-          headers: {
-            "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        });
+        const res = await axios.post(
+          `${baseURL}/project/create-project-by-user`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        );
 
         if (res.data) {
           console.log("Project created successfully:", res.data);
@@ -53,22 +58,85 @@ const DetailAndLandDrawingFile = () => {
     },
   });
 
-  const handleFileChange = (e) => {
-    const { name, type, files } = e.target;
+  // const handleFileChange = (e) => {
+  //   const { name, type, files } = e.target;
 
-    if (type === "file" && files.length > 0) {
-      const selectedFile = files[0];
-      formik.setFieldValue(name, selectedFile);
-    }
-  };
+  //   if (type === "file" && files.length > 0) {
+  //     const selectedFile = files[0];
+  //     formik.setFieldValue(name, selectedFile);
+  //   }
+  // };
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      {/* Detail Section */}
+    <Form
+      {...formItemLayout}
+      form={formik.form}
+      onFinish={formik.handleSubmit}
+      size="large"
+      autoComplete="off"
+    >
       <div className="flex flex-col">
-        {/* ... (same as your Detail component) */}
         <div className="w-full mx-2 flex-1">
-          {/* ... (same as your Detail component) */}
+          <div className="font-bold h-6 mt-3 text-gray-500 text-xs leading-8 uppercase">
+            Number of floor
+          </div>
+          <Form.Item
+            label=""
+            name="numoffloor"
+            rules={[
+              {
+                required: true,
+                message: "Number of floor cannot be blank",
+              },
+              { whitespace: true },
+            ]}
+            hasFeedback
+          >
+            
+              <Input
+                //onChange={handleChange}
+                // value={userData["numoffloor"] || ""}
+                value={formik.values.numoffloor}
+                onChange={formik.handleChange}
+                name="numoffloor"
+                placeholder="Number of floor"
+                type="number"
+                className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+              />
+            
+          </Form.Item>
+        </div>
+
+        <div className="w-full mx-2 flex-1">
+          <div className="font-bold h-6 mt-3 text-gray-500 text-xs leading-8 uppercase">
+            Total Area (m²)
+          </div>
+
+          <Form.Item
+            label=""
+            name="totalArea"
+            rules={[
+              {
+                required: true,
+                message: "Area cannot be blank",
+              },
+              { whitespace: true },
+            ]}
+            hasFeedback
+          >
+            
+              <Input
+                //onChange={handleChange}
+                //value={userData["totalArea"] || ""}
+                value={formik.values.totalArea}
+                onChange={formik.handleChange}
+                name="totalArea"
+                placeholder="Total area"
+                type="number"
+                className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+              />
+            
+          </Form.Item>
         </div>
       </div>
 
@@ -93,14 +161,15 @@ const DetailAndLandDrawingFile = () => {
             />
           </div>
           {formik.touched.landDrawingFile && formik.errors.landDrawingFile && (
-            <div className="text-red-500 text-xs">{formik.errors.landDrawingFile}</div>
+            <div className="text-red-500 text-xs">
+              {formik.errors.landDrawingFile}
+            </div>
           )}
         </div>
       </div>
-
-      {/* Add a submit button */}
-      <button type="submit">Submit</button>
-    </form>
+     
+    </Form>
+   
   );
 };
 
