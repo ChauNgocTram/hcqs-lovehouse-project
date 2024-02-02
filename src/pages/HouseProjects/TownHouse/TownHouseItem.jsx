@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { IoHomeOutline } from "react-icons/io5";
 import { MdAttachMoney } from "react-icons/md";
 
-export default function HouseRoofItem({ sampleProject = {}, staticFile }) {
+export default function TownHouseItem({ sampleProject = {}, staticFile }) {
   const { id, location, header, totalArea, estimatePrice } = sampleProject;
 
   const url = staticFile && staticFile.length > 0 ? staticFile[0].url : null;
@@ -15,14 +15,10 @@ export default function HouseRoofItem({ sampleProject = {}, staticFile }) {
     }).format(amount);
   };
   return (
-    <div className="bg-white shadow-1 p-5 rounded-lg rounded-tl-[90px] w-full max-w-[352px]  mx-auto cursor-pointer hover:shadow-2xl transition">
-      <img
-        src={url}
-        alt=""
-        className="mb-8 rounded-tl-[90px] rounded-br-[90px] h-[165px]"
-      />
+    <div className="bg-white shadow-1 p-5 rounded-lg  w-full max-w-[352px]  mx-auto cursor-pointer hover:shadow-2xl transition">
+      <img src={url} alt="" className="mb-8 rounded-lg h-[165px]" />
       <div className="mb-4 flex gap-x-2 text-sm">
-        <div className="bg-baseGreen rounded-full text-white px-3">
+        <div className="bg-baseOrange rounded-full text-white px-3 ">
           {location}
         </div>
       </div>

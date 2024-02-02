@@ -17,7 +17,7 @@ import {
 import HouseProject from "../pages/HouseProjects/HouseProject";
 import HouseRoofList from "../pages/HouseProjects/HouseRoof/HouseRoofList";
 import HouseRoofDetail from "../pages/HouseProjects/HouseRoof/HouseRoofDetail";
-import TownHouse from "../pages/HouseProjects/TownHouse/TownHouse";
+import TownHouseList from "../pages/HouseProjects/TownHouse/TownHouseList";
 import TownHouseDetail from "../pages/HouseProjects/TownHouse/TownHouseDetail";
 import News from "../pages/News/News";
 import NewsDetail from "../pages/News/NewsDetail";
@@ -40,7 +40,7 @@ export default function Routers() {
           path: "/house-roof-projects/details/:id",
           element: <HouseRoofDetail />,
         },
-        { path: "/town-house-projects", element: <TownHouse /> },
+        { path: "/town-house-projects", element: <TownHouseList /> },
         {
           path: "/town-house-projects/details/:id",
           element: <TownHouseDetail />,
