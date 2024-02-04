@@ -30,7 +30,7 @@ export default function LandDrawingFile() {
         <div className="bg-white my-2 p-1 flex border border-gray-200 rounded">
           <input
             onChange={handleChange}
-            name="landDrawingFile" 
+            name="landDrawingFileUrl" 
             type="file"
             className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
           />

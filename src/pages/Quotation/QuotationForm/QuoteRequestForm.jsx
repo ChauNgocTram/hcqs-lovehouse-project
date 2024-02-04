@@ -12,11 +12,13 @@ import Navbar from "../../../components/Navbar/Navbar";
 import Footer from "../../../components/Footer/Footer";
 import { quoteRequest } from "../../../constants/apiQuoteRequest";
 
-import DetailAndLandDrawingFile from "../../../components/QuotationComponent/steps/DetailAndLandDrawingFile";
+import {alert } from "../../../components/Alert/Alert"
 
 
 export default function QuoteRequestForm() {
-  
+  const [isValid, setIsValid] = useState(true);
+  const [showAlert, setShowAlert] = useState(false);
+
 
   const user = useSelector((state) => state?.user?.user);
 
@@ -35,26 +37,18 @@ export default function QuoteRequestForm() {
 
 
   const displaySteps = (step) => {
-    // switch (step) {
-    //   case 1:
-    //     return <Account />;
-    //   case 2:
-    //     return <Detail />;
-    //   case 3:
-    //     return <LandDrawingFile />;
-    //   case 4:
-    //     return <Final />;
-    //   default:
-    // }
-
     switch (step) {
       case 1:
-        return <DetailAndLandDrawingFile />;
+        return <Account />;
       case 2:
+        return <Detail setIsValid={setIsValid} setShowAlert={setShowAlert} />;
+      case 3:
+        return <LandDrawingFile />;
+      case 4:
         return <Final />;
       default:
-        return null;
     }
+
    };
 
   const handleClick = async (direction) => {
@@ -76,6 +70,8 @@ export default function QuoteRequestForm() {
         console.error("Error creating project:", error);
       }
     }
+
+
   };
 
   return (
@@ -104,6 +100,8 @@ export default function QuoteRequestForm() {
             handleClick={handleClick}
             currentStep={currentStep}
             steps={steps}
+            isValid={isValid}
+            showAlert={showAlert}
           />
         )}
       </div>

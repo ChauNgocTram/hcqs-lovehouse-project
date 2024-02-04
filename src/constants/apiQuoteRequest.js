@@ -6,9 +6,10 @@ export const quoteRequest = async (userData, accountId) => {
     const formData = new FormData();
 
    
-    formData.append("NumOfFloor", userData.numoffloor);
-    formData.append("Area", userData.totalArea);
-    formData.append("LandDrawingFile", userData.landDrawingFile); 
+    formData.append("NumOfFloor", userData.numOfFloor);
+    formData.append("Area", userData.area);
+    formData.append("LandDrawingFile", userData.landDrawingFileUrl); 
+    formData.append("Type", userData.constructionType);
     formData.append("AccountId", accountId);
  
 
@@ -16,6 +17,7 @@ export const quoteRequest = async (userData, accountId) => {
     const res = await axios.post(`${baseURL}/project/create-project-by-user`, formData, {
       headers: {
         "Authorization": `Bearer ${localStorage.getItem("accessToken")}`, 
+         "Content-Type": "multipart/form-data",
       },
     });
 
