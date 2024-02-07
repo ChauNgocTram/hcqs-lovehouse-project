@@ -14,7 +14,7 @@ function UserProfileDetails() {
   const navigate = useNavigate();
 
   const user = useSelector((state) => state.user?.user);
-  // const role = useSelector((state) => state.role?.role);
+  //const role = useSelector((state) => state.user?.role);
 
   const [isMenu, setIsMenu] = useState(false);
 
@@ -48,16 +48,41 @@ function UserProfileDetails() {
       <AnimatePresence>
         {isMenu && (
           <motion.div className="absolute top-16 right-8 px-4 py-3 rounded-xl shadow-md z-50 flex flex-col items-start justify-start gap-4 bg-white">
-            <motion.div
-              whileTap={{ scale: 0.9 }}
-              className="flex items-center justify-between text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 
-              w-full px-2 py-1 rounded-md cursor-pointer text-nowrap"
-            >
-              <Link to={"/dashboard"}>Dashboard</Link>
-              <div className="text-xs pl-2">
-                <FaChevronRight />
-              </div>
-            </motion.div>
+            
+              <motion.div
+                whileTap={{ scale: 0.9 }}
+                className="flex items-center justify-between text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 
+                w-full px-2 py-1 rounded-md cursor-pointer text-nowrap"
+              >
+                <Link to={"/customer/my-request"}>Customer Dashboard</Link>
+                <div className="text-xs pl-2">
+                  <FaChevronRight />
+                </div>
+              </motion.div>
+            
+              <motion.div
+                whileTap={{ scale: 0.9 }}
+                className="flex items-center justify-between text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 
+                w-full px-2 py-1 rounded-md cursor-pointer text-nowrap"
+              >
+                <Link to={"/staff/all-request"}>Staff Dashboard</Link>
+                <div className="text-xs pl-2">
+                  <FaChevronRight />
+                </div>
+              </motion.div>
+           
+              <motion.div
+                whileTap={{ scale: 0.9 }}
+                className="flex items-center justify-between text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 
+                w-full px-2 py-1 rounded-md cursor-pointer text-nowrap"
+              >
+                <Link to={"/dashboard"}>Dashboard</Link>
+                <div className="text-xs pl-2">
+                  <FaChevronRight />
+                </div>
+              </motion.div>
+           
+
             <motion.div
               whileTap={{ scale: 0.9 }}
               className="flex items-center justify-between text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 

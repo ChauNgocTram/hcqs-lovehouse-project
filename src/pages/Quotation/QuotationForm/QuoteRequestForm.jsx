@@ -10,7 +10,7 @@ import LandDrawingFile from "../../../components/QuotationComponent/steps/LandDr
 import Final from "../../../components/QuotationComponent/steps/Final";
 import Navbar from "../../../components/Navbar/Navbar";
 import Footer from "../../../components/Footer/Footer";
-import { quoteRequest } from "../../../constants/apiQuoteRequest";
+import { quoteRequest } from "../../../constants/apiQuotationOfCustomer";
 
 import {alert } from "../../../components/Alert/Alert"
 
@@ -18,7 +18,7 @@ import {alert } from "../../../components/Alert/Alert"
 export default function QuoteRequestForm() {
   const [isValid, setIsValid] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
-
+  const [isFileSelected, setIsFileSelected] = useState(false);
 
   const user = useSelector((state) => state?.user?.user);
 
@@ -88,6 +88,8 @@ export default function QuoteRequestForm() {
                 setUserData,
                 finalData,
                 setFinalData,
+                isFileSelected,
+              setIsFileSelected,
               }}
             >
               {displaySteps(currentStep)}

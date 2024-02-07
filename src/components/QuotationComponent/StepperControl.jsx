@@ -4,7 +4,7 @@ import {alert} from "../Alert/Alert"
 export default function StepperControl({ handleClick, currentStep, steps,isValid, showAlert }) {
   
   const handleNextClick = () => {
-    if (showAlert) {
+    if (showAlert || !isValid) {
       alert.alertFailed("Error", "Please fill in all required fields.", () => {});
     } else {
       handleClick("next");

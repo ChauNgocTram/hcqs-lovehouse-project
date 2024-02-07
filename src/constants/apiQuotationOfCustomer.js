@@ -26,3 +26,14 @@ export const quoteRequest = async (userData, accountId) => {
     return null;
   }
 };
+
+
+export const getAllRequest = async (accountId) => {
+  try {
+      const res = await axios.get(`${baseURL}/project/get-all-project-by-accountId/${accountId}`);
+      return res.data;
+  } catch (err) {
+      return null;
+  }
+};
+
