@@ -1,35 +1,40 @@
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useFormik } from "formik";
+import { Input, Button, Form as AntdForm, Select } from "antd";
+import * as Yup from "yup";
+import { getAllWorker } from "../../../constants/apiWorker";
+import { getProjectById } from "../../../constants/apiQuotationOfStaff";
 
-import React, {useEffect, useState} from 'react';
-import { useFormik } from 'formik';
-import { Input, Button, Form as AntdForm , Select } from 'antd';
-import * as Yup from 'yup';
-import { getAllWorker } from '../../../constants/apiWorker';
-
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 const { Option } = Select;
 
 const validationSchema = Yup.object().shape({
   sandMixingRatio: Yup.number().required(
-      "'Sand Mixing Ratio' must not be empty."
-    ),
-    cementMixingRatio: Yup.number().required(
-      "'Cement Mixing Ratio' must not be empty."
-    ),
-    stoneMixingRatio: Yup.number().required(
-      "'Stone Mixing Ratio' must not be empty."
-    ),
-    tiledArea: Yup.number().required("The TiledArea must be required!"),
-    wallLength: Yup.number().required("'Wall Length' must not be empty."),
-    wallHeight: Yup.number().required("'Wall Height' must not be empty."),
-    estimatedTimeOfCompletion: Yup.number().required(
-      "The EstimatedTimeOfCompletion must be required!"
-    ),
+    "'Sand Mixing Ratio' must not be empty."
+  ),
+  cementMixingRatio: Yup.number().required(
+    "'Cement Mixing Ratio' must not be empty."
+  ),
+  stoneMixingRatio: Yup.number().required(
+    "'Stone Mixing Ratio' must not be empty."
+  ),
+  tiledArea: Yup.number().required("The TiledArea must be required!"),
+  wallLength: Yup.number().required("'Wall Length' must not be empty."),
+  wallHeight: Yup.number().required("'Wall Height' must not be empty."),
+  estimatedTimeOfCompletion: Yup.number().required(
+    "The EstimatedTimeOfCompletion must be required!"
+  ),
 });
 
 const ConfigForm = ({ initialValues, onSubmit }) => {
   const [workers, setWorkers] = useState([]);
   const [selectedWorker, setSelectedWorker] = useState(null);
+  
+  const [projectDetail, setProjectDetail] = useState({});
+
+  const { id } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,7 +42,7 @@ const ConfigForm = ({ initialValues, onSubmit }) => {
         const response = await getAllWorker();
         setWorkers(response.result.data);
       } catch (error) {
-        console.error('Error fetching workers:', error);
+        console.error("Error fetching workers:", error);
       }
     };
 
@@ -53,14 +58,16 @@ const ConfigForm = ({ initialValues, onSubmit }) => {
           values.laborRequests = [];
         }
         values.laborRequests.forEach((request) => {
-          const selectedWorker = workers.find(worker => worker.id === request.workerPriceId);
+          const selectedWorker = workers.find(
+            (worker) => worker.id === request.workerPriceId
+          );
           if (selectedWorker) {
             request.workerPriceId = selectedWorker.id;
           }
         });
         await onSubmit(values);
       } catch (error) {
-        console.error('Error submitting form:', error);
+        console.error("Error submitting form:", error);
       }
     },
   });
@@ -94,25 +101,54 @@ const ConfigForm = ({ initialValues, onSubmit }) => {
       const selectedWorker = workers.find(
         (worker) => worker.id === formik.values.laborRequests[0].workerPriceId
       );
-  
+
       if (selectedWorker) {
         setSelectedWorker(selectedWorker);
       } else {
-        console.error(`Worker with ID ${formik.values.laborRequests[0].workerPriceId} not found`);
+        console.error(
+          `Worker with ID ${formik.values.laborRequests[0].workerPriceId} not found`
+        );
       }
     }
   }, [formik.values.laborRequests, workers]);
+
+  useEffect(() => {
+    const fetchProjectDetail = async () => {
+      try {
+        if (id) {
+          const data = await getProjectById(id);
+          if (data && data.result) {
+            setProjectDetail(data.result.data);
+            const projectId = data.result.data?.project?.id;
+            formik.setFieldValue("id", projectId || "");
+          } else {
+            console.error("Invalid data format:", data);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching house project data:", error);
+      }
+    };
+
+    fetchProjectDetail();
+  }, [id]);
   return (
-    <AntdForm onFinish={formik.handleSubmit}>
-        <AntdForm.Item label="ID">
+    <AntdForm
+      onFinish={formik.handleSubmit}
+      name="basic"
+      labelCol={{ span: 8 }}
+      wrapperCol={{ span: 16 }}
+      style={{ maxWidth: 600 }}
+      autoComplete="off"
+    >
+      <AntdForm.Item label="ID" initialValue={id}>
         <Input
           type="text"
           name="id"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
+         // onChange={formik.handleChange}
+         // onBlur={formik.handleBlur}
           value={formik.values.id}
         />
-       
       </AntdForm.Item>
 
       <AntdForm.Item label="Sand Mixing Ratio">
@@ -240,7 +276,8 @@ const ConfigForm = ({ initialValues, onSubmit }) => {
           onBlur={formik.handleBlur}
           value={formik.values.estimatedTimeOfCompletion}
         />
-        {formik.touched.estimatedTimeOfCompletion && formik.errors.estimatedTimeOfCompletion ? (
+        {formik.touched.estimatedTimeOfCompletion &&
+        formik.errors.estimatedTimeOfCompletion ? (
           <div>{formik.errors.estimatedTimeOfCompletion}</div>
         ) : null}
       </AntdForm.Item>
@@ -248,7 +285,9 @@ const ConfigForm = ({ initialValues, onSubmit }) => {
       <AntdForm.Item label="Worker">
         <Select
           name="laborRequests[0].workerPriceId"
-          onChange={(value) => formik.setFieldValue('laborRequests[0].workerPriceId', value)}
+          onChange={(value) =>
+            formik.setFieldValue("laborRequests[0].workerPriceId", value)
+          }
           onBlur={formik.handleBlur}
           value={formik.values.laborRequests[0].workerPriceId}
         >
@@ -269,8 +308,7 @@ const ConfigForm = ({ initialValues, onSubmit }) => {
           name="laborRequests[0].exportLaborCost"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          
-          value={selectedWorker ? selectedWorker.laborCost : ''}
+          value={selectedWorker ? selectedWorker.laborCost : ""}
         />
         {/* {formik.touched.laborRequests.exportLaborCost && formik.errors.laborRequests.exportLaborCost ? (
           <div>{formik.errors.laborRequests.exportLaborCost}</div>
@@ -287,9 +325,8 @@ const ConfigForm = ({ initialValues, onSubmit }) => {
         />
       </AntdForm.Item>
 
-      
       <AntdForm.Item>
-        <Button type="primary" htmlType="submit" className='text-black'>
+        <Button type="primary" htmlType="submit" className="text-black">
           Submit
         </Button>
       </AntdForm.Item>

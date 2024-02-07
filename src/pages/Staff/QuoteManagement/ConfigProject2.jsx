@@ -4,7 +4,7 @@ import { updateProjectConfig } from "../../../constants/apiQuotationOfStaff";
 
 const ConfigProject2 = () => {
   const initialValues = {
-    id: "",
+    //id: "",
     sandMixingRatio: 0,
     cementMixingRatio: 0,
     stoneMixingRatio: 0,
@@ -26,11 +26,11 @@ const ConfigProject2 = () => {
 
   const handleSubmit = async (values) => {
     try {
-        values.laborRequests[0].workerPriceId = values.laborRequests[0].id;
+      //values.laborRequests[0].workerPriceId = values.laborRequests[0].id;
       const response = await updateProjectConfig(values);
-      console.log('API Response:', response);
+      console.log("API Response:", response);
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error("Error submitting form:", error);
     }
   };
 
