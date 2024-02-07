@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
-import { Input, Button, Form as AntdForm, Select } from "antd";
+import { Input, Button, Form as AntdForm, Select, Row, Col } from "antd";
 import * as Yup from "yup";
 import { getAllWorker } from "../../../constants/apiWorker";
 import { getProjectById } from "../../../constants/apiQuotationOfStaff";
@@ -31,7 +31,7 @@ const validationSchema = Yup.object().shape({
 const ConfigForm = ({ initialValues, onSubmit }) => {
   const [workers, setWorkers] = useState([]);
   const [selectedWorker, setSelectedWorker] = useState(null);
-  
+
   const [projectDetail, setProjectDetail] = useState({});
 
   const { id } = useParams();
@@ -138,85 +138,92 @@ const ConfigForm = ({ initialValues, onSubmit }) => {
       name="basic"
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
-      style={{ maxWidth: 600 }}
+      //style={{ maxWidth: 1000 }}
       autoComplete="off"
     >
       <AntdForm.Item label="ID" initialValue={id}>
         <Input
           type="text"
           name="id"
-         // onChange={formik.handleChange}
-         // onBlur={formik.handleBlur}
+          // onChange={formik.handleChange}
+          // onBlur={formik.handleBlur}
           value={formik.values.id}
         />
       </AntdForm.Item>
 
-      <AntdForm.Item label="Sand Mixing Ratio">
-        <Input
-          type="number"
-          name="sandMixingRatio"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.sandMixingRatio}
-        />
-        {formik.touched.sandMixingRatio && formik.errors.sandMixingRatio ? (
-          <div>{formik.errors.sandMixingRatio}</div>
-        ) : null}
-      </AntdForm.Item>
+      <Row gutter={16}>
+        <Col span={12}>
+          <AntdForm.Item label="Sand Mixing Ratio">
+            <Input
+              type="number"
+              name="sandMixingRatio"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.sandMixingRatio}
+            />
+            {formik.touched.sandMixingRatio && formik.errors.sandMixingRatio ? (
+              <div>{formik.errors.sandMixingRatio}</div>
+            ) : null}
+          </AntdForm.Item>
 
-      <AntdForm.Item label="Cement Mixing Ratio">
-        <Input
-          type="number"
-          name="cementMixingRatio"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.cementMixingRatio}
-        />
-        {formik.touched.cementMixingRatio && formik.errors.cementMixingRatio ? (
-          <div>{formik.errors.cementMixingRatio}</div>
-        ) : null}
-      </AntdForm.Item>
+          <AntdForm.Item label="Cement Mixing Ratio">
+            <Input
+              type="number"
+              name="cementMixingRatio"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.cementMixingRatio}
+            />
+            {formik.touched.cementMixingRatio &&
+            formik.errors.cementMixingRatio ? (
+              <div>{formik.errors.cementMixingRatio}</div>
+            ) : null}
+          </AntdForm.Item>
 
-      <AntdForm.Item label="Stone Mixing Ratio">
-        <Input
-          type="number"
-          name="stoneMixingRatio"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.stoneMixingRatio}
-        />
-        {formik.touched.stoneMixingRatio && formik.errors.stoneMixingRatio ? (
-          <div>{formik.errors.stoneMixingRatio}</div>
-        ) : null}
-      </AntdForm.Item>
+          <AntdForm.Item label="Stone Mixing Ratio">
+            <Input
+              type="number"
+              name="stoneMixingRatio"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.stoneMixingRatio}
+            />
+            {formik.touched.stoneMixingRatio &&
+            formik.errors.stoneMixingRatio ? (
+              <div>{formik.errors.stoneMixingRatio}</div>
+            ) : null}
+          </AntdForm.Item>
 
-      <AntdForm.Item label="furnitureDiscount">
-        <Input
-          type="number"
-          name="furnitureDiscount"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.furnitureDiscount}
-        />
-        {formik.touched.furnitureDiscount && formik.errors.furnitureDiscount ? (
-          <div>{formik.errors.furnitureDiscount}</div>
-        ) : null}
-      </AntdForm.Item>
+          <AntdForm.Item label="furnitureDiscount">
+            <Input
+              type="number"
+              name="furnitureDiscount"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.furnitureDiscount}
+            />
+            {formik.touched.furnitureDiscount &&
+            formik.errors.furnitureDiscount ? (
+              <div>{formik.errors.furnitureDiscount}</div>
+            ) : null}
+          </AntdForm.Item>
 
-      <AntdForm.Item label="laborPrice">
-        <Input
-          type="number"
-          name="laborPrice"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.laborPrice}
-        />
-        {formik.touched.laborPrice && formik.errors.laborPrice ? (
-          <div>{formik.errors.laborPrice}</div>
-        ) : null}
-      </AntdForm.Item>
+          <AntdForm.Item label="laborPrice">
+            <Input
+              type="number"
+              name="laborPrice"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.laborPrice}
+            />
+            {formik.touched.laborPrice && formik.errors.laborPrice ? (
+              <div>{formik.errors.laborPrice}</div>
+            ) : null}
+          </AntdForm.Item>
+        </Col>
 
-      <AntdForm.Item label="laborDiscount">
+        <Col span={12}>
+        <AntdForm.Item label="laborDiscount">
         <Input
           type="number"
           name="laborDiscount"
@@ -281,6 +288,10 @@ const ConfigForm = ({ initialValues, onSubmit }) => {
           <div>{formik.errors.estimatedTimeOfCompletion}</div>
         ) : null}
       </AntdForm.Item>
+        </Col>
+      </Row>
+
+      
 
       <AntdForm.Item label="Worker">
         <Select

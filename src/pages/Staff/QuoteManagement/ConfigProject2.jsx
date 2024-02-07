@@ -35,10 +35,17 @@ const ConfigProject2 = () => {
   };
 
   return (
-    <div>
-      <h1>Your Form</h1>
-      <ConfigForm initialValues={initialValues} onSubmit={handleSubmit} />
+    <>
+    
+    <div className="flex flex-col items-center justify-center mx-auto">      
+    <h1 className="my-6 text-4xl">Config Form</h1>
+    <div className="">
+    <ConfigForm initialValues={initialValues} onSubmit={handleSubmit} />
     </div>
+      
+    </div>
+    </>
+    
   );
 };
 export default ConfigProject2;
