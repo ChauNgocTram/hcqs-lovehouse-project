@@ -30,7 +30,6 @@ import QuoteRequestForm from "../pages/Quotation/QuotationForm/QuoteRequestForm"
 import Customer from "../pages/Customer/Customer";
 import QuoteRequest from "../pages/Customer/QuoteRequest";
 import AllRequest from "../pages/Staff/QuoteManagement/AllRequest";
-import ConfigProject from "../pages/Staff/QuoteManagement/ConfigProject";
 import ConfigProject2 from "../pages/Staff/QuoteManagement/ConfigProject2";
 
 export default function Routers() {
