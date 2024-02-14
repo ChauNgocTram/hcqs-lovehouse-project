@@ -12,6 +12,7 @@ import ConfirmPopup from "../../../components/Dashboard/ConfirmPopup";
 import { FaRegEdit } from "react-icons/fa";
 import { buttonClick } from "../../../assets/animations";
 import CreateSupplier from "./CreateSupplier";
+import EditSupplier from "./EditSupplier";
 
 const ViewSupplier = () => {
   const [suppliers, setSuppliers] = useState([]);
@@ -23,6 +24,8 @@ const ViewSupplier = () => {
   const [deleteConfirmation, setDeleteConfirmation] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [isCreate, setIsCreate] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [selectedSupplierId, setSelectedSupplierId] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -116,6 +119,11 @@ const ViewSupplier = () => {
     setCurrentPage(1);
   };
 
+  const openEditSupplier = (supplierId) => {
+    setSelectedSupplierId(supplierId);
+    setIsEdit(true);
+  };
+
   return (
     <>
       {loading ? (
@@ -188,7 +196,10 @@ const ViewSupplier = () => {
                         className="cursor-pointer text-xl text-red-400 hover:text-red-500"
                         onClick={() => openDeleteConfirmation(supplier.id)}
                       />
-                      <FaRegEdit className="cursor-pointer text-xl text-blue-400 hover:text-blue-500" />
+                      <FaRegEdit
+                        onClick={() => openEditSupplier(supplier.id)}
+                        className="cursor-pointer text-xl text-blue-400 hover:text-blue-500"
+                      />
                     </div>
                   </td>
                 </tr>
@@ -214,6 +225,17 @@ const ViewSupplier = () => {
       {isCreate && (
         <div>
           <CreateSupplier setIsCreate={setIsCreate} refreshData={refreshData} />
+        </div>
+      )}
+
+      {/* edit supplier */}
+      {isEdit && (
+        <div>
+          <EditSupplier
+            setIsEdit={setIsEdit}
+            refreshData={refreshData}
+            selectedSupplierId={selectedSupplierId}
+          />
         </div>
       )}
 
