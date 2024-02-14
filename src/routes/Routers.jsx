@@ -24,6 +24,8 @@ import {
   EditProject,
   ProjectDetail,
   CreateSampleProject,
+  ImportQuotation,
+  ListQuotation,
 } from "../pages";
 
 import HouseProject from "../pages/HouseProjects/HouseProject";
@@ -93,6 +95,9 @@ export default function Routers() {
         { path: "list-project", element: <ProjectList /> },
         { path: "detail-project/:id", element: <ProjectDetail /> },
         { path: "edit-project/:id", element: <EditProject /> },
+
+        { path: "import-quotation", element: <ImportQuotation /> },
+        { path: "list-quotation", element: <ListQuotation /> },
       ],
     },
     {

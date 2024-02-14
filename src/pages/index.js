@@ -26,4 +26,7 @@ export { default as ProjectList } from "./Dashboard/HouseProjectPage/ProjectList
 export { default as ProjectDetail } from "./Dashboard/HouseProjectPage/ProjectDetail";
 export { default as EditProject } from "./Dashboard/HouseProjectPage/EditProject";
 
+export { default as ImportQuotation } from "./Dashboard/SupplierQuotation/ImportQuotation";
+export { default as ListQuotation } from "./Dashboard/SupplierQuotation/ListQuotation";
+
 export { default as AboutUs } from "./AboutUs/AboutUs";

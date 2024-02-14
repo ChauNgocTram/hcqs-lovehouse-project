@@ -10,7 +10,7 @@ import {
   FaRegCalendarAlt,
   FaRegUser,
 } from "react-icons/fa";
-import { IoGridOutline } from "react-icons/io5";
+import { IoGridOutline, IoPricetagsSharp } from "react-icons/io5";
 import { CiSettings } from "react-icons/ci";
 import { MdLogout } from "react-icons/md";
 import { AiOutlinePieChart, AiOutlineProject } from "react-icons/ai";
@@ -30,6 +30,7 @@ function DBSidebar({ setIsOpen }) {
   const [isNews, setIsNews] = useState(true);
   const [isProject, setIsProject] = useState(true);
   const [isBlogs, setIsBlogs] = useState(true);
+  const [isPriceQuotation, setIsPriceQuotation] = useState(true);
 
   const handleSignout = () => {
     dispatch(logout());
@@ -314,6 +315,59 @@ function DBSidebar({ setIsOpen }) {
                     }
                   >
                     Blogs List
+                  </NavLink>
+                </motion.div>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Supplier  */}
+        <div className="pl-2 pt-6 text-slate-200">
+          <div className="pt-4">
+            <p className="text-slate-400 uppercase font-semibold py-2">
+              Supplier
+            </p>
+
+            {/* dashboard  */}
+            <div
+              onClick={() => {
+                setIsPriceQuotation(!isPriceQuotation);
+              }}
+              className="flex items-center justify-between cursor-pointer"
+            >
+              <div className="flex items-center justify-start py-2">
+                <IoPricetagsSharp className="" />
+                <div className="pl-2">Price Quotation</div>
+              </div>
+              <div>
+                {isPriceQuotation ? <FaChevronDown /> : <FaChevronUp />}
+              </div>
+            </div>
+
+            {/* navlink  */}
+            {!isPriceQuotation && (
+              <>
+                <motion.div {...slideUpOut} className={`flex flex-col `}>
+                  <NavLink
+                    to={"/dashboard/import-quotation"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
+                        : isNotActiveStyles
+                    }
+                  >
+                    Import Quotation
+                  </NavLink>
+                  <NavLink
+                    to={"/dashboard/list-quotation"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
+                        : isNotActiveStyles
+                    }
+                  >
+                    Quotation List
                   </NavLink>
                 </motion.div>
               </>
