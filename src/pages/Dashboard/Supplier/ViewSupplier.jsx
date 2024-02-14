@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
+import * as XLSX from "xlsx";
 
 import { GrSupport } from "react-icons/gr";
 import { FaChevronRight } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
 
-import { getAllSuppliers, deleteSupplierById } from "../../../api";
-import { MutatingDots, Pagination } from "../../../components";
+import {
+  getAllSuppliers,
+  deleteSupplierById,
+  importSupplierFromExcelSheet,
+} from "../../../api";
+import { DataTable, MutatingDots, Pagination } from "../../../components";
 import ConfirmPopup from "../../../components/Dashboard/ConfirmPopup";
 import { FaRegEdit } from "react-icons/fa";
 import { buttonClick } from "../../../assets/animations";
@@ -26,6 +31,7 @@ const ViewSupplier = () => {
   const [isCreate, setIsCreate] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [selectedSupplierId, setSelectedSupplierId] = useState(null);
+  const [isImport, setIsImport] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -124,6 +130,54 @@ const ViewSupplier = () => {
     setIsEdit(true);
   };
 
+  const handleSubmit = async (data, file) => {
+    // Extracting valid data from the data object
+    const validData = data.validData;
+
+    // Creating a 2D array with headers and valid data
+    const sheetData = [
+      Object.keys(validData[0]),
+      ...validData.map((item) => Object.values(item)),
+    ];
+
+    // Creating a worksheet
+    const ws = XLSX.utils.aoa_to_sheet(sheetData);
+
+    // Creating a workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet 1");
+
+    // Creating an array buffer
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+
+    // Creating a Blob from the array buffer
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+
+    // Create a FormData object to append the Blob
+    const formData = new FormData();
+    formData.append("file", blob, "SauChien_20122023.xlsx");
+
+    console.log("data: ", data);
+    try {
+      // Upload the file using your API function
+      const uploadResponse = await importSupplierFromExcelSheet(formData);
+
+      if (uploadResponse.date) {
+        toast.success("Upload successful: " + uploadResponse.date);
+      } else {
+        // Create a download link
+        const downloadLink = document.createElement("a");
+        downloadLink.href = URL.createObjectURL(uploadResponse);
+        downloadLink.download = "SauChien_20122023_error.xlsx";
+        downloadLink.click();
+      }
+    } catch (error) {
+      toast.error("Error during upload:", error);
+    }
+  };
+
   return (
     <>
       {loading ? (
@@ -156,7 +210,14 @@ const ViewSupplier = () => {
                 onChange={handleSearchChange}
               />
             </div>
-            <div>
+            <div className="flex space-x-2">
+              <motion.div
+                {...buttonClick}
+                onClick={() => setIsImport(true)}
+                className="px-4 py-2 border rounded-md text-white bg-blue-500 hover:bg-blue-600 font-semibold shadow-md cursor-pointer"
+              >
+                Import Supplier
+              </motion.div>
               <motion.div
                 {...buttonClick}
                 onClick={() => setIsCreate(true)}
@@ -247,8 +308,64 @@ const ViewSupplier = () => {
           onCancel={closeDeleteConfirmation}
         />
       )}
+
+      {/* import supplier  */}
+      <DataTable
+        isOpen={isImport}
+        onClose={() => setIsImport(false)}
+        onSubmit={handleSubmit}
+        fields={fields}
+      />
     </>
   );
 };
 
 export default ViewSupplier;
+
+const fields = [
+  {
+    label: "No",
+    key: "No",
+    fieldType: {
+      type: "input",
+    },
+    example: "1",
+    validations: [
+      {
+        rule: "required",
+        errorMessage: "No is required",
+        level: "error",
+      },
+    ],
+  },
+  {
+    label: "SupplierName",
+    key: "SupplierName",
+    fieldType: {
+      type: "input",
+    },
+    example: "Supplier1",
+    validations: [
+      {
+        rule: "required",
+        errorMessage: "Supplier Name is required",
+        level: "error",
+      },
+    ],
+  },
+  {
+    label: "Type",
+    key: "Type",
+    fieldType: {
+      type: "input",
+    },
+    example: "1",
+    validations: [
+      {
+        rule: "required",
+        errorMessage: "Type is required",
+        level: "error",
+      },
+    ],
+  },
+];
