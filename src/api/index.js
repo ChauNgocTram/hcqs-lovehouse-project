@@ -83,3 +83,17 @@ export {
   uploadSupplierQuotationWithExcelFile,
 }
 from "./SupplierPriceQuotation";
+
+//SupplierPriceDetail
+export {
+  getAllQuotationPrices,
+  getLatestQuotationPriceByMaterialId,
+  getLatestQuotationPriceByMaterialName,
+  getLatestQuotationPriceBySupplierId,
+  getLatestQuotationPriceBySupplierName,
+  getQuotationPriceByMaterialId,
+  getQuotationPriceByMaterialName,
+  getQuotationPriceBySupplierId,
+  getQuotationPriceBySupplierName
+}
+from "./SupplierPriceDetail";
