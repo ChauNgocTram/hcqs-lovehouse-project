@@ -1,80 +1,96 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import {  useNavigate } from "react-router-dom";
 import StaffSidebar from "../../../components/Sidebar/StaffSidebar";
-import { getAllRequestForStaff } from "../../../constants/apiQuotationOfStaff";
+import {
+  getAllRequestForStaff,
+  getProjectById,
+} from "../../../constants/apiQuotationOfStaff";
 
 export default function AllRequest() {
-    const [allRequest, setAllRequest] = useState([]);
+  const [allRequest, setAllRequest] = useState([]);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-        const fetchAllRequestForStaff = async () => {
-          try {
-            const data = await getAllRequestForStaff();
-            if (data && data.result) {
-              const formattedData = data.result.data.map((item) => ({
-                ...item,
-                createDate: formatDate(item.createDate),
-              }));
-              setAllRequest(formattedData);
-             // setLoading(false);
-            }
-          } catch (error) {
-            console.error("Error fetching blogs:", error);
-          }
-        };
-    
-        fetchAllRequestForStaff();
-      }, []);
-    
-      const formatDate = (dateString) => {
-        const options = {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        };
-        const formattedDate = new Date(dateString).toLocaleString("en-US", options);
-        return formattedDate;
-      };
-    
-      const renderStatus = (projectStatus) => {
-        switch (projectStatus) {
-          case 0:
-            return (
-              <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-yellow-300 rounded-lg bg-opacity-50">
-                New
-              </span>
-            );
-          case 1:
-            return (
-              <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-blue-400 rounded-lg bg-opacity-50">
-                Processing
-              </span>
-            );
-          case 2:
-            return (
-              <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-green-400 rounded-lg bg-opacity-50">
-                Incomplete
-              </span>
-            );
-          case 3:
-            return (
-              <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-gray-400 rounded-lg bg-opacity-50">
-                Cancelled
-              </span>
-            );
-          default:
-            return null;
+  const redirectToQuotationDetail = async (projectId) => {
+    try {
+      const projectData = await getProjectById(projectId);
+
+      const quotationId = projectData.result.data.quotations[0].id;
+
+      navigate(`/staff/quotation-detail/${quotationId}`);
+    } catch (error) {
+      console.error("Error fetching project details:", error);
+    }
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const fetchAllRequestForStaff = async () => {
+      try {
+        const data = await getAllRequestForStaff();
+        if (data && data.result) {
+          const formattedData = data.result.data.map((item) => ({
+            ...item,
+            createDate: formatDate(item.createDate),
+          }));
+          setAllRequest(formattedData);
+          // setLoading(false);
         }
-      };
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      }
+    };
+
+    fetchAllRequestForStaff();
+  }, []);
+
+  const formatDate = (dateString) => {
+    const options = {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    };
+    const formattedDate = new Date(dateString).toLocaleString("en-US", options);
+    return formattedDate;
+  };
+
+  const renderStatus = (projectStatus) => {
+    switch (projectStatus) {
+      case 0:
+        return (
+          <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-yellow-300 rounded-lg bg-opacity-50">
+            Pending
+          </span>
+        );
+      case 1:
+        return (
+          <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-blue-400 rounded-lg bg-opacity-50">
+            Processing
+          </span>
+        );
+      case 2:
+        return (
+          <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-green-400 rounded-lg bg-opacity-50">
+            Under Construction
+          </span>
+        );
+      case 3:
+        return (
+          <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-gray-400 rounded-lg bg-opacity-50">
+            Complete Construction
+          </span>
+        );
+      default:
+        return null;
+    }
+  };
   return (
     <>
-    <div className="flex">
-        <StaffSidebar/>
+      <div className="flex">
+        <StaffSidebar />
 
         <div className="h-screen flex-1 p-7">
           <h1 className="text-2xl font-semibold pb-5">Quote Request</h1>
@@ -126,10 +142,26 @@ export default function AllRequest() {
                           <span>{renderStatus(item.projectStatus)}</span>
                         </td>
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                        {item.projectStatus === 0 && (
+                          {item.projectStatus === 0 && (
                             <NavLink to={`/staff/config-project/${item.id}`}>
                               Config
                             </NavLink>
+                          )}
+
+                          {item.projectStatus === 1 && (
+                            // <NavLink to={`/staff/quotation-detail/${item.quotation.id}`}>
+                            //   Quotation Detail
+                            // </NavLink>
+                            // <button
+                            //   onClick={() => redirectToQuotationDetail(item.id)}
+                            // >
+                            //   Quotation Detail
+                            // </button>
+                             <button
+                             onClick={() => redirectToQuotationDetail(item.id)}
+                           >
+                             View Detail
+                           </button>
                           )}
                         </td>
                       </tr>
@@ -141,7 +173,10 @@ export default function AllRequest() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
               {allRequest.map((item, index) => (
-                <div key={item.id} className="bg-white space-y-4 p-4 rounded-lg shadow">
+                <div
+                  key={item.id}
+                  className="bg-white space-y-4 p-4 rounded-lg shadow"
+                >
                   <div className="flex items-center space-x-2 text-sm">
                     <div className="text-blue-500 font-bold hover:underline">
                       #{index + 1}
@@ -158,7 +193,7 @@ export default function AllRequest() {
             </div>
           </div>
         </div>
-    </div>
+      </div>
     </>
-  )
+  );
 }

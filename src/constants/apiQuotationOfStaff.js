@@ -1,67 +1,127 @@
 import axios from "axios";
+
 const baseURL = "https://hcqs-backend.azurewebsites.net";
+export const usertoken = localStorage.accessToken;
 
 export const getAllRequestForStaff = async (fieldName, ascending) => {
   try {
-      const res = await axios.get(`${baseURL}/project/get-all-project`, []);
-      return res.data;
+    const res = await axios.get(`${baseURL}/project/get-all-project`, {
+      headers: {
+        Authorization: `Bearer ${usertoken}`,
+      },
+      withCredentials: true,
+    });
+    return res.data;
   } catch (err) {
-      return null;
+    return null;
   }
 };
 
 export const getProjectById = async (id) => {
   try {
-      const res = await axios.get(`${baseURL}/project/get-project-by-id/${id}`);
-      return res.data;
+    const res = await axios.get(`${baseURL}/project/get-project-by-id/${id}`, {
+      headers: {
+        Authorization: `Bearer ${usertoken}`,
+      },
+      withCredentials: true,
+    });
+    return res.data;
   } catch (err) {
-      return null;
+    return null;
   }
 };
 
-// export const configProject = async (accountId,userData) => {
-//   try {
-//     const formData = new FormData();
-
-   
-//     formData.append("id", accountId);
-//     formData.append("sandMixingRatio", userData.sandMixingRatio);
-//     formData.append("cementMixingRatio", userData.cementMixingRatio); 
-//     formData.append("stoneMixingRatio", userData.stoneMixingRatio);
-//     formData.append("furnitureDiscount", userData.furnitureDiscount);
-//     formData.append("laborPrice", userData.laborPrice);
-//     formData.append("laborDiscount", userData.laborDiscount);
-//     formData.append("tiledArea", userData.tiledArea);
-//     formData.append("wallLength", userData.wallLength);
-//     formData.append("wallHeight", userData.wallHeight);
-//     formData.append("estimatedTimeOfCompletion", userData.estimatedTimeOfCompletion);
-
-//     const laborRequests = [{
-//       "exportLaborCost": userData.exportLaborCost,
-//       "quantity": userData.quantity,
-//       "workerPriceId": userData.workerPriceId
-//     }];
-
-//     formData.append("laborRequests", JSON.stringify(laborRequests));
- 
-//     const res = await axios.put(`${baseURL}/project/config-project`,formData);
-
-//     return res.data;
-//   } catch (err) {
-//     return null;
-//   }
-// };
-
-
 export const updateProjectConfig = async (updateData) => {
   try {
-    const res = await axios.put(`${baseURL}/project/config-project`, updateData, {
-      // Các cấu hình khác nếu cần
-    });
+    const res = await axios.put(
+      `${baseURL}/project/config-project`,
+      updateData,
+      {
+        headers: {
+          Authorization: `Bearer ${usertoken}`,
+        },
+        withCredentials: true,
+      }
+    );
 
     return res.data;
   } catch (err) {
-    console.error('Error updating project config:', err);
-    throw err; // Ném lại lỗi để xử lý ở phần gọi API
+    console.error("Error updating project config:", err);
+    throw err;
+  }
+};
+
+export const getQuoteDetailByQuoteId = async (id) => {
+  try {
+    const res = await axios.get(
+      `${baseURL}/quotation-detail/get-quotation-detail-by-quotation-id/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${usertoken}`,
+        },
+        withCredentials: true,
+      }
+    );
+    return res.data;
+  } catch (err) {
+    return null;
+  }
+};
+
+export const createListQuotationDetail = async (createData) => {
+  try {
+    const res = await axios.post(
+      `${baseURL}/quotation-detail/create-list-quotation-detail`,
+      createData,
+      {
+        headers: {
+          Authorization: `Bearer ${usertoken}`,
+        },
+        withCredentials: true,
+      }
+    );
+
+    return res.data;
+  } catch (err) {
+    console.error("Error create quotation detail:", err);
+    throw err;
+  }
+};
+
+export const updateQuotationDetail = async (updateData) => {
+  try {
+    const res = await axios.put(
+      `${baseURL}/quotation-detail/update-quotation-detail`,
+      updateData,
+      {
+        headers: {
+          Authorization: `Bearer ${usertoken}`,
+        },
+        withCredentials: true,
+      }
+    );
+
+    return res.data;
+  } catch (err) {
+    console.error("Error update quotation detail:", err);
+    throw err;
+  }
+};
+
+export const deleteQuotationDetailById = async (id) => {
+  try {
+    const res = await axios.delete(
+      `${baseURL}/quotation-detail/delete-quotation-detail-by-id/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${usertoken}`,
+        },
+        withCredentials: true,
+      }
+    );
+
+    return res.data;
+  } catch (err) {
+    return null;
   }
 };

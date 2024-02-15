@@ -1,5 +1,7 @@
 import axios from "axios";
+
 const baseURL = "https://hcqs-backend.azurewebsites.net";
+export const usertoken = localStorage.accessToken;
 
 export const quoteRequest = async (userData, accountId) => {
   try {
@@ -30,7 +32,13 @@ export const quoteRequest = async (userData, accountId) => {
 
 export const getAllRequest = async (accountId) => {
   try {
-      const res = await axios.get(`${baseURL}/project/get-all-project-by-accountId/${accountId}`);
+      const res = await axios.get(`${baseURL}/project/get-all-project-by-accountId/${accountId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${usertoken}`,
+        },
+        withCredentials: true,
+      });
       return res.data;
   } catch (err) {
       return null;

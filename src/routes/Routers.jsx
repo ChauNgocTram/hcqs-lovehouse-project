@@ -31,6 +31,8 @@ import Customer from "../pages/Customer/Customer";
 import QuoteRequest from "../pages/Customer/QuoteRequest";
 import AllRequest from "../pages/Staff/QuoteManagement/AllRequest";
 import ConfigProject2 from "../pages/Staff/QuoteManagement/ConfigProject2";
+import QuotationDetails from "../pages/Staff/QuoteManagement/QuotationDetails/QuotationDetails";
+import HappyNewYear from "../pages/HappyNewYear";
 
 export default function Routers() {
   const routing = useRoutes([
@@ -39,6 +41,7 @@ export default function Routers() {
       element: <HomeLayout />,
       children: [
         { path: "/", element: <Home /> },
+        { path: "/happy-new-year", element: <HappyNewYear/> },
         { path: "/aboutus", element: <AboutUs /> },
         { path: "/houseProject", element: <HouseProject /> },
         { path: "/house-roof-projects", element: <HouseRoofList /> },
@@ -76,8 +79,10 @@ export default function Routers() {
       element: <StaffLayout />,
       children: [
         { path: "/staff/all-request", element: <AllRequest /> },
-        // { path: "/staff/config-project/:id", element: <ConfigProject /> },
+        
         { path: "/staff/config-project/:id", element: <ConfigProject2/> },
+        { path: "/staff/quotation-detail/:id", element: <QuotationDetails/> },
+        
       ],
     },
     {
