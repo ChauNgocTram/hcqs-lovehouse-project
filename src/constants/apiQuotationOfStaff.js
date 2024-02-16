@@ -125,3 +125,23 @@ export const deleteQuotationDetailById = async (id) => {
     return null;
   }
 };
+
+export const publicQuotationForCustomer = async (projectData) => {
+  try {
+    const res = await axios.put(
+      `${baseURL}/quotation/public-quotation-for-customer`,
+      projectData,
+      {
+        headers: {
+          Authorization: `Bearer ${usertoken}`,
+        },
+        withCredentials: true,
+      }
+    );
+
+    return res.data;
+  } catch (err) {
+    console.error("Error public quotation detail:", err);
+    throw err;
+  }
+};

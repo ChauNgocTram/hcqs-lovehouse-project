@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import StaffSidebar from "../../../components/Sidebar/StaffSidebar";
 import {
   getAllRequestForStaff,
@@ -152,16 +152,19 @@ export default function AllRequest() {
                             // <NavLink to={`/staff/quotation-detail/${item.quotation.id}`}>
                             //   Quotation Detail
                             // </NavLink>
-                            // <button
-                            //   onClick={() => redirectToQuotationDetail(item.id)}
-                            // >
-                            //   Quotation Detail
-                            // </button>
-                             <button
-                             onClick={() => redirectToQuotationDetail(item.id)}
-                           >
-                             View Detail
-                           </button>
+                            <>
+                              <button
+                                onClick={() =>
+                                  redirectToQuotationDetail(item.id)
+                                }
+                              >
+                                Quotation Detail
+                              </button>
+
+                              <NavLink to={`/staff/project-detail/${item.id}`}>
+                                View Detail
+                              </NavLink>
+                            </>
                           )}
                         </td>
                       </tr>

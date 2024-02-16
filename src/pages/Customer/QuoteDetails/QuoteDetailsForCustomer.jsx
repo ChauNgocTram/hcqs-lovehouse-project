@@ -1,23 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { getQuoteDetailByQuoteId, publicQuotationForCustomer } from "../../../../constants/apiQuotationOfStaff";
-import {alert} from "../../../../components/Alert/Alert"
+import {getQuoteDetailForCustomer} from "../../../constants/apiQuotationOfCustomer"
 
-import StaffSidebar from "../../../../components/Sidebar/StaffSidebar";
-import FormCreateMaterialDetail from "./Manage/FormCreateMaterialDetail";
-import FormUpdateMaterialDetail from "./Manage/FormUpdateMaterialDetail";
-import DeleteMaterialDetail from "./Manage/DeleteMaterialDetail";
+import StaffSidebar from "../../../components/Sidebar/StaffSidebar";
 
-export default function QuotationDetails() {
+export default function QuoteDetailsForCustomer() {
   const { id } = useParams();
   const [quoteDetail, setQuoteDetail] = useState([]);
-  //const [loading, setLoading] = useState(true);
-  const [reloadContent, setReloadContent] = useState(false);
 
   const fetchQuoteDetail = async () => {
     try {
-      const data = await getQuoteDetailByQuoteId(id);
+      const data = await getQuoteDetailForCustomer(id);
 
       if (data && data.result) {
         setQuoteDetail(data.result.data);
@@ -30,59 +24,7 @@ export default function QuotationDetails() {
 
   useEffect(() => {
     fetchQuoteDetail();
-  }, [id, reloadContent]);
-
-  const handleReloadContent = () => {
-    setReloadContent((prev) => !prev);
-  };
-
-  const handlePublicProject = async () => {
-    try {
-      const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton:
-            "bg-green-500 hover:bg-green-600 text-white mx-3 px-4 py-2 rounded",
-          cancelButton:
-            "bg-red-500 hover:bg-red-600 text-white mx-3 px-4 py-2 rounded",
-        },
-        buttonsStyling: false,
-      });
-
-      const result = await swalWithBootstrapButtons.fire({
-        title: "Are you sure?",
-        text: "Do you want to public quotation detail for customer?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, public it",
-        cancelButtonText: "No, cancel",
-        reverseButtons: true,
-        focusConfirm: false,
-      });
-
-      if (result.isConfirmed) {
-        await publicQuotationForCustomer(id);
-        handleReloadContent();
-        alert.alertSuccessWithTime(
-          "Public Quote detail Successfully!",
-          "",
-          2000,
-          "25",
-          () => {}
-        );
-      }else if (result.dismiss === Swal.DismissReason.cancel) {
-        alert.alertFailedWithTime("Failed to public", "", 2000, "25", () => {});
-      }
-      
-    } catch (error) {
-      alert.alertFailedWithTime(
-        "Failed to public quote detail. ",
-        "Please try again.",
-        2000,
-        "25",
-        () => {}
-      );
-    }
-  };
+  }, [id]);
 
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat("vi-VN", {
@@ -98,13 +40,9 @@ export default function QuotationDetails() {
 
         <div className="h-screen flex-1 p-7">
           <h1 className="text-2xl font-semibold pb-5">Quote Detail</h1>
-          <div className="ml-4">
-            <FormCreateMaterialDetail onModalClose={handleReloadContent} />
-          </div>
+          
 
-          <div>
-          <button onClick={handlePublicProject}>Public Project</button>
-          </div>
+      
 
           <div className="p-5 h-screen bg-gray-100 ">
             <div className="overflow-auto rounded-lg shadow hidden md:block">
@@ -177,19 +115,9 @@ export default function QuotationDetails() {
                           </td>
                           <td className="p-3 text-sm text-gray-700 text-center">
                             <div className="flex justify-center">
-                              <div>
-                                <FormUpdateMaterialDetail
-                                  quoteDetail={item}
-                                  onModalClose={handleReloadContent}
-                                />
-                              </div>
+                              
 
-                              <div>
-                                <DeleteMaterialDetail
-                                  quoteDetail={item}
-                                  onDelete={handleReloadContent}
-                                />
-                              </div>
+                             
                             </div>
                           </td>
                         </tr>
@@ -202,5 +130,5 @@ export default function QuotationDetails() {
         </div>
       </div>
     </>
-  );
+  )
 }

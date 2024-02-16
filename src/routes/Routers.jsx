@@ -33,6 +33,9 @@ import AllRequest from "../pages/Staff/QuoteManagement/AllRequest";
 import ConfigProject2 from "../pages/Staff/QuoteManagement/ConfigProject2";
 import QuotationDetails from "../pages/Staff/QuoteManagement/QuotationDetails/QuotationDetails";
 import HappyNewYear from "../pages/HappyNewYear";
+import ProjectDetails from "../pages/Staff/QuoteManagement/ProjectDetails/ProjectDetails";
+import ProjectDetailsForCustomer from "../pages/Customer/ProjectDetails/ProjectDetailsForCustomer";
+import QuoteDetailsForCustomer from "../pages/Customer/QuoteDetails/QuoteDetailsForCustomer"
 
 export default function Routers() {
   const routing = useRoutes([
@@ -72,6 +75,8 @@ export default function Routers() {
       children: [
         { path: "/customer/dashboard", element: <Customer /> },
         { path: "/customer/my-request", element: <QuoteRequest /> },
+        { path: "/customer/project-detail/:id", element: <ProjectDetailsForCustomer/> },
+        { path: "/customer/quotation-detail/:id", element: <QuoteDetailsForCustomer/>},
       ],
     },
     {
@@ -79,8 +84,9 @@ export default function Routers() {
       element: <StaffLayout />,
       children: [
         { path: "/staff/all-request", element: <AllRequest /> },
-        
+        { path: "/staff/project-detail/:id", element: <ProjectDetails/> },
         { path: "/staff/config-project/:id", element: <ConfigProject2/> },
+        
         { path: "/staff/quotation-detail/:id", element: <QuotationDetails/> },
         
       ],

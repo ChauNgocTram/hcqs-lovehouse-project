@@ -45,3 +45,33 @@ export const getAllRequest = async (accountId) => {
   }
 };
 
+export const getProjectByIdForCustomer = async (id) => {
+  try {
+    const res = await axios.get(`${baseURL}/project/get-project-by-id-for-customer/${id}`, {
+      headers: {
+        Authorization: `Bearer ${usertoken}`,
+      },
+      withCredentials: true,
+    });
+    return res.data;
+  } catch (err) {
+    return null;
+  }
+};
+
+export const getQuoteDetailForCustomer = async (id) => {
+  try {
+    const res = await axios.get(
+      `${baseURL}/quotation/get-quotation-by-id/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${usertoken}`,
+        },
+        withCredentials: true,
+      }
+    );
+    return res.data;
+  } catch (err) {
+    return null;
+  }
+};

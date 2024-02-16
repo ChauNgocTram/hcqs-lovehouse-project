@@ -1,16 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import CustomerSidebar from "../../components/Sidebar/CustomerSidebar";
-import { getAllRequest } from "../../constants/apiQuotationOfCustomer";
+import {
+  getAllRequest,
+  getProjectByIdForCustomer,
+} from "../../constants/apiQuotationOfCustomer";
 
 export default function QuoteRequest() {
   const [allRequest, setAllRequest] = useState([]);
   const { accountId } = useParams();
+  const navigate = useNavigate();
 
   const user = useSelector((state) => state?.user?.user);
 
   const customerId = user.id;
+
+  const redirectToQuotationDetail = async (projectId) => {
+    try {
+      const projectData = await getProjectByIdForCustomer(projectId);
+
+      const quotationId = projectData.result.data.quotations[0].id;
+
+      navigate(`/customer/quotation-detail/${quotationId}`);
+    } catch (error) {
+      console.error("Error fetching project details:", error);
+    }
+  };
+
   useEffect(() => {
     const fetchAllRequest = async () => {
       try {
@@ -49,7 +66,7 @@ export default function QuoteRequest() {
       case 0:
         return (
           <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-yellow-300 rounded-lg bg-opacity-50">
-            New
+            Pending
           </span>
         );
       case 1:
@@ -61,13 +78,13 @@ export default function QuoteRequest() {
       case 2:
         return (
           <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-green-400 rounded-lg bg-opacity-50">
-            Incomplete
+             Under Construction
           </span>
         );
       case 3:
         return (
           <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-gray-400 rounded-lg bg-opacity-50">
-            Cancelled
+            Complete Construction
           </span>
         );
       default:
@@ -91,6 +108,9 @@ export default function QuoteRequest() {
                     </th>
                     <th className="p-3 text-sm font-semibold tracking-wide text-left">
                       Details
+                    </th>
+                    <th className="p-3 text-sm font-semibold tracking-wide text-left">
+                      Construction Type
                     </th>
                     <th className="p-3 text-sm font-semibold tracking-wide text-left">
                       Date
@@ -117,12 +137,36 @@ export default function QuoteRequest() {
                           Floors: {item.numOfFloor}, Area: {item.area}
                         </td>
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                         {item.constructionType === 0 ? "Rough Construction" : "Completed Construction"}
+                        </td>
+                        <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                           {item.createDate}
                         </td>
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                           <span>{renderStatus(item.projectStatus)}</span>
                         </td>
-                        <td className="p-3 text-sm text-gray-700 whitespace-nowrap"></td>
+                        <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                          {item.projectStatus === 1 && (
+                            // <NavLink to={`/staff/quotation-detail/${item.quotation.id}`}>
+                            //   Quotation Detail
+                            // </NavLink>
+                            <>
+                              {/* <button
+                                onClick={() =>
+                                  redirectToQuotationDetail(item.id)
+                                }
+                              >
+                                Quotation Detail
+                              </button> */}
+
+                              <NavLink
+                                to={`/customer/project-detail/${item.id}`}
+                              >
+                                View Detail
+                              </NavLink>
+                            </>
+                          )}
+                        </td>
                       </tr>
                     );
                   })}
@@ -132,7 +176,10 @@ export default function QuoteRequest() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
               {allRequest.map((item, index) => (
-                <div key={item.id} className="bg-white space-y-4 p-4 rounded-lg shadow">
+                <div
+                  key={item.id}
+                  className="bg-white space-y-4 p-4 rounded-lg shadow"
+                >
                   <div className="flex items-center space-x-2 text-sm">
                     <div className="text-blue-500 font-bold hover:underline">
                       #{index + 1}
