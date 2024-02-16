@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { getProjectById } from "../../../../constants/apiQuotationOfStaff";
 
 import StaffSidebar from "../../../../components/Sidebar/StaffSidebar";
+import QuotationStatusBadge from "../../../../components/QuotationComponent/Status/QuotationStatusBadge";
 
 export default function ProjectDetails() {
   const { id } = useParams();
@@ -31,37 +32,6 @@ export default function ProjectDetails() {
       style: "currency",
       currency: "VND",
     }).format(amount);
-  };
-
-  const renderStatus = (quotationStatus) => {
-    switch (quotationStatus) {
-      case 0:
-        return (
-          <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-yellow-300 rounded-lg bg-opacity-50">
-            Pending
-          </span>
-        );
-      case 1:
-        return (
-          <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-blue-400 rounded-lg bg-opacity-50">
-            Waiting response
-          </span>
-        );
-      case 2:
-        return (
-          <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-gray-400 rounded-lg bg-opacity-50">
-            Cancel
-          </span>
-        );
-      case 3:
-        return (
-          <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-green-400 rounded-lg bg-opacity-50">
-            Approved
-          </span>
-        );
-      default:
-        return null;
-    }
   };
 
   return (
@@ -109,7 +79,7 @@ export default function ProjectDetails() {
                     className="bg-white text-black text-left"
                   >
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                      {`Floors: ${projectDetail.project?.numOfFloor}, Area: ${projectDetail.project?.area}`}
+                      {`Floors: ${projectDetail?.project?.numOfFloor}, Area: ${projectDetail?.project?.area}`}
                     </td>
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
                       {projectDetail?.project?.constructionType === 0
@@ -127,7 +97,9 @@ export default function ProjectDetails() {
                       )}
                     </td>
                     <td className="w-40 p-3 text-sm text-gray-700 whitespace-nowrap text-center">
-                      {formatCurrency(projectDetail?.quotations?.[0]?.laborPrice)}
+                      {formatCurrency(
+                        projectDetail?.quotations?.[0]?.laborPrice
+                      )}
                     </td>
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
                       <span>
@@ -135,13 +107,13 @@ export default function ProjectDetails() {
                       </span>
                     </td>
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
-                      <span>
-                        {renderStatus(projectDetail?.quotations?.[0]?.quotationStatus)}
-                      </span>
+                      <QuotationStatusBadge
+                        quotationStatus={
+                          projectDetail?.quotations?.[0]?.quotationStatus
+                        }
+                      />
                     </td>
-                    <td className="p-3 text-sm text-gray-700 text-center">
-
-                    </td>
+                    <td className="p-3 text-sm text-gray-700 text-center"></td>
                   </tr>
                 </tbody>
               </table>

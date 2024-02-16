@@ -126,11 +126,11 @@ export const deleteQuotationDetailById = async (id) => {
   }
 };
 
-export const publicQuotationForCustomer = async (projectData) => {
+export const publicQuotationForCustomer = async (quotationId) => {
   try {
     const res = await axios.put(
-      `${baseURL}/quotation/public-quotation-for-customer`,
-      projectData,
+      `${baseURL}/quotation/public-quotation-for-customer/${quotationId}`,
+      null, 
       {
         headers: {
           Authorization: `Bearer ${usertoken}`,

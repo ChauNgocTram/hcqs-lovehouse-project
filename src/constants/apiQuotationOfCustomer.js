@@ -75,3 +75,52 @@ export const getQuoteDetailForCustomer = async (id) => {
     return null;
   }
 };
+
+export const createQuotationDealRequest = async (createData) => {
+  try {
+    const res = await axios.post(
+      `${baseURL}/quotation/create-quotation-dealing-request`,
+      createData,
+      {
+        headers: {
+          Authorization: `Bearer ${usertoken}`,
+        },
+        withCredentials: true,
+      }
+    );
+
+    return res.data;
+  } catch (err) {
+    console.error("Error create quotation detail:", err);
+    throw err;
+  }
+};
+
+export const dealQuotation = async (createData) => {
+  try {
+    const { status, stringValue } = createData;
+
+    if (status === undefined || stringValue === undefined) {
+      throw new Error("Both 'status' and 'stringValue' are required in createData");
+    }
+
+    const res = await axios.post(
+      `${baseURL}/quotation/deal-quotation`,
+      {
+        status,
+        stringValue,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${usertoken}`,
+        },
+        withCredentials: true,
+      }
+    );
+
+    return res.data;
+  } catch (err) {
+    console.error("Error dealing with quotation:", err);
+    throw err;
+  }
+};

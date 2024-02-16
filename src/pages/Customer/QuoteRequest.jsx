@@ -6,6 +6,7 @@ import {
   getAllRequest,
   getProjectByIdForCustomer,
 } from "../../constants/apiQuotationOfCustomer";
+import ProjectStatusBadge from "../../components/QuotationComponent/Status/ProjectStatusBadge"
 
 export default function QuoteRequest() {
   const [allRequest, setAllRequest] = useState([]);
@@ -61,36 +62,7 @@ export default function QuoteRequest() {
     return formattedDate;
   };
 
-  const renderStatus = (projectStatus) => {
-    switch (projectStatus) {
-      case 0:
-        return (
-          <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-yellow-300 rounded-lg bg-opacity-50">
-            Pending
-          </span>
-        );
-      case 1:
-        return (
-          <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-blue-400 rounded-lg bg-opacity-50">
-            Processing
-          </span>
-        );
-      case 2:
-        return (
-          <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-green-400 rounded-lg bg-opacity-50">
-             Under Construction
-          </span>
-        );
-      case 3:
-        return (
-          <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-gray-400 rounded-lg bg-opacity-50">
-            Complete Construction
-          </span>
-        );
-      default:
-        return null;
-    }
-  };
+ 
   return (
     <>
       <div className="flex">
@@ -143,7 +115,8 @@ export default function QuoteRequest() {
                           {item.createDate}
                         </td>
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                          <span>{renderStatus(item.projectStatus)}</span>
+                        <ProjectStatusBadge projectStatus={item.projectStatus} />
+                          
                         </td>
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                           {item.projectStatus === 1 && (
@@ -188,7 +161,7 @@ export default function QuoteRequest() {
                       Floors: {item.numOfFloor}, Area: {item.area}
                     </div>
                     <div className="text-gray-500">{item.createDate}</div>
-                    <div>{renderStatus(item.projectStatus)}</div>
+                    <div><ProjectStatusBadge projectStatus={item.projectStatus} /></div>
                     <div>Action</div>
                   </div>
                 </div>

@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { getQuoteDetailByQuoteId, publicQuotationForCustomer } from "../../../../constants/apiQuotationOfStaff";
-import {alert} from "../../../../components/Alert/Alert"
+import {
+  getQuoteDetailByQuoteId,
+  publicQuotationForCustomer,
+} from "../../../../constants/apiQuotationOfStaff";
+import { alert } from "../../../../components/Alert/Alert";
 
 import StaffSidebar from "../../../../components/Sidebar/StaffSidebar";
 import FormCreateMaterialDetail from "./Manage/FormCreateMaterialDetail";
 import FormUpdateMaterialDetail from "./Manage/FormUpdateMaterialDetail";
 import DeleteMaterialDetail from "./Manage/DeleteMaterialDetail";
+import CurrencyFormatter from "../../../../components/Common/CurrencyFormatter";
 
 export default function QuotationDetails() {
   const { id } = useParams();
@@ -60,7 +64,8 @@ export default function QuotationDetails() {
       });
 
       if (result.isConfirmed) {
-        await publicQuotationForCustomer(id);
+        const data = await publicQuotationForCustomer(id);
+        console.log("check data: ", data);
         handleReloadContent();
         alert.alertSuccessWithTime(
           "Public Quote detail Successfully!",
@@ -69,10 +74,9 @@ export default function QuotationDetails() {
           "25",
           () => {}
         );
-      }else if (result.dismiss === Swal.DismissReason.cancel) {
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
         alert.alertFailedWithTime("Failed to public", "", 2000, "25", () => {});
       }
-      
     } catch (error) {
       alert.alertFailedWithTime(
         "Failed to public quote detail. ",
@@ -82,13 +86,6 @@ export default function QuotationDetails() {
         () => {}
       );
     }
-  };
-
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    }).format(amount);
   };
 
   return (
@@ -103,7 +100,7 @@ export default function QuotationDetails() {
           </div>
 
           <div>
-          <button onClick={handlePublicProject}>Public Project</button>
+            <button onClick={handlePublicProject}  className="bg-baseOrange text-white rounded-lg p-2 my-2 mx-5 font-semibold">Public Project</button>
           </div>
 
           <div className="p-5 h-screen bg-gray-100 ">
@@ -173,7 +170,7 @@ export default function QuotationDetails() {
                             {item.quantity}
                           </td>
                           <td className="p-3 text-sm text-gray-700 whitespace-nowrap text-right">
-                            <span>{formatCurrency(item.total)}</span>
+                            <CurrencyFormatter amount={item.total} />
                           </td>
                           <td className="p-3 text-sm text-gray-700 text-center">
                             <div className="flex justify-center">

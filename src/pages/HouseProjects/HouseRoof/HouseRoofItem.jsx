@@ -3,24 +3,16 @@ import { NavLink } from "react-router-dom";
 import { IoHomeOutline } from "react-icons/io5";
 import { MdAttachMoney } from "react-icons/md";
 
+import CurrencyFormatter from "../../../components/Common/CurrencyFormatter";
+
 export default function HouseRoofItem({ sampleProject = {}, staticFile }) {
   const { id, location, header, totalArea, estimatePrice } = sampleProject;
 
   const url = staticFile && staticFile.length > 0 ? staticFile[0].url : null;
 
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    }).format(amount);
-  };
   return (
     <div className="bg-white shadow-1 p-5 rounded-lg  w-full max-w-[352px]  mx-auto cursor-pointer hover:shadow-2xl transition">
-      <img
-        src={url}
-        alt=""
-        className="mb-8 rounded-lg h-[165px]"
-      />
+      <img src={url} alt="" className="mb-8 rounded-lg h-[165px]" />
       <div className="mb-4 flex gap-x-2 text-sm">
         <div className="bg-baseGreen rounded-full text-white px-3">
           {location}
@@ -47,7 +39,7 @@ export default function HouseRoofItem({ sampleProject = {}, staticFile }) {
         </div>
 
         <div className="text-lg font-semibold text-red-500 ">
-          {formatCurrency(estimatePrice)}
+          <CurrencyFormatter amount={estimatePrice} />
         </div>
       </div>
     </div>

@@ -66,7 +66,7 @@ export default function ProjectDetailsForCustomer() {
                 <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                   Floors: {projectDetail?.project?.numOfFloor}
                   <br />
-                  Area: {projectDetail.project?.area} m<sup>2</sup>
+                  Area: {projectDetail?.project?.area} m<sup>2</sup>
                 </td>
                 <td className="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
                   {projectDetail?.project?.constructionType === 0

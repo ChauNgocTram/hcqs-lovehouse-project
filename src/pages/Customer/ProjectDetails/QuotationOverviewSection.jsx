@@ -3,6 +3,9 @@ import { useNavigate, useParams, NavLink } from "react-router-dom";
 
 import { getProjectByIdForCustomer } from "../../../constants/apiQuotationOfCustomer";
 
+import QuotationStatusBadge from "../../../components/QuotationComponent/Status/QuotationStatusBadge";
+import CurrencyFormatter from "../../../components/Common/CurrencyFormatter";
+
 export default function QuotationOverviewSection() {
   const { id } = useParams();
   const [projectDetail, setProjectDetail] = useState({});
@@ -25,49 +28,17 @@ export default function QuotationOverviewSection() {
     fetchProjectDetail();
   }, [id]);
 
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    }).format(amount);
-  };
-
-  const renderStatus = (quotationStatus) => {
-    switch (quotationStatus) {
-      case 0:
-        return (
-          <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-yellow-300 rounded-lg bg-opacity-50">
-            Pending
-          </span>
-        );
-      case 1:
-        return (
-          <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-blue-400 rounded-lg bg-opacity-50">
-            Waiting response
-          </span>
-        );
-      case 2:
-        return (
-          <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-gray-400 rounded-lg bg-opacity-50">
-            Cancel
-          </span>
-        );
-      case 3:
-        return (
-          <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-green-400 rounded-lg bg-opacity-50">
-            Approved
-          </span>
-        );
-      default:
-        return null;
-    }
+  const calculateOriginalPrice = (price, discount) => {
+    const discountPercentage = Math.abs(discount);
+    const originalPrice = price / (1 - discountPercentage / 100);
+    return originalPrice;
   };
 
   return (
     <>
       <h1 className="text-2xl font-semibold pb-5">Quotation Overview</h1>
 
-      <div className="p-5 h-screen bg-gray-100 ">
+      <div className="p-5 h-auto ">
         <div className="overflow-auto rounded-lg shadow hidden md:block">
           <table className="w-full">
             <thead className="bg-gray-50 border-b-2 border-gray-200">
@@ -98,32 +69,112 @@ export default function QuotationOverviewSection() {
                 className="bg-white text-black text-left"
               >
                 <td className="w-40 p-3 text-sm text-gray-700 whitespace-nowrap text-center">
-                  {projectDetail?.quotations?.[0]?.rawMaterialPrice
-                    ? formatCurrency(
-                        projectDetail.quotations[0].rawMaterialPrice
-                      )
-                    : "N/A"}
+                  {projectDetail?.quotations?.[0]?.rawMaterialPrice ? (
+                    <div className="flex items-center justify-center">
+                      <span className="mr-2">
+                        <CurrencyFormatter
+                          amount={
+                            projectDetail?.quotations?.[0]?.rawMaterialPrice
+                          }
+                        />
+                      </span>
+                      <span className="line-through text-gray-500">
+                        <CurrencyFormatter
+                          amount={calculateOriginalPrice(
+                            projectDetail?.quotations?.[0]?.rawMaterialPrice,
+                            projectDetail?.quotations?.[0]?.rawMaterialDiscount
+                          )}
+                        />
+                      </span>
+                    </div>
+                  ) : (
+                    "N/A"
+                  )}
+                  {projectDetail?.quotations?.[0]?.rawMaterialDiscount && (
+                    <div className="text-red-500">
+                      {`(-${Math.abs(
+                        projectDetail?.quotations?.[0]?.rawMaterialDiscount
+                      )}%)`}
+                    </div>
+                  )}
                 </td>
-                <td className=" w-40 p-3 text-sm text-gray-700 whitespace-nowrap text-center">
-                  {projectDetail?.quotations?.[0]?.furniturePrice
-                    ? formatCurrency(projectDetail.quotations[0].furniturePrice)
-                    : "N/A"}
-                </td>
+
                 <td className="w-40 p-3 text-sm text-gray-700 whitespace-nowrap text-center">
-                  {projectDetail?.quotations?.[0]?.laborPrice
-                    ? formatCurrency(projectDetail.quotations[0].laborPrice)
-                    : "N/A"}
+                  {projectDetail?.quotations?.[0]?.furniturePrice ? (
+                    <div className="flex items-center justify-center">
+                      <span className="mr-2">
+                        <CurrencyFormatter
+                          amount={
+                            projectDetail?.quotations?.[0]?.furniturePrice
+                          }
+                        />
+                      </span>
+                      <span className="line-through text-gray-500">
+                        <CurrencyFormatter
+                          amount={calculateOriginalPrice(
+                            projectDetail?.quotations?.[0]?.furniturePrice,
+                            projectDetail?.quotations?.[0]?.furnitureDiscount
+                          )}
+                        />
+                      </span>
+                    </div>
+                  ) : (
+                    "N/A"
+                  )}
+                  {projectDetail?.quotations?.[0]?.furnitureDiscount && (
+                    <div className="text-red-500">
+                      {`(-${Math.abs(
+                        projectDetail?.quotations?.[0]?.furnitureDiscount
+                      )}%)`}
+                    </div>
+                  )}
                 </td>
+
+                <td className="w-40 p-3 text-sm text-gray-700 whitespace-nowrap text-center">
+                  {projectDetail?.quotations?.[0]?.laborPrice ? (
+                    <div className="flex items-center justify-center">
+                      <span className="mr-2">
+                        <CurrencyFormatter
+                          amount={projectDetail?.quotations?.[0]?.laborPrice}
+                        />
+                      </span>
+                      <span className="line-through text-gray-500">
+                        <CurrencyFormatter
+                          amount={calculateOriginalPrice(
+                            projectDetail?.quotations?.[0]?.laborPrice,
+                            projectDetail?.quotations?.[0]?.laborDiscount
+                          )}
+                        />
+                      </span>
+                    </div>
+                  ) : (
+                    "N/A"
+                  )}
+                  {projectDetail?.quotations?.[0]?.laborDiscount && (
+                    <div className="text-red-500">
+                      {`(-${Math.abs(
+                        projectDetail?.quotations?.[0]?.laborDiscount
+                      )}%)`}
+                    </div>
+                  )}
+                </td>
+
                 <td className="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
-                  {projectDetail?.quotations?.[0]?.total
-                    ? formatCurrency(projectDetail.quotations[0].total)
-                    : "N/A"}
+                  {projectDetail?.quotations?.[0]?.total ? (
+                    <CurrencyFormatter
+                      amount={projectDetail?.quotations?.[0]?.total}
+                    />
+                  ) : (
+                    "N/A"
+                  )}
                 </td>
                 <td className="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
                   <span>
-                    {renderStatus(
-                      projectDetail?.quotations?.[0]?.quotationStatus
-                    )}
+                    <QuotationStatusBadge
+                      quotationStatus={
+                        projectDetail?.quotations?.[0]?.quotationStatus
+                      }
+                    />
                   </span>
                 </td>
                 <td className="p-3 text-sm text-gray-700 text-center">
