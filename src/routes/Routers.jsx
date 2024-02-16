@@ -32,7 +32,6 @@ import QuoteRequest from "../pages/Customer/QuoteRequest";
 import AllRequest from "../pages/Staff/QuoteManagement/AllRequest";
 import ConfigProject2 from "../pages/Staff/QuoteManagement/ConfigProject2";
 import QuotationDetails from "../pages/Staff/QuoteManagement/QuotationDetails/QuotationDetails";
-import HappyNewYear from "../pages/HappyNewYear";
 import ProjectDetails from "../pages/Staff/QuoteManagement/ProjectDetails/ProjectDetails";
 import ProjectDetailsForCustomer from "../pages/Customer/ProjectDetails/ProjectDetailsForCustomer";
 import QuoteDetailsForCustomer from "../pages/Customer/QuoteDetails/QuoteDetailsForCustomer"
@@ -44,7 +43,6 @@ export default function Routers() {
       element: <HomeLayout />,
       children: [
         { path: "/", element: <Home /> },
-        { path: "/happy-new-year", element: <HappyNewYear/> },
         { path: "/aboutus", element: <AboutUs /> },
         { path: "/houseProject", element: <HouseProject /> },
         { path: "/house-roof-projects", element: <HouseRoofList /> },
