@@ -93,7 +93,7 @@ const EditMaterial = ({ setIsEdit, refreshData, selectedMaterialId }) => {
           </label>
           <select
             name="materialType"
-            value={materialData.materialType}
+            value={materialData.unitMaterial}
             onChange={handleChange}
             className="w-full border rounded-md py-2 px-3 focus:outline-none focus:ring focus:border-blue-300 mt-2"
           >
@@ -108,7 +108,7 @@ const EditMaterial = ({ setIsEdit, refreshData, selectedMaterialId }) => {
           </label>
           <select
             name="unitMaterial"
-            value={materialData.unitMaterial}
+            value={materialData.materialType}
             onChange={handleChange}
             className="w-full border rounded-md py-2 px-3 focus:outline-none focus:ring focus:border-blue-300 mt-2"
           >
