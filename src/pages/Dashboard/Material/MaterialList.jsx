@@ -11,6 +11,7 @@ import { buttonClick } from "../../../assets/animations";
 import { getAllMaterials, deleteMaterialById } from "../../../api";
 import { Pagination, MutatingDots } from "../../../components";
 import CreateMaterial from "./CreateMaterial";
+import EditMaterial from "./EditMaterial";
 
 const MaterialList = () => {
   const [materials, setMaterials] = useState([]);
@@ -262,10 +263,21 @@ const MaterialList = () => {
         </div>
       )}
 
-      {/* create suplier  */}
+      {/* create material  */}
       {isCreate && (
         <div>
           <CreateMaterial setIsCreate={setIsCreate} refreshData={refreshData} />
+        </div>
+      )}
+
+      {/* edit material */}
+      {isEdit && (
+        <div>
+          <EditMaterial
+            setIsEdit={setIsEdit}
+            refreshData={refreshData}
+            selectedMaterialId={selectedMaterialId}
+          />
         </div>
       )}
     </>

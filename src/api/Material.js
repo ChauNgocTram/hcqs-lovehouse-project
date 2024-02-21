@@ -21,17 +21,11 @@ export const createMaterial = async (materialData) => {
   }
 };
 
-export const updateMaterial = async (
-  id,
-  name,
-  unitMaterial,
-  materialType,
-  quantity
-) => {
+export const updateMaterial = async (materialData) => {
   try {
     const response = await axios.put(
       `${baseURL}/material/update-material`,
-      { id, name, unitMaterial, materialType, quantity },
+      materialData,
       {
         headers: {
           Authorization: `Bearer ${usertoken}`,
