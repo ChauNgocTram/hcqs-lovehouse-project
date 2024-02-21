@@ -4,7 +4,10 @@ import { useParams } from "react-router-dom";
 import { getProjectById } from "../../../../constants/apiQuotationOfStaff";
 
 import StaffSidebar from "../../../../components/Sidebar/StaffSidebar";
-import QuotationStatusBadge from "../../../../components/QuotationComponent/Status/QuotationStatusBadge";
+import ProjectSection from "./ProjectSection";
+import QuotationSection from "./QuotationSection";
+import ContractSection from "./ContractSection";
+import ContractSection2 from "./ContractSection2";
 
 export default function ProjectDetails() {
   const { id } = useParams();
@@ -27,18 +30,19 @@ export default function ProjectDetails() {
     fetchProjectDetail();
   }, [id]);
 
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    }).format(amount);
-  };
 
   return (
     <>
       <div className="flex">
         <StaffSidebar />
-
+        <div className="h-screen flex-1 p-7">
+        <ProjectSection/>
+        <QuotationSection/>
+        {/* <ContractSection/> */}
+        <ContractSection2/>
+        </div>
+       
+{/* 
         <div className="h-screen flex-1 p-7">
           <h1 className="text-2xl font-semibold pb-5">Project Detail</h1>
 
@@ -119,7 +123,7 @@ export default function ProjectDetails() {
               </table>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

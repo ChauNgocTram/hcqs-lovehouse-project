@@ -18,7 +18,7 @@ export const quoteRequest = async (userData, accountId) => {
  
     const res = await axios.post(`${baseURL}/project/create-project-by-user`, formData, {
       headers: {
-        "Authorization": `Bearer ${localStorage.getItem("accessToken")}`, 
+        "Authorization": `Bearer ${usertoken}`, 
          "Content-Type": "multipart/form-data",
       },
     });
@@ -28,6 +28,22 @@ export const quoteRequest = async (userData, accountId) => {
     return null;
   }
 };
+
+// export const createQuotationRequest = async (formData) => {
+//   try {
+//     const res = await axios.post(`${baseURL}/project/create-project-by-user`, formData, {
+//       headers: {
+//         Authorization: `Bearer ${usertoken}`,
+//         "Content-Type": "multipart/form-data",
+//       },
+//       withCredentials: true,
+//     });
+
+//     return res.data;
+//   } catch (err) {
+//     return null;
+//   }
+// };
 
 
 export const getAllRequest = async (accountId) => {

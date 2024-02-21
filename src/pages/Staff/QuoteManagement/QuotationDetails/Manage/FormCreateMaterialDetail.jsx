@@ -127,8 +127,7 @@ export default function FormCreateMaterialDetail({ onModalClose }) {
         <button
           className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium text-sm rounded-lg px-5 py-2.5 text-center"
           onClick={handleButtonClick}
-        >
-          + Add material
+        >+ Add material
         </button>
         <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
           <div className="p-4 my-auto lg:px-8 text-left overflow-y-auto max-h-[500px]">

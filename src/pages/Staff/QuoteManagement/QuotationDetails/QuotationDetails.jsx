@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import {
   getQuoteDetailByQuoteId,
   publicQuotationForCustomer,
+  getQuotationById,
 } from "../../../../constants/apiQuotationOfStaff";
 import { alert } from "../../../../components/Alert/Alert";
 
@@ -12,12 +13,28 @@ import FormCreateMaterialDetail from "./Manage/FormCreateMaterialDetail";
 import FormUpdateMaterialDetail from "./Manage/FormUpdateMaterialDetail";
 import DeleteMaterialDetail from "./Manage/DeleteMaterialDetail";
 import CurrencyFormatter from "../../../../components/Common/CurrencyFormatter";
+import LoadingOverlay from "../../../../components/Loading/LoadingOverlay";
 
 export default function QuotationDetails() {
   const { id } = useParams();
+  const [quote, setQuote] = useState({});
   const [quoteDetail, setQuoteDetail] = useState([]);
-  //const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [reloadContent, setReloadContent] = useState(false);
+  
+
+  const fetchQuotation = async () => {
+    try {
+      const data = await getQuotationById(id);
+
+      if (data && data.result) {
+        setQuote(data.result.data);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error("Error fetching quote detail:", error);
+    }
+  };
 
   const fetchQuoteDetail = async () => {
     try {
@@ -25,7 +42,7 @@ export default function QuotationDetails() {
 
       if (data && data.result) {
         setQuoteDetail(data.result.data);
-        //setLoading(false);
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error fetching quote detail:", error);
@@ -33,6 +50,7 @@ export default function QuotationDetails() {
   };
 
   useEffect(() => {
+    fetchQuotation();
     fetchQuoteDetail();
   }, [id, reloadContent]);
 
@@ -90,18 +108,26 @@ export default function QuotationDetails() {
 
   return (
     <>
+      <LoadingOverlay loading={loading} />
       <div className="flex">
         <StaffSidebar />
 
         <div className="h-screen flex-1 p-7">
-          <h1 className="text-2xl font-semibold pb-5">Quote Detail</h1>
-          <div className="ml-4">
-            <FormCreateMaterialDetail onModalClose={handleReloadContent} />
-          </div>
+          <h1 className="text-3xl font-semibold pb-4 pl-4">Quote Detail</h1>
 
-          <div>
-            <button onClick={handlePublicProject}  className="bg-baseOrange text-white rounded-lg p-2 my-2 mx-5 font-semibold">Public Project</button>
-          </div>
+          {quote?.quotation?.quotationStatus === 0 && (
+            <div className="flex items-center">
+              <div className="ml-4">
+                <FormCreateMaterialDetail onModalClose={handleReloadContent} />
+              </div>
+              <button
+                onClick={handlePublicProject}
+                className="text-white bg-green-600 hover:bg-green-800 focus:outline-none font-medium text-sm rounded-lg px-5 py-2.5 text-center my-6 ml-4 "
+              >
+                Public Project
+              </button>
+            </div>
+          )}
 
           <div className="p-5 h-screen bg-gray-100 ">
             <div className="overflow-auto rounded-lg shadow hidden md:block">

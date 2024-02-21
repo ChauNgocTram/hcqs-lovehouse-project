@@ -197,10 +197,20 @@ export default function OverviewSection() {
                   />
                 </td>
                 <td className="flex flex-col p-3 text-sm text-gray-700 text-center">
-                  <button className="bg-baseGreen text-white rounded-lg p-2 mb-2 font-semibold" onClick={handleConfirmQuotation}>
-                    Confirm Quotation
-                  </button>
-                  <DealForm />
+                {quoteDetail?.quotation?.quotationStatus === 1 && (
+                    <>
+                      <button
+                        className="bg-baseGreen text-white rounded-lg p-2 mb-2 font-semibold"
+                        onClick={handleConfirmQuotation}
+                      >
+                        Confirm Quotation
+                      </button>
+                      <DealForm />
+                    </>
+                  )}
+                  {quoteDetail?.quotation?.quotationStatus === 3 && (
+                    <button>Sign Contract</button>
+                  )}
                 </td>
               </tr>
             </tbody>

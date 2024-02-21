@@ -32,9 +32,11 @@ import QuoteRequest from "../pages/Customer/QuoteRequest";
 import AllRequest from "../pages/Staff/QuoteManagement/AllRequest";
 import ConfigProject2 from "../pages/Staff/QuoteManagement/ConfigProject2";
 import QuotationDetails from "../pages/Staff/QuoteManagement/QuotationDetails/QuotationDetails";
-import ProjectDetails from "../pages/Staff/QuoteManagement/ProjectDetails/ProjectDetails";
+import ProjectDetailsForStaff from "../pages/Staff/QuoteManagement/ProjectDetails/ProjectDetailsForStaff";
 import ProjectDetailsForCustomer from "../pages/Customer/ProjectDetails/ProjectDetailsForCustomer";
 import QuoteDetailsForCustomer from "../pages/Customer/QuoteDetails/QuoteDetailsForCustomer"
+import QuotationForm from "../pages/Quotation/QuotationForm/QuotationForm";
+import Quotation from "../pages/Quotation/Quotation";
 
 export default function Routers() {
   const routing = useRoutes([
@@ -59,7 +61,8 @@ export default function Routers() {
         { path: "/news/newsDetail/:id", element: <NewsDetail /> },
         { path: "/blog", element: <Blog /> },
         { path: "/blog/blogDetail/:id", element: <BlogDetail /> },
-        { path: "/quote-request", element: <QuoteRequestForm /> },
+        // { path: "/quote-request", element: <QuoteRequestForm /> },
+        { path: "/quote-request", element: <Quotation/>},
       ],
     },
     {
@@ -82,7 +85,7 @@ export default function Routers() {
       element: <StaffLayout />,
       children: [
         { path: "/staff/all-request", element: <AllRequest /> },
-        { path: "/staff/project-detail/:id", element: <ProjectDetails/> },
+        { path: "/staff/project-detail/:id", element: <ProjectDetailsForStaff/> },
         { path: "/staff/config-project/:id", element: <ConfigProject2/> },
         
         { path: "/staff/quotation-detail/:id", element: <QuotationDetails/> },

@@ -55,7 +55,7 @@ export default function DealForm() {
       console.log("Form data submitted:", formattedData);
 
       await createQuotationDealRequest(formattedData);
-      resetForm();
+     // resetForm();
       alert.alertSuccessWithTime(
         "Create Quotation Deal Request Successfully",
         "",

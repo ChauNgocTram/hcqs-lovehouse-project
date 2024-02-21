@@ -2,27 +2,23 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import StaffSidebar from "../../../components/Sidebar/StaffSidebar";
-import {
-  getAllRequestForStaff,
-  getProjectById,
-} from "../../../constants/apiQuotationOfStaff";
-import ProjectStatusBadge from "../../../components/QuotationComponent/Status/ProjectStatusBadge"
+import { getAllRequestForStaff } from "../../../constants/apiQuotationOfStaff";
+import ProjectStatusBadge from "../../../components/QuotationComponent/Status/ProjectStatusBadge";
+import LoadingOverlay from "../../../components/Loading/LoadingOverlay";
+import TabsComponent from "../../../components/Tabs/TabsComponent";
+import DateFormatter from "../../../components/Common/DateFormatter"
 
 export default function AllRequest() {
   const [allRequest, setAllRequest] = useState([]);
   const navigate = useNavigate();
-
-  const redirectToQuotationDetail = async (projectId) => {
-    try {
-      const projectData = await getProjectById(projectId);
-
-      const quotationId = projectData.result.data.quotations[0].id;
-
-      navigate(`/staff/quotation-detail/${quotationId}`);
-    } catch (error) {
-      console.error("Error fetching project details:", error);
-    }
-  };
+  const [loading, setLoading] = useState(true);
+  const [selectedTab, setSelectedTab] = useState(0);
+  const [filteredProjects, setFilteredProjects] = useState(allRequest);
+  const tabs = [
+    { title: "New", filter: (item) => item.projectStatus === 0 },
+    { title: "Processing", filter: (item) => item.projectStatus === 1 },
+  ];
+  const [currentContent, setCurrentContent] = useState(tabs[0].title);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -35,7 +31,9 @@ export default function AllRequest() {
             createDate: formatDate(item.createDate),
           }));
           setAllRequest(formattedData);
-          // setLoading(false);
+
+          filterProjectsByTab(selectedTab);
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error fetching blogs:", error);
@@ -44,6 +42,12 @@ export default function AllRequest() {
 
     fetchAllRequestForStaff();
   }, []);
+
+  const filterProjectsByTab = (index) => {
+    const filterFunction = tabs[index].filter;
+    const filtered = allRequest.filter(filterFunction);
+    setFilteredProjects(filtered);
+  };
 
   const formatDate = (dateString) => {
     const options = {
@@ -58,15 +62,28 @@ export default function AllRequest() {
     return formattedDate;
   };
 
+  const handleTabChange = (index) => {
+    setSelectedTab(index);
+    filterProjectsByTab(index);
+  };
+
   return (
     <>
+      <LoadingOverlay loading={loading} />
       <div className="flex">
         <StaffSidebar />
 
         <div className="h-screen flex-1 p-7">
           <h1 className="text-2xl font-semibold pb-5">Quote Request</h1>
+          <TabsComponent
+            items={tabs}
+            initialTabTitle={currentContent}
+            onTabChange={handleTabChange}
+            defaultTabIndex={0}
+          />
+
           <div className="p-5 h-screen bg-gray-100 ">
-            <div className="overflow-auto rounded-lg shadow hidden md:block">
+            <div className="overflow-auto rounded-lg shadow  md:block">
               <table className="w-full">
                 <thead className="bg-gray-50 border-b-2 border-gray-200">
                   <tr>
@@ -91,7 +108,7 @@ export default function AllRequest() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {allRequest.map((item, index) => {
+                  {filteredProjects.map((item, index) => {
                     return (
                       <tr
                         key={item.id}
@@ -107,11 +124,12 @@ export default function AllRequest() {
                           Floors: {item.numOfFloor}, Area: {item.area}
                         </td>
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                          {item.createDate}
+                        <DateFormatter dateString={item.createDate} />
                         </td>
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                          
-                          <ProjectStatusBadge projectStatus={item.projectStatus} />
+                          <ProjectStatusBadge
+                            projectStatus={item.projectStatus}
+                          />
                         </td>
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                           {item.projectStatus === 0 && (
@@ -121,18 +139,7 @@ export default function AllRequest() {
                           )}
 
                           {item.projectStatus === 1 && (
-                            // <NavLink to={`/staff/quotation-detail/${item.quotation.id}`}>
-                            //   Quotation Detail
-                            // </NavLink>
                             <>
-                              <button
-                                onClick={() =>
-                                  redirectToQuotationDetail(item.id)
-                                }
-                              >
-                                Quotation Detail
-                              </button>
-
                               <NavLink to={`/staff/project-detail/${item.id}`}>
                                 View Detail
                               </NavLink>
@@ -146,7 +153,7 @@ export default function AllRequest() {
               </table>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
+            {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
               {allRequest.map((item, index) => (
                 <div
                   key={item.id}
@@ -160,12 +167,14 @@ export default function AllRequest() {
                       Floors: {item.numOfFloor}, Area: {item.area}
                     </div>
                     <div className="text-gray-500">{item.createDate}</div>
-                    <div><ProjectStatusBadge projectStatus={item.projectStatus} /></div>
+                    <div>
+                      <ProjectStatusBadge projectStatus={item.projectStatus} />
+                    </div>
                     <div>Action</div>
                   </div>
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

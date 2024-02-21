@@ -4,6 +4,7 @@ import CustomerSidebar from "../../../components/Sidebar/CustomerSidebar";
 import ProjecDetailsSection from "./ProjectDetailsSection";
 import QuotationOverviewSection from "./QuotationOverviewSection";
 
+
 export default function ProjectDetailsForCustomer() {
   return (
     <>

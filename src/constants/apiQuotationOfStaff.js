@@ -51,6 +51,23 @@ export const updateProjectConfig = async (updateData) => {
   }
 };
 
+export const getQuotationById = async (quotationId) => {
+  try {
+    const res = await axios.get(
+      `${baseURL}/quotation/get-quotation-by-id/${quotationId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${usertoken}`,
+        },
+        withCredentials: true,
+      }
+    );
+    return res.data;
+  } catch (err) {
+    return null;
+  }
+};
+
 export const getQuoteDetailByQuoteId = async (id) => {
   try {
     const res = await axios.get(

@@ -4,11 +4,12 @@ import { useSelector } from "react-redux";
 import CustomerSidebar from "../../components/Sidebar/CustomerSidebar";
 import {
   getAllRequest,
-  getProjectByIdForCustomer,
 } from "../../constants/apiQuotationOfCustomer";
 import ProjectStatusBadge from "../../components/QuotationComponent/Status/ProjectStatusBadge"
+import LoadingOverlay from "../../components/Loading/LoadingOverlay"
 
 export default function QuoteRequest() {
+  const [loading, setLoading] = useState(true);
   const [allRequest, setAllRequest] = useState([]);
   const { accountId } = useParams();
   const navigate = useNavigate();
@@ -17,19 +18,9 @@ export default function QuoteRequest() {
 
   const customerId = user.id;
 
-  const redirectToQuotationDetail = async (projectId) => {
-    try {
-      const projectData = await getProjectByIdForCustomer(projectId);
-
-      const quotationId = projectData.result.data.quotations[0].id;
-
-      navigate(`/customer/quotation-detail/${quotationId}`);
-    } catch (error) {
-      console.error("Error fetching project details:", error);
-    }
-  };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fetchAllRequest = async () => {
       try {
         const data = await getAllRequest(customerId);
@@ -39,6 +30,7 @@ export default function QuoteRequest() {
             createDate: formatDate(item.createDate),
           }));
           setAllRequest(formattedData);
+          setLoading(false);
         } else {
           console.error("Invalid data format:", data);
         }
@@ -65,6 +57,7 @@ export default function QuoteRequest() {
  
   return (
     <>
+    <LoadingOverlay loading={loading} />
       <div className="flex">
         <CustomerSidebar />
 

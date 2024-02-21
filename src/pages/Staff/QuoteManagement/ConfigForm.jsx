@@ -128,70 +128,70 @@ const ConfigForm = () => {
           />
 
           <InputField
-            label="Sand Mixing Ratio"
+            label="Sand Mixing Ratio (%)"
             name="sandMixingRatio"
             type="number"
             error={errors.sandMixingRatio && touched.sandMixingRatio}
           />
 
           <InputField
-            label="Cement Mixing Ratio"
+            label="Cement Mixing Ratio (%)"
             name="cementMixingRatio"
             type="number"
             error={errors.cementMixingRatio && touched.cementMixingRatio}
           />
 
           <InputField
-            label="Stone Mixing Ratio"
+            label="Stone Mixing Ratio (%)"
             name="stoneMixingRatio"
             type="number"
             error={errors.stoneMixingRatio && touched.stoneMixingRatio}
           />
 
           <InputField
-            label="Raw Material Discount"
+            label="Raw Material Discount (%)"
             name="rawMaterialDiscount"
             type="number"
             error={errors.rawMaterialDiscount && touched.rawMaterialDiscount}
           />
 
           <InputField
-            label="Furniture Discount"
+            label="Furniture Discount (%)"
             name="furnitureDiscount"
             type="number"
             error={errors.furnitureDiscount && touched.furnitureDiscount}
           />
 
           <InputField
-            label="Label Discount"
+            label="Label Discount (%)"
             name="laborDiscount"
             type="number"
             error={errors.laborDiscount && touched.laborDiscount}
           />
 
           <InputField
-            label="Tiled Area"
+            label="Tiled Area (m²)"
             name="tiledArea"
             type="number"
             error={errors.tiledArea && touched.tiledArea}
           />
 
           <InputField
-            label="Wall Length"
+            label="Wall Length (m)"
             name="wallLength"
             type="number"
             error={errors.wallLength && touched.wallLength}
           />
 
           <InputField
-            label="Wall Height"
+            label="Wall Height (m)"
             name="wallHeight"
             type="number"
             error={errors.wallHeight && touched.wallHeight}
           />
 
           <InputField
-            label="estimatedTimeOfCompletion"
+            label="Estimated Time Of Completion (days)"
             name="estimatedTimeOfCompletion"
             type="number"
             error={

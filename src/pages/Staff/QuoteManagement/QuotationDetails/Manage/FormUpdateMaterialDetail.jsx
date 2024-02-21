@@ -140,10 +140,13 @@ const initialValues = {
               {({ values, errors, touched, setFieldValue }) => (
                 <Form>
                   <label htmlFor="quotationId">Quotation ID</label>
-                  <Field name="quotationId" as={Input} type="text" readOnly />
+                  <Field name="quotationId" as={Input} type="text" readOnly className="mb-4 text-gray-500"/>
+                  <label htmlFor="id">ID</label>
+                  <Field name="id" as={Input} type="text" readOnly className="mb-4 text-gray-500"/>
+
 
                   <label htmlFor="materialId" className="mr-4 ">
-                    Material
+                    Material:
                   </label>
                   <Field
                     as="select"
@@ -159,6 +162,7 @@ const initialValues = {
                       setFieldValue("materialId", selectedMaterialId);
                     }}
                     value={values.materialId}
+                    className="mb-4"
                   >
                     <option disabled value="">
                       Select Material
@@ -182,7 +186,7 @@ const initialValues = {
                   </div>
 
                   <label htmlFor="quantity" className="">Quantity</label>
-                  <Field name="quantity" as={Input} type="number" />
+                  <Field name="quantity" as={Input} type="number" className="mb-4"/>
                   {errors.quantity && touched.quantity && (
                     <div style={{ color: "red" }}>{errors.quantity}</div>
                   )}

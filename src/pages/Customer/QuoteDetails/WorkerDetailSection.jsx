@@ -44,6 +44,9 @@ export default function WorkerDetailSection() {
                   <th className="p-3 text-sm font-semibold tracking-wide text-right">
                     Quantity
                   </th>
+                  <th className="p-3 text-sm font-semibold tracking-wide text-right">
+                    Labor Cost
+                  </th>
                   <th className=" p-3 text-sm font-semibold tracking-wide text-right">
                     Total
                   </th>
@@ -53,6 +56,9 @@ export default function WorkerDetailSection() {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {quoteDetail.workerForProjects.map((item, index) => {
+                  const total = item.quantity * item.exportLaborCost;
+
+
                   return (
                     <tr key={item.id} className="bg-white text-black text-left">
                       <td className="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
@@ -64,9 +70,12 @@ export default function WorkerDetailSection() {
                       
                       <td className="p-3 text-sm text-gray-700 whitespace-nowrap text-right">
                         {item.quantity}
+                      </td> <td className="p-3 text-sm text-gray-700 whitespace-nowrap text-right">
+                        
+                        <CurrencyFormatter amount={item.exportLaborCost} />/person
                       </td>
                       <td className="p-3 text-sm text-gray-700 whitespace-nowrap text-right">
-                        <CurrencyFormatter amount={item.exportLaborCost} />
+                        <CurrencyFormatter amount={total} />
                       </td>
                      
                     </tr>

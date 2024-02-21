@@ -170,19 +170,27 @@ export default function QuotationOverviewSection() {
                 </td>
                 <td className="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
                   <span>
-                    <QuotationStatusBadge
-                      quotationStatus={
-                        projectDetail?.quotations?.[0]?.quotationStatus
-                      }
-                    />
+                    {projectDetail?.quotations?.[0]?.quotationStatus ? (
+                      <QuotationStatusBadge
+                        quotationStatus={
+                          projectDetail?.quotations?.[0]?.quotationStatus
+                        }
+                      />
+                    ) : (
+                      "N/A"
+                    )}
                   </span>
                 </td>
                 <td className="p-3 text-sm text-gray-700 text-center">
-                  <NavLink
-                    to={`/customer/quotation-detail/${projectDetail?.quotations?.[0]?.id}`}
-                  >
-                    View Quotation Detail
-                  </NavLink>
+                  {projectDetail?.quotations?.[0]?.quotationStatus === 1 ? (
+                    <NavLink
+                      to={`/customer/quotation-detail/${projectDetail?.quotations?.[0]?.id}`}
+                    >
+                      View Quotation Detail
+                    </NavLink>
+                  ) : (
+                    "N/A"
+                  )}
                 </td>
               </tr>
             </tbody>

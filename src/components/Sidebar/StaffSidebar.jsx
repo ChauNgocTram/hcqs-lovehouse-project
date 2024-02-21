@@ -18,15 +18,15 @@ export default function StaffSidebar() {
     {
       title: "Quote Request",
       icon: <RiMailSendFill />,
-      path: "/customer/my-request",
+      path: "/staff/all-request",
     },
-    { title: "Quotation Detail", icon: <MdOutlinePriceChange /> },
-    { title: "Deal Quotation", icon: <GrTransaction /> },
+    // { title: "Quotation Detail", icon: <MdOutlinePriceChange /> },
+    // { title: "Deal Quotation", icon: <GrTransaction /> },
     { title: "Accounts", icon: <FaRegCircleUser />, gap: true },
     { title: "Transaction ", icon: <RiWallet3Line /> },
 
     // { title: "Analytics", icon: "Chart" },
-    { title: "Go to Home page", icon: <RiHome4Line />, gap: true },
+    { title: "Go to Home page", icon: <RiHome4Line />, gap: true ,path: "/",},
     { title: "Log out", icon: <RiLogoutCircleRLine /> },
   ];
   return (
@@ -68,7 +68,7 @@ export default function StaffSidebar() {
             >
               <li
                 key={index}
-                className={`flex  rounded-md p-2 cursor-pointer hover:bg-baseGreen text-black text-sm items-center gap-x-4 
+                className={`flex  rounded-md p-2 cursor-pointer hover:bg-baseGreen text-black hover:text-white text-sm items-center gap-x-4 
               ${Menu.gap ? "mt-9" : "mt-2"} ${
                   index === 0 && "bg-baseGreen text-white"
                 } `}
