@@ -22,13 +22,3 @@ input[type="password"]::-ms-clear {
   z-index: 10;
   overflow: hidden;
 }
-
-.lh-button{
-  @apply text-center uppercase tracking-wider py-4 px-8 text-[13px] font-semibold cursor-pointer rounded-md hover:bg-opacity-90 bg-baseOrange text-white w-max
-}
-
-
-
-
-
-
