@@ -97,3 +97,23 @@ export {
   getQuotationPriceBySupplierName
 }
 from "./SupplierPriceDetail";
+
+//Material
+export {
+  createMaterial,
+  deleteMaterialById,
+  getAllMaterials,
+  getMaterialById,
+  getMaterialByName,
+  updateMaterial,
+  updateMaterialQuantity
+}
+from "./Material";
+
+export {
+  getAllExportInventory,
+  getAllImportInventory,
+  getAllInventory,
+  getImportMaterialTemplate
+}
+from "./ImportExportInventory";

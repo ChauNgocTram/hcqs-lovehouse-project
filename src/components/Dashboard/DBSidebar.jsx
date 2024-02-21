@@ -12,11 +12,12 @@ import {
 } from "react-icons/fa";
 import { IoGridOutline, IoPricetagsSharp } from "react-icons/io5";
 import { CiSettings } from "react-icons/ci";
-import { MdLogout } from "react-icons/md";
+import { MdInventory, MdLogout } from "react-icons/md";
 import { AiOutlinePieChart, AiOutlineProject } from "react-icons/ai";
 import { FaBlog, FaRegNewspaper } from "react-icons/fa6";
 import { BiSolidDetail } from "react-icons/bi";
 import { GrSupport } from "react-icons/gr";
+import { SiMaterialdesignicons } from "react-icons/si";
 
 import { buttonClick, slideUpOut } from "../../assets/animations";
 import { logout } from "../../context/actions/authActions";
@@ -35,6 +36,8 @@ function DBSidebar({ setIsOpen }) {
   const [isPriceQuotation, setIsPriceQuotation] = useState(true);
   const [isSupplier, setIsSupplier] = useState(true);
   const [isSupplierPriceDetail, setIsSupplierPriceDetail] = useState(true);
+  const [isInventory, setIsInventory] = useState(true);
+  const [isMaterial, setIsMaterial] = useState(true);
 
   const handleSignout = () => {
     dispatch(logout());
@@ -326,12 +329,86 @@ function DBSidebar({ setIsOpen }) {
           </div>
         </div>
 
-        {/* Supplier  */}
+        {/* ImportExport  */}
         <div className="pl-2 pt-6 text-slate-200">
           <div className="pt-4">
             <p className="text-slate-400 uppercase font-semibold py-2">
-              Supplier
+              Import Export
             </p>
+
+            {/* Inventory  */}
+            <div
+              onClick={() => {
+                setIsInventory(!isInventory);
+              }}
+              className="flex items-center justify-between cursor-pointer"
+            >
+              <div className="flex items-center justify-start py-2">
+                <MdInventory className="text-xl" />
+                <div className="pl-2">Inventory</div>
+              </div>
+              <div>{isInventory ? <FaChevronDown /> : <FaChevronUp />}</div>
+            </div>
+
+            {/* navlink  */}
+            {!isInventory && (
+              <>
+                <motion.div {...slideUpOut} className={`flex flex-col `}>
+                  <NavLink
+                    to={"/dashboard/import-inventory"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
+                        : isNotActiveStyles
+                    }
+                  >
+                    Import Inventory
+                  </NavLink>
+                  <NavLink
+                    to={"/dashboard/list-quotation"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
+                        : isNotActiveStyles
+                    }
+                  >
+                    Quotation List
+                  </NavLink>
+                </motion.div>
+              </>
+            )}
+
+            {/* Material  */}
+            <div
+              onClick={() => {
+                setIsMaterial(!isMaterial);
+              }}
+              className="flex items-center justify-between cursor-pointer"
+            >
+              <div className="flex items-center justify-start py-2">
+                <SiMaterialdesignicons className="text-xl" />
+                <div className="pl-2">Material</div>
+              </div>
+              <div>{isMaterial ? <FaChevronDown /> : <FaChevronUp />}</div>
+            </div>
+
+            {/* navlink  */}
+            {!isMaterial && (
+              <>
+                <motion.div {...slideUpOut} className={`flex flex-col `}>
+                  <NavLink
+                    to={"/dashboard/list-material"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? `${isActiveStyles} px-4 py-2 border-l-8  border-slate-600 hover:bg-slate-200 hover:bg-opacity-50  pl-16 p-2w-full font-semibold `
+                        : isNotActiveStyles
+                    }
+                  >
+                    Material List
+                  </NavLink>
+                </motion.div>
+              </>
+            )}
 
             {/* supplier  */}
             <div

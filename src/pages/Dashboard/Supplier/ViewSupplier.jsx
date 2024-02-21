@@ -200,17 +200,25 @@ const ViewSupplier = () => {
             </div>
           </div>
 
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex flex-wrap justify-between items-center mb-4">
             <div className="flex items-center space-x-2">
-              <div className="px-2">Search</div>
+              <div className="px-2 font-semibold">Search</div>
               <input
                 type="text"
-                className="border px-2 py-1"
+                className="border px-2 py-1 w-80"
+                placeholder="Search..."
                 value={searchTerm}
                 onChange={handleSearchChange}
               />
             </div>
-            <div className="flex space-x-2">
+            <div className="flex flex-wrap space-x-2">
+              <motion.div
+                {...buttonClick}
+                // onClick={() => setIsImport(true)}
+                className="px-4 py-2 border rounded-md text-white bg-green-500 hover:bg-green-600 font-semibold shadow-md cursor-pointer"
+              >
+                Download Sample
+              </motion.div>
               <motion.div
                 {...buttonClick}
                 onClick={() => setIsImport(true)}

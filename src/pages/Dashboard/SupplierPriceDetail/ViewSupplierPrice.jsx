@@ -31,7 +31,8 @@ const ViewSupplierPrice = () => {
           <div className="relative z-0 border-b w-full"></div>
         </div>
       </div> */}
-      {/* table  */}a
+      {/* table  */}
+      
     </div>
   );
 };
