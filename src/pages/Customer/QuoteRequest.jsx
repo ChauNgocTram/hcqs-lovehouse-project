@@ -111,7 +111,7 @@ export default function QuoteRequest() {
                           />
                         </td>
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                          {item.projectStatus === 1 && (
+                          {item.projectStatus !== 0 && (
                             <>
                               <NavLink
                                 to={`/customer/project-detail/${item.id}`}

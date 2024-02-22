@@ -1,9 +1,8 @@
 import React from "react";
 import { useRoutes } from "react-router-dom";
-import HomeLayout from "../layout/HomeLayout";
+import { HomeLayout, CustomerLayout, StaffLayout } from "../layout";
 import AuthLayout from "../layout/AuthLayout";
-import CustomerLayout from "../layout/CustomerLayout";
-import StaffLayout from "../layout/StaffLayout";
+
 import Home from "../pages/Home/Home.jsx";
 import {
   AboutUs,
@@ -14,29 +13,29 @@ import {
   Profile,
   Setting,
   UsersList,
+  HouseProject,
+  HouseRoofList,
+  HouseRoofDetail,
+  TownHouseList,
+  TownHouseDetail,
+  News,
+  NewsDetail,
+  Blog,
+  BlogDetail,
+  QuoteRequestForm,
+  QuotationForm,
+  Quotation,
+  Customer,
+  QuoteRequest,
+  ProjectDetailsForCustomer,
+  QuoteDetailsForCustomer,
+  AllRequest,
+  ConfigProject2,
+  QuotationDetails,
+  ProjectDetailsForStaff,
 } from "../pages";
 
-import HouseProject from "../pages/HouseProjects/HouseProject";
-import HouseRoofList from "../pages/HouseProjects/HouseRoof/HouseRoofList";
-import HouseRoofDetail from "../pages/HouseProjects/HouseRoof/HouseRoofDetail";
-import TownHouseList from "../pages/HouseProjects/TownHouse/TownHouseList";
-import TownHouseDetail from "../pages/HouseProjects/TownHouse/TownHouseDetail";
-import News from "../pages/News/News";
-import NewsDetail from "../pages/News/NewsDetail";
-import Blog from "../pages/Blogs/Blog";
-import BlogDetail from "../pages/Blogs/BlogDetail";
 import { PageNotfound } from "../components";
-import QuoteRequestForm from "../pages/Quotation/QuotationForm/QuoteRequestForm";
-import Customer from "../pages/Customer/Customer";
-import QuoteRequest from "../pages/Customer/QuoteRequest";
-import AllRequest from "../pages/Staff/QuoteManagement/AllRequest";
-import ConfigProject2 from "../pages/Staff/QuoteManagement/ConfigProject2";
-import QuotationDetails from "../pages/Staff/QuoteManagement/QuotationDetails/QuotationDetails";
-import ProjectDetailsForStaff from "../pages/Staff/QuoteManagement/ProjectDetails/ProjectDetailsForStaff";
-import ProjectDetailsForCustomer from "../pages/Customer/ProjectDetails/ProjectDetailsForCustomer";
-import QuoteDetailsForCustomer from "../pages/Customer/QuoteDetails/QuoteDetailsForCustomer"
-import QuotationForm from "../pages/Quotation/QuotationForm/QuotationForm";
-import Quotation from "../pages/Quotation/Quotation";
 
 export default function Routers() {
   const routing = useRoutes([
@@ -62,7 +61,7 @@ export default function Routers() {
         { path: "/blog", element: <Blog /> },
         { path: "/blog/blogDetail/:id", element: <BlogDetail /> },
         // { path: "/quote-request", element: <QuoteRequestForm /> },
-        { path: "/quote-request", element: <Quotation/>},
+        { path: "/quote-request", element: <Quotation /> },
       ],
     },
     {
@@ -76,8 +75,14 @@ export default function Routers() {
       children: [
         { path: "/customer/dashboard", element: <Customer /> },
         { path: "/customer/my-request", element: <QuoteRequest /> },
-        { path: "/customer/project-detail/:id", element: <ProjectDetailsForCustomer/> },
-        { path: "/customer/quotation-detail/:id", element: <QuoteDetailsForCustomer/>},
+        {
+          path: "/customer/project-detail/:id",
+          element: <ProjectDetailsForCustomer />,
+        },
+        {
+          path: "/customer/quotation-detail/:id",
+          element: <QuoteDetailsForCustomer />,
+        },
       ],
     },
     {
@@ -85,11 +90,13 @@ export default function Routers() {
       element: <StaffLayout />,
       children: [
         { path: "/staff/all-request", element: <AllRequest /> },
-        { path: "/staff/project-detail/:id", element: <ProjectDetailsForStaff/> },
-        { path: "/staff/config-project/:id", element: <ConfigProject2/> },
-        
-        { path: "/staff/quotation-detail/:id", element: <QuotationDetails/> },
-        
+        {
+          path: "/staff/project-detail/:id",
+          element: <ProjectDetailsForStaff />,
+        },
+        { path: "/staff/config-project/:id", element: <ConfigProject2 /> },
+
+        { path: "/staff/quotation-detail/:id", element: <QuotationDetails /> },
       ],
     },
     {

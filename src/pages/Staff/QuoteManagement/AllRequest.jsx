@@ -26,11 +26,11 @@ export default function AllRequest() {
       try {
         const data = await getAllRequestForStaff();
         if (data && data.result) {
-          const formattedData = data.result.data.map((item) => ({
-            ...item,
-            createDate: formatDate(item.createDate),
-          }));
-          setAllRequest(formattedData);
+          // const formattedData = data.result.data.map((item) => ({
+          //   ...item,
+          //   createDate: formatDate(item.createDate),
+          // }));
+          setAllRequest(data.result.data);
 
           filterProjectsByTab(selectedTab);
           setLoading(false);
@@ -49,18 +49,7 @@ export default function AllRequest() {
     setFilteredProjects(filtered);
   };
 
-  const formatDate = (dateString) => {
-    const options = {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    };
-    const formattedDate = new Date(dateString).toLocaleString("en-US", options);
-    return formattedDate;
-  };
+
 
   const handleTabChange = (index) => {
     setSelectedTab(index);
@@ -99,6 +88,12 @@ export default function AllRequest() {
                     <th className="p-3 text-sm font-semibold tracking-wide text-left">
                       Date
                     </th>
+                    <th className="p-3 text-sm font-semibold tracking-wide text-left">
+                      Customer
+                    </th>
+                    <th className="p-3 text-sm font-semibold tracking-wide text-left">
+                      Phone
+                    </th>
                     <th className=" p-3 text-sm font-semibold tracking-wide text-left">
                       Status
                     </th>
@@ -125,6 +120,12 @@ export default function AllRequest() {
                         </td>
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                         <DateFormatter dateString={item.createDate} />
+                        </td>
+                        <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                        {item.account.firstName} {item.account.lastName}
+                        </td>
+                        <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                        {item.account.phoneNumber} 
                         </td>
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                           <ProjectStatusBadge
