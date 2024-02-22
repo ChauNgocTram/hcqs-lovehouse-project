@@ -31,12 +31,12 @@ export default function StaffSidebar() {
 
   const Menus = [
     {
+      label: "MENU",
+    },
+    {
       title: "Quote Request",
       icon: <RiMailSendFill />,
       submenu: [{ title: "All Request", path: "/staff/all-request" }],
-    },
-    {
-      label: "MENU",
     },
     {
       title: "User Management",

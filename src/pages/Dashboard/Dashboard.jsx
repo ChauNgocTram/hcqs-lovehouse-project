@@ -1,5 +1,5 @@
 import { Outlet } from "react-router";
-import { DBFooter, DBHeader, DBSidebar } from "../../components";
+import { DBFooter, DBHeader } from "../../components";
 import StaffSidebar from "../../components/Sidebar/StaffSidebar";
 import { useState } from "react";
 
