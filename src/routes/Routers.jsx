@@ -122,6 +122,32 @@ export default function Routers() {
         { path: "/staff/config-project/:id", element: <ConfigProject2 /> },
 
         { path: "/staff/quotation-detail/:id", element: <QuotationDetails /> },
+
+        { path: "users-list", element: <UsersList /> },
+
+        { path: "create-news", element: <NewsCreate /> },
+        { path: "list-news", element: <NewsList /> },
+        { path: "edit-news/:id", element: <NewsEdit /> },
+
+        { path: "create-blog", element: <BlogCreate /> },
+        { path: "list-blog", element: <BlogsList /> },
+        { path: "edit-blog/:id", element: <BlogEdit /> },
+
+        { path: "create-sample-project", element: <CreateSampleProject /> },
+        { path: "list-project", element: <ProjectList /> },
+        { path: "detail-project/:id", element: <ProjectDetail /> },
+        { path: "edit-project/:id", element: <EditProject /> },
+
+        { path: "import-inventory", element: <ImportInventory /> },
+
+        { path: "list-material", element: <MaterialList /> },
+
+        { path: "view-supplier", element: <ViewSupplier /> },
+
+        { path: "view-supplier-price", element: <ViewSupplierPrice /> },
+
+        { path: "import-quotation", element: <ImportQuotation /> },
+        { path: "list-quotation", element: <ListQuotation /> },
       ],
     },
     {
@@ -169,7 +195,7 @@ export default function Routers() {
       path: "/404",
       element: <PageNotfound />,
     },
-    { path: "*", element: <Navigate to="/404" replace /> },
+    // { path: "*", element: <Navigate to="/404" replace /> },
   ]);
   return routing;
 }

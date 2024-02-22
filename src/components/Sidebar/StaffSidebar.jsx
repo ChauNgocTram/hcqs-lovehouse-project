@@ -33,7 +33,7 @@ export default function StaffSidebar() {
     {
       title: "Quote Request",
       icon: <RiMailSendFill />,
-      path: "/staff/all-request",
+      submenu: [{ title: "All Request", path: "/staff/all-request" }],
     },
     {
       label: "MENU",
@@ -41,12 +41,7 @@ export default function StaffSidebar() {
     {
       title: "User Management",
       icon: <FaRegCircleUser />,
-      submenu: [
-        { title: "Users List", path: "/users-list" },
-        { title: "Create User", path: "/create-user" },
-        { title: "Staff Activity", path: "/staff-activity" },
-        { title: "Role Permission", path: "/role-permission" },
-      ],
+      submenu: [{ title: "Users List", path: "/dashboard/users-list" }],
     },
     { title: "Calendar ", icon: <FaRegCalendarAlt /> },
 
@@ -57,24 +52,24 @@ export default function StaffSidebar() {
       title: "House Project Page",
       icon: <AiOutlineProject />,
       submenu: [
-        { title: "Create Project", path: "/create-sample-project" },
-        { title: "Project List", path: "/list-project" },
+        { title: "Create Project", path: "/dashboard/create-sample-project" },
+        { title: "Project List", path: "/dashboard/list-project" },
       ],
     },
     {
       title: "News Management",
       icon: <FaRegNewspaper />,
       submenu: [
-        { title: "Create News", path: "/create-news" },
-        { title: "News List", path: "/list-news" },
+        { title: "Create News", path: "/dashboard/create-news" },
+        { title: "News List", path: "/dashboard/list-news" },
       ],
     },
     {
       title: "Blogs Management",
       icon: <FaBlog />,
       submenu: [
-        { title: "Create Blog", path: "/create-blog" },
-        { title: "Blog List", path: "/list-blog" },
+        { title: "Create Blog", path: "/dashboard/create-blog" },
+        { title: "Blog List", path: "/dashboard/list-blog" },
       ],
     },
 
@@ -85,31 +80,36 @@ export default function StaffSidebar() {
       title: "Inventory",
       icon: <MdInventory />,
       submenu: [
-        { title: "Import Inventory", path: "/import-inventory" },
-        { title: "Export Inventory", path: "/export-inventory" },
+        { title: "Import Inventory", path: "/dashboard/import-inventory" },
+        { title: "Export Inventory", path: "/dashboard/export-inventory" },
       ],
     },
     {
       title: "Material",
       icon: <SiMaterialdesignicons />,
-      submenu: [{ title: "Material List", path: "/list-material" }],
+      submenu: [{ title: "Material List", path: "/dashboard/list-material" }],
     },
     {
       title: "Supplier",
       icon: <GrSupport />,
-      submenu: [{ title: "View Supplier", path: "/view-supplier" }],
+      submenu: [{ title: "View Supplier", path: "/dashboard/view-supplier" }],
     },
     {
       title: "Supplier Price Detail",
       icon: <BiSolidDetail />,
-      submenu: [{ title: "View Supplier Price", path: "/view-supplier-price" }],
+      submenu: [
+        {
+          title: "View Supplier Price",
+          path: "/dashboard/view-supplier-price",
+        },
+      ],
     },
     {
       title: "Supplier Price Quotation",
       icon: <IoPricetagsSharp />,
       submenu: [
-        { title: "Import Quotation", path: "/import-quotation" },
-        { title: "Quotation List", path: "/list-quotation" },
+        { title: "Import Quotation", path: "/dashboard/import-quotation" },
+        { title: "Quotation List", path: "/dashboard/list-quotation" },
       ],
     },
     {
@@ -126,7 +126,7 @@ export default function StaffSidebar() {
   };
 
   return (
-    <div className="flex w-72.5 overflow-y-auto duration-300 ease-linear scrollbar-thin scrollbar-none scrollbar-track-gray-100">
+    <div className="flex w-72.5 overflow-y-auto duration-300 ease-linear scrollbar-thin scrollbar-none scrollbar-track-gray-100 border-r shadow-sm">
       <div
         className={`${
           open ? "w-64" : "w-28"
@@ -201,7 +201,13 @@ export default function StaffSidebar() {
                           to={submenu.path}
                           className="text-decoration-none"
                         >
-                          <li className="flex rounded-md p-2 cursor-pointer hover:bg-baseGreen text-black hover:text-white text-sm items-center gap-x-4">
+                          <li
+                            className={`flex rounded-md p-2 cursor-pointer ${
+                              location.pathname === submenu.path
+                                ? "bg-baseGreen text-white"
+                                : "hover:bg-baseGreen text-black hover:text-white"
+                            } text-sm items-center gap-x-4`}
+                          >
                             <span style={{ fontSize: "24px" }}>&nbsp;</span>
                             <span
                               className={`${
