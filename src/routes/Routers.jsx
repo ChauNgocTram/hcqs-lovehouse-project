@@ -91,7 +91,6 @@ export default function Routers() {
     {
       path: "/auth",
       element: <AuthLayout />,
-      element: <AuthLayout />,
       children: [{ path: "/auth", element: <Auth /> }],
     },
     {
