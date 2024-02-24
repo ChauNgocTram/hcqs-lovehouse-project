@@ -1,24 +1,140 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Table, Input, Space, Button } from "antd";
 import { toast } from "react-toastify";
 import * as XLSX from "xlsx";
 
 import { MdInventory } from "react-icons/md";
 import { FaChevronRight } from "react-icons/fa";
+import { SearchOutlined } from "@ant-design/icons";
 
 import { buttonClick } from "../../../assets/animations";
+import { DataTable, MutatingDots } from "../../../components";
 import {
+  getAllInventory,
   getImportMaterialTemplate,
   getImportMaterialWithExcelError,
   importMaterialWithExcel,
 } from "../../../api";
-import { DataTable } from "../../../components";
-import JSZip from "jszip";
 
 const ImportInventory = () => {
-  const user = useSelector((state) => state?.user?.user);
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [inventoryData, setInventoryData] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const data = await getAllInventory(1, 100);
+
+        if (data) {
+          setInventoryData(data.result.data);
+          setIsLoading(false);
+        } else {
+          console.error("Error fetching inventory data");
+        }
+      } catch (error) {
+        console.error("Error during data fetch:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+
+  const handleReset = (clearFilters) => {
+    clearFilters();
+    setSearchText("");
+  };
+
+  const getColumnSearchProps = (dataIndex) => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+    }) => (
+      <div style={{ padding: 8 }}>
+        <Input
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{ width: 188, marginBottom: 8, display: "block" }}
+        />
+        <Space>
+          <Button
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            style={{ width: 90 }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => handleReset(clearFilters)}
+            style={{ width: 90 }}
+          >
+            Reset
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered) => (
+      <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+    render: (text) =>
+      searchedColumn === dataIndex ? (
+        <span style={{ backgroundColor: "#ffc069" }}>
+          {text
+            .toString()
+            .split(new RegExp(`(?<=${searchText})|(?=${searchText})`, "i"))
+            .map(
+              (fragment, i) =>
+                fragment.toLowerCase() === searchText.toLowerCase() ? (
+                  <span key={i} className="highlight">
+                    {fragment}
+                  </span>
+                ) : (
+                  fragment
+                ) // Highlight matched text
+            )}
+        </span>
+      ) : (
+        text
+      ),
+  });
+
+  const columns = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+      ...getColumnSearchProps("id"),
+    },
+    {
+      title: "Quantity",
+      dataIndex: "quantity",
+      key: "quantity",
+      ...getColumnSearchProps("quantity"),
+    },
+    {
+      title: "Date",
+      dataIndex: "date",
+      key: "date",
+      ...getColumnSearchProps("date"),
+    },
+  ];
 
   const downloadExample = async () => {
     try {
@@ -71,46 +187,63 @@ const ImportInventory = () => {
   };
 
   return (
-    <div className="flex flex-col p-8">
-      {/* title */}
-      <div>
-        <div className="flex items-center space-x-2 text-xl">
-          <MdInventory />
-          <div>Import Export</div>
-          <FaChevronRight />
-          <div>Inventory</div>
-          <FaChevronRight />
+    <>
+      {isLoading ? (
+        <div className="flex items-center justify-center h-full">
+          <MutatingDots />
         </div>
-        <div className="text-2xl text-orange-400 font-semibold py-4">
-          Import Inventory
+      ) : (
+        <div className="flex flex-col p-8">
+          {/* title */}
+          <div>
+            <div className="flex items-center space-x-2 text-xl">
+              <MdInventory />
+              <div>Import Export</div>
+              <FaChevronRight />
+              <div>Inventory</div>
+              <FaChevronRight />
+            </div>
+            <div className="text-2xl text-orange-400 font-semibold py-4">
+              Import Inventory
+            </div>
+          </div>
+
+          <div className="flex flex-wrap justify-start">
+            <motion.div
+              {...buttonClick}
+              onClick={() => setIsOpen(true)}
+              className="px-4 py-2 border rounded-md text-white bg-gray-500 hover:bg-gray-600 font-semibold shadow-md cursor-pointer"
+            >
+              Open Flow
+            </motion.div>
+
+            <motion.div
+              {...buttonClick}
+              onClick={downloadExample}
+              className="px-4 py-2 border rounded-md text-white bg-blue-500 hover:bg-blue-600 font-semibold shadow-md cursor-pointer"
+            >
+              Dowload Example
+            </motion.div>
+          </div>
+
+          <div>
+            {/* Ant Design Table */}
+            <Table
+              columns={columns}
+              dataSource={inventoryData}
+              pagination={{ pageSize: 10 }} // Adjust pageSize as needed
+            />
+          </div>
+
+          <DataTable
+            isOpen={isOpen}
+            onClose={() => setIsOpen(false)}
+            onSubmit={handleSubmit}
+            fields={fields}
+          />
         </div>
-      </div>
-
-      <div className="flex flex-wrap justify-start">
-        <motion.div
-          {...buttonClick}
-          onClick={() => setIsOpen(true)}
-          className="px-4 py-2 border rounded-md text-white bg-gray-500 hover:bg-gray-600 font-semibold shadow-md cursor-pointer"
-        >
-          Open Flow
-        </motion.div>
-
-        <motion.div
-          {...buttonClick}
-          onClick={downloadExample}
-          className="px-4 py-2 border rounded-md text-white bg-blue-500 hover:bg-blue-600 font-semibold shadow-md cursor-pointer"
-        >
-          Dowload Example
-        </motion.div>
-      </div>
-
-      <DataTable
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        onSubmit={handleSubmit}
-        fields={fields}
-      />
-    </div>
+      )}
+    </>
   );
 };
 
