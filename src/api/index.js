@@ -81,6 +81,7 @@ export {
   getAllSupplierQuotationsByMonth,
   getSupplierQuotationTemplate,
   uploadSupplierQuotationWithExcelFile,
+  getUploadSupplierQuotationWithExcelFileError
 }
 from "./SupplierPriceQuotation";
 
@@ -114,6 +115,8 @@ export {
   getAllExportInventory,
   getAllImportInventory,
   getAllInventory,
-  getImportMaterialTemplate
+  getImportMaterialTemplate,
+  importMaterialWithExcel,
+  getImportMaterialWithExcelError
 }
 from "./ImportExportInventory";
