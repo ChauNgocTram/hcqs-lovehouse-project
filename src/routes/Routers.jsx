@@ -1,8 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate, useRoutes } from "react-router-dom";
-import HomeLayout from "../layout/HomeLayout";
+
+import { HomeLayout, CustomerLayout, StaffLayout } from "../layout";
 import AuthLayout from "../layout/AuthLayout";
+
 import Home from "../pages/Home/Home.jsx";
 import {
   AboutUs,
@@ -24,19 +26,33 @@ import {
   EditProject,
   ProjectDetail,
   CreateSampleProject,
+  HouseProject,
+  HouseRoofList,
+  HouseRoofDetail,
+  TownHouseList,
+  TownHouseDetail,
+  News,
+  NewsDetail,
+  Blog,
+  BlogDetail,
+  QuoteRequestForm,
+  QuotationForm,
+  Quotation,
+  Customer,
+  QuoteRequest,
+  ProjectDetailsForCustomer,
+  QuoteDetailsForCustomer,
+  AllRequest,
+  ConfigProject2,
+  ProjectDetailsForStaff,
+  ManageMaterialDetails,
 } from "../pages";
 
-import HouseProject from "../pages/HouseProjects/HouseProject";
-import HouseRoof from "../pages/HouseProjects/HouseRoof/HouseRoof";
-import HouseRoofDetail from "../pages/HouseProjects/HouseRoof/HouseRoofDetail";
-import TownHouse from "../pages/HouseProjects/TownHouse/TownHouse";
-import TownHouseDetail from "../pages/HouseProjects/TownHouse/TownHouseDetail";
-import News from "../pages/News/News";
-import NewsDetail from "../pages/News/NewsDetail";
-import Blog from "../pages/Blogs/Blog";
-import BlogDetail from "../pages/Blogs/BlogDetail";
 import { PageNotfound } from "../components";
-import QuoteRequestForm from "../pages/Quotation/QuotationForm/QuoteRequestForm";
+import ListPaymentProgress from "../pages/Staff/QuoteManagement/ContractDetails/ListPaymentProgress";
+import CreateProgressForm from "../pages/Staff/QuoteManagement/ContractDetails/ManageContract/CreateProgressForm";
+import CreateProgress from "../pages/Staff/QuoteManagement/ContractDetails/ManageContract/CreateProgress";
+import QuoteDetailsForStaff from "../pages/Staff/QuoteManagement/QuotationDetails/QuoteDetailsForStaff";
 
 export default function Routers() {
   const auth = useSelector((state) => state?.auth);
@@ -52,12 +68,12 @@ export default function Routers() {
         { path: "/", element: <Home /> },
         { path: "/aboutus", element: <AboutUs /> },
         { path: "/houseProject", element: <HouseProject /> },
-        { path: "/house-roof-projects", element: <HouseRoof /> },
+        { path: "/house-roof-projects", element: <HouseRoofList /> },
         {
           path: "/house-roof-projects/details/:id",
           element: <HouseRoofDetail />,
         },
-        { path: "/town-house-projects", element: <TownHouse /> },
+        { path: "/town-house-projects", element: <TownHouseList /> },
         {
           path: "/town-house-projects/details/:id",
           element: <TownHouseDetail />,
@@ -66,13 +82,47 @@ export default function Routers() {
         { path: "/news/newsDetail/:id", element: <NewsDetail /> },
         { path: "/blog", element: <Blog /> },
         { path: "/blog/blogDetail/:id", element: <BlogDetail /> },
-        { path: "/quote-request", element: <QuoteRequestForm /> },
+        // { path: "/quote-request", element: <QuoteRequestForm /> },
+        { path: "/quote-request", element: <Quotation /> },
       ],
     },
     {
       path: "/auth",
       element: <AuthLayout />,
       children: [{ path: "/auth", element: <Auth /> }],
+    },
+    {
+      path: "/customer",
+      element: <CustomerLayout />,
+      children: [
+        { path: "/customer/dashboard", element: <Customer /> },
+        { path: "/customer/my-request", element: <QuoteRequest /> },
+        {
+          path: "/customer/project-detail/:id",
+          element: <ProjectDetailsForCustomer />,
+        },
+        {
+          path: "/customer/quotation-detail/:id",
+          element: <QuoteDetailsForCustomer />,
+        },
+      ],
+    },
+    {
+      path: "/staff",
+      element: <StaffLayout />,
+      children: [
+        { path: "/staff/all-request", element: <AllRequest /> },
+        {
+          path: "/staff/project-detail/:id",
+          element: <ProjectDetailsForStaff />,
+        },
+        { path: "/staff/config-project/:id", element: <ConfigProject2 /> },
+        
+        { path: "/staff/quotation-detail/:id", element: <QuoteDetailsForStaff/> },
+        { path: "/staff/manage-material-detail/:id", element: <ManageMaterialDetails/> },
+        { path: "/staff/contract-payment-progress/:id", element: <ListPaymentProgress/> },
+        { path: "/staff/create-list-progress/:id", element: <CreateProgress/> },
+      ],
     },
     {
       path: "/dashboard",
