@@ -1,6 +1,6 @@
 import React from "react";
 
-import CustomerSidebar from "../../../components/Sidebar/CustomerSidebar";
+import { CustomerSidebar } from "../../../components";
 import ProjecDetailsSection from "./ProjectDetailsSection";
 import QuotationOverviewSection from "./QuotationOverviewSection";
 import DealingSection from "./DealingSection";

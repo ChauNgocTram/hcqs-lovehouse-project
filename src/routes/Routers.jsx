@@ -31,11 +31,15 @@ import {
   QuoteDetailsForCustomer,
   AllRequest,
   ConfigProject2,
-  QuotationDetails,
   ProjectDetailsForStaff,
+  ManageMaterialDetails,
 } from "../pages";
 
 import { PageNotfound } from "../components";
+import ListPaymentProgress from "../pages/Staff/QuoteManagement/ContractDetails/ListPaymentProgress";
+import CreateProgressForm from "../pages/Staff/QuoteManagement/ContractDetails/ManageContract/CreateProgressForm";
+import CreateProgress from "../pages/Staff/QuoteManagement/ContractDetails/ManageContract/CreateProgress";
+import QuoteDetailsForStaff from "../pages/Staff/QuoteManagement/QuotationDetails/QuoteDetailsForStaff";
 
 export default function Routers() {
   const routing = useRoutes([
@@ -95,8 +99,11 @@ export default function Routers() {
           element: <ProjectDetailsForStaff />,
         },
         { path: "/staff/config-project/:id", element: <ConfigProject2 /> },
-
-        { path: "/staff/quotation-detail/:id", element: <QuotationDetails /> },
+        
+        { path: "/staff/quotation-detail/:id", element: <QuoteDetailsForStaff/> },
+        { path: "/staff/manage-material-detail/:id", element: <ManageMaterialDetails/> },
+        { path: "/staff/contract-payment-progress/:id", element: <ListPaymentProgress/> },
+        { path: "/staff/create-list-progress/:id", element: <CreateProgress/> },
       ],
     },
     {

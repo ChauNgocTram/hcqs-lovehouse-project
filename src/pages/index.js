@@ -49,6 +49,6 @@ export { default as QuoteDetailsForCustomer } from "../pages/Customer/QuoteDetai
 // Staff
 export { default as AllRequest } from "../pages/Staff/QuoteManagement/AllRequest";
 export { default as ConfigProject2 } from "../pages/Staff/QuoteManagement/ConfigProject/ConfigProject2";
-export { default as QuotationDetails } from "../pages/Staff/QuoteManagement/QuotationDetails/QuotationDetails";
+export { default as ManageMaterialDetails } from "./Staff/QuoteManagement/QuotationDetails/Manage/ManageMaterialDetails";
 export { default as ProjectDetailsForStaff } from "../pages/Staff/QuoteManagement/ProjectDetails/ProjectDetailsForStaff";
 

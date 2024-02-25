@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-import CustomerSidebar from "../../components/Sidebar/CustomerSidebar";
+import { CustomerSidebar, ProjectStatusBadge, LoadingOverlay } from "../../components";
 import { getAllRequest } from "../../constants/apiQuotationOfCustomer";
-import ProjectStatusBadge from "../../components/QuotationComponent/Status/ProjectStatusBadge";
-import LoadingOverlay from "../../components/Loading/LoadingOverlay";
+
 
 export default function QuoteRequest() {
   const [loading, setLoading] = useState(true);

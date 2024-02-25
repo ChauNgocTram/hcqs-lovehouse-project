@@ -12,9 +12,8 @@ import {
 
 import { alert } from "../../../../components/Alert/Alert"
 
-import { projectConfigValidationSchema } from "../validationSchema";
-import InputField from "../../../../components/StaffComponent/QuoteComponent/InputField";
-import CurrencyFormatter from "../../../../components/Common/CurrencyFormatter";
+import { projectConfigValidationSchema } from "./validationSchema";
+import { InputField, CurrencyFormatter } from "../../../../components";
 
 const ConfigForm = () => {
   const [workers, setWorkers] = useState([]);
@@ -140,7 +139,7 @@ const ConfigForm = () => {
             value={projectId}
             readOnly
           />
-          <span className="font-semibold text-l ml-4">Properties</span>
+          <p className="font-semibold text-l mx-4 border-t-2 border-gray-300 pt-6">Properties</p>
           <div className="flex flex-col md:flex-row justify-between mt-6 gap-x-10">
             <InputField
               label="Wall Length (m)"
@@ -163,7 +162,7 @@ const ConfigForm = () => {
             />
           </div>
 
-          <span className="font-semibold text-l ml-4 ">Mixing Ratio (%)</span>
+          <p className="font-semibold text-l mx-4 border-t-2 border-gray-300 pt-6">Mixing Ratio (%)</p>
           <div className="flex flex-col md:flex-row justify-between mt-6 gap-x-10 ">
             <InputField
               label="Sand "
@@ -187,7 +186,7 @@ const ConfigForm = () => {
             />
           </div>
 
-          <span className="font-semibold text-l ml-4">Discount (Optional)</span>
+          <p className="font-semibold text-l mx-4 border-t-2 border-gray-300 pt-6">Discount (Optional)</p>
           <div className="flex flex-col md:flex-row justify-between mt-6 gap-x-10">
             <InputField
               label="Raw Material"
@@ -221,9 +220,9 @@ const ConfigForm = () => {
             }
           />
 
-          <span className="font-semibold text-l ml-4 mb-6">
+          <p className="font-semibold text-l mx-4 border-t-2 border-gray-300 pt-6 mb-6">
             Worker for project
-          </span>
+          </p>
           <FieldArray name="laborRequests">
             {({ push, remove }) => (
               <div>

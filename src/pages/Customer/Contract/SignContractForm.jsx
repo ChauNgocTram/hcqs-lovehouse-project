@@ -5,18 +5,19 @@ import * as Yup from "yup";
 import { Formik, Form, FieldArray, Field, ErrorMessage } from "formik";
 import { Input, Button } from "antd";
 
-import Modal from "../../../components/Modal/Modal"
-import { alert } from "../../../components/Alert/Alert"
+import Modal from "../../../components/Modal/Modal";
+import { alert } from "../../../components/Alert/Alert";
 
-import { getProjectByIdForCustomer } from "../../../constants/apiQuotationOfCustomer"
+import { getProjectByIdForCustomer } from "../../../constants/apiQuotationOfCustomer";
+
+
 
 export default function SignContractForm() {
-    const [showModal, setShowModal] = useState(false);
-    const { id } = useParams();
-    const navigate = useNavigate();
-    const [projectDetail, setProjectDetail] = useState({});
+  const [showModal, setShowModal] = useState(false);
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [projectDetail, setProjectDetail] = useState({});
 
-    
   const fetchProjectDetail = async () => {
     try {
       const data = await getProjectByIdForCustomer(id);
@@ -42,21 +43,55 @@ export default function SignContractForm() {
     if (projectDetail.quotations && projectDetail.quotations.length > 0) {
       setInitialValues({
         contractId: projectDetail.quotations[0].id,
-        rawMaterialDiscount: "",
-        furnitureDiscount: "",
-        laborDiscount: "",
+        name: "",
+        price: 0,
+        content: "",
       });
     }
   }, [projectDetail]);
 
   const [initialValues, setInitialValues] = useState({
-    quotationId: "", // Initial value is an empty string, it will be updated in useEffect
-    rawMaterialDiscount: "",
-    furnitureDiscount: "",
-    laborDiscount: "",
+    contractId: "",
+    name: "", // Initial value is an empty string, it will be updated in useEffect
+    price: 0,
+    content: "",
+    
   });
-  return (
-    <div>SignContractForm</div>
-  )
-}
 
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    try {
+      const formattedData = {
+        contractId: values.contractId,
+        name: values.name,
+        price: values.price,
+        content: values.content,
+      };
+
+      console.log("Form data submitted:", formattedData);
+
+      await createDealByStaff(formattedData);
+      resetForm();
+      alert.alertSuccessWithTime(
+        "Create Quotation Deal Successfully",
+        "",
+        2000,
+        "30",
+        () => {}
+      );
+
+      setShowModal(false);
+      onModalClose();
+    } catch (error) {
+      alert.alertFailedWithTime(
+        "Failed To Create",
+        "Please try again",
+        2500,
+        "25",
+        () => {}
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  };
+  return <div>SignContractForm</div>;
+}

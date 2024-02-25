@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import StaffSidebar from "../../../components/Sidebar/StaffSidebar";
+import { StaffSidebar, ProjectStatusBadge, LoadingOverlay, TabsComponent, DateFormatter } from "../../../components";
 import { getAllRequestForStaff } from "../../../constants/apiQuotationOfStaff";
-import ProjectStatusBadge from "../../../components/QuotationComponent/Status/ProjectStatusBadge";
-import LoadingOverlay from "../../../components/Loading/LoadingOverlay";
-import TabsComponent from "../../../components/Tabs/TabsComponent";
-import DateFormatter from "../../../components/Common/DateFormatter"
+
 
 export default function AllRequest() {
   const [allRequest, setAllRequest] = useState([]);
@@ -62,8 +59,8 @@ export default function AllRequest() {
       <div className="flex">
         <StaffSidebar />
 
-        <div className="h-screen flex-1 p-7">
-          <h1 className="text-2xl font-semibold pb-5">Quote Request</h1>
+        <div className="h-screen flex-1 p-7 bg-gray-100 ">
+          <h1 className="text-2xl font-semibold pb-5 uppercase text-center">Quote Request</h1>
           <TabsComponent
             items={tabs}
             initialTabTitle={currentContent}

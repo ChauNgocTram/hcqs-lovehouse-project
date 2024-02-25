@@ -1,20 +1,19 @@
 import React from "react";
-import ConfigForm from "./ConfigForm";
-import { StaffSidebar } from "../../../../components";
+import CreateProgressForm from "./CreateProgressForm";
+import { StaffSidebar } from "../../../../../components";
 
-const ConfigProject2 = () => {
+export default function CreateProgress() {
   return (
     <>
       <div className="flex">
         <StaffSidebar />
         <div className="flex flex-col items-center justify-center mx-auto px-24 w-full">
-          <h1 className="my-6 text-4xl">Config Form</h1>
+          <h1 className="my-6 text-4xl">Create Payment Progress</h1>
           <div className="w-full mx-auto">
-            <ConfigForm />
+            <CreateProgressForm />
           </div>
         </div>
       </div>
     </>
   );
-};
-export default ConfigProject2;
+}
