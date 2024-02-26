@@ -31,8 +31,8 @@ export default function AllRequest() {
             createDate: formatDate(item.createDate),
           }));
           setAllRequest(formattedData);
-
-          filterProjectsByTab(selectedTab);
+          setSelectedTab(0);
+          filterProjectsByTab(0);
           setLoading(false);
         }
       } catch (error) {
