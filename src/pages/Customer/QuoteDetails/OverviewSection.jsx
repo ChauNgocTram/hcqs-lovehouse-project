@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { getQuoteDetailForCustomer, dealQuotation } from "../../../constants/apiQuotationOfCustomer";
+import {
+  getQuoteDetailForCustomer,
+  dealQuotation,
+} from "../../../constants/apiQuotationOfCustomer";
 
 import { alert } from "../../../components/Alert/Alert";
 
-import { QuotationStatusBadge, CurrencyFormatter, LoadingOverlay } from "../../../components";
+import {
+  QuotationStatusBadge,
+  CurrencyFormatter,
+  LoadingOverlay,
+} from "../../../components";
 
 import DealForm from "../DealQuotation/DealForm";
-
+import SignContractForm from "../Contract/SignContractForm";
+import { toast } from "react-toastify";
 
 export default function OverviewSection() {
   const { id } = useParams();
@@ -45,7 +53,7 @@ export default function OverviewSection() {
 
   const onDelete = () => {
     // Logic for deleting or handling something
-    console.log('onDelete function called');
+    console.log("onDelete function called");
   };
 
   const handleConfirmQuotation = async () => {
@@ -73,26 +81,25 @@ export default function OverviewSection() {
 
       if (result.isConfirmed) {
         console.log("Confirming quotation with id:", id);
-        await dealQuotation({ quotationId: id, status: true });
-        console.log("Confirmation successful!");
+        const result = await dealQuotation({ quotationId: id, status: true });
+        if (result.isSuccess) {
+          console.log("Confirmation successful!");
+          alert.alertSuccessWithTime(
+            "Confirm quotation successfully!",
+            "",
+            2000,
+            "25",
+            () => {}
+          );
+        } else {
+          for (var i = 0; i < result.messages.length; i++) {
+            toast.error(result.messages[i])
+          }
+          
+        }
         setReloadContent(true);
-        alert.alertSuccessWithTime(
-          "Confirm quotation successfully!",
-          "",
-          2000,
-          "25",
-          () => {}
-        );
-        onDelete();
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        alert.alertFailedWithTime(
-          "Failed to confirm",
-          "",
-          2000,
-          "25",
-          () => {}
-        );
-      }
+       
+      } 
     } catch (error) {
       console.error("Error confirming quotation:", error);
       alert.alertFailedWithTime(
@@ -107,7 +114,7 @@ export default function OverviewSection() {
 
   return (
     <>
-     <LoadingOverlay loading={loading} />
+      <LoadingOverlay loading={loading} />
       <h1 className="text-xl font-semibold pb-5 uppercase">Overview</h1>
       <div className="px-5 pb-5 h-auto ">
         <div className="overflow-auto rounded-lg shadow hidden md:block">
@@ -251,7 +258,8 @@ export default function OverviewSection() {
                     )}
 
                   {quoteDetail?.quotation?.quotationStatus === 3 && (
-                    <button>Sign Contract</button>
+                    // <button>Sign Contract</button>
+                    <SignContractForm onModalClose={handleReloadContent} />
                   )}
                 </td>
               </tr>
