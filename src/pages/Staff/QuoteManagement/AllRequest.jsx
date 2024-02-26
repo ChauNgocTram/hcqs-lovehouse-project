@@ -29,7 +29,7 @@ export default function AllRequest() {
           // }));
           setAllRequest(data.result.data);
 
-          filterProjectsByTab(selectedTab);
+         // filterProjectsByTab(selectedTab);
           setLoading(false);
         }
       } catch (error) {
@@ -40,11 +40,11 @@ export default function AllRequest() {
     fetchAllRequestForStaff();
   }, []);
 
-  const filterProjectsByTab = (index) => {
-    const filterFunction = tabs[index].filter;
-    const filtered = allRequest.filter(filterFunction);
-    setFilteredProjects(filtered);
-  };
+  // const filterProjectsByTab = (index) => {
+  //   const filterFunction = tabs[index].filter;
+  //   const filtered = allRequest.filter(filterFunction);
+  //   setFilteredProjects(filtered);
+  // };
 
 
 
@@ -61,12 +61,12 @@ export default function AllRequest() {
 
         <div className="h-screen flex-1 p-7 bg-gray-100 ">
           <h1 className="text-2xl font-semibold pb-5 uppercase text-center">Quote Request</h1>
-          <TabsComponent
+          {/* <TabsComponent
             items={tabs}
             initialTabTitle={currentContent}
             onTabChange={handleTabChange}
             defaultTabIndex={0}
-          />
+          /> */}
 
           <div className="p-5 h-screen bg-gray-100 ">
             <div className="overflow-auto rounded-lg shadow  md:block">
@@ -88,9 +88,9 @@ export default function AllRequest() {
                     <th className="p-3 text-sm font-semibold tracking-wide text-left">
                       Customer
                     </th>
-                    <th className="p-3 text-sm font-semibold tracking-wide text-left">
+                    {/* <th className="p-3 text-sm font-semibold tracking-wide text-left">
                       Phone
-                    </th>
+                    </th> */}
                     <th className=" p-3 text-sm font-semibold tracking-wide text-left">
                       Status
                     </th>
@@ -100,7 +100,7 @@ export default function AllRequest() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {filteredProjects.map((item, index) => {
+                  {allRequest.map((item, index) => {
                     return (
                       <tr
                         key={item.id}
@@ -121,9 +121,9 @@ export default function AllRequest() {
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                         {item.account.firstName} {item.account.lastName}
                         </td>
-                        <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                        {/* <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                         {item.account.phoneNumber} 
-                        </td>
+                        </td> */}
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                           <ProjectStatusBadge
                             projectStatus={item.projectStatus}
