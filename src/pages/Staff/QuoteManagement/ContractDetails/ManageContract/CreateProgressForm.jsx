@@ -5,7 +5,7 @@ import { Input, Button, Space, message } from "antd";
 import axios from "axios";
 import * as Yup from "yup";
 
-import { createContractProgress } from "../../../../../constants/apiContract";
+import { createContractProgress,getContractById } from "../../../../../constants/apiContract";
 
 import { getProjectById } from "../../../../../constants/apiQuotationOfStaff";
 
@@ -21,14 +21,14 @@ export default function CreateProgressForm() {
   const [projectDetail, setProjectDetail] = useState({});
 
   const [progressItem, setProgressItem] = useState([]);
-  const [contractDetail, setContractDetail] = useState({});
+  const [contract, setContract] = useState({});
  
 
   const initialValues = {
     progressDetails: [
       {
         name: "Deposit",
-        content: "Initial deposit for the project",
+        content: "Deposit",
         price: 0,
         contractId: id,
       },
@@ -65,7 +65,7 @@ export default function CreateProgressForm() {
         "30",
         () => {}
       );
-
+      navigate(`/staff/contract-payment-progress/${id}`);
     } catch (error) {
       alert.alertFailedWithTime(
         "Failed To Create",
@@ -79,6 +79,22 @@ export default function CreateProgressForm() {
     }
   };
 
+  const fetchContract = async () => {
+    try {
+      const data = await getContractById(id);
+
+      if (data && data.result) {
+        setContract(data.result.data);
+       // setLoading(false);
+      }
+    } catch (error) {
+      console.error("Error fetching progress detail:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchContract();
+  }, [id]);
 
 
   return (
@@ -110,7 +126,7 @@ export default function CreateProgressForm() {
                           ) : null}
                           <>
                             <div className="mb-6 pt-4 mx-4 border-t-2 border-gray-300 font-semibold">
-                              No.{index}
+                              No.{index + 1}
                             </div>
                             <InputField
                               label="Name"
@@ -177,8 +193,10 @@ export default function CreateProgressForm() {
         </div>
 
         <div className="total w-1/3">
-          <p>Total: </p>
-          <p>Remaining amounts:</p>
+          <div className="flex">Total: 
+          <p className="text-red-500 font-semibold ml-4">  <CurrencyFormatter amount={contract.total} /></p>
+         </div>
+          {/* <p>Remaining amounts:</p> */}
         </div>
       </div>
     </>

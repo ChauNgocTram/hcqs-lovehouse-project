@@ -1,68 +1,62 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, NavLink } from "react-router-dom";
 
-import {
-  getContractProgressById,
-  getContractById,
-} from "../../../../constants/apiContract";
+import { getContractProgressById } from "../../../constants/apiContract"
 
 import {
-  StaffSidebar,
-  LoadingOverlay,
-  DateFormatter,
-  PaymentStatusBadge,
-  CurrencyFormatter,
-} from "../../../../components";
-import DeleteProgress from "./ManageContract/DeleteProgress";
-export default function ListPaymentProgress() {
-  const { id } = useParams();
-  const [loading, setLoading] = useState(true);
-  const [reloadContent, setReloadContent] = useState(false);
-  const [progressDetail, setProgressDetail] = useState([]);
-  const [contract, setContract] = useState({});
-  const totalPriceInProgress = progressDetail.reduce((total, item) => {
-    return total + item.payment.price;
-  }, 0);
+    StaffSidebar,
+    LoadingOverlay,
+    DateFormatter,
+    PaymentStatusBadge,
+    CurrencyFormatter,
+  } from "../../../components"
+import SignContractForm from "./SignContractForm";
 
-  const isTotalPriceEqual = totalPriceInProgress === contract.total;
+export default function PaymentProgress() {
+    const { id } = useParams();
+    const [loading, setLoading] = useState(true);
+    const [reloadContent, setReloadContent] = useState(false);
+    const [progressDetail, setProgressDetail] = useState([]);
 
-  const fetchContract = async () => {
-    try {
-      const data = await getContractById(id);
-
-      if (data && data.result) {
-        setContract(data.result.data);
-        setLoading(false);
+  
+    const fetchProgressDetail = async () => {
+      try {
+        const data = await getContractProgressById(id);
+  
+        if (data && data.result) {
+          setProgressDetail(data.result.data);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error("Error fetching progress detail:", error);
       }
-    } catch (error) {
-      console.error("Error fetching progress detail:", error);
-    }
-  };
+    };
+  
+    const handleReloadContent = () => {
+      setReloadContent((prev) => !prev);
+    };
+  
+    useEffect(() => {
+      fetchProgressDetail();
+    }, [id, reloadContent]);
 
-  useEffect(() => {
-    fetchContract();
-  }, [id]);
-
-  const fetchProgressDetail = async () => {
-    try {
-      const data = await getContractProgressById(id);
-
-      if (data && data.result) {
-        setProgressDetail(data.result.data);
-        setLoading(false);
+    const fetchProjectDetail = async () => {
+      try {
+        const data = await getProjectByIdForCustomer(id);
+  
+        if (data && data.result) {
+          setProjectDetail(data.result.data);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error("Error fetching project detail:", error);
       }
-    } catch (error) {
-      console.error("Error fetching progress detail:", error);
-    }
-  };
-
-  const handleReloadContent = () => {
-    setReloadContent((prev) => !prev);
-  };
-
-  useEffect(() => {
-    fetchProgressDetail();
-  }, [id, reloadContent]);
+    };
+  
+    useEffect(() => {
+      fetchProjectDetail();
+    }, [id]);
+    
   return (
     <>
       <LoadingOverlay loading={loading} />
@@ -74,26 +68,21 @@ export default function ListPaymentProgress() {
             Payment Progress Detail
           </h1>
 
+          {/* {quote?.quotation?.quotationStatus === 0 && ( */}
           <div className="flex items-center">
-            {/* <DeleteProgress
-              contractDetail={contract.id}
-              onDelete={handleReloadContent}
-            /> */}
+            <div className="ml-4">
+              {/* <NavLink
+                to={`/staff/create-list-progress/${id}`}
+                className="text-blue-500 hover:underline"
+              >
+                Sign Contract
+              </NavLink> */}
+               <SignContractForm onModalClose={handleReloadContent} />
 
-            <div className="ml-5">
-              {isTotalPriceEqual ? null : (
-                <NavLink
-                  to={`/staff/create-list-progress/${id}`}
-                  
-                >
-                  <button className="bg-green-600 text-white px-4 py-2 rounded">
-                  + Create List Progress
-                  </button>
-                  
-                </NavLink>
-              )}
+             
             </div>
           </div>
+          {/* )} */}
 
           {/* <button className="flex items-center" onClick={handleBack}>
           Back
@@ -123,6 +112,8 @@ export default function ListPaymentProgress() {
                     <th className="p-3 text-sm font-semibold tracking-wide">
                       Payment Status
                     </th>
+
+                   
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
@@ -150,6 +141,27 @@ export default function ListPaymentProgress() {
                               paymentStatus={item.payment.paymentStatus}
                             />
                           </td>
+                          
+
+                          {/* {quote?.quotation?.quotationStatus === 0 && (
+                            <td className="p-3 text-sm text-gray-700 text-center">
+                              <div className="flex justify-center">
+                                <div>
+                                  <FormUpdateMaterialDetail
+                                    quoteDetail={item}
+                                    onModalClose={handleReloadContent}
+                                  />
+                                </div>
+
+                                <div>
+                                  <DeleteMaterialDetail
+                                    quoteDetail={item}
+                                    onDelete={handleReloadContent}
+                                  />
+                                </div>
+                              </div>
+                            </td>
+                          )} */}
                         </tr>
                       );
                     })}
@@ -160,5 +172,5 @@ export default function ListPaymentProgress() {
         </div>
       </div>
     </>
-  );
+  )
 }

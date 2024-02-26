@@ -38,6 +38,7 @@ export { default as DateFormatter } from "./Common/DateFormatter";
 export { default as ContractStatusBadge } from "./QuotationComponent/Status/ContractStatusBadge"; 
 export { default as ProjectStatusBadge } from "./QuotationComponent/Status/ProjectStatusBadge"; 
 export { default as QuotationStatusBadge } from "./QuotationComponent/Status/QuotationStatusBadge"; 
+export { default as PaymentStatusBadge } from "./QuotationComponent/Status/PaymentStatusBadge"; 
 
 // Staff Component
 export { default as InputField } from "./StaffComponent/QuoteComponent/InputField"; 

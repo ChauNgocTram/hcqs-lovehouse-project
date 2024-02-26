@@ -40,6 +40,7 @@ import ListPaymentProgress from "../pages/Staff/QuoteManagement/ContractDetails/
 import CreateProgressForm from "../pages/Staff/QuoteManagement/ContractDetails/ManageContract/CreateProgressForm";
 import CreateProgress from "../pages/Staff/QuoteManagement/ContractDetails/ManageContract/CreateProgress";
 import QuoteDetailsForStaff from "../pages/Staff/QuoteManagement/QuotationDetails/QuoteDetailsForStaff";
+import PaymentProgress from "../pages/Customer/Contract/PaymentProgress";
 
 export default function Routers() {
   const routing = useRoutes([
@@ -86,6 +87,10 @@ export default function Routers() {
         {
           path: "/customer/quotation-detail/:id",
           element: <QuoteDetailsForCustomer />,
+        },
+        {
+          path: "/customer/payment-progress/:id",
+          element: <PaymentProgress/>,
         },
       ],
     },
