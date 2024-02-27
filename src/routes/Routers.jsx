@@ -1,10 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate, useRoutes } from "react-router-dom";
-import HomeLayout from "../layout/HomeLayout";
+
+import { HomeLayout, CustomerLayout, StaffLayout } from "../layout";
 import AuthLayout from "../layout/AuthLayout";
-import CustomerLayout from "../layout/CustomerLayout";
-import StaffLayout from "../layout/StaffLayout";
+
 import Home from "../pages/Home/Home.jsx";
 import {
   AboutUs,
@@ -26,36 +26,35 @@ import {
   EditProject,
   ProjectDetail,
   CreateSampleProject,
-  ImportQuotation,
-  ListQuotation,
-  ViewSupplierPrice,
-  ViewSupplier,
-  MaterialList,
-  ImportInventory,
+  HouseProject,
+  HouseRoofList,
+  HouseRoofDetail,
+  TownHouseList,
+  TownHouseDetail,
+  News,
+  NewsDetail,
+  Blog,
+  BlogDetail,
+  QuoteRequestForm,
+  QuotationForm,
+  Quotation,
+  Customer,
+  QuoteRequest,
+  ProjectDetailsForCustomer,
+  QuoteDetailsForCustomer,
+  AllRequest,
+  ConfigProject2,
+  ProjectDetailsForStaff,
+  ManageMaterialDetails,
 } from "../pages";
+import getAllRequestForStaff from "../constants/apiQuotationOfStaff.js";
 
-import HouseProject from "../pages/HouseProjects/HouseProject";
-import HouseRoofList from "../pages/HouseProjects/HouseRoof/HouseRoofList";
-import HouseRoofDetail from "../pages/HouseProjects/HouseRoof/HouseRoofDetail";
-import TownHouseList from "../pages/HouseProjects/TownHouse/TownHouseList";
-import TownHouseDetail from "../pages/HouseProjects/TownHouse/TownHouseDetail";
-import News from "../pages/News/News";
-import NewsDetail from "../pages/News/NewsDetail";
-import Blog from "../pages/Blogs/Blog";
-import BlogDetail from "../pages/Blogs/BlogDetail";
 import { PageNotfound } from "../components";
-import QuoteRequestForm from "../pages/Quotation/QuotationForm/QuoteRequestForm";
-import Customer from "../pages/Customer/Customer";
-import QuoteRequest from "../pages/Customer/QuoteRequest";
-import AllRequest from "../pages/Staff/QuoteManagement/AllRequest";
-import ConfigProject2 from "../pages/Staff/QuoteManagement/ConfigProject2";
-import QuotationDetails from "../pages/Staff/QuoteManagement/QuotationDetails/QuotationDetails";
-import ProjectDetailsForStaff from "../pages/Staff/QuoteManagement/ProjectDetails/ProjectDetailsForStaff";
-import ProjectDetailsForCustomer from "../pages/Customer/ProjectDetails/ProjectDetailsForCustomer";
-import QuoteDetailsForCustomer from "../pages/Customer/QuoteDetails/QuoteDetailsForCustomer";
-import QuotationForm from "../pages/Quotation/QuotationForm/QuotationForm";
-import Quotation from "../pages/Quotation/Quotation";
-
+import ListPaymentProgress from "../pages/Staff/QuoteManagement/ContractDetails/ListPaymentProgress";
+import CreateProgressForm from "../pages/Staff/QuoteManagement/ContractDetails/ManageContract/CreateProgressForm";
+import CreateProgress from "../pages/Staff/QuoteManagement/ContractDetails/ManageContract/CreateProgress";
+import QuoteDetailsForStaff from "../pages/Staff/QuoteManagement/QuotationDetails/QuoteDetailsForStaff";
+import PaymentProgress from "../pages/Customer/Contract/PaymentProgress";
 export default function Routers() {
   const auth = useSelector((state) => state?.auth);
 
@@ -107,6 +106,10 @@ export default function Routers() {
           path: "/customer/quotation-detail/:id",
           element: <QuoteDetailsForCustomer />,
         },
+        {
+          path: "/customer/payment-progress/:id",
+          element: <PaymentProgress />,
+        },
       ],
     },
     {
@@ -124,7 +127,22 @@ export default function Routers() {
         },
         { path: "/staff/config-project/:id", element: <ConfigProject2 /> },
 
-        { path: "/staff/quotation-detail/:id", element: <QuotationDetails /> },
+        {
+          path: "/staff/quotation-detail/:id",
+          element: <QuoteDetailsForStaff />,
+        },
+        {
+          path: "/staff/manage-material-detail/:id",
+          element: <ManageMaterialDetails />,
+        },
+        {
+          path: "/staff/contract-payment-progress/:id",
+          element: <ListPaymentProgress />,
+        },
+        {
+          path: "/staff/create-list-progress/:id",
+          element: <CreateProgress />,
+        },
       ],
     },
     {
