@@ -47,7 +47,6 @@ import {
   ProjectDetailsForStaff,
   ManageMaterialDetails,
 } from "../pages";
-import getAllRequestForStaff from "../constants/apiQuotationOfStaff.js";
 
 import { PageNotfound } from "../components";
 import ListPaymentProgress from "../pages/Staff/QuoteManagement/ContractDetails/ListPaymentProgress";
@@ -55,6 +54,7 @@ import CreateProgressForm from "../pages/Staff/QuoteManagement/ContractDetails/M
 import CreateProgress from "../pages/Staff/QuoteManagement/ContractDetails/ManageContract/CreateProgress";
 import QuoteDetailsForStaff from "../pages/Staff/QuoteManagement/QuotationDetails/QuoteDetailsForStaff";
 import PaymentProgress from "../pages/Customer/Contract/PaymentProgress";
+
 export default function Routers() {
   const auth = useSelector((state) => state?.auth);
 
@@ -114,11 +114,7 @@ export default function Routers() {
     },
     {
       path: "/staff",
-      element: isAdminOrStaff ? (
-        <StaffLayout />
-      ) : (
-        <Navigate to="/404" replace />
-      ),
+      element: <StaffLayout />,
       children: [
         { path: "/staff/all-request", element: <AllRequest /> },
         {
@@ -164,17 +160,6 @@ export default function Routers() {
         { path: "list-project", element: <ProjectList /> },
         { path: "detail-project/:id", element: <ProjectDetail /> },
         { path: "edit-project/:id", element: <EditProject /> },
-
-        { path: "import-inventory", element: <ImportInventory /> },
-
-        { path: "list-material", element: <MaterialList /> },
-
-        { path: "view-supplier", element: <ViewSupplier /> },
-
-        { path: "view-supplier-price", element: <ViewSupplierPrice /> },
-
-        { path: "import-quotation", element: <ImportQuotation /> },
-        { path: "list-quotation", element: <ListQuotation /> },
       ],
     },
     {
@@ -190,7 +175,7 @@ export default function Routers() {
       path: "/404",
       element: <PageNotfound />,
     },
-    // { path: "*", element: <Navigate to="/404" replace /> },
+    { path: "*", element: <Navigate to="/404" replace /> },
   ]);
   return routing;
 }
