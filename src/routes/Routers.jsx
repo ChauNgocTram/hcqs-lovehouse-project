@@ -108,7 +108,7 @@ export default function Routers() {
         },
         {
           path: "/customer/payment-progress/:id",
-          element: <PaymentProgress/>,
+          element: <PaymentProgress />,
         },
       ],
     },
@@ -122,11 +122,23 @@ export default function Routers() {
           element: <ProjectDetailsForStaff />,
         },
         { path: "/staff/config-project/:id", element: <ConfigProject2 /> },
-        
-        { path: "/staff/quotation-detail/:id", element: <QuoteDetailsForStaff/> },
-        { path: "/staff/manage-material-detail/:id", element: <ManageMaterialDetails/> },
-        { path: "/staff/contract-payment-progress/:id", element: <ListPaymentProgress/> },
-        { path: "/staff/create-list-progress/:id", element: <CreateProgress/> },
+
+        {
+          path: "/staff/quotation-detail/:id",
+          element: <QuoteDetailsForStaff />,
+        },
+        {
+          path: "/staff/manage-material-detail/:id",
+          element: <ManageMaterialDetails />,
+        },
+        {
+          path: "/staff/contract-payment-progress/:id",
+          element: <ListPaymentProgress />,
+        },
+        {
+          path: "/staff/create-list-progress/:id",
+          element: <CreateProgress />,
+        },
       ],
     },
     {

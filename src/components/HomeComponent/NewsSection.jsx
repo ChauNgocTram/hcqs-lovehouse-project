@@ -83,7 +83,10 @@ export default function NewsSection() {
               <div className="absolute inset-0 bg-cover bg-black opacity-10 group-hover:opacity-50 " />
               <div className="relative flex flex-col gap-3">
                 <h1 className="text-xl lg:text-2xl font-semibold hover:text-white">
-                  <NavLink to={`/news/newsDetail/${news.id}`}> {news.header}</NavLink>
+                  <NavLink to={`/news/newsDetail/${news.id}`}>
+                    {" "}
+                    {news.header}
+                  </NavLink>
                 </h1>
               </div>
               <NavLink to={`/news/newsDetail/${news.id}`}>

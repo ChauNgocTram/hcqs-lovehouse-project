@@ -16,7 +16,10 @@ import {
 
 import { getAllMaterial } from "../../../../../constants/apiMaterial";
 
-export default function FormUpdateMaterialDetail({ quoteDetail,onModalClose }) {
+export default function FormUpdateMaterialDetail({
+  quoteDetail,
+  onModalClose,
+}) {
   const [showModal, setShowModal] = useState(false);
 
   const [materials, setMaterials] = useState([]);
@@ -30,7 +33,7 @@ export default function FormUpdateMaterialDetail({ quoteDetail,onModalClose }) {
     setShowModal(true);
   };
 
-const initialValues = {
+  const initialValues = {
     id: quoteDetail ? quoteDetail.id : "",
     quantity: quoteDetail ? quoteDetail.quantity : 0,
     quotationId: id,
@@ -119,11 +122,10 @@ const initialValues = {
   return (
     <>
       <Fragment>
-        <button
-          
-          onClick={handleButtonClick}
-        >
-          <FiEdit style={{ cursor: "pointer", marginLeft: "10px", color:"green"}}/>
+        <button onClick={handleButtonClick}>
+          <FiEdit
+            style={{ cursor: "pointer", marginLeft: "10px", color: "green" }}
+          />
         </button>
 
         <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
@@ -140,10 +142,21 @@ const initialValues = {
               {({ values, errors, touched, setFieldValue }) => (
                 <Form>
                   <label htmlFor="quotationId">Quotation ID</label>
-                  <Field name="quotationId" as={Input} type="text" readOnly className="mb-4 text-gray-500"/>
+                  <Field
+                    name="quotationId"
+                    as={Input}
+                    type="text"
+                    readOnly
+                    className="mb-4 text-gray-500"
+                  />
                   <label htmlFor="id">ID</label>
-                  <Field name="id" as={Input} type="text" readOnly className="mb-4 text-gray-500"/>
-
+                  <Field
+                    name="id"
+                    as={Input}
+                    type="text"
+                    readOnly
+                    className="mb-4 text-gray-500"
+                  />
 
                   <label htmlFor="materialId" className="mr-4 ">
                     Material:
@@ -185,8 +198,15 @@ const initialValues = {
                     )}
                   </div>
 
-                  <label htmlFor="quantity" className="">Quantity</label>
-                  <Field name="quantity" as={Input} type="number" className="mb-4"/>
+                  <label htmlFor="quantity" className="">
+                    Quantity
+                  </label>
+                  <Field
+                    name="quantity"
+                    as={Input}
+                    type="number"
+                    className="mb-4"
+                  />
                   {errors.quantity && touched.quantity && (
                     <div style={{ color: "red" }}>{errors.quantity}</div>
                   )}

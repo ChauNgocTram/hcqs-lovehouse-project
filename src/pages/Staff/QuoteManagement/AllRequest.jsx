@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { StaffSidebar, ProjectStatusBadge, LoadingOverlay, TabsComponent, DateFormatter } from "../../../components";
+import {
+  StaffSidebar,
+  ProjectStatusBadge,
+  LoadingOverlay,
+  TabsComponent,
+  DateFormatter,
+} from "../../../components";
 import { getAllRequestForStaff } from "../../../constants/apiQuotationOfStaff";
-
 
 export default function AllRequest() {
   const [allRequest, setAllRequest] = useState([]);
@@ -29,7 +34,7 @@ export default function AllRequest() {
           // }));
           setAllRequest(data.result.data);
 
-         // filterProjectsByTab(selectedTab);
+          // filterProjectsByTab(selectedTab);
           setLoading(false);
         }
       } catch (error) {
@@ -46,8 +51,6 @@ export default function AllRequest() {
   //   setFilteredProjects(filtered);
   // };
 
-
-
   const handleTabChange = (index) => {
     setSelectedTab(index);
     filterProjectsByTab(index);
@@ -60,7 +63,9 @@ export default function AllRequest() {
         <StaffSidebar />
 
         <div className="h-screen flex-1 p-7 bg-gray-100 ">
-          <h1 className="text-2xl font-semibold pb-5 uppercase text-center">Quote Request</h1>
+          <h1 className="text-2xl font-semibold pb-5 uppercase text-center">
+            Quote Request
+          </h1>
           {/* <TabsComponent
             items={tabs}
             initialTabTitle={currentContent}
@@ -116,10 +121,10 @@ export default function AllRequest() {
                           Floors: {item.numOfFloor}, Area: {item.area}
                         </td>
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                        <DateFormatter dateString={item.createDate} />
+                          <DateFormatter dateString={item.createDate} />
                         </td>
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                        {item.account.firstName} {item.account.lastName}
+                          {item.account.firstName} {item.account.lastName}
                         </td>
                         {/* <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                         {item.account.phoneNumber} 

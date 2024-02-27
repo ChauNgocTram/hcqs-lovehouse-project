@@ -1,20 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
-import "./index.css";
 import { Provider } from "react-redux";
+import { ToastContainer } from "react-toastify";
+
+import App from "./App";
 import Store from "./context/store";
-import { ToastContainer } from 'react-toastify';
-import "react-toastify/dist/ReactToastify.css";
+import "./index.css";
 import "react-quill/dist/quill.snow.css";
-import HouseContextProvider from "./components/HouseProjectsComponent/Filter/HouseContext"
+import "react-toastify/dist/ReactToastify.css";
+import "react-datepicker/dist/react-datepicker.css";
+import HouseContextProvider from "./components/HouseProjectsComponent/Filter/HouseContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
     <Provider store={Store}>
-    <HouseContextProvider>
+      <HouseContextProvider>
         <App />
         <ToastContainer position="top-right" autoClose={3000} />
       </HouseContextProvider>
