@@ -112,6 +112,62 @@ export default function OverviewSection() {
     }
   };
 
+  const handleCancelQuotation = async () => {
+    try {
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton:
+            "bg-green-500 hover:bg-green-600 text-white mx-3 px-4 py-2 rounded",
+          cancelButton:
+            "bg-red-500 hover:bg-red-600 text-white mx-3 px-4 py-2 rounded",
+        },
+        buttonsStyling: false,
+      });
+
+      const result = await swalWithBootstrapButtons.fire({
+        title: "Are you sure?",
+        text: "Do you want to cancel this quote?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, I agree",
+        cancelButtonText: "No",
+        reverseButtons: true,
+        focusConfirm: false,
+      });
+
+      if (result.isConfirmed) {
+        console.log("Cancel quotation with id:", id);
+        const result = await dealQuotation({ quotationId: id, status: false });
+        if (result.isSuccess) {
+          console.log("Cancel successful!");
+          alert.alertSuccessWithTime(
+            "Cancel quotation successfully!",
+            "",
+            2000,
+            "25",
+            () => {}
+          );
+        } else {
+          for (var i = 0; i < result.messages.length; i++) {
+            toast.error(result.messages[i])
+          }
+          
+        }
+        setReloadContent(true);
+       
+      } 
+    } catch (error) {
+      console.error("Error cancel quotation:", error);
+      alert.alertFailedWithTime(
+        "Failed to cancel quotation. Please try again.",
+        "",
+        2000,
+        "25",
+        () => {}
+      );
+    }
+  };
+
   return (
     <>
       <LoadingOverlay loading={loading} />
@@ -251,11 +307,18 @@ export default function OverviewSection() {
                             >
                               Confirm Quotation
                             </button>
+                            <button
+                              className="bg-red-500 text-white rounded-lg p-2 mb-2 font-semibold"
+                              onClick={handleCancelQuotation}
+                            >
+                              Cancel Quotation
+                            </button>
                             <DealForm onModalClose={handleReloadContent} />
                           </>
                         )}
                       </>
                     )}
+                    
 
                   {quoteDetail?.quotation?.quotationStatus === 3 && (
                     // <button>Sign Contract</button>
