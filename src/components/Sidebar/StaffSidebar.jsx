@@ -46,7 +46,7 @@ export default function StaffSidebar() {
     { title: "Calendar ", icon: <FaRegCalendarAlt /> },
 
     {
-      label: "FUNC TION",
+      label: "FUNCTION",
     },
     {
       title: "House Project Page",
