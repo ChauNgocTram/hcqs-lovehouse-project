@@ -42,8 +42,6 @@ const ExportPriceHistoryPopup = ({
     },
   ];
 
-  console.log("exportPrices: ", exportPrices);
-  console.log("materialId: ", materialId);
   return (
     <Modal
       title="Export Price History"
@@ -52,7 +50,12 @@ const ExportPriceHistoryPopup = ({
       footer={null}
       width={800}
     >
-      <Table columns={columns} dataSource={historyData} rowKey="id" />
+      <Table
+        columns={columns}
+        dataSource={historyData}
+        rowKey="id"
+        pagination={{ pageSize: 5 }}
+      />
     </Modal>
   );
 };
