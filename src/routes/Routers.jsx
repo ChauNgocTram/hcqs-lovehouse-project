@@ -46,6 +46,15 @@ import {
   ConfigProject2,
   ProjectDetailsForStaff,
   ManageMaterialDetails,
+  ListQuotation,
+  ImportQuotation,
+  ViewSupplierPrice,
+  ViewSupplier,
+  MaterialList,
+  ImportInventory,
+  ExportPrice,
+  ExportInventory,
+  QuotationDetail,
 } from "../pages";
 
 import { PageNotfound } from "../components";
@@ -160,6 +169,23 @@ export default function Routers() {
         { path: "list-project", element: <ProjectList /> },
         { path: "detail-project/:id", element: <ProjectDetail /> },
         { path: "edit-project/:id", element: <EditProject /> },
+
+        { path: "import-inventory", element: <ImportInventory /> },
+        { path: "export-inventory", element: <ExportInventory /> },
+        {
+          path: "export-inventory/quotation-detail/:id",
+          element: <QuotationDetail />,
+        },
+
+        { path: "list-material", element: <MaterialList /> },
+        { path: "export-price-material", element: <ExportPrice /> },
+
+        { path: "view-supplier", element: <ViewSupplier /> },
+
+        { path: "view-supplier-price", element: <ViewSupplierPrice /> },
+
+        { path: "import-quotation", element: <ImportQuotation /> },
+        { path: "list-quotation", element: <ListQuotation /> },
       ],
     },
     {
@@ -175,7 +201,7 @@ export default function Routers() {
       path: "/404",
       element: <PageNotfound />,
     },
-    { path: "*", element: <Navigate to="/404" replace /> },
+    // { path: "*", element: <Navigate to="/404" replace /> },
   ]);
   return routing;
 }
