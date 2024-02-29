@@ -46,7 +46,7 @@ export default function StaffSidebar() {
     { title: "Calendar ", icon: <FaRegCalendarAlt /> },
 
     {
-      label: "FUNC TION",
+      label: "FUNCTION",
     },
     {
       title: "House Project Page",
@@ -115,7 +115,7 @@ export default function StaffSidebar() {
       label: "OTHER",
     },
     { title: "Transaction ", icon: <RiWallet3Line /> },
-    { title: "Go to Home page", icon: <RiHome4Line />, path: "/" },
+    // { title: "Go to Home page", icon: <RiHome4Line />, path: "/" },
     { title: "Setting ", icon: <RiWallet3Line /> },
     { title: "Log out", icon: <RiLogoutCircleRLine /> },
   ];
@@ -125,7 +125,7 @@ export default function StaffSidebar() {
   };
 
   return (
-    <div className="flex w-72.5 overflow-y-auto duration-300 ease-linear scrollbar-thin scrollbar-none scrollbar-track-gray-100 border-r shadow-sm">
+    <div className=" flex w-72.5 overflow-y-auto duration-300 ease-linear scrollbar-thin scrollbar-none scrollbar-track-gray-100 border-r shadow-sm">
       <div
         className={`${
           open ? "w-64" : "w-28"
@@ -149,7 +149,7 @@ export default function StaffSidebar() {
           </NavLink>
           <img
             src={control}
-            className={`z-50 cursor-pointer top-9 w-7  border-baseGreen
+            className={` cursor-pointer top-9 w-7  border-baseGreen
      border-2 rounded-full  ${!open && "rotate-180"}`}
             onClick={() => setOpen(!open)}
           />
@@ -157,14 +157,15 @@ export default function StaffSidebar() {
         <ul className="pt-6">
           {Menus.map((menu, index) => (
             <React.Fragment key={index}>
-              {menu.label ? (
+              {menu.label && open ? (
                 <li
                   key={`label-${index}`}
                   className="text-gray-500 uppercase font-bold text-md mb-2 mt-8"
                 >
                   {menu.label}
                 </li>
-              ) : (
+              ) : null} 
+              {!menu.label ? (
                 <>
                   <li
                     key={index}
@@ -221,7 +222,7 @@ export default function StaffSidebar() {
                     </ul>
                   )}
                 </>
-              )}
+              ) : null}
             </React.Fragment>
           ))}
         </ul>
