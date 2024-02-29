@@ -66,7 +66,6 @@ export default function PaymentProgress() {
               >
                 Sign Contract
               </NavLink> */}
-               <SignContractForm onModalClose={handleReloadContent} />
 
              
             </div>

@@ -144,6 +144,7 @@ const ConfigForm = () => {
             type="text"
             value={id}
             readOnly
+            hidden
           />
           <p className="font-semibold text-l mx-4 border-t-2 border-gray-300 pt-6">Properties</p>
           <div className="flex flex-col md:flex-row justify-between mt-6 gap-x-10">

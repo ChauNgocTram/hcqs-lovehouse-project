@@ -106,7 +106,7 @@ export default function QuoteRequest() {
                           />
                         </td>
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                          {item.projectStatus !== 0 && (
+                          {(
                             <>
                               <NavLink
                                 to={`/customer/project-detail/${item.id}`}
@@ -150,7 +150,7 @@ export default function QuoteRequest() {
                   </div>
 
                   <div className="text-sm font-medium text-black text-right">
-                    {item.projectStatus !== 0 && (
+                    { (
                       // <NavLink to={`/customer/project-detail/${item.id}`}>
                       //   <button className="bg-baseGreen text-white font-semibold px-4 py-2 rounded hover:bg-red-400">
                       //     View Detail
