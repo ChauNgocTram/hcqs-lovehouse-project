@@ -14,7 +14,11 @@ import {
   FaRegCircleUser,
   FaRegNewspaper,
 } from "react-icons/fa6";
-import { MdInventory, MdOutlinePriceChange } from "react-icons/md";
+import {
+  MdInventory,
+  MdOutlinePriceChange,
+  MdOutlineSettings,
+} from "react-icons/md";
 import { GrSupport, GrTransaction } from "react-icons/gr";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { AiOutlineProject } from "react-icons/ai";
@@ -44,7 +48,11 @@ export default function StaffSidebar() {
       icon: <FaRegCircleUser />,
       submenu: [{ title: "Users List", path: "/dashboard/users-list" }],
     },
-    { title: "Calendar ", icon: <FaRegCalendarAlt /> },
+    {
+      title: "Construction Config ",
+      icon: <MdOutlineSettings />,
+      submenu: [{ title: "Config List", path: "/staff/construction-config" }],
+    },
 
     {
       label: "FUNCTION",
@@ -120,6 +128,7 @@ export default function StaffSidebar() {
         { title: "Quotation List", path: "/dashboard/list-quotation" },
       ],
     },
+
     {
       label: "OTHER",
     },
@@ -159,7 +168,7 @@ export default function StaffSidebar() {
           <img
             src={control}
             className={` cursor-pointer top-9 w-7  border-baseGreen
-     border-2 rounded-full  ${!open && "rotate-180"}`}
+     border-2 rounded-full ml-10  ${!open && "rotate-180"}`}
             onClick={() => setOpen(!open)}
           />
         </div>
@@ -173,7 +182,7 @@ export default function StaffSidebar() {
                 >
                   {menu.label}
                 </li>
-              ) : null} 
+              ) : null}
               {!menu.label ? (
                 <>
                   <li

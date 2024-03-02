@@ -123,7 +123,6 @@ export default function ContractSection2() {
                             View payment progress
                           </NavLink>
                         </>
-
                       ) : (
                         <NavLink
                           to={`/staff/contract-payment-progress/${projectDetail?.contract?.id}`}
