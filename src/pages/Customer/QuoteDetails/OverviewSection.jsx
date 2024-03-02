@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import {
   getQuoteDetailForCustomer,
@@ -25,6 +25,7 @@ export default function OverviewSection() {
   const [reloadContent, setReloadContent] = useState(false);
   const [loading, setLoading] = useState(true);
   const [projectDetail, setProjectDetail] = useState({});
+const navigate = useNavigate();
   const fetchQuoteDetail = async () => {
     try {
       const data = await getQuoteDetailForCustomer(id);
@@ -111,6 +112,7 @@ useEffect(()=>{
             "25",
             () => {}
           );
+          navigate(`customer/project-detail/${projectDetail.id}`);
         } else {
           for (var i = 0; i < result.messages.length; i++) {
             toast.error(result.messages[i]);
@@ -358,14 +360,7 @@ useEffect(()=>{
                       </>
                     )}
 
-                  {quoteDetail?.quotation?.quotationStatus === 3 &&
-                    projectDetail && (
-                      // <button>Sign Contract</button>
-                      <SignContractForm
-                        onModalClose={handleReloadContent}
-                        projectDetail={projectDetail}
-                      />
-                    )}
+                  
                 </td>
               </tr>
             </tbody>
