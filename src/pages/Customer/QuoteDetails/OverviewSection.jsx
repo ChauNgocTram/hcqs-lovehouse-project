@@ -16,56 +16,15 @@ import {
 } from "../../../components";
 
 import DealForm from "../DealQuotation/DealForm";
-import SignContractForm from "../Contract/SignContractForm";
 import { toast } from "react-toastify";
 
-export default function OverviewSection() {
-  const { id } = useParams();
-  const [quoteDetail, setQuoteDetail] = useState([]);
-  const [reloadContent, setReloadContent] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [projectDetail, setProjectDetail] = useState({});
-const navigate = useNavigate();
-  const fetchQuoteDetail = async () => {
-    try {
-      const data = await getQuoteDetailForCustomer(id);
-
-      if (data && data.result) {
-        setQuoteDetail(data.result.data);
-        setLoading(false);
-      }
-    } catch (error) {
-      console.error("Error fetching quote detail:", error);
-    }
-  };
-useEffect(()=>{
-  fetchProjectDetail();
-
-
-},[])
-  useEffect(() => {
-    fetchQuoteDetail();
-  }, [id, reloadContent]);
+export default function OverviewSection({ quoteDetail, projectDetail }) {
+  const navigate = useNavigate();
 
   const handleReloadContent = () => {
     setReloadContent((prev) => !prev);
   };
-
-  const fetchProjectDetail = async () => {
-    try {
-      const projectID = quoteDetail?.quotation?.projectId;
-      const data = await getProjectByIdForCustomer(projectID);
-      if (data && data.result) {
-        setProjectDetail(data.result.data);
-        setLoading(false);
-      }
-    } catch (error) {
-      console.error("Error fetching project detail:", error);
-    }
-  };
-
-
-
+console.log(projectDetail)
   const calculateOriginalPrice = (price, discount) => {
     const discountPercentage = Math.abs(discount);
     const originalPrice = price / (1 - discountPercentage / 100);
@@ -101,8 +60,7 @@ useEffect(()=>{
       });
 
       if (result.isConfirmed) {
-        console.log("Confirming quotation with id:", id);
-        const result = await dealQuotation({ quotationId: id, status: true });
+        const result = await dealQuotation({ quotationId: quoteDetail.quotation.id, status: true });
         if (result.isSuccess) {
           console.log("Confirmation successful!");
           alert.alertSuccessWithTime(
@@ -156,8 +114,7 @@ useEffect(()=>{
       });
 
       if (result.isConfirmed) {
-        console.log("Cancel quotation with id:", id);
-        const result = await dealQuotation({ quotationId: id, status: false });
+        const result = await dealQuotation({ quotationId:quoteDetail.quotation.id, status: false });
         if (result.isSuccess) {
           console.log("Cancel successful!");
           alert.alertSuccessWithTime(
@@ -188,7 +145,6 @@ useEffect(()=>{
 
   return (
     <>
-      <LoadingOverlay loading={loading} />
       <h1 className="text-xl font-semibold py-5 uppercase pl-5">Overview</h1>
       <div className="px-5 pb-5 h-auto ">
         <div className="overflow-auto rounded-lg shadow hidden md:block">
@@ -337,9 +293,7 @@ useEffect(()=>{
                   />
                 </td>
                 <td className="flex flex-col p-3 text-sm text-gray-700 text-center">
-                  {quoteDetail?.quotationDealings &&
-                    quoteDetail.quotationDealings.length === 0 && (
-                      <>
+                <>
                         {quoteDetail?.quotation?.quotationStatus === 1 && (
                           <>
                             <button
@@ -357,10 +311,14 @@ useEffect(()=>{
                             {/* <DealForm onModalClose={handleReloadContent} /> */}
                           </>
                         )}
-                      </>
-                    )}
 
-                  
+                        {quoteDetail?.quotation?.quotationStatus == 2 && (
+                          <DealForm
+                            onModalClose={handleReloadContent}
+                            id={quoteDetail?.quotation?.id}
+                          />
+                        )}
+                      </>
                 </td>
               </tr>
             </tbody>
@@ -506,9 +464,7 @@ useEffect(()=>{
             </div>
 
             <div className="text-sm font-medium text-black text-right space-x-2">
-              {quoteDetail?.quotationDealings &&
-                quoteDetail.quotationDealings.length === 0 && (
-                  <>
+            <>
                     {quoteDetail?.quotation?.quotationStatus === 1 && (
                       <>
                         <button
@@ -524,22 +480,15 @@ useEffect(()=>{
                           Confirm
                         </button>
 
-                        {/* <DealForm onModalClose={handleReloadContent} /> */}
                       </>
                     )}
+                      {quoteDetail?.quotation?.quotationStatus == 2 && (
+                          <DealForm
+                            onModalClose={handleReloadContent}
+                            id={quoteDetail?.quotation?.id}
+                          />
+                        )}
                   </>
-                )}
-
-              {quoteDetail?.quotation?.quotationStatus === 3 && (
-                <>
-                  {projectDetail?.contract?.contractStatus === 0 ? (
-                    <span>Waiting</span>
-                  ) : (
-                    <SignContractForm onModalClose={handleReloadContent} />
-                  )}
-                </>
-                // <button>Sign Contract</button>
-              )}
             </div>
           </div>
         </div>

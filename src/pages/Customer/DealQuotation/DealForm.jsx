@@ -8,13 +8,11 @@ import { Input, Button } from "antd";
 import { Modal } from "../../../components";
 import { alert } from "../../../components/Alert/Alert";
 import { createQuotationDealRequest } from "../../../constants/apiQuotationOfCustomer";
+import { toast } from "react-toastify";
 
-export default function DealForm({ onModalClose }) {
+export default function DealForm({ onModalClose, id }) {
   const [showModal, setShowModal] = useState(false);
 
-  const [discount, setDiscount] = useState({});
-
-  const { id } = useParams();
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
@@ -41,45 +39,28 @@ export default function DealForm({ onModalClose }) {
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    try {
-      const formattedData = {
-        quotationId: id,
-        materialDiscount: values.materialDiscount,
-        furnitureDiscount: values.furnitureDiscount,
-        laborDiscount: values.laborDiscount,
-        description: values.description,
-      };
+    const formattedData = {
+      quotationId: id,
+      materialDiscount: values.materialDiscount,
+      furnitureDiscount: values.furnitureDiscount,
+      laborDiscount: 0,
+      description: values.description,
+    };
 
-      console.log("Form data submitted:", formattedData);
+    console.log("Form data submitted:", formattedData);
 
-      const result = await createQuotationDealRequest(formattedData);
-      resetForm();
-      if (result.isSuccess) {
-        alert.alertSuccessWithTime(
-          "Create Quotation Deal Request Successfully",
-          "",
-          2000,
-          "25",
-          () => {}
-        );
-      } else {
-        for (var i = 0; i < result.messages.length; i++) {
-          toast.error(result.messages[i]);
-        }
+    const result = await createQuotationDealRequest(formattedData);
+    resetForm();
+    if (result.isSuccess) {
+      toast.success("Create successfully");
+    } else {
+      for (var i = 0; i < result.messages.length; i++) {
+        toast.error(result.messages[i]);
       }
-      setShowModal(false);
-      onModalClose();
-    } catch (error) {
-      alert.alertSuccessWithTime(
-        "Create Quotation Deal Request Successfully",
-        "",
-        2000,
-        "30",
-        () => {}
-      );
-    } finally {
-      setSubmitting(false);
     }
+    setShowModal(false);
+    onModalClose();
+    setSubmitting(false);
   };
 
   return (
