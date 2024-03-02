@@ -25,7 +25,6 @@ export default function OverviewSection() {
   const [reloadContent, setReloadContent] = useState(false);
   const [loading, setLoading] = useState(true);
   const [projectDetail, setProjectDetail] = useState({});
-
   const fetchQuoteDetail = async () => {
     try {
       const data = await getQuoteDetailForCustomer(id);
@@ -38,7 +37,11 @@ export default function OverviewSection() {
       console.error("Error fetching quote detail:", error);
     }
   };
+useEffect(()=>{
+  fetchProjectDetail();
 
+
+},[])
   useEffect(() => {
     fetchQuoteDetail();
   }, [id, reloadContent]);
@@ -51,7 +54,6 @@ export default function OverviewSection() {
     try {
       const projectID = quoteDetail?.quotation?.projectId;
       const data = await getProjectByIdForCustomer(projectID);
-console.log("check nè: ", data)
       if (data && data.result) {
         setProjectDetail(data.result.data);
         setLoading(false);
@@ -61,9 +63,7 @@ console.log("check nè: ", data)
     }
   };
 
-  useEffect(() => {
-    fetchProjectDetail();
-  }, [id]);
+
 
   const calculateOriginalPrice = (price, discount) => {
     const discountPercentage = Math.abs(discount);
@@ -358,10 +358,14 @@ console.log("check nè: ", data)
                       </>
                     )}
 
-                  {quoteDetail?.quotation?.quotationStatus === 3 &&   (
-                    // <button>Sign Contract</button>
-                    <SignContractForm onModalClose={handleReloadContent} />
-                  )}
+                  {quoteDetail?.quotation?.quotationStatus === 3 &&
+                    projectDetail && (
+                      // <button>Sign Contract</button>
+                      <SignContractForm
+                        onModalClose={handleReloadContent}
+                        projectDetail={projectDetail}
+                      />
+                    )}
                 </td>
               </tr>
             </tbody>

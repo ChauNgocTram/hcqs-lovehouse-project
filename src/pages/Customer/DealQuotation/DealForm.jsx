@@ -38,7 +38,6 @@ export default function DealForm({ onModalClose }) {
       .required("Required")
       .positive("Must be positive")
       .integer("Must be an integer"),
-   
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
@@ -53,9 +52,24 @@ export default function DealForm({ onModalClose }) {
 
       console.log("Form data submitted:", formattedData);
 
-      await createQuotationDealRequest(formattedData);
+      const result = await createQuotationDealRequest(formattedData);
       resetForm();
-
+      if (result.isSuccess) {
+        alert.alertSuccessWithTime(
+          "Create Quotation Deal Request Successfully",
+          "",
+          2000,
+          "25",
+          () => {}
+        );
+      } else {
+        for (var i = 0; i < result.messages.length; i++) {
+          toast.error(result.messages[i]);
+        }
+      }
+      setShowModal(false);
+      onModalClose();
+    } catch (error) {
       alert.alertSuccessWithTime(
         "Create Quotation Deal Request Successfully",
         "",
@@ -63,21 +77,10 @@ export default function DealForm({ onModalClose }) {
         "30",
         () => {}
       );
-      setShowModal(false);
-      onModalClose();
-    } catch (error) {
-      alert.alertFailedWithTime(
-        "Failed To Create",
-        "Please try again",
-        2500,
-        "25",
-        () => {}
-      );
     } finally {
       setSubmitting(false);
     }
   };
-  
 
   return (
     <>
@@ -150,7 +153,7 @@ export default function DealForm({ onModalClose }) {
                   <label htmlFor="description" className="">
                     Description
                   </label>
-                  <Field name="description"  as={Input} type="text" />
+                  <Field name="description" as={Input} type="text" />
                   {errors.description && touched.description && (
                     <div style={{ color: "red", marginBottom: "12px" }}>
                       {errors.description}

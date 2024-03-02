@@ -56,15 +56,22 @@ export default function CreateProgressForm() {
 
       console.log("Form data submitted:", formattedData);
 
-      await createContractProgress(formattedData);
+    const result = await createContractProgress(formattedData);
       resetForm();
-      alert.alertSuccessWithTime(
-        "Create List Contract Progress Successfully",
-        "",
-        2000,
-        "30",
-        () => {}
-      );
+      if (result.isSuccess) {
+        alert.alertSuccessWithTime(
+          "Create List Contract Progress Successfully",
+          "",
+          2000,
+          "25",
+          () => {}
+        );
+      } else {
+        for (var i = 0; i < result.messages.length; i++) {
+          toast.error(result.messages[i]);
+        }
+      }
+     
       navigate(`/staff/contract-payment-progress/${id}`);
     } catch (error) {
       alert.alertFailedWithTime(

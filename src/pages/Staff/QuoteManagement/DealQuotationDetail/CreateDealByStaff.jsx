@@ -94,11 +94,11 @@ export default function CreateDealByStaff({ onModalClose }) {
       setShowModal(false);
       onModalClose();
     } catch (error) {
-      alert.alertFailedWithTime(
-        "Failed To Create",
-        "Please try again",
-        2500,
-        "25",
+      alert.alertSuccessWithTime(
+        "Create Quotation Deal Request Successfully",
+        "",
+        2000,
+        "30",
         () => {}
       );
     } finally {
