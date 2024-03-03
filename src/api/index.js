@@ -15,7 +15,7 @@ export {
   submitOTPResetPass,
   updateAccount
 }
-from "./account.js";
+from "./Account.js";
 
 //news
 export {
@@ -25,7 +25,7 @@ export {
   updateNews,
   deleteNewsById,
 }
-from "./news";
+from "./News";
 
 //blog
 export {
@@ -35,7 +35,7 @@ export {
   updateBlog,
   deleteBlogById,
 }
-from "./blog.js";
+from "./Blog.js";
 
 //project
 export {
@@ -45,7 +45,7 @@ export {
   getSampleProjectById,
   updateSampleProject,
 }
-from "./sampleproject.js";
+from "./SampleProject.js";
 
 //project
 export {
@@ -54,7 +54,7 @@ export {
   createProjectByUser,
   getProjectById,
 }
-from "./project.js";
+from "./Project.js";
 
 //role
 export {
@@ -62,7 +62,7 @@ export {
   getAllRoles,
   removeRoleForUser
 }
-from "./role";
+from "./Role";
 
 //supplier
 export {

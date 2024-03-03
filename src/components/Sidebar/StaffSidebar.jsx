@@ -56,6 +56,7 @@ export default function StaffSidebar() {
       icon: <MdOutlineSettings />,
       submenu: [{ title: "Config List", path: "/staff/construction-config" }],
     },
+    { title: "Woker Management", icon: <RiHome4Line />, path: "/staff/worker-management" },
 
     {
       label: "FUNCTION",

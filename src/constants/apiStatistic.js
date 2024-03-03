@@ -44,7 +44,64 @@ export const getConstructionType = async ({ timePeriod, year }) => {
   
       return res.data;
     } catch (err) {
-      console.error("Error dealing with quotation:", err);
+      console.error("Error :", err);
+      throw err;
+    }
+  };
+
+  export const getProject = async ({ timePeriod, year }) => {
+    try {
+      const res = await axios.post(
+        `${baseURL}/statistic/get-increase-project?year=${year}&timePeriod=${timePeriod}`,
+        {
+            headers: {
+                Authorization: `Bearer ${usertoken}`,
+              },
+              withCredentials: true,
+        }
+      );
+  
+      return res.data;
+    } catch (err) {
+      console.error("Error:", err);
+      throw err;
+    }
+  };
+
+  export const getProjectStatus = async ({ timePeriod, year }) => {
+    try {
+      const res = await axios.post(
+        `${baseURL}/statistic/get-project-status-ratio?year=${year}&timePeriod=${timePeriod}`,
+        {
+            headers: {
+                Authorization: `Bearer ${usertoken}`,
+              },
+              withCredentials: true,
+        }
+      );
+  
+      return res.data;
+    } catch (err) {
+      console.error("Error:", err);
+      throw err;
+    }
+  };
+  
+  export const getContractStatus = async ({ timePeriod, year }) => {
+    try {
+      const res = await axios.post(
+        `${baseURL}/statistic/get-contract-ratio?year=${year}&timePeriod=${timePeriod}`,
+        {
+            headers: {
+                Authorization: `Bearer ${usertoken}`,
+              },
+              withCredentials: true,
+        }
+      );
+  
+      return res.data;
+    } catch (err) {
+      console.error("Error:", err);
       throw err;
     }
   };

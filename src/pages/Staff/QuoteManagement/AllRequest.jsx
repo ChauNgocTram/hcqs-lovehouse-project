@@ -28,7 +28,7 @@ export default function AllRequest() {
         setLoading(false);
       }
     } catch (error) {
-      console.error("Error fetching blogs:", error);
+      console.error("Error fetching request:", error);
     }
   };
 
@@ -37,11 +37,6 @@ export default function AllRequest() {
     fetchData(0);
   }, []);
 
-  // const filterProjectsByTab = (index) => {
-  //   const filterFunction = tabs[index].filter;
-  //   const filtered = allRequest.filter(filterFunction);
-  //   setFilteredProjects(filtered);
-  // };
 
   const onChange = async (key) => {
     console.log(key);
@@ -83,9 +78,7 @@ export default function AllRequest() {
                     <th className="w-20 p-3 text-sm font-semibold tracking-wide text-left">
                       No.
                     </th>
-                    <th className="w-24 p-3 text-sm font-semibold tracking-wide text-left">
-                      Project ID
-                    </th>
+                   
                     <th className="w-24 p-3 text-sm font-semibold tracking-wide text-left">
                       Details
                     </th>
@@ -116,9 +109,7 @@ export default function AllRequest() {
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                           {index + 1}
                         </td>
-                        <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                          {item.id}
-                        </td>
+                       
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                           Floors: {item.numOfFloor}, Area: {item.area} m
                           <sup>2</sup>

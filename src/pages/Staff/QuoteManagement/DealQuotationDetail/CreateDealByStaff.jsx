@@ -66,19 +66,10 @@ export default function CreateDealByStaff({ onModalClose, quotationId }) {
       }
     }
 
-      setShowModal(false);
-      onModalClose();
-    } catch (error) {
-      alert.alertFailedWithTime(
-        "Failed To Create",
-        "Please try again",
-        2500,
-        "25",
-        () => {}
-      );
-    } finally {
-      setSubmitting(false);
-    }
+    setShowModal(false);
+    onModalClose();
+
+    setSubmitting(false);
   };
 
   return (

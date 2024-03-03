@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { PieChart, Pie, Cell } from "recharts";
+import {getProjectStatus} from "../../../../constants/apiStatistic"
+const COLORS = ['#a6d75b', '#63bff0', '#edbf33', '#FF8042'];
 
-import {getConstructionType} from "../../../../constants/apiStatistic"
-const COLORS = ["#e27c7c", "#a4a2a8"];
-
-const ConstructionTypeChart = () => {
+const ProjectStatusChart = () => {
   const [data, setData] = useState([]);
-  const [timePeriod, setTimePeriod] = useState(1); 
+  const [timePeriod, setTimePeriod] = useState(1); // Default to "this week"
   const [year, setYear] = useState(2024);
 
   const fetchData = async () => {
     try {
-      const res = await getConstructionType({ timePeriod, year });
+      const res = await getProjectStatus({ timePeriod, year });
 
       if (res.isSuccess && res.result && res.result.data) {
         const formattedData = Object.entries(res.result.data).map(([name, value], index) => ({
@@ -79,7 +78,6 @@ const ConstructionTypeChart = () => {
                 fill="#ffffff"
                 textAnchor="middle"
                 dominantBaseline="central"
-                fontWeight="600"
               >
                 {`${(percent * 100).toFixed(2)}%`}
               </text>
@@ -109,4 +107,4 @@ const ConstructionTypeChart = () => {
   );
 };
 
-export default ConstructionTypeChart;
+export default ProjectStatusChart;
