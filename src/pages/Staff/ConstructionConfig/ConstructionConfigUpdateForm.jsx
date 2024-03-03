@@ -8,8 +8,8 @@ import { Button } from "antd";
 import * as Yup from "yup";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { toast } from "react-toastify";
-const ConstructionConfigUpdateForm = ({ showModal, setShowModal, data }) => {
-  console.log(data);
+const ConstructionConfigUpdateForm = ({ showModal, setShowModal, data ,fetchData}) => {
+  const [isLoading, setIsLoading] = useState(false); 
   const handleButtonClick = () => {
     setShowModal(true);
   };
@@ -22,28 +22,6 @@ const ConstructionConfigUpdateForm = ({ showModal, setShowModal, data }) => {
       .required("Required"),
     stoneMixingRatio: Yup.number()
       .moreThan(0, "stoneMixingRatio must be more than 0")
-      .required("Required"),
-    constructionType: Yup.number().required("Required"),
-    numOfFloorMin: Yup.number()
-      .moreThan(0, "numOfFloorMin must be more than 0")
-      .required("Required"),
-    numOfFloorMax: Yup.number()
-      .moreThan(0, "numOfFloorMax must be more than 0")
-      .required("Required"),
-    areaMin: Yup.number()
-      .moreThan(0, "areaMin must be more than 0")
-      .required("Required"),
-    areaMax: Yup.number()
-      .moreThan(Yup.ref("areaMin"), "areaMax must be more than areaMin")
-      .required("Required"),
-    tiledAreaMin: Yup.number()
-      .moreThan(0, "tiledAreaMin must be more than 0")
-      .required("Required"),
-    tiledAreaMax: Yup.number()
-      .moreThan(
-        Yup.ref("tiledAreaMin"),
-        "tiledAreaMax must be more than tiledAreaMin"
-      )
       .required("Required"),
   });
 
@@ -68,12 +46,28 @@ const ConstructionConfigUpdateForm = ({ showModal, setShowModal, data }) => {
           validationSchema={validationSchema}
           onSubmit={async (values, { setSubmitting }) => {
             try {
+              setIsLoading(true)
               console.log(values);
-              const result = await updateConstructionConfig(values);
+              const formatData = {
+                sandMixingRatio: values.sandMixingRatio,
+                cementMixingRatio: values.cementMixingRatio,
+                stoneMixingRatio: values.stoneMixingRatio,
+                constructionType: Number(values.constructionType) ,
+                numOfFloorMin: values.numOfFloorMin,
+                numOfFloorMax: values.numOfFloorMax,
+                areaMin: values.areaMin,
+                areaMax: values.areaMax,
+                tiledAreaMin: values.tiledAreaMin,
+                tiledAreaMax: values.tiledAreaMax,
+              };
+              const result = await updateConstructionConfig(formatData);
               console.log(result);
               if (result.isSuccess) {
                 toast.success("Update successfully");
+              setIsLoading(false)
+
                 setShowModal(false);
+                fetchData()
               } else {
                 for (var i = 0; i < result.messages.length; i++) {
                   toast.error(result.messages[i]);
@@ -82,6 +76,8 @@ const ConstructionConfigUpdateForm = ({ showModal, setShowModal, data }) => {
             } catch (error) {
               console.error("Error updating project config:", error);
             } finally {
+              setIsLoading(false)
+
               setSubmitting(false);
             }
           }}
@@ -134,7 +130,7 @@ const ConstructionConfigUpdateForm = ({ showModal, setShowModal, data }) => {
                   component="div"
                   className="text-red-600"
                 />
-
+{/* 
                 <label htmlFor="constructionType" className="text-base">
                   Construction Type:
                 </label>
@@ -234,12 +230,13 @@ const ConstructionConfigUpdateForm = ({ showModal, setShowModal, data }) => {
                   name="tiledAreaMax"
                   component="div"
                   className="text-red-600"
-                />
+                /> */}
 
                 <Button
                   type="primary"
                   htmlType="submit"
                   className="text-white bg-green-500 font-semibold p-2 mt-5"
+                  loading={isLoading}
                 >
                   Submit
                 </Button>

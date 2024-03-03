@@ -1,15 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "../../../components";
-import { createConstructionConfig } from "../../../constants/apiConstructionConfig";
+import {
+  createConstructionConfig,
+  getMaxConfig,
+} from "../../../constants/apiConstructionConfig";
 import { Button } from "antd";
 import * as Yup from "yup";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { toast } from "react-toastify";
+import BaseButton from "../../../components/Button/BaseButton";
 
-const ConstructionConfigForProject = ({ showModal, setShowModal }) => {
+const ConstructionConfigForProject = ({
+  showModal,
+  setShowModal,
+  fetchData,
+}) => {
   const handleButtonClick = () => {
     setShowModal(true);
   };
+  const [maxData, setMaxData] = useState({});
+  const [isLoading, setIsLoading] = useState(false); // Initialize loading state
+
+  const fetchMax = async () => {
+    const result = await getMaxConfig();
+    console.log(result);
+    if (result.isSuccess) {
+      setMaxData(result.result.data);
+    }
+  };
+
+  useEffect(() => {
+    fetchMax();
+  }, []);
+
   const validationSchema = Yup.object().shape({
     sandMixingRatio: Yup.number()
       .moreThan(0, "sandMixingRatio must be more than 0")
@@ -20,8 +43,7 @@ const ConstructionConfigForProject = ({ showModal, setShowModal }) => {
     stoneMixingRatio: Yup.number()
       .moreThan(0, "stoneMixingRatio must be more than 0")
       .required("Required"),
-    constructionType: Yup.number()
-      .required("Required"),
+    constructionType: Yup.number().required("Required"),
     numOfFloorMin: Yup.number()
       .moreThan(0, "numOfFloorMin must be more than 0")
       .required("Required"),
@@ -50,11 +72,11 @@ const ConstructionConfigForProject = ({ showModal, setShowModal }) => {
     cementMixingRatio: 0,
     stoneMixingRatio: 0,
     constructionType: 0,
-    numOfFloorMin: 0,
+    numOfFloorMin: maxData.numOfFloorMax,
     numOfFloorMax: 0,
-    areaMin: 0,
+    areaMin: maxData.areaMax,
     areaMax: 0,
-    tiledAreaMin: 0,
+    tiledAreaMin: maxData.tiledAreaMax,
     tiledAreaMax: 0,
   };
 
@@ -66,12 +88,28 @@ const ConstructionConfigForProject = ({ showModal, setShowModal }) => {
           validationSchema={validationSchema}
           onSubmit={async (values, { setSubmitting }) => {
             try {
+
               console.log(values);
-              const result = await createConstructionConfig(values);
-              console.log(result)
+              const formatData = {
+                sandMixingRatio: values.sandMixingRatio,
+                cementMixingRatio: values.cementMixingRatio,
+                stoneMixingRatio: values.stoneMixingRatio,
+                constructionType: Number(values.constructionType),
+                numOfFloorMin: values.numOfFloorMin,
+                numOfFloorMax: values.numOfFloorMax,
+                areaMin: values.areaMin,
+                areaMax: values.areaMax,
+                tiledAreaMin: values.tiledAreaMin,
+                tiledAreaMax: values.tiledAreaMax,
+              };
+              setIsLoading(true); // Set loading state to true when submitting form
+
+              const result = await createConstructionConfig(formatData);
+              console.log(result);
               if (result.isSuccess) {
-             toast.success("Create successfully")
-             setShowModal(false)
+                toast.success("Create successfully");
+                setShowModal(false);
+                fetchData();
               } else {
                 for (var i = 0; i < result.messages.length; i++) {
                   toast.error(result.messages[i]);
@@ -80,9 +118,11 @@ const ConstructionConfigForProject = ({ showModal, setShowModal }) => {
             } catch (error) {
               console.error("Error updating project config:", error);
             } finally {
+              setIsLoading(false); // Set loading state to false after API call is complete
               setSubmitting(false);
             }
           }}
+          
         >
           {({ errors, touched }) => (
             <Form>
@@ -141,8 +181,8 @@ const ConstructionConfigForProject = ({ showModal, setShowModal }) => {
                   name="constructionType"
                   className="border border-gray-300 p-2 rounded-md"
                 >
-                  <option value="0">Rough Construction</option>
-                  <option value="1">Complete Construction</option>
+                  <option value={0}>Rough Construction</option>
+                  <option value={1}>Complete Construction</option>
                 </Field>
                 <ErrorMessage
                   name="constructionType"
@@ -233,11 +273,11 @@ const ConstructionConfigForProject = ({ showModal, setShowModal }) => {
                   component="div"
                   className="text-red-600"
                 />
-
                 <Button
                   type="primary"
                   htmlType="submit"
                   className="text-white bg-green-500 font-semibold p-2 mt-5"
+                  loading={isLoading}
                 >
                   Submit
                 </Button>
