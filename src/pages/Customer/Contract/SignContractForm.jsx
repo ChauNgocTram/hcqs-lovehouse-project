@@ -9,7 +9,11 @@ import { Input, Button } from "antd";
 import { Modal } from "../../../components";
 import { alert } from "../../../components/Alert/Alert";
 
-import { getContractProgressById, resendVerificationCodeByContractId, signContract } from "../../../constants/apiContract";
+import {
+  getContractProgressById,
+  resendVerificationCodeByContractId,
+  signContract,
+} from "../../../constants/apiContract";
 import { toast } from "react-toastify";
 
 
@@ -34,9 +38,11 @@ export default function SignContractForm({ onModalClose, id }) {
       console.error("Error fetching project detail:", error);
     }
   };
-
   useEffect(() => {
-    fetchContract();
+    if(projectDetail !=null){
+      fetchContract();
+
+    }
   }, [id]);
 
   // const handleButtonClick = () => {
@@ -113,7 +119,7 @@ export default function SignContractForm({ onModalClose, id }) {
       const formattedData = {
         contractId: values.contractId,
         verificationCode: values.verificationCode,
-        accountId: user?.id
+        accountId: user?.id,
       };
 
       console.log("Form data submitted:", formattedData);
@@ -150,13 +156,17 @@ export default function SignContractForm({ onModalClose, id }) {
   return (
     <>
       <Fragment>
-        <button
-          onClick={handleButtonClick}
-          className="bg-baseOrange text-white rounded-lg p-2 mb-2 font-semibold"
-        >
-          Sign Contract
-        </button>
-
+       {projectDetail?.contract?.contractStatus === 1 &&
+     
+       <button
+       onClick={handleButtonClick}
+       className="bg-baseOrange text-white rounded-lg p-2 mb-2 font-semibold"
+     >
+       Sign Contract
+     </button>   
+       
+       }
+    
         <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
           <div className="p-4 my-auto lg:px-8 text-left overflow-y-auto max-h-[500px] flex flex-col">
             <h3 className="text-xl font-semibold text-gray-900 mb-5">

@@ -71,7 +71,6 @@ export default function CreateProgressForm() {
           toast.error(result.messages[i]);
         }
       }
-
       navigate(`/staff/contract-payment-progress/${id}`);
     } catch (error) {
       alert.alertFailedWithTime(
