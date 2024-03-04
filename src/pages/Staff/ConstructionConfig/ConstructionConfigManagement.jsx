@@ -149,7 +149,7 @@ const ConstructionConfigManagement = () => {
       ),
     },
     {
-      title: "Area (Min- Max) (m2)",
+      title: "Area (Min- Max) (m²)",
       dataIndex: "areaMinMax",
       key: "areaMinMax",
       width: 150, 
@@ -158,7 +158,7 @@ const ConstructionConfigManagement = () => {
       ),
     },
     {
-      title: "Tiled Area (Min-Max) (m2)",
+      title: "Tiled Area (Min-Max) (m²)",
       dataIndex: "tiledAreaMinMax",
       key: "tiledAreaMinMax",
       width: 150,
