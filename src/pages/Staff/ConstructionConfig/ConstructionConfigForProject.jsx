@@ -83,7 +83,8 @@ const ConstructionConfigForProject = ({
   return (
     <>
       <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
-        <Formik
+      <div style={{ maxHeight: '700px', overflowY: 'auto' }}>
+      <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={async (values, { setSubmitting }) => {
@@ -285,6 +286,8 @@ const ConstructionConfigForProject = ({
             </Form>
           )}
         </Formik>
+      </div>
+      
       </Modal>
     </>
   );

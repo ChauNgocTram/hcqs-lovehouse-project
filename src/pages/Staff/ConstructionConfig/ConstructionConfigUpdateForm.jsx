@@ -26,6 +26,7 @@ const ConstructionConfigUpdateForm = ({ showModal, setShowModal, data ,fetchData
   });
 
   const initialValues = {
+    id: data.id,
     sandMixingRatio: data.sandMixingRatio,
     cementMixingRatio: data.cementMixingRatio,
     stoneMixingRatio: data.stoneMixingRatio,
