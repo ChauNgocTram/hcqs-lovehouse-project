@@ -3,8 +3,9 @@ import { DBHeader, LoadingOverlay, StaffSidebar } from "../../../components";
 import {
   deleteConstructionConfig,
   getAllConstructionConfig,
+  searchConstructionConfig,
 } from "../../../constants/apiConstructionConfig";
-import { Button, Input, Select, Space, Table } from "antd";
+import { Button, Input, InputNumber, Select, Space, Table } from "antd";
 import ConstructionConfigForProject from "./ConstructionConfigForProject";
 import ConstructionConfigUpdateForm from "./ConstructionConfigUpdateForm";
 import Swal from "sweetalert2";
@@ -12,6 +13,7 @@ import { toast } from "react-toastify";
 import { SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import BaseButton from "../../../components/Button/BaseButton";
+import { IoIosArrowDropdown } from "react-icons/io";
 
 const ConstructionConfigManagement = () => {
   const [constructionConfigList, setConstructionConfigList] = useState([]);
@@ -19,117 +21,16 @@ const ConstructionConfigManagement = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [updateData, setUpdateData] = useState({});
-  const [searchText, setSearchText] = useState("");
-  const [searchedColumn, setSearchedColumn] = useState("");
-  const searchInput = useRef(null);
+  const [showFilter, setShowFilter] = useState(false); // State để theo dõi trạng thái của phần filter
 
-  const getColumnSearchProps = (
-    dataIndex,
-    setSearchText,
-    searchedColumn,
-    searchInput,
-    handleSearch,
-    handleReset
-  ) => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-      close,
-    }) => (
-      <div
-        style={{
-          padding: 8,
-        }}
-        onKeyDown={(e) => e.stopPropagation()}
-      >
-        <Input
-          ref={searchInput}
-          placeholder={`Search ${dataIndex}`}
-          value={selectedKeys[0]}
-          onChange={(e) =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
-          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-          style={{
-            marginBottom: 8,
-            display: "block",
-          }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            icon={<SearchOutlined />}
-            size="small"
-            style={{
-              width: 90,
-            }}
-          >
-            Search
-          </Button>
-          <Button
-            onClick={() => clearFilters && handleReset(clearFilters)}
-            size="small"
-            style={{
-              width: 90,
-            }}
-          >
-            Reset
-          </Button>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              confirm({
-                closeDropdown: false,
-              });
-              setSearchText(selectedKeys[0]);
-              setSearchedColumn(dataIndex);
-            }}
-          >
-            Filter
-          </Button>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              close();
-            }}
-          >
-            close
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered) => (
-      <SearchOutlined
-        style={{
-          color: filtered ? "#1677ff" : undefined,
-        }}
-      />
-    ),
-    onFilter: (value, record) => record[dataIndex].toString().includes(value),
-    onFilterDropdownOpenChange: (visible) => {
-      if (visible) {
-        setTimeout(() => searchInput.current?.select(), 100);
-      }
-    },
-    render: (text) =>
-      searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{
-            backgroundColor: "#ffc069",
-            padding: 0,
-          }}
-          searchWords={[searchText]}
-          autoEscape
-          textToHighlight={text ? text.toString() : ""}
-        />
-      ) : (
-        text
-      ),
+  const [searchParams, setSearchParams] = useState({
+    constructionType: 0,
+    numOfFloorMin: 0,
+    numOfFloorMax: 0,
+    areaMin: 0,
+    areaMax: 0,
+    tiledAreaMin: 0,
+    tiledAreaMax: 0
   });
 
   const fetchData = async () => {
@@ -144,22 +45,38 @@ const ConstructionConfigManagement = () => {
     fetchData();
   }, []);
 
-  const handleSearch = (selectedKeys, confirm, dataIndex) => {
-    confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-  };
-
-  const handleReset = (clearFilters) => {
-    clearFilters();
-    setSearchText("");
-  };
-
   const handleEdit = (record) => {
     setShowUpdateModal(true);
     setUpdateData(record);
   };
+  const handleInputChange = (field, value) => {
+    setSearchParams({
+      ...searchParams,
+      [field]: value
+    });
+  };
 
+  const handleSearch = async () => {
+    // Handle search logic here, you can use searchParams state
+    console.log(searchParams);
+    const data = await searchConstructionConfig(searchParams);
+    if (data.isSuccess) {
+      setConstructionConfigList(data.result.data)
+    }
+  };
+  const handleReset = async () => {
+    setSearchParams({
+      constructionType: 0,
+      numOfFloorMin: 0,
+      numOfFloorMax: 0,
+      areaMin: 0,
+      areaMax: 0,
+      tiledAreaMin: 0,
+      tiledAreaMax: 0
+    })
+    setShowFilter(false);
+    fetchData();
+  }
   const handleDelete = async (record) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -183,15 +100,7 @@ const ConstructionConfigManagement = () => {
     });
 
     if (result.isConfirmed) {
-      const data = await deleteConstructionConfig({
-        constructionType: record.constructionType,
-        numOfFloorMin: record.numOfFloorMin,
-        numOfFloorMax: record.numOfFloorMax,
-        areaMin: record.areaMin,
-        areaMax: record.areaMax,
-        tiledAreaMin: record.tiledAreaMin,
-        tiledAreaMax: record.tiledAreaMax,
-      });
+      const data = await deleteConstructionConfig(record.id);
 
       if (data.isSuccess) {
         toast.success("Delete successfully");
@@ -208,151 +117,53 @@ const ConstructionConfigManagement = () => {
       title: "Sand Mixing Ratio (%)",
       dataIndex: "sandMixingRatio",
       key: "sandMixingRatio",
-      ...getColumnSearchProps(
-        "sandMixingRatio",
-        setSearchText,
-        searchedColumn,
-        searchInput,
-        handleSearch,
-        handleReset
-      ),
-      width: 150,
+      width: 120,
     },
     {
       title: "Cement Mixing Ratio (%)",
       dataIndex: "cementMixingRatio",
       key: "cementMixingRatio",
-      width: 150,
-
-      ...getColumnSearchProps(
-        "cementMixingRatio",
-        setSearchText,
-        searchedColumn,
-        searchInput,
-        handleSearch,
-        handleReset
-      ),
+      width: 120
     },
     {
       title: "Stone Mixing Ratio (%)",
       dataIndex: "stoneMixingRatio",
       key: "stoneMixingRatio",
-      width: 150,
-
-      ...getColumnSearchProps(
-        "stoneMixingRatio",
-        setSearchText,
-        searchedColumn,
-        searchInput,
-        handleSearch,
-        handleReset
-      ),
+      width: 120
     },
     {
       title: "Construction Type",
       dataIndex: "constructionType",
       key: "constructionType",
       width: 150,
-
-      ...getColumnSearchProps(
-        "constructionType",
-        setSearchText,
-        searchedColumn,
-        searchInput,
-        handleSearch,
-        handleReset
-      ),
       render: (text) =>
         text === 0 ? "Rough Construction" : "Complete Construction",
     },
     {
-      title: "Number of Floors (Min)",
-      dataIndex: "numOfFloorMin",
-      key: "numOfFloorMin",
+      title: "Number of Floors (Min - Max)",
+      dataIndex: "numOfFloorMinMax",
+      key: "numOfFloorMinMax",
       width: 150,
-
-      ...getColumnSearchProps(
-        "numOfFloorMin",
-        setSearchText,
-        searchedColumn,
-        searchInput,
-        handleSearch,
-        handleReset
+      render: (text, record) => (
+        <span>{`${record.numOfFloorMin} - ${record.numOfFloorMax}`}</span>
       ),
     },
     {
-      title: "Number of Floors (Max)",
-      dataIndex: "numOfFloorMax",
-      key: "numOfFloorMax",
-      width: 150,
-
-      ...getColumnSearchProps(
-        "numOfFloorMax",
-        setSearchText,
-        searchedColumn,
-        searchInput,
-        handleSearch,
-        handleReset
+      title: "Area (Min- Max) (m2)",
+      dataIndex: "areaMinMax",
+      key: "areaMinMax",
+      width: 150, 
+      render: (text, record) => (
+        <span>{`${record.areaMin} - ${record.areaMax}`}</span>
       ),
     },
     {
-      title: "Area (Min) (m2)",
-      dataIndex: "areaMin",
-      key: "areaMin",
+      title: "Tiled Area (Min-Max) (m2)",
+      dataIndex: "tiledAreaMinMax",
+      key: "tiledAreaMinMax",
       width: 150,
-
-      ...getColumnSearchProps(
-        "areaMin",
-        setSearchText,
-        searchedColumn,
-        searchInput,
-        handleSearch,
-        handleReset
-      ),
-    },
-    {
-      title: "Area (Max) (m2)",
-      dataIndex: "areaMax",
-      key: "areaMax",
-      width: 150,
-
-      ...getColumnSearchProps(
-        "areaMax",
-        setSearchText,
-        searchedColumn,
-        searchInput,
-        handleSearch,
-        handleReset
-      ),
-    },
-    {
-      title: "Tiled Area (Min) (m2)",
-      dataIndex: "tiledAreaMin",
-      key: "tiledAreaMin",
-      width: 150,
-
-      ...getColumnSearchProps(
-        "tiledAreaMin",
-        setSearchText,
-        searchedColumn,
-        searchInput,
-        handleSearch,
-        handleReset
-      ),
-    },
-    {
-      title: "Tiled Area (Max) (m2)",
-      dataIndex: "tiledAreaMax",
-      key: "tiledAreaMax",
-      width: 150,
-
-      ...getColumnSearchProps(
-        "tiledAreaMax",
-        setSearchText,
-        searchedColumn,
-        searchInput,
-        handleSearch,
-        handleReset
+      render: (text, record) => (
+        <span>{`${record.tiledAreaMin} - ${record.tiledAreaMax}`}</span>
       ),
     },
     {
@@ -372,6 +183,9 @@ const ConstructionConfigManagement = () => {
       ),
     },
   ];
+  const toggleFilter = () => {
+    setShowFilter(!showFilter); // Khi nhấn nút filter, toggle trạng thái hiển thị của phần filter
+  };
 
   return (
     <>
@@ -383,27 +197,100 @@ const ConstructionConfigManagement = () => {
           <h1 className="text-2xl font-semibold pb-2 mt-5 uppercase text-center">
             Construction Config
           </h1>
-          <div className="flex justify-end items-center mx-16 my-2">
+
+          <div className="flex justify-between mb-4 px-16">
+
+            <Button className="bg-baseGreen text-white flex items-center justify-between w-24" onClick={toggleFilter}>
+              Filter <IoIosArrowDropdown />
+            </Button>
+
+
             <Button
-              className="bg-baseGreen text-white"
+              className="bg-baseGreen text-white "
               onClick={() => setShowAddModal(true)}
             >
               + Add construction config
             </Button>
-            <ConstructionConfigForProject
-              setShowModal={setShowAddModal}
-              showModal={showAddModal}
-              fetchData={fetchData}
-            />
-            {showUpdateModal && (
-              <ConstructionConfigUpdateForm
-                setShowModal={setShowUpdateModal}
-                showModal={showUpdateModal}
-                data={updateData}
-                fetchData={fetchData}
-              />
-            )}
           </div>
+
+          {showFilter && (
+            <div className="flex flex-col justify-start items-start mx-16 my-2">
+              <div className="flex justify-start items-center space-y-2">
+                <Select
+                  id="constructionType"
+                  className="w-42"
+                  value={searchParams.constructionType}
+                  onChange={(value) =>
+                    handleInputChange("constructionType", value)
+                  }
+                >
+                  <Option value={0}>Rough Construction</Option>
+                  <Option value={1}>Complete Construction</Option>
+                </Select>
+              </div>
+              <div className="flex justify-start items-center my-2">
+                <label className="text-sm">Number of Floors:</label>
+                <InputNumber
+                  className="h-8 w-16"
+                  value={searchParams.numOfFloorMin}
+                  onChange={(value) =>
+                    handleInputChange("numOfFloorMin", value)
+                  }
+                />
+                <span>-</span>
+                <InputNumber
+                  className="h-8 w-16"
+                  value={searchParams.numOfFloorMax}
+                  onChange={(value) =>
+                    handleInputChange("numOfFloorMax", value)
+                  }
+                />
+              </div>
+              <div className="flex justify-start items-center my-2">
+                <label className="text-sm">Area:</label>
+                <InputNumber
+                  className="w-16"
+                  value={searchParams.areaMin}
+                  onChange={(value) => handleInputChange("areaMin", value)}
+                />
+                <span>-</span>
+                <InputNumber
+                  className=" w-16"
+                  value={searchParams.areaMax}
+                  onChange={(value) => handleInputChange("areaMax", value)}
+                />
+              </div>
+              <div className="flex justify-start items-center my-2">
+                <label className="text-sm">Tiled Area:</label>
+                <InputNumber
+                  className="h-full w-16"
+                  value={searchParams.tiledAreaMin}
+                  onChange={(value) =>
+                    handleInputChange("tiledAreaMin", value)
+                  }
+                />
+                <span>-</span>
+                <InputNumber
+                  className="h-8 w-16"
+                  value={searchParams.tiledAreaMax}
+                  onChange={(value) =>
+                    handleInputChange("tiledAreaMax", value)
+                  }
+                />
+              </div>
+              <div className="flex justify-start items-center my-2">
+                <Button className="bg-baseGreen text-white"
+                  type="primary" onClick={handleSearch}>
+                  Search
+                </Button>
+                <Button className="bg-baseGreen text-white mx-2"
+                  type="primary" onClick={handleReset}>
+                  Reset Filter
+                </Button>
+              </div>
+            </div>
+          )}
+
           <Table
             dataSource={constructionConfigList}
             columns={columns}
@@ -411,6 +298,20 @@ const ConstructionConfigManagement = () => {
             className="mx-16 my-16"
             scroll={{ x: true }}
           />
+
+          <ConstructionConfigForProject
+            setShowModal={setShowAddModal}
+            showModal={showAddModal}
+            fetchData={fetchData}
+          />
+          {showUpdateModal && (
+            <ConstructionConfigUpdateForm
+              setShowModal={setShowUpdateModal}
+              showModal={showUpdateModal}
+              data={updateData}
+              fetchData={fetchData}
+            />
+          )}
         </div>
       </div>
     </>

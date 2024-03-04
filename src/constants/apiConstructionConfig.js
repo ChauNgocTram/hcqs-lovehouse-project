@@ -19,6 +19,24 @@ export const getConstructionConfig = async (data) => {
     return null;
   }
 };
+
+export const searchConstructionConfig = async (data) => {
+  try {
+    const res = await axios.post(
+      `${baseURL}/construction-config/search-construction-config`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${usertoken}`,
+        },
+        withCredentials: true,
+      }
+    );
+    return res.data;
+  } catch (err) {
+    return null;
+  }
+};
 export const getAllConstructionConfig = async () => {
   try {
     const res = await axios.get(
@@ -87,12 +105,12 @@ export const updateConstructionConfig = async (data) => {
   }
 };
 
-export const deleteConstructionConfig = async (data) => {
+export const deleteConstructionConfig = async (id) => {
   try {
     const res = await axios.delete(
-      `${baseURL}/construction-config/delete-construction-config`,
+      `${baseURL}/construction-config/delete-construction-config/${id}`,
       {
-        data: data, // Pass the data directly
+    
         headers: {
           "Content-Type": "application/json", // Specify content type as application/json
           // Optionally, you can include other headers such as Authorization
