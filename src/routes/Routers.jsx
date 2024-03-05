@@ -140,6 +140,7 @@ export default function Routers() {
       path: "/staff",
       element: <StaffLayout />,
       children: [
+        { path: "/staff/dashboard", element: <StaffDashboard/> },
         { path: "/staff/all-request", element: <AllRequest /> },
         {
           path: "/staff/project-detail/:id",
@@ -167,6 +168,7 @@ export default function Routers() {
           path: "/staff/construction-config",
           element: <ConstructionConfigManagement />,
         },
+        { path: "/staff/worker-management", element: <WorkerManagement/> },
       ],
     },
     {

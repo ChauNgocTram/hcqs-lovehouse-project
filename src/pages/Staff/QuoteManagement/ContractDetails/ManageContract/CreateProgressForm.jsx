@@ -71,7 +71,6 @@ export default function CreateProgressForm() {
           toast.error(result.messages[i]);
         }
       }
-
       navigate(`/staff/contract-payment-progress/${id}`);
     } catch (error) {
       alert.alertFailedWithTime(
@@ -201,7 +200,7 @@ export default function CreateProgressForm() {
 
         <div className="total w-1/3">
           <div className="flex">Total:
-            <p className="text-red-500 font-semibold ml-4">  <CurrencyFormatter amount={contract.total} /></p>
+            <p className="text-red-500 font-semibold ml-4"><CurrencyFormatter amount={contract.total} /> VNĐ</p>
           </div>
           {/* <p>Remaining amounts:</p> */}
         </div>

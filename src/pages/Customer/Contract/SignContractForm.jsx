@@ -9,19 +9,20 @@ import { Input, Button } from "antd";
 import { Modal } from "../../../components";
 import { alert } from "../../../components/Alert/Alert";
 
-import { getContractProgressById, resendVerificationCodeByContractId, signContract } from "../../../constants/apiContract";
+import {
+  getContractProgressById,
+  resendVerificationCodeByContractId,
+  signContract,
+} from "../../../constants/apiContract";
 import { toast } from "react-toastify";
 
-
-
-
-export default function SignContractForm({ onModalClose, id }) {
+export default function SignContractForm({ onModalClose, id, projectDetail }) {
   const user = useSelector((state) => state?.user?.user);
 
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const [contract, setContract] = useState({});
-
+  console.log(projectDetail);
   const fetchContract = async () => {
     try {
       const data = await getContractProgressById(id);
@@ -34,16 +35,17 @@ export default function SignContractForm({ onModalClose, id }) {
       console.error("Error fetching project detail:", error);
     }
   };
-
   useEffect(() => {
-    fetchContract();
+    if (projectDetail !== null) {
+      fetchContract();
+    }
   }, [id]);
 
   // const handleButtonClick = () => {
   //   setShowModal(true);
   // };
   const handleButtonClick = () => {
-    console.log("he", user)
+    console.log("he", user);
     if (user?.phoneNumber == null || user.phoneNumber == "") {
       // If phone number is empty, show confirmation modal
       Swal.fire({
@@ -68,12 +70,10 @@ export default function SignContractForm({ onModalClose, id }) {
   const initialValues = {
     contractId: id,
     verificationCode: "",
-
   };
 
   const validationSchema = Yup.object().shape({
-    verificationCode: Yup.string()
-      .required("Required")
+    verificationCode: Yup.string().required("Required"),
   });
 
   const handleResend = async () => {
@@ -85,84 +85,81 @@ export default function SignContractForm({ onModalClose, id }) {
           "",
           2000,
           "25",
-          () => { }
+          () => {}
         );
       } else {
         for (var i = 0; i < result.messages.length; i++) {
           toast.error(result.messages[i]);
         }
       }
-
-    } catch (error) { }
-  }
+    } catch (error) {}
+  };
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    try {
-      if (!user?.phoneNumber) {
-        // Handle case when user's phone number is empty
-        alert.alertFailedWithTime(
-          "Failed To Sign Contract",
-          "Please update your phone number first",
-          2500,
-          "25",
-          () => { }
-        );
-        setShowModal(false);
-        onModalClose();
-        return;
-      }
-      const formattedData = {
-        contractId: values.contractId,
-        verificationCode: values.verificationCode,
-        accountId: user?.id
-      };
-
-      console.log("Form data submitted:", formattedData);
-
-      const result = await signContract(formattedData);
-      resetForm();
-      if (result.isSuccess) {
-        alert.alertSuccessWithTime(
-          "Sign Contract Successfully",
-          "",
-          2000,
-          "25",
-          () => { }
-        );
-      } else {
-        for (var i = 0; i < result.messages.length; i++) {
-          toast.error(result.messages[i]);
-        }
-      }
-      setShowModal(false);
-      onModalClose();
-    } catch (error) {
+    if (!user?.phoneNumber) {
+      // Handle case when user's phone number is empty
       alert.alertFailedWithTime(
         "Failed To Sign Contract",
-        "Please try again",
+        "Please update your phone number first",
         2500,
         "25",
-        () => { }
+        () => {}
       );
-    } finally {
-      setSubmitting(false);
+      setShowModal(false);
+      onModalClose();
+      return;
     }
+    const formattedData = {
+      contractId: values.contractId,
+      verificationCode: values.verificationCode,
+      accountId: user?.id,
+    };
+
+    console.log("Form data submitted:", formattedData);
+
+    const result = await signContract(formattedData);
+    resetForm();
+    if (result.isSuccess) {
+      alert.alertSuccessWithTime(
+        "Sign Contract Successfully",
+        "",
+        2000,
+        "25",
+        () => {}
+      );
+    } else {
+      for (var i = 0; i < result.messages.length; i++) {
+        toast.error(result.messages[i]);
+      }
+    }
+    setShowModal(false);
+    onModalClose();
+
+    setSubmitting(false);
   };
+  console.log(projectDetail);
   return (
     <>
       <Fragment>
-        <button
-          onClick={handleButtonClick}
-          className="bg-baseOrange text-white rounded-lg p-2 mb-2 font-semibold"
-        >
-          Sign Contract
-        </button>
+        {projectDetail?.contract?.contractStatus === 1 && (
+          <button
+            onClick={handleButtonClick}
+            className="bg-baseOrange text-white rounded-lg p-2 mb-2 font-semibold"
+          >
+            Sign Contract
+          </button>
+        )}
 
         <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
           <div className="p-4 my-auto lg:px-8 text-left overflow-y-auto max-h-[500px] flex flex-col">
             <h3 className="text-xl font-semibold text-gray-900 mb-5">
               Sign Contract
             </h3>
-            <button style={{ cursor: 'pointer' }} onClick={() => handleResend()}>Resend verification code</button>
+            <button
+              style={{ cursor: "pointer" }}
+              onClick={() => handleResend()}
+            >
+              Resend verification code
+            </button>
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
@@ -191,8 +188,6 @@ export default function SignContractForm({ onModalClose, id }) {
                       {errors.verificationCode}
                     </div>
                   )}
-
-
 
                   <Button
                     type="primary"

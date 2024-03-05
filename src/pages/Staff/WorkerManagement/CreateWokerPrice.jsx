@@ -5,61 +5,48 @@ import * as Yup from "yup";
 import { Formik, Form, FieldArray, Field, ErrorMessage } from "formik";
 import { Input, Button } from "antd";
 
-import { Modal } from "../../../../components";
-import { alert } from "../../../../components/Alert/Alert";
-import {
-  createDealByStaff,
-  getProjectById,
-} from "../../../../constants/apiQuotationOfStaff";
+import { Modal } from "../../../components";
+import { alert } from "../../../components/Alert/Alert";
 import { toast } from "react-toastify";
 
-export default function CreateDealByStaff({ onModalClose, quotationId }) {
+import { createWorkerPrice } from "../../../constants/apiWorker";
+
+export default function CreateWokerPrice({ onModalClose,fetchAllWorker }) {
   const [showModal, setShowModal] = useState(false);
-  const navigate = useNavigate();
-  //const [loading, setLoading] = useState(true);
 
   const handleButtonClick = () => {
     setShowModal(true);
   };
 
   const initialValues = {
-    quotationId: quotationId,
-    rawMaterialDiscount: "",
-    furnitureDiscount: "",
-    laborDiscount: 0,
+    positionName: "",
+    laborCost: "",
   };
 
   const validationSchema = Yup.object().shape({
-    rawMaterialDiscount: Yup.number()
-      .required("Required")
-      .positive("Must be positive")
-      .integer("Must be an integer"),
-    furnitureDiscount: Yup.number()
-      .required("Required")
-      .positive("Must be positive")
-      .integer("Must be an integer"),
+    positionName: Yup.string().required("Required"),
+    laborCost: Yup.number().required("Required").positive("Must be positive"),
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     const formattedData = {
-      quotationId: values.quotationId,
-      rawMaterialDiscount: values.rawMaterialDiscount,
-      furnitureDiscount: values.furnitureDiscount,
-      laborDiscount: values.laborDiscount,
+      positionName: values.positionName,
+      laborCost: values.laborCost,
     };
 
     console.log("Form data submitted:", formattedData);
 
-    const result = await createDealByStaff(formattedData);
+    const result = await createWorkerPrice(formattedData);
     resetForm();
     if (result.isSuccess) {
       alert.alertSuccessWithTime(
-        "Create Quotation Deal Successfully",
+        "Create Worker Price Successfully",
         "",
         2000,
         "30",
         () => {}
       );
+      fetchAllWorker
     } else {
       for (var i = 0; i < result.messages.length; i++) {
         toast.error(result.messages[i]);
@@ -79,13 +66,13 @@ export default function CreateDealByStaff({ onModalClose, quotationId }) {
           onClick={handleButtonClick}
           className="bg-baseOrange text-white rounded-lg p-2 mb-2 font-semibold mx-2"
         >
-          Create Deal Quotation
+          Create Worker Price
         </button>
 
         <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
           <div className="p-4 my-auto lg:px-8 text-left overflow-y-auto max-h-[500px]">
             <h3 className="text-xl font-semibold text-gray-900 mb-5">
-              Create Deal Request
+              Create Worker Price
             </h3>
 
             <Formik
@@ -95,30 +82,30 @@ export default function CreateDealByStaff({ onModalClose, quotationId }) {
             >
               {({ values, errors, touched, setFieldValue }) => (
                 <Form>
-                  <label htmlFor="rawMaterialDiscount">Material Discount</label>
+                  <label htmlFor="positionName">Woker Type</label>
                   <Field
-                    name="rawMaterialDiscount"
+                    name="positionName"
                     as={Input}
-                    type="number"
+                    type="text"
                     className="mb-3"
                   />
-                  {errors.rawMaterialDiscount &&
-                    touched.rawMaterialDiscount && (
+                  {errors.positionName &&
+                    touched.positionName && (
                       <div style={{ color: "red", marginBottom: "12px" }}>
-                        {errors.rawMaterialDiscount}
+                        {errors.positionName}
                       </div>
                     )}
 
-                  <label htmlFor="furnitureDiscount">Furniture Discount</label>
+                  <label htmlFor="laborCost">Average Labor Cost</label>
                   <Field
-                    name="furnitureDiscount"
+                    name="laborCost"
                     as={Input}
                     type="number"
                     className="mb-3"
                   />
-                  {errors.furnitureDiscount && touched.furnitureDiscount && (
+                  {errors.laborCost && touched.laborCost && (
                     <div style={{ color: "red", marginBottom: "12px" }}>
-                      {errors.furnitureDiscount}
+                      {errors.laborCost}
                     </div>
                   )}
 
