@@ -66,6 +66,8 @@ import QuoteDetailsForStaff from "../pages/Staff/QuoteManagement/QuotationDetail
 import PaymentProgress from "../pages/Customer/Contract/PaymentProgress";
 import ConstructionConfigManagement from "../pages/Staff/ConstructionConfig/ConstructionConfigManagement.jsx";
 import PaymentNotification from "../pages/Customer/Payment/PaymentNotification.jsx";
+import StaffDashboard from "../pages/Staff/StaffDashboard/StaffDashboard.jsx"
+import WorkerManagement from "../pages/Staff/WorkerManagement/WorkerManagement.jsx"
 
 export default function Routers() {
   const auth = useSelector((state) => state?.auth);
