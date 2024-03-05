@@ -147,6 +147,7 @@ const ConfigForm = () => {
 
               try {
                 console.log(values);
+                setIsLoading(true);
                 const getConfigData = await getConstructionConfig({
                   constructionType: projectDetail.project.constructionType,
                   numOfFloor: projectDetail.project.numOfFloor,
@@ -165,11 +166,11 @@ const ConfigForm = () => {
                       "30",
                       () => {}
                     );
+
                     navigate(`/staff/project-detail/${id}`);
                   } else {
                     for (var i = 0; i < result.messages.length; i++) {
                       toast.error(result.messages[i]);
-                      
                     }
                   }
                 } else {
@@ -181,6 +182,7 @@ const ConfigForm = () => {
                     ) {
                     }
                   }
+                  setIsLoading(false);
                   setShowModal(true);
                 }
               } catch (error) {
@@ -339,6 +341,7 @@ const ConfigForm = () => {
                   type="primary"
                   htmlType="submit"
                   className="text-white bg-baseGreen font-semibold mx-auto"
+                  loading={isLoading}
                 >
                   Submit
                 </Button>
