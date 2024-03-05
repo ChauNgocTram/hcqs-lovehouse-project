@@ -192,7 +192,7 @@ const ConstructionConfigManagement = () => {
       <LoadingOverlay loading={loading} />
       <div className="flex overflow-hidden">
         <StaffSidebar />
-        <div className="h-screen overflow-y-auto flex-1  bg-gray-100 ">
+        <div className="h-screen overflow-y-auto flex-1 bg-gray-100 ">
           <DBHeader />
           <h1 className="text-2xl font-semibold pb-2 mt-5 uppercase text-center">
             Construction Config
