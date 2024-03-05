@@ -90,6 +90,7 @@ const ConfigForm = () => {
             id: id,
             wallLength: values.wallLength,
             wallHeight: values.wallHeight,
+            tiledArea: values.tiledArea,
             estimatedTimeOfCompletion: values.estimatedTimeOfCompletion,
             laborRequests: values.laborRequests.map((request) => ({
               exportLaborCost: request.exportLaborCost,
