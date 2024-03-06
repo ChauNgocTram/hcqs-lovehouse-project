@@ -65,6 +65,7 @@ import CreateProgress from "../pages/Staff/QuoteManagement/ContractDetails/Manag
 import QuoteDetailsForStaff from "../pages/Staff/QuoteManagement/QuotationDetails/QuoteDetailsForStaff";
 import PaymentProgress from "../pages/Customer/Contract/PaymentProgress";
 import ConstructionConfigManagement from "../pages/Staff/ConstructionConfig/ConstructionConfigManagement.jsx";
+import PaymentNotification from "../pages/Customer/Payment/PaymentNotification.jsx";
 import AdminDashboard from "../pages/Admin/AdminDashboard/AdminDashboard"
 import WorkerManagement from "../pages/Staff/WorkerManagement/WorkerManagement";
 
@@ -76,6 +77,8 @@ export default function Routers() {
   const isStaff = auth?.userRole?.includes("STAFF");
 
   const routing = useRoutes([
+    { path: "/payment/*", element: <PaymentNotification /> },
+    
     {
       path: "/",
       element: <HomeLayout />,
@@ -99,6 +102,7 @@ export default function Routers() {
         { path: "/blog/blogDetail/:id", element: <BlogDetail /> },
         // { path: "/quote-request", element: <QuoteRequestForm /> },
         { path: "/quote-request", element: <Quotation /> },
+
       ],
     },
     {
