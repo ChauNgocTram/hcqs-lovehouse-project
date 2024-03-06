@@ -25,7 +25,7 @@ export {
   updateNews,
   deleteNewsById,
 }
-from "./News.js";
+from "./news";
 
 //blog
 export {
@@ -62,7 +62,7 @@ export {
   getAllRoles,
   removeRoleForUser
 }
-from "./Role.js";
+from "./role";
 
 //supplier
 export {
@@ -72,6 +72,7 @@ export {
   getSupplierById,
   importSupplierFromExcelSheet,
   updateSupplier,
+  getSupplierTemplate
 }
 from "./Supplier";
 

@@ -9,6 +9,7 @@ import { MdDelete } from "react-icons/md";
 
 import { LuUpload } from "react-icons/lu";
 import { alert } from "../../../components/Alert/Alert";
+import { Button } from "antd";
 
 export default function QuotationForm() {
   const user = useSelector((state) => state?.user?.user);
@@ -21,7 +22,7 @@ export default function QuotationForm() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [address, setAddress] = useState("");
   const [progress, setProgress] = useState(null);
-  // const [isLoading, setisLoading] = useState(false);
+   const [isLoading, setisLoading] = useState(false);
 
   const [errorsProject, setErrorsProject] = useState({
     floor: "",
@@ -60,8 +61,7 @@ export default function QuotationForm() {
 
   const submitRequest = async (e) => {
     e.preventDefault();
-    try {
-      //   setisLoading(true);
+   
 
       if (!validateProjectForm()) {
         return;
@@ -86,6 +86,8 @@ export default function QuotationForm() {
       });
 
       if (result.isConfirmed) {
+      setisLoading(true);
+
         const response = await quoteRequest(formData, user?.id);
         console.log("Form Data:", formData);
 
@@ -107,17 +109,8 @@ export default function QuotationForm() {
             () => {}
           );
         }
-      }
-    } catch (error) {
-      console.error("Error creating blog", error);
-      alert.alertFailedWithTime(
-        "Failed to create request",
-        "Please try again",
-        2500,
-        "25",
-        () => {}
-      );
-    }
+      
+    } 
   };
 
   const validateProjectForm = () => {
@@ -359,12 +352,14 @@ export default function QuotationForm() {
                   </div>
 
                   <div className="mt-8 text-right">
-                    <button
+                    <Button
                       className="inline-block py-2 px-4 mb-2 text-xs text-center font-semibold leading-6 text-white bg-baseGreen hover:bg-green-600 rounded-lg transition duration-200"
                       onClick={submitRequest}
+                      loading={isLoading}
+                      
                     >
                       Submit
-                    </button>
+                    </Button>
                   </div>
                 </form>
               </div>

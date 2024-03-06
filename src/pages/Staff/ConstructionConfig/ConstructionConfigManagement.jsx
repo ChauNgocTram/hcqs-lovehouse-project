@@ -30,7 +30,7 @@ const ConstructionConfigManagement = () => {
     areaMin: 0,
     areaMax: 0,
     tiledAreaMin: 0,
-    tiledAreaMax: 0
+    tiledAreaMax: 0,
   });
 
   const fetchData = async () => {
@@ -52,7 +52,7 @@ const ConstructionConfigManagement = () => {
   const handleInputChange = (field, value) => {
     setSearchParams({
       ...searchParams,
-      [field]: value
+      [field]: value,
     });
   };
 
@@ -60,8 +60,9 @@ const ConstructionConfigManagement = () => {
     // Handle search logic here, you can use searchParams state
     console.log(searchParams);
     const data = await searchConstructionConfig(searchParams);
-    if (data.isSuccess) {
-      setConstructionConfigList(data.result.data)
+    console.log("aaaaa", data);
+    if (data.isSuccess && data.result.data) {
+      setConstructionConfigList(data.result.data);
     }
   };
   const handleReset = async () => {
@@ -72,11 +73,11 @@ const ConstructionConfigManagement = () => {
       areaMin: 0,
       areaMax: 0,
       tiledAreaMin: 0,
-      tiledAreaMax: 0
-    })
+      tiledAreaMax: 0,
+    });
     setShowFilter(false);
     fetchData();
-  }
+  };
   const handleDelete = async (record) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -123,13 +124,13 @@ const ConstructionConfigManagement = () => {
       title: "Cement Mixing Ratio (%)",
       dataIndex: "cementMixingRatio",
       key: "cementMixingRatio",
-      width: 120
+      width: 120,
     },
     {
       title: "Stone Mixing Ratio (%)",
       dataIndex: "stoneMixingRatio",
       key: "stoneMixingRatio",
-      width: 120
+      width: 120,
     },
     {
       title: "Construction Type",
@@ -152,7 +153,7 @@ const ConstructionConfigManagement = () => {
       title: "Area (Min- Max) (m²)",
       dataIndex: "areaMinMax",
       key: "areaMinMax",
-      width: 150, 
+      width: 150,
       render: (text, record) => (
         <span>{`${record.areaMin} - ${record.areaMax}`}</span>
       ),
@@ -192,18 +193,19 @@ const ConstructionConfigManagement = () => {
       <LoadingOverlay loading={loading} />
       <div className="flex overflow-hidden">
         <StaffSidebar />
-        <div className="h-screen overflow-y-auto flex-1  bg-gray-100 ">
+        <div className="h-screen overflow-y-auto flex-1 bg-gray-100 ">
           <DBHeader />
           <h1 className="text-2xl font-semibold pb-2 mt-5 uppercase text-center">
             Construction Config
           </h1>
 
           <div className="flex justify-between mb-4 px-16">
-
-            <Button className="bg-baseGreen text-white flex items-center justify-between w-24" onClick={toggleFilter}>
+            <Button
+              className="bg-baseGreen text-white flex items-center justify-between w-24"
+              onClick={toggleFilter}
+            >
               Filter <IoIosArrowDropdown />
             </Button>
-
 
             <Button
               className="bg-baseGreen text-white "
@@ -265,26 +267,28 @@ const ConstructionConfigManagement = () => {
                 <InputNumber
                   className="h-full w-16"
                   value={searchParams.tiledAreaMin}
-                  onChange={(value) =>
-                    handleInputChange("tiledAreaMin", value)
-                  }
+                  onChange={(value) => handleInputChange("tiledAreaMin", value)}
                 />
                 <span>-</span>
                 <InputNumber
                   className="h-8 w-16"
                   value={searchParams.tiledAreaMax}
-                  onChange={(value) =>
-                    handleInputChange("tiledAreaMax", value)
-                  }
+                  onChange={(value) => handleInputChange("tiledAreaMax", value)}
                 />
               </div>
               <div className="flex justify-start items-center my-2">
-                <Button className="bg-baseGreen text-white"
-                  type="primary" onClick={handleSearch}>
+                <Button
+                  className="bg-baseGreen text-white"
+                  type="primary"
+                  onClick={handleSearch}
+                >
                   Search
                 </Button>
-                <Button className="bg-baseGreen text-white mx-2"
-                  type="primary" onClick={handleReset}>
+                <Button
+                  className="bg-baseGreen text-white mx-2"
+                  type="primary"
+                  onClick={handleReset}
+                >
                   Reset Filter
                 </Button>
               </div>
