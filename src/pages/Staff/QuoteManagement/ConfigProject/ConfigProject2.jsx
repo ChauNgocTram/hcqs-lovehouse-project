@@ -1,18 +1,16 @@
 import React from "react";
 import ConfigForm from "./ConfigForm";
-import { StaffSidebar } from "../../../../components";
+import { DBHeader, StaffSidebar } from "../../../../components";
 
 const ConfigProject2 = () => {
   return (
     <>
-      <div className="flex">
-        <StaffSidebar />
-        <div className="flex flex-col items-center justify-center mx-auto px-32 w-full">
-          <h1 className="my-6 text-4xl">Config Form</h1>
-          <div className="w-full mx-auto">
-            <ConfigForm />
-          </div>
-        </div>
+      <div className="mx-auto px-5 h-screen">
+        <h1 className="mt-6 text-2xl font-semibold uppercase text-center ">
+          Config Form
+        </h1>
+
+        <ConfigForm />
       </div>
     </>
   );

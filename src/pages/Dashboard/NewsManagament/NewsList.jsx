@@ -95,7 +95,7 @@ const NewsList = () => {
   );
 
   return (
-    <div className="flex flex-col p-8 ">
+    <div className="flex flex-col p-8 h-screen overflow-y-auto mb-8 pb-12">
       {/* title */}
       <div>
         <div className="flex items-center space-x-2 text-xl">
@@ -118,7 +118,7 @@ const NewsList = () => {
                 Your News
               </h2>
               <Link
-                to={"/dashboard/create-news"}
+                to={"/staff/create-news"}
                 className="v-btn py-2 px-4
               bg-orange-600 hover:bg-orange-700 focus:ring-orange-500 focus:ring-offset-orange-200
               text-white transition ease-in duration-200 text-center text-base font-medium focus:outline-none focus:ring-2
@@ -208,7 +208,7 @@ const NewsList = () => {
                                 <div className="flex flex-col">
                                   {/* Edit  */}
                                   <Link
-                                    to={`/dashboard/edit-news/${news.id}`}
+                                    to={`/staff/edit-news/${news.id}`}
                                     className="flex items-center justify-start px-2 py-1 m-2 hover:bg-gray-300 
                                     rounded-md"
                                   >

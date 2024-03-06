@@ -1,115 +1,50 @@
 import React, { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import control from "../../assets/images/control.png";
+import HouseLogo from "../../assets/images/HouseLogo.png";
 
 import {
-  AiOutlineSetting,
-  AiOutlineSolution,
-  AiOutlineBook,
-  AiOutlineRead,
-  AiOutlineFundProjectionScreen,
-  AiOutlineTags,
-  AiOutlineHdd,
-  AiOutlineUngroup,
-  AiOutlineApartment,
-  AiOutlineContacts,
-  AiOutlineLineChart,
+  AiOutlinePieChart,
+  AiOutlineHome,
+  AiOutlineShop,
+  AiOutlineTeam,
+  AiOutlineLogout,
   AiOutlineDown,
   AiOutlineUp,
 } from "react-icons/ai";
 
-import control from "../../assets/images/control.png";
-import HouseLogo from "../../assets/images/HouseLogo.png";
-
-export default function StaffSidebar() {
+export default function AdminSidebar() {
   const [open, setOpen] = useState(true);
   const [activeSubMenu, setActiveSubMenu] = useState(null);
   const location = useLocation();
 
   const Menus = [
-   
     {
-      label: "QUOTATION",
-    },
-    {
-      title: "All Request",
-      icon: <AiOutlineSolution />,
-      path: "/staff/all-request",
+      title: "Dashboard",
+      icon: <AiOutlinePieChart />,
+      path: "/admin/dashboard",
     },
 
-    {
-      title: "Construction Config ",
-      icon: <AiOutlineSetting />,
-      path: "/staff/construction-config",
-    },
-
-    {
-      label: "CONTENT MANAGEMENT",
-    },
-    {
-      title: "Project Page",
-      icon: <AiOutlineBook />,
-      submenu: [
-        { title: "Create Project", path: "/dashboard/create-sample-project" },
-        { title: "Project List", path: "/dashboard/list-project" },
-      ],
-    },
-    {
-      title: "News Page",
-      icon: <AiOutlineFundProjectionScreen />,
-      submenu: [
-        { title: "Create News", path: "/staff/create-news" },
-        { title: "News List", path: "/staff/list-news" },
-      ],
-    },
-    {
-      title: "Blogs Page",
-      icon: <AiOutlineRead />,
-      submenu: [
-        { title: "Create Blog", path: "/dashboard/create-blog" },
-        { title: "Blog List", path: "/dashboard/list-blog" },
-      ],
-    },
-
-    {
-      label: "IMPORT EXPORT",
-    },
-    {
-      title: "Inventory",
-      icon: <AiOutlineHdd />,
-      submenu: [
-        { title: "List Inventory", path: "/dashboard/import-inventory" },
-        { title: "Export Inventory", path: "/dashboard/export-inventory" },
-      ],
-    },
-    {
-      title: "Material",
-      icon: <AiOutlineUngroup />,
-      path: "/dashboard/list-material",
-    },
-    {
-      title: "Sale Price",
-      icon: <AiOutlineTags />,
-      path: "/dashboard/export-price-material",
-    },
-
-    {
-      title: "Woker Management",
-      icon: <AiOutlineApartment />,
-      path: "/staff/worker-management",
-    },
     {
       title: "User Management",
-      icon: <AiOutlineContacts />,
-      path: "/dashboard/users-list",
+      icon: <AiOutlineTeam />,
+      path: "/admin/users-list",
     },
-
     {
-      label: "OTHER",
+      title: "Supplier Management",
+      icon: <AiOutlineShop />,
+      submenu: [
+        { title: "List Supplier", path: "/admin/view-supplier" },
+        {
+          title: "View Supplier Price",
+          path: "/admin/view-supplier-price",
+        },
+        { title: "Import Quotation", path: "/admin/import-quotation" },
+        { title: "Quotation List", path: "/admin/list-quotation" },
+      ],
     },
-    { title: "Transaction ", icon: <AiOutlineLineChart /> },
-    // { title: "Go to Home page", icon: <RiHome4Line />, path: "/" },
-    // { title: "Setting ", icon: <RiWallet3Line /> },
-    //{ title: "Log out", icon: <RiLogoutCircleRLine /> },
+    { title: "Go to Home page", icon: <AiOutlineHome />, gap: true, path: "/" },
+    { title: "Log out", icon: <AiOutlineLogout /> },
   ];
 
   const toggleSubMenu = (index) => {
@@ -144,7 +79,7 @@ export default function StaffSidebar() {
           <img
             src={control}
             className={` cursor-pointer top-9 w-7  border-baseGreen
-     border-2 rounded-full ml-10  ${!open && "rotate-180"}`}
+   border-2 rounded-full ml-10  ${!open && "rotate-180"}`}
             onClick={() => setOpen(!open)}
           />
         </div>

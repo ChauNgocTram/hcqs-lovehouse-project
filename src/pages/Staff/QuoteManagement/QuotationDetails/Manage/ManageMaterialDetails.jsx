@@ -70,11 +70,7 @@ export default function ManageMaterialDetails() {
   return (
     <>
       <LoadingOverlay loading={loading} />
-      <div className="flex h-auto overflow-hidden">
-        <StaffSidebar />
-
-        <div className=" h-screen flex-1 ">
-          <DBHeader />
+      
           <h1 className="text-2xl font-semibold pb-2 mt-5 mb-5 pl-4 uppercase ">
             Quote Detail
           </h1>
@@ -217,8 +213,7 @@ export default function ManageMaterialDetails() {
               handleReloadContent={handleReloadContent}
             />
           </div>
-        </div>
-      </div>
+       
     </>
   );
 }
