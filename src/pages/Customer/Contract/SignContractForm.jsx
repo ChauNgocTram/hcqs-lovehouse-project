@@ -16,13 +16,18 @@ import {
 } from "../../../constants/apiContract";
 import { toast } from "react-toastify";
 
-export default function SignContractForm({ onModalClose, id, projectDetail }) {
+
+export default function SignContractForm({ onModalClose, id, projectDetail,fetchData }) {
+
   const user = useSelector((state) => state?.user?.user);
 
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const [contract, setContract] = useState({});
   console.log(projectDetail);
+  const [isSendLoading, setIsSendLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const fetchContract = async () => {
     try {
       const data = await getContractProgressById(id);
@@ -59,7 +64,7 @@ export default function SignContractForm({ onModalClose, id, projectDetail }) {
       }).then((result) => {
         if (result.isConfirmed) {
           // If confirmed, navigate to update account page
-          navigate("/update-account");
+          navigate("/customer/account/profile");
         }
       });
     } else {
@@ -77,6 +82,7 @@ export default function SignContractForm({ onModalClose, id, projectDetail }) {
   });
 
   const handleResend = async () => {
+    setIsSendLoading(true);
     var result = await resendVerificationCodeByContractId(id);
     try {
       if (result.isSuccess) {
@@ -87,6 +93,7 @@ export default function SignContractForm({ onModalClose, id, projectDetail }) {
           "25",
           () => {}
         );
+        setIsSendLoading(false);
       } else {
         for (var i = 0; i < result.messages.length; i++) {
           toast.error(result.messages[i]);
@@ -103,11 +110,15 @@ export default function SignContractForm({ onModalClose, id, projectDetail }) {
         2500,
         "25",
         () => {}
+
       );
+      
       setShowModal(false);
       onModalClose();
       return;
     }
+    setIsLoading(true)
+
     const formattedData = {
       contractId: values.contractId,
       verificationCode: values.verificationCode,
@@ -126,11 +137,15 @@ export default function SignContractForm({ onModalClose, id, projectDetail }) {
         "25",
         () => {}
       );
+      fetchData
     } else {
       for (var i = 0; i < result.messages.length; i++) {
         toast.error(result.messages[i]);
       }
     }
+
+    setIsLoading(false)
+
     setShowModal(false);
     onModalClose();
 
@@ -150,16 +165,21 @@ export default function SignContractForm({ onModalClose, id, projectDetail }) {
         )}
 
         <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
-          <div className="p-4 my-auto lg:px-8 text-left overflow-y-auto max-h-[500px] flex flex-col">
+          <div className="p-4 my-auto lg:px-8 text-left  overflow-y-auto max-h-[500px] flex flex-col">
             <h3 className="text-xl font-semibold text-gray-900 mb-5">
               Sign Contract
             </h3>
-            <button
+
+            <Button
+              className="text-white bg-green-600 hover:bg-green-800  "
               style={{ cursor: "pointer" }}
               onClick={() => handleResend()}
+              loading={isSendLoading}
             >
               Resend verification code
-            </button>
+            </Button>
+
+
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
@@ -167,15 +187,6 @@ export default function SignContractForm({ onModalClose, id, projectDetail }) {
             >
               {({ values, errors, touched, setFieldValue }) => (
                 <Form className="flex flex-col">
-                  <label htmlFor="contractId">Contract ID</label>
-                  <Field
-                    name="contractId"
-                    as={Input}
-                    type="text"
-                    readOnly
-                    className="mb-3"
-                  />
-
                   <label htmlFor="verificationCode">Verify code</label>
                   <Field
                     name="verificationCode"
@@ -193,6 +204,7 @@ export default function SignContractForm({ onModalClose, id, projectDetail }) {
                     type="primary"
                     htmlType="submit"
                     className="text-white bg-baseGreen font-semibold mx-auto mt-4"
+                    loading={isLoading}
                   >
                     Sign
                   </Button>

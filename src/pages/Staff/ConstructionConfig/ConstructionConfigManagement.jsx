@@ -195,6 +195,7 @@ const ConstructionConfigManagement = () => {
   return (
     <>
       <LoadingOverlay loading={loading} />
+
       <div className="flex flex-col flex-1 h-screen w-full overflow-y-auto">
         <h1 className="text-2xl font-semibold pb-2 mt-5 uppercase text-center">
           Construction Config

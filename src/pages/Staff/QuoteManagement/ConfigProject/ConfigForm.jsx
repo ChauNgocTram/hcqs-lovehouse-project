@@ -26,6 +26,7 @@ import ProjectInfo from "./ProjectInfo";
 
 const ConfigForm = ({ projectDetail }) => {
   const [workers, setWorkers] = useState([]);
+
   const [isLoading, setIsLoading] = useState(false);
   const [selectedWorkerCost, setSelectedWorkerCost] = useState(0);
 
@@ -66,6 +67,7 @@ const ConfigForm = ({ projectDetail }) => {
 
   return (
     <>
+
       <div className="h-[580px] md:w-1/2 p-4 mb-24 order-2 md:order-2 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
         <Formik
           initialValues={initialValues}
@@ -109,7 +111,12 @@ const ConfigForm = ({ projectDetail }) => {
                 for (var i = 0; i < result.messages.length; i++) {
                   toast.error(result.messages[i]);
                 }
+              } catch (error) {
+                console.error("Error updating project config:", error);
+              } finally {
+                setSubmitting(false);
               }
+
             } else {
               for (var i = 0; i < getConfigData.messages.length; i++) {
                 toast.error(getConfigData.messages[i]);
@@ -260,6 +267,7 @@ const ConfigForm = ({ projectDetail }) => {
                         + Add Worker
                       </Button>
                     </div>
+
                   </div>
                 )}
               </FieldArray>
@@ -272,12 +280,12 @@ const ConfigForm = ({ projectDetail }) => {
                 >
                   Submit
                 </Button>
+
               </div>
             </Form>
           )}
         </Formik>
       </div>
-
       <ConstructionConfigForProject
         showModal={showModal}
         setShowModal={setShowModal}

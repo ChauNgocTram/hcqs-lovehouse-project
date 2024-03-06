@@ -22,6 +22,7 @@ export default function QuotationForm() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [address, setAddress] = useState("");
   const [progress, setProgress] = useState(null);
+
   const [loading, setLoading] =useState(false)
   // const [isLoading, setisLoading] = useState(false);
 
@@ -62,8 +63,9 @@ export default function QuotationForm() {
 
   const submitRequest = async (e) => {
     e.preventDefault();
-  
+
       //   setisLoading(true);
+
 
       if (!validateProjectForm()) {
         return;
@@ -88,6 +90,8 @@ setLoading(true)
       });
 
       if (result.isConfirmed) {
+      setisLoading(true);
+
         const response = await quoteRequest(formData, user?.id);
         console.log("Form Data:", formData);
 
@@ -112,8 +116,9 @@ setLoading(true)
           setLoading(false)
 
         }
+
       }
-   
+
   };
 
   const validateProjectForm = () => {
