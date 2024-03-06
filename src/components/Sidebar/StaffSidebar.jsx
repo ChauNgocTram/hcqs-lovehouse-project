@@ -113,19 +113,6 @@ export default function StaffSidebar() {
       icon: <AiOutlineApartment />,
       path: "/staff/worker-management",
     },
-    {
-      title: "User Management",
-      icon: <AiOutlineContacts />,
-      path: "/dashboard/users-list",
-    },
-
-    {
-      label: "OTHER",
-    },
-    { title: "Transaction ", icon: <AiOutlineLineChart /> },
-    // { title: "Go to Home page", icon: <RiHome4Line />, path: "/" },
-    // { title: "Setting ", icon: <RiWallet3Line /> },
-    //{ title: "Log out", icon: <RiLogoutCircleRLine /> },
   ];
 
   const toggleSubMenu = (index) => {
