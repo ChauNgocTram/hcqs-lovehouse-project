@@ -38,9 +38,7 @@ export default function AdminSidebar() {
         {
           title: "View Supplier Price",
           path: "/admin/view-supplier-price",
-        },
-        { title: "Import Quotation", path: "/admin/import-quotation" },
-        { title: "Quotation List", path: "/admin/list-quotation" },
+        }
       ],
     },
     { title: "Go to Home page", icon: <AiOutlineHome />, gap: true, path: "/" },
