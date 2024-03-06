@@ -25,7 +25,7 @@ export {
   updateNews,
   deleteNewsById,
 }
-from "./News";
+from "./News.js";
 
 //blog
 export {
@@ -62,7 +62,7 @@ export {
   getAllRoles,
   removeRoleForUser
 }
-from "./Role";
+from "./Role.js";
 
 //supplier
 export {
