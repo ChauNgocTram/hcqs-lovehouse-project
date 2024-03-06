@@ -138,8 +138,11 @@ const ConstructionConfigManagement = () => {
       key: "constructionType",
       width: 150,
       render: (text) =>
-        text === 0 ? <Tag color="gold">Rough</Tag> : <Tag color="cyan">Completed</Tag>,
-       
+        text === 0 ? (
+          <Tag color="gold">Rough</Tag>
+        ) : (
+          <Tag color="cyan">Completed</Tag>
+        ),
     },
     {
       title: "Number of Floors (Min - Max)",
@@ -197,7 +200,7 @@ const ConstructionConfigManagement = () => {
           Construction Config
         </h1>
 
-        <div className="flex flex-1 justify-between mb-4 px-16">
+        <div className="flex justify-between mb-4 px-16">
           <Button
             className="bg-baseGreen text-white flex items-center justify-between w-24"
             onClick={toggleFilter}
@@ -214,7 +217,7 @@ const ConstructionConfigManagement = () => {
         </div>
 
         {showFilter && (
-          <div className="flex flex-col  flex-1 justify-start items-start mx-16 my-2">
+          <div className="flex flex-col   justify-start items-start mx-16 my-2">
             <div className="flex justify-start items-center space-y-2">
               <Select
                 id="constructionType"
