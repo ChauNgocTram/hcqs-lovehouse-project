@@ -111,9 +111,7 @@ const ConfigForm = ({ projectDetail }) => {
                 for (var i = 0; i < result.messages.length; i++) {
                   toast.error(result.messages[i]);
                 }
-              } catch (error) {
-                console.error("Error updating project config:", error);
-              } finally {
+             
                 setSubmitting(false);
               }
 
