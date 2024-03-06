@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Formik, Form, FieldArray, Field, ErrorMessage } from "formik";
-import { Input, Button, Space, message } from "antd";
+import { Input, Button, Space, message, DatePicker } from "antd";
 import axios from "axios";
 import * as Yup from "yup";
 
@@ -19,6 +19,8 @@ import {
 } from "../../../../../components";
 import { alert } from "../../../../../components/Alert/Alert";
 import { toast } from "react-toastify";
+import { formatDate, getCurrentDateTime } from "../../../../../constants/util";
+import dayjs from "dayjs";
 
 export default function CreateProgressForm() {
   const { id } = useParams();
@@ -28,6 +30,7 @@ export default function CreateProgressForm() {
 
   const [progressItem, setProgressItem] = useState([]);
   const [contract, setContract] = useState({});
+  const defaultValue = dayjs('2024-01-01');
 
   const initialValues = {
     progressDetails: [
@@ -36,6 +39,7 @@ export default function CreateProgressForm() {
         content: "Deposit",
         price: 0,
         contractId: id,
+        endDate: defaultValue,
       },
     ],
   };
@@ -55,6 +59,7 @@ export default function CreateProgressForm() {
       name: detail.name,
       content: detail.content,
       price: detail.price,
+      endDate: detail.endDate,
       contractId: id,
     }));
     setIsLoading(true);
@@ -71,14 +76,12 @@ export default function CreateProgressForm() {
         () => {}
       );
       navigate(`/staff/contract-payment-progress/${id}`);
-
     } else {
       for (var i = 0; i < result.messages.length; i++) {
         toast.error(result.messages[i]);
       }
     }
     setIsLoading(false);
-
 
     setSubmitting(false);
   };
@@ -142,7 +145,20 @@ export default function CreateProgressForm() {
                               label="Price"
                               name={`progressDetails.${index}.price`}
                               type="text"
+                              className="w-32"
                             />
+                            <div className="flex w-full my-5">
+                              <p className="mx-5">End Date</p>
+                              <DatePicker
+                                label="End Date"
+                                showTime
+                                name={`progressDetails.${index}.endDate`}
+                                defaultValue={defaultValue}
+                                onChange={(date, dateString) => {
+                                  setFieldValue(`progressDetails.${index}.endDate`, formatDate(dateString) );
+                                }}
+                              />
+                            </div>
 
                             {index > 0 && (
                               <Button
@@ -163,6 +179,7 @@ export default function CreateProgressForm() {
                             name: "",
                             content: "",
                             price: 0,
+                            endDate: defaultValue
                           });
                         }}
                         className="text-white bg-blue-400 font-semibold mx-4"
