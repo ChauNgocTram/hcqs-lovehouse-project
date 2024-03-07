@@ -100,7 +100,7 @@ const ImportQuotation = () => {
           <div>Price Quotation</div>
           <FaChevronRight />
         </div>
-        <div className="text-2xl text-orange-400 font-semibold py-4">
+        <div className="text-2xl text-green-400 font-semibold py-4">
           Import Quotation
         </div>
       </div>
@@ -263,7 +263,7 @@ const fields = [
     validations: [
       {
         rule: "regex",
-        value: "^ *$",
+        value: " ",
         errorMessage: "Check the error row",
         level: "error",
       },
