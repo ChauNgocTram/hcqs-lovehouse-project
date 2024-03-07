@@ -4,9 +4,25 @@ import {
     usertoken
 } from ".";
 
+export const validExcelFile = async (excelData) => {
+    try {
+        const res = await axios.post(`${baseURL}/supplier-price-quotation/valid-excel-file`, excelData, {
+            headers: {
+                Authorization: `Bearer ${usertoken}`,
+                "Content-Type": "multipart/form-data",
+            },
+            withCredentials: true,
+        });
+
+        return res.data;
+    } catch (err) {
+        return null;
+    }
+};
+
 export const uploadSupplierQuotationWithExcelFile = async (excelData) => {
     try {
-        const res = await axios.post(`${baseURL}/supplier-price-quotation/Upload-supplier-quotation-with-excel-file`, excelData, {
+        const res = await axios.post(`${baseURL}/supplier-price-quotation/upload-supplier-quotation-with-excel-file`, excelData, {
             headers: {
                 Authorization: `Bearer ${usertoken}`,
                 "Content-Type": "multipart/form-data",
@@ -22,7 +38,7 @@ export const uploadSupplierQuotationWithExcelFile = async (excelData) => {
 
 export const getUploadSupplierQuotationWithExcelFileError = async (excelData) => {
     try {
-        const res = await axios.post(`${baseURL}/supplier-price-quotation/Upload-supplier-quotation-with-excel-file`, excelData, {
+        const res = await axios.post(`${baseURL}/supplier-price-quotation/upload-supplier-quotation-with-excel-file`, excelData, {
             headers: {
                 Authorization: `Bearer ${usertoken}`,
                 "Content-Type": "multipart/form-data",
@@ -39,7 +55,7 @@ export const getUploadSupplierQuotationWithExcelFileError = async (excelData) =>
         // Create a link element and trigger a download
         const link = document.createElement("a");
         link.href = window.URL.createObjectURL(blob);
-        link.download = "SupplierPriceQuotationTemplate.xlsx";
+        link.download = "SupplierPriceQuotationError.xlsx";
         link.click();
     } catch (err) {
         return null;

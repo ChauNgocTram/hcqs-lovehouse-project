@@ -7,33 +7,13 @@ import { CurrencyFormatter, LoadingOverlay } from "../../../../components";
 
 import { FiEdit } from "react-icons/fi";
 
-export default function Material() {
-  const { id } = useParams();
-  const [quoteDetail, setQuoteDetail] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const fetchQuoteDetail = async () => {
-    try {
-      const data = await getQuotationById(id);
-
-      if (data && data.result) {
-        setQuoteDetail(data.result.data);
-        setLoading(false);
-      }
-    } catch (error) {
-      console.error("Error fetching quote detail:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchQuoteDetail();
-  }, [id]);
+export default function Material({quoteDetail}) {
+  
   return (
     <>
-      <LoadingOverlay loading={loading} />
       <div id="material">
-        <div className="flex items-center mt-12 mb-6 ">
-          <h1 className="text-xl font-semibold mr-4 uppercase">
+        <div className="flex items-center mt-12 ">
+          <h1 className="text-xl font-semibold mr-4 uppercase pb-8 pl-5">
             Details of materials
           </h1>
           {quoteDetail?.quotation?.quotationStatus === 0 && (
@@ -138,6 +118,60 @@ export default function Material() {
             ) : (
               <p>No materials available.</p>
             )}
+          </div>
+
+          <div className="grid grid-cols-1 gap-16 px-8 pt-4 md:hidden h-[300px] overflow-auto">
+            {quoteDetail.quotationDetails &&
+              quoteDetail.quotationDetails.map((item, index) => (
+                <div
+                  key={item.id}
+                  className=" space-y-4 rounded-lg shadow px-8 py-5 bg-slate-100"
+                >
+                  <div className="flex items-center justify-between space-x-5 text-sm">
+                    <div className="text-blue-500 text-xl font-bold hover:underline">
+                      #{index + 1}
+                      <span className="font-semibold text-xl ml-4">
+                        {item.material.name}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between text-sm text-gray-700">
+                    <span>Unit:</span>
+                    {(() => {
+                      switch (item.material.unitMaterial) {
+                        case 0:
+                          return "Kg";
+                        case 1:
+                          return "m³";
+                        case 2:
+                          return "Bar";
+                        case 3:
+                          return "Item";
+                        default:
+                          return "";
+                      }
+                    })()}
+                  </div>
+
+                  <div className="flex justify-between text-sm text-gray-700">
+                    <span>Construction Type:</span>
+                    {item.material.materialType === 0
+                      ? "Raw Material"
+                      : "Funiture"}
+                  </div>
+
+                  <div className="flex justify-between text-sm text-gray-700">
+                    <span>Quantity</span>
+                    {item.quantity}
+                  </div>
+
+                  <div className="flex justify-between text-sm text-gray-700">
+                    <span className="font-semibold">Total:</span>
+                    <CurrencyFormatter amount={item.total} />
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
       </div>

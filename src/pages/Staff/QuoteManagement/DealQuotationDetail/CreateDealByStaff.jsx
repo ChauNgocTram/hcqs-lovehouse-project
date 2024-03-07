@@ -11,52 +11,23 @@ import {
   createDealByStaff,
   getProjectById,
 } from "../../../../constants/apiQuotationOfStaff";
+import { toast } from "react-toastify";
 
-export default function CreateDealByStaff({ onModalClose }) {
+export default function CreateDealByStaff({ onModalClose, quotationId }) {
   const [showModal, setShowModal] = useState(false);
-  const { id } = useParams();
   const navigate = useNavigate();
-  const [projectDetail, setProjectDetail] = useState({});
   //const [loading, setLoading] = useState(true);
-
-  const fetchProjectDetail = async () => {
-    try {
-      const data = await getProjectById(id);
-
-      if (data && data.result) {
-        setProjectDetail(data.result.data);
-        // setLoading(false);
-      }
-    } catch (error) {
-      console.error("Error fetching project detail:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchProjectDetail();
-  }, [id]);
 
   const handleButtonClick = () => {
     setShowModal(true);
   };
 
-  useEffect(() => {
-    if (projectDetail.quotations && projectDetail.quotations.length > 0) {
-      setInitialValues({
-        quotationId: projectDetail.quotations[0].id,
-        rawMaterialDiscount: "",
-        furnitureDiscount: "",
-        laborDiscount: "",
-      });
-    }
-  }, [projectDetail]);
-
-  const [initialValues, setInitialValues] = useState({
-    quotationId: "", 
+  const initialValues = {
+    quotationId: quotationId,
     rawMaterialDiscount: "",
     furnitureDiscount: "",
-    laborDiscount: "",
-  });
+    laborDiscount: 0,
+  };
 
   const validationSchema = Yup.object().shape({
     rawMaterialDiscount: Yup.number()
@@ -67,25 +38,21 @@ export default function CreateDealByStaff({ onModalClose }) {
       .required("Required")
       .positive("Must be positive")
       .integer("Must be an integer"),
-    laborDiscount: Yup.number()
-      .required("Required")
-      .positive("Must be positive")
-      .integer("Must be an integer"),
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    try {
-      const formattedData = {
-        quotationId: values.quotationId,
-        rawMaterialDiscount: values.rawMaterialDiscount,
-        furnitureDiscount: values.furnitureDiscount,
-        laborDiscount: values.laborDiscount,
-      };
+    const formattedData = {
+      quotationId: values.quotationId,
+      rawMaterialDiscount: values.rawMaterialDiscount,
+      furnitureDiscount: values.furnitureDiscount,
+      laborDiscount: values.laborDiscount,
+    };
 
-      console.log("Form data submitted:", formattedData);
+    console.log("Form data submitted:", formattedData);
 
-      await createDealByStaff(formattedData);
-      resetForm();
+    const result = await createDealByStaff(formattedData);
+    resetForm();
+    if (result.isSuccess) {
       alert.alertSuccessWithTime(
         "Create Quotation Deal Successfully",
         "",
@@ -93,20 +60,16 @@ export default function CreateDealByStaff({ onModalClose }) {
         "30",
         () => {}
       );
-
-      setShowModal(false);
-      onModalClose();
-    } catch (error) {
-      alert.alertFailedWithTime(
-        "Failed To Create",
-        "Please try again",
-        2500,
-        "25",
-        () => {}
-      );
-    } finally {
-      setSubmitting(false);
+    } else {
+      for (var i = 0; i < result.messages.length; i++) {
+        toast.error(result.messages[i]);
+      }
     }
+
+    setShowModal(false);
+    onModalClose();
+
+    setSubmitting(false);
   };
 
   return (
@@ -114,7 +77,7 @@ export default function CreateDealByStaff({ onModalClose }) {
       <Fragment>
         <button
           onClick={handleButtonClick}
-          className="bg-baseOrange text-white rounded-lg p-2 mb-2 font-semibold"
+          className="bg-baseOrange text-white rounded-lg p-2 mb-2 font-semibold mx-2"
         >
           Create Deal Quotation
         </button>
@@ -132,15 +95,6 @@ export default function CreateDealByStaff({ onModalClose }) {
             >
               {({ values, errors, touched, setFieldValue }) => (
                 <Form>
-                  <label htmlFor="quotationId">Quotation ID</label>
-                  <Field
-                    name="quotationId"
-                    as={Input}
-                    type="text"
-                    readOnly
-                    className="mb-3"
-                  />
-
                   <label htmlFor="rawMaterialDiscount">Material Discount</label>
                   <Field
                     name="rawMaterialDiscount"
@@ -165,16 +119,6 @@ export default function CreateDealByStaff({ onModalClose }) {
                   {errors.furnitureDiscount && touched.furnitureDiscount && (
                     <div style={{ color: "red", marginBottom: "12px" }}>
                       {errors.furnitureDiscount}
-                    </div>
-                  )}
-
-                  <label htmlFor="laborDiscount" className="">
-                    Labor Discount
-                  </label>
-                  <Field name="laborDiscount" as={Input} type="number" />
-                  {errors.laborDiscount && touched.laborDiscount && (
-                    <div style={{ color: "red", marginBottom: "12px" }}>
-                      {errors.laborDiscount}
                     </div>
                   )}
 

@@ -27,9 +27,12 @@ export { default as ProjectDetail } from "./Dashboard/HouseProjectPage/ProjectDe
 export { default as EditProject } from "./Dashboard/HouseProjectPage/EditProject";
 
 export { default as ImportInventory } from "./Dashboard/Inventory/ImportInventory";
+export { default as ExportInventory } from "./Dashboard/Inventory/ExportInventory";
+export { default as QuotationDetail } from "./Dashboard/Inventory/QuotationDetail";
 
 export { default as CreateMaterial } from "./Dashboard/Material/CreateMaterial";
 export { default as MaterialList } from "./Dashboard/Material/MaterialList";
+export { default as ExportPrice } from "./Dashboard/Material/ExportPrice";
 
 export { default as ViewSupplier } from "./Dashboard/Supplier/ViewSupplier";
 
@@ -39,6 +42,7 @@ export { default as ImportQuotation } from "./Dashboard/SupplierQuotation/Import
 export { default as ListQuotation } from "./Dashboard/SupplierQuotation/ListQuotation";
 
 export { default as AboutUs } from "./AboutUs/AboutUs";
+export { default as CustomerAccount } from "./Customer/Account/Account";
 
 // House Projects
 export { default as HouseProject } from "../pages/HouseProjects/HouseProject";
@@ -54,8 +58,6 @@ export { default as NewsDetail } from "../pages/News/NewsDetail";
 // Blogs
 export { default as Blog } from "../pages/Blogs/Blog";
 export { default as BlogDetail } from "../pages/Blogs/BlogDetail";
-
-
 
 // Quotation
 export { default as QuoteRequestForm } from "../pages/Quotation/QuotationForm/QuoteRequestForm";
@@ -73,4 +75,3 @@ export { default as AllRequest } from "../pages/Staff/QuoteManagement/AllRequest
 export { default as ConfigProject2 } from "../pages/Staff/QuoteManagement/ConfigProject/ConfigProject2";
 export { default as ManageMaterialDetails } from "./Staff/QuoteManagement/QuotationDetails/Manage/ManageMaterialDetails";
 export { default as ProjectDetailsForStaff } from "../pages/Staff/QuoteManagement/ProjectDetails/ProjectDetailsForStaff";
-
