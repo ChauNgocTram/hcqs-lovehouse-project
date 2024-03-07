@@ -134,7 +134,7 @@ const NewsEdit = () => {
   };
 
   return (
-    <div className="flex flex-col p-8">
+    <div className="flex flex-col p-8 h-screen overflow-y-auto">
       {/* title */}
       <div>
         <div className="flex items-center space-x-2 text-xl">
