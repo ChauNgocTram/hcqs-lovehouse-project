@@ -196,7 +196,7 @@ const UsersList = () => {
   return (
     <>
       <Spin spinning={loading}>
-        <div className="flex flex-col p-8 text-gray-900 h-screen overflow-y-auto mb-8 pb-12">
+        <div className="flex flex-col p-8 text-gray-900">
           {/* title */}
           <div>
             <div className="flex items-center space-x-2 text-xl">
@@ -206,7 +206,7 @@ const UsersList = () => {
               <div>User Managament</div>
               <FaChevronRight />
             </div>
-            <div className="text-2xl text-orange-400 font-semibold py-4">
+            <div className="text-2xl text-green-400 font-semibold py-4">
               User List
             </div>
           </div>

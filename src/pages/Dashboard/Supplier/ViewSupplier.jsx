@@ -213,7 +213,7 @@ const ViewSupplier = () => {
           <MutatingDots />
         </div>
       ) : (
-        <div className="relative flex flex-col p-8 text-gray-900 h-screen overflow-y-auto mb-8 pb-12">
+        <div className="relative flex flex-col p-8 text-gray-900">
           {/* title */}
           <div>
             <div className="flex items-center space-x-2 text-xl">
@@ -223,7 +223,7 @@ const ViewSupplier = () => {
               <div>Supplier</div>
               <FaChevronRight />
             </div>
-            <div className="text-2xl text-orange-400 font-semibold py-4">
+            <div className="text-2xl text-green-400 font-semibold py-4">
               View Supplier
             </div>
           </div>
@@ -250,14 +250,14 @@ const ViewSupplier = () => {
               <motion.div
                 {...buttonClick}
                 onClick={() => setIsImport(true)}
-                className="px-4 py-2 border rounded-md text-white bg-blue-500 hover:bg-blue-600 font-semibold shadow-md cursor-pointer"
+                className="px-4 py-2 border rounded-md text-white bg-green-500 hover:bg-green-600 font-semibold shadow-md cursor-pointer"
               >
                 Import Supplier
               </motion.div>
               <motion.div
                 {...buttonClick}
                 onClick={() => setIsCreate(true)}
-                className="px-4 py-2 border rounded-md text-white bg-orange-500 hover:bg-orange-600 font-semibold shadow-md cursor-pointer"
+                className="px-4 py-2 border rounded-md text-white bg-green-500 hover:bg-green-600 font-semibold shadow-md cursor-pointer"
               >
                 Create Supplier
               </motion.div>

@@ -95,7 +95,7 @@ const NewsList = () => {
   );
 
   return (
-    <div className="flex flex-col p-8 h-screen overflow-y-auto mb-8 pb-12">
+    <div className="flex flex-col p-8 ">
       {/* title */}
       <div>
         <div className="flex items-center space-x-2 text-xl">
@@ -105,7 +105,7 @@ const NewsList = () => {
           <div>News Management</div>
           <FaChevronRight />
         </div>
-        <div className="text-2xl text-orange-400 font-semibold py-4">
+        <div className="text-2xl text-green-400 font-semibold py-4">
           News List
         </div>
       </div>
@@ -118,9 +118,9 @@ const NewsList = () => {
                 Your News
               </h2>
               <Link
-                to={"/staff/create-news"}
+                to={"/dashboard/create-news"}
                 className="v-btn py-2 px-4
-              bg-orange-600 hover:bg-orange-700 focus:ring-orange-500 focus:ring-offset-orange-200
+              bg-green-600 hover:bg-green-700 focus:ring-green-500 focus:ring-offset-green-200
               text-white transition ease-in duration-200 text-center text-base font-medium focus:outline-none focus:ring-2
               focus:ring-offset-2 rounded-lg flex items-center hover:no-underline"
               >
@@ -196,7 +196,7 @@ const NewsList = () => {
                             </div>
 
                             <div
-                              className="relative group flex items-center justify-center p-2 bg-orange-500 hover:bg-orange-600 rounded-3xl text-white
+                              className="relative group flex items-center justify-center p-2 bg-green-500 hover:bg-green-600 rounded-3xl text-white
                               cursor-pointer"
                             >
                               <div>Operation</div>
@@ -208,7 +208,7 @@ const NewsList = () => {
                                 <div className="flex flex-col">
                                   {/* Edit  */}
                                   <Link
-                                    to={`/staff/edit-news/${news.id}`}
+                                    to={`/dashboard/edit-news/${news.id}`}
                                     className="flex items-center justify-start px-2 py-1 m-2 hover:bg-gray-300 
                                     rounded-md"
                                   >

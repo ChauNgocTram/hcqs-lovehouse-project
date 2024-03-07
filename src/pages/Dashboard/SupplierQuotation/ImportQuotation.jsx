@@ -90,7 +90,7 @@ const ImportQuotation = () => {
   };
 
   return (
-    <div className="flex flex-col p-8 h-screen overflow-y-auto mb-8 pb-12">
+    <div className="flex flex-col p-8 ">
       {/* title */}
       <div>
         <div className="flex items-center space-x-2 text-xl">
@@ -100,7 +100,7 @@ const ImportQuotation = () => {
           <div>Price Quotation</div>
           <FaChevronRight />
         </div>
-        <div className="text-2xl text-orange-400 font-semibold py-4">
+        <div className="text-2xl text-green-400 font-semibold py-4">
           Import Quotation
         </div>
       </div>
