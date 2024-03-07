@@ -24,7 +24,7 @@ export default function QuotationForm() {
   const [progress, setProgress] = useState(null);
 
   const [loading, setLoading] = useState(false);
-  // const [isLoading, setisLoading] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
 
   const [errorsProject, setErrorsProject] = useState({
     floor: "",
