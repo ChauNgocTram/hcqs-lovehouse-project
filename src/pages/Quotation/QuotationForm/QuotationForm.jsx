@@ -23,7 +23,7 @@ export default function QuotationForm() {
   const [address, setAddress] = useState("");
   const [progress, setProgress] = useState(null);
 
-  const [loading, setLoading] =useState(false)
+  const [loading, setLoading] = useState(false);
   // const [isLoading, setisLoading] = useState(false);
 
   const [errorsProject, setErrorsProject] = useState({
@@ -31,8 +31,7 @@ export default function QuotationForm() {
     area: "",
     constructionType: "",
     selectedImage: "",
-    address:""
-
+    address: "",
   });
 
   const uploadImage = (e) => {
@@ -64,61 +63,55 @@ export default function QuotationForm() {
   const submitRequest = async (e) => {
     e.preventDefault();
 
-      //   setisLoading(true);
+    //   setisLoading(true);
 
+    if (!validateProjectForm()) {
+      return;
+    }
+    const formData = {
+      numOfFloor: floor,
+      area: area,
+      landDrawingFileUrl: selectedImage ? selectedImage : null,
+      constructionType: constructionType,
+      address: address,
+    };
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to submit the request?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, submit it",
+      cancelButtonText: "No, cancel",
+      reverseButtons: true,
+      focusConfirm: false,
+    });
 
-      if (!validateProjectForm()) {
-        return;
-      }
-setLoading(true)
-      const formData = {
-        numOfFloor: floor,
-        area: area,
-        landDrawingFileUrl: selectedImage ? selectedImage : null,
-        constructionType: constructionType,
-        address: address,
-      };
-      const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "Do you want to submit the request?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, submit it",
-        cancelButtonText: "No, cancel",
-        reverseButtons: true,
-        focusConfirm: false,
-      });
-
-      if (result.isConfirmed) {
+    if (result.isConfirmed) {
       setisLoading(true);
+      const response = await quoteRequest(formData, user?.id);
+      console.log("Form Data:", formData);
 
-        const response = await quoteRequest(formData, user?.id);
-        console.log("Form Data:", formData);
-
-        if (response.isSuccess) {
-          alert.alertSuccessWithTime(
-            "Request quotation created successfully",
-            "",
-            2000,
-            "30",
-            () => {}
-          );
-          setLoading(false)
-          navigate("/customer/my-request");
-        } else {
-          alert.alertFailedWithTime(
-            "Failed to create request",
-            "Please try again",
-            2500,
-            "25",
-            () => {}
-          );
-          setLoading(false)
-
-        }
-
+      if (response.isSuccess) {
+        alert.alertSuccessWithTime(
+          "Request quotation created successfully",
+          "",
+          2000,
+          "30",
+          () => {}
+        );
+        setLoading(false);
+        navigate("/customer/my-request");
+      } else {
+        alert.alertFailedWithTime(
+          "Failed to create request",
+          "Please try again",
+          2500,
+          "25",
+          () => {}
+        );
+        setLoading(false);
       }
-
+    }
   };
 
   const validateProjectForm = () => {
@@ -127,7 +120,7 @@ setLoading(true)
       area: "",
       constructionType: "",
       selectedImage: "",
-      address:"",
+      address: "",
     };
 
     if (!floor) {
@@ -244,7 +237,7 @@ setLoading(true)
                     <div className="w-full  px-4 mb-10">
                       <div className="relative w-full h-14 py-4 px-3 border border-gray-400 hover:border-white focus-within:border-green-500 rounded-lg">
                         <span className="absolute bottom-full left-0 ml-3 -mb-1 transform translate-y-0.5 text-xs font-semibold text-gray-500 px-1  bg-white ">
-                          Address 
+                          Address
                         </span>
                         <input
                           type="text"
@@ -266,7 +259,6 @@ setLoading(true)
                         </div>
                       )}
                     </div>
-
 
                     <div className="w-full px-4 mb-10">
                       <div className="relative w-full h-14 py-4 px-3 border border-gray-400 hover:border-white focus-within:border-green-500 rounded-lg">
