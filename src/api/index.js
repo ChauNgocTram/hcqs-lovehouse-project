@@ -25,7 +25,7 @@ export {
   updateNews,
   deleteNewsById,
 }
-from "./News.js";
+from "./News";
 
 //blog
 export {
@@ -62,7 +62,7 @@ export {
   getAllRoles,
   removeRoleForUser
 }
-from "./Role.js";
+from "./Role";
 
 //supplier
 export {
@@ -74,7 +74,7 @@ export {
   updateSupplier,
   getSupplierTemplate
 }
-from "./Supplier.js";
+from "./Supplier";
 
 //SupplierQuotatio
 export {
@@ -86,7 +86,7 @@ export {
   getUploadSupplierQuotationWithExcelFileError,
   validExcelFile
 }
-from "./SupplierPriceQuotation.js";
+from "./SupplierPriceQuotation";
 
 //SupplierPriceDetail
 export {
@@ -100,7 +100,7 @@ export {
   getQuotationPriceBySupplierId,
   getQuotationPriceBySupplierName
 }
-from "./SupplierPriceDetail.js";
+from "./SupplierPriceDetail";
 
 //Material
 export {
@@ -112,7 +112,7 @@ export {
   updateMaterial,
   updateMaterialQuantity
 }
-from "./Material.js";
+from "./Material";
 
 export {
   getAllExportInventory,
@@ -122,7 +122,7 @@ export {
   importMaterialWithExcel,
   getImportMaterialWithExcelError
 }
-from "./ImportExportInventory.js";
+from "./ImportExportInventory";
 
 export {
   createExportPriceMaterial,
@@ -134,7 +134,7 @@ export {
   importExportPriceMaterialFromExcelSheet,
   updateExportPriceMaterial
 }
-from "./ExportPriceMaterial.js";
+from "./ExportPriceMaterial";
 
 export {
   createListQuotationDetail,
@@ -144,11 +144,11 @@ export {
   getQuotationDetailByQuotationId,
   updateQuotationDetail
 }
-from "./QuotationDetail.js";
+from "./QuotationDetail";
 
 export {
   getRemainQuantityForFulfillment,
   updateProgressConstructionMaterial,
   createProgressConstructionMaterial
 }
-from "./ProgressConstructionMaterial.js"
+from "./ProgressConstructionMaterial"

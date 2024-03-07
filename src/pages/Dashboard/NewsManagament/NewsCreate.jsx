@@ -110,7 +110,7 @@ function NewsCreate() {
   }
 
   return (
-    <div className="flex flex-col p-8 h-screen overflow-y-auto">
+    <div className="flex flex-col p-8">
       {/* title */}
       <div>
         <div className="flex items-center space-x-2 text-xl">

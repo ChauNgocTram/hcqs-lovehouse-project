@@ -89,7 +89,7 @@ export default function PaymentProgress() {
                       Price
                     </th>
                     <th className="p-3 text-sm font-semibold tracking-wide">
-                    End Date
+                      Date
                     </th>
                     <th className="p-3 text-sm font-semibold tracking-wide">
                       Payment Status
@@ -120,7 +120,6 @@ export default function PaymentProgress() {
                           <td className="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
                             <DateFormatter dateString={item.date} />
                           </td>
-                        
                           <td className="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
                             <PaymentStatusBadge
                               paymentStatus={item.payment.paymentStatus}

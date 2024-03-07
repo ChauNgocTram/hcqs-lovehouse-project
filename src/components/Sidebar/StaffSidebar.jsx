@@ -2,24 +2,33 @@ import React, { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 import {
-  AiOutlineSetting,
-  AiOutlineSolution,
-  AiOutlineBook,
-  AiOutlineRead,
-  AiOutlineFundProjectionScreen,
-  AiOutlineTags,
-  AiOutlineHdd,
-  AiOutlineUngroup,
-  AiOutlineApartment,
-  AiOutlineContacts,
-  AiOutlineLineChart,
-  AiOutlineDown,
-  AiOutlineUp,
-  AiOutlineShop,
-} from "react-icons/ai";
+  RiMailSendFill,
+  RiLogoutCircleRLine,
+  RiHome4Line,
+  RiWallet3Line,
+} from "react-icons/ri";
+import {
+  FaBlog,
+  FaChevronDown,
+  FaChevronUp,
+  FaRegCircleUser,
+  FaRegNewspaper,
+} from "react-icons/fa6";
+import {
+  MdInventory,
+  MdOutlinePriceChange,
+  MdOutlineSettings,
+} from "react-icons/md";
+import { GrSupport, GrTransaction } from "react-icons/gr";
+import { FaRegCalendarAlt } from "react-icons/fa";
+import { AiOutlineProject } from "react-icons/ai";
+import { SiMaterialdesignicons } from "react-icons/si";
 
 import control from "../../assets/images/control.png";
 import HouseLogo from "../../assets/images/HouseLogo.png";
+import { BiSolidDetail } from "react-icons/bi";
+import { IoPricetagsSharp } from "react-icons/io5";
+import { FcSalesPerformance } from "react-icons/fc";
 
 export default function StaffSidebar() {
   const [open, setOpen] = useState(true);
@@ -27,92 +36,110 @@ export default function StaffSidebar() {
   const location = useLocation();
 
   const Menus = [
-   
-    {
-      label: "QUOTATION",
-    },
-    {
-      title: "All Request",
-      icon: <AiOutlineSolution />,
-      path: "/staff/all-request",
-    },
+    { title: "Dashboard", icon: <RiHome4Line />, path: "/staff/dashboard" },
 
+    {
+      label: "MENU",
+    },
+    {
+      title: "Quote Request",
+      icon: <RiMailSendFill />,
+      submenu: [{ title: "All Request", path: "/staff/all-request" }],
+    },
+    {
+      title: "User Management",
+      icon: <FaRegCircleUser />,
+      submenu: [{ title: "Users List", path: "/dashboard/users-list" }],
+    },
     {
       title: "Construction Config ",
-      icon: <AiOutlineSetting />,
-      path: "/staff/construction-config",
+      icon: <MdOutlineSettings />,
+      submenu: [{ title: "Config List", path: "/staff/construction-config" }],
     },
+    { title: "Woker Management", icon: <RiHome4Line />, path: "/staff/worker-management" },
 
     {
-      label: "CONTENT MANAGEMENT",
+      label: "FUNCTION",
     },
     {
-      title: "Project Page",
-      icon: <AiOutlineBook />,
+      title: "House Project Page",
+      icon: <AiOutlineProject />,
       submenu: [
         { title: "Create Project", path: "/dashboard/create-sample-project" },
         { title: "Project List", path: "/dashboard/list-project" },
       ],
     },
     {
-      title: "News Page",
-      icon: <AiOutlineFundProjectionScreen />,
+      title: "News Management",
+      icon: <FaRegNewspaper />,
       submenu: [
-        { title: "Create News", path: "/staff/create-news" },
-        { title: "News List", path: "/staff/list-news" },
+        { title: "Create News", path: "/dashboard/create-news" },
+        { title: "News List", path: "/dashboard/list-news" },
       ],
     },
     {
-      title: "Blogs Page",
-      icon: <AiOutlineRead />,
+      title: "Blogs Management",
+      icon: <FaBlog />,
       submenu: [
         { title: "Create Blog", path: "/dashboard/create-blog" },
         { title: "Blog List", path: "/dashboard/list-blog" },
       ],
     },
-    {
-      label: "SUPPLIER",
-    },
-    {
-      title: "Supplier Management",
-      icon: <AiOutlineShop />,
-      submenu: [
-        {
-          title: "View Supplier Price",
-          path: "/staff/view-supplier-price",
-        },
-        { title: "Import Quotation", path: "/staff/import-quotation" },
-        { title: "Quotation List", path: "/staff/list-quotation" },
-      ],
-    },
+
     {
       label: "IMPORT EXPORT",
     },
     {
       title: "Inventory",
-      icon: <AiOutlineHdd />,
+      icon: <MdInventory />,
       submenu: [
         { title: "List Inventory", path: "/dashboard/import-inventory" },
         { title: "Export Inventory", path: "/dashboard/export-inventory" },
       ],
     },
-    
     {
       title: "Material",
-      icon: <AiOutlineUngroup />,
-      path: "/dashboard/list-material",
+      icon: <SiMaterialdesignicons />,
+      submenu: [{ title: "Material List", path: "/dashboard/list-material" }],
     },
     {
       title: "Sale Price",
-      icon: <AiOutlineTags />,
-      path: "/dashboard/export-price-material",
+      icon: <FcSalesPerformance />,
+      submenu: [
+        { title: "Sale Price List", path: "/dashboard/export-price-material" },
+      ],
+    },
+    {
+      title: "Supplier",
+      icon: <GrSupport />,
+      submenu: [{ title: "View Supplier", path: "/dashboard/view-supplier" }],
+    },
+    {
+      title: "Supplier Price Detail",
+      icon: <BiSolidDetail />,
+      submenu: [
+        {
+          title: "View Supplier Price",
+          path: "/dashboard/view-supplier-price",
+        },
+      ],
+    },
+    {
+      title: "Supplier Price Quotation",
+      icon: <IoPricetagsSharp />,
+      submenu: [
+        { title: "Import Quotation", path: "/dashboard/import-quotation" },
+        { title: "Quotation List", path: "/dashboard/list-quotation" },
+      ],
     },
 
     {
-      title: "Woker Management",
-      icon: <AiOutlineApartment />,
-      path: "/staff/worker-management",
+      label: "OTHER",
     },
+    { title: "Transaction ", icon: <RiWallet3Line /> },
+    // { title: "Go to Home page", icon: <RiHome4Line />, path: "/" },
+    { title: "Setting ", icon: <RiWallet3Line /> },
+    { title: "Log out", icon: <RiLogoutCircleRLine /> },
   ];
 
   const toggleSubMenu = (index) => {
@@ -167,7 +194,7 @@ export default function StaffSidebar() {
                   <NavLink
                     key={index}
                     to={menu.path}
-                    className="text-decoration-none "
+                    className="text-decoration-none"
                   >
                     <li
                       // key={index}
@@ -183,7 +210,7 @@ export default function StaffSidebar() {
                           : "hover:bg-baseGreen text-black hover:text-white"
                       } text-sm items-center gap-x-4`}
                     >
-                      <span style={{ fontSize: "22px" }}>{menu.icon}</span>
+                      <span style={{ fontSize: "24px" }}>{menu.icon}</span>
                       <span
                         className={`${
                           !open && "hidden"
@@ -196,9 +223,9 @@ export default function StaffSidebar() {
                           className={`ml-auto ${open ? "block" : "hidden"}`}
                         >
                           {activeSubMenu === index ? (
-                            <AiOutlineUp />
+                            <FaChevronUp />
                           ) : (
-                            <AiOutlineDown />
+                            <FaChevronDown />
                           )}
                         </span>
                       )}

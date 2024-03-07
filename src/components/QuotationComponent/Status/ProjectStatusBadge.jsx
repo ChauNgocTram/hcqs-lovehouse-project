@@ -1,24 +1,31 @@
 import React from "react";
-import { Tag } from 'antd';
 
 const ProjectStatusBadge = ({ projectStatus }) => {
-
+  console.log(projectStatus)
   switch (projectStatus) {
     case 0:
       return (
-        <Tag color="orange">PENDING</Tag>
+        <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-yellow-300 rounded-lg bg-opacity-50">
+          Pending
+        </span>
       );
     case 1:
       return (
-        <Tag color="processing">PROCESSING</Tag>
+        <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-blue-400 rounded-lg bg-opacity-50">
+          Processing
+        </span>
       );
     case 2:
       return (
-         <Tag color="green">UNDER CONSTRUCTION</Tag>
+        <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-green-400 rounded-lg bg-opacity-50">
+          Under Construction
+        </span>
       );
     case 3:
       return (
-        <Tag color="magenta">COMPLETE CONSTRUCTION</Tag>
+        <span className="p-1.5 text-xs font-medium uppercase tracking-wider bg-gray-400 rounded-lg bg-opacity-50">
+          Complete Construction
+        </span>
       );
     default:
       return null;

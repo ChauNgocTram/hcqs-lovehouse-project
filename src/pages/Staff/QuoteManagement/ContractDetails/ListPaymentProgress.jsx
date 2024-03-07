@@ -66,8 +66,11 @@ export default function ListPaymentProgress() {
   return (
     <>
       <LoadingOverlay loading={loading} />
-      
-       
+      <div className="flex overflow-hidden">
+        <StaffSidebar />
+
+        <div className="h-screen overflow-y-auto flex-1 bg-gray-100">
+        <DBHeader/>
           <h1 className="text-2xl font-semibold pb-2 mt-5 uppercase text-center">
             Payment Progress Detail
           </h1>
@@ -135,7 +138,6 @@ export default function ListPaymentProgress() {
                           </td>
                           <td className="p-3 text-sm text-gray-700 whitespace-nowrap text-right">
                             <CurrencyFormatter amount={item.payment.price} />
-                            {item.payment.price}
                           </td>
                           <td className="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
                             <DateFormatter dateString={item.date} />
@@ -196,7 +198,8 @@ export default function ListPaymentProgress() {
                 ))}
             </div>
           </div>
-       
+        </div>
+      </div>
     </>
   );
 }

@@ -1,20 +1,12 @@
 import { Outlet } from "react-router-dom";
 
-import { AdminSidebar, DBHeader, DBFooter } from "../components";
-
 function AdminLayout() {
   return (
-    <div className="flex overflow-hidden">
-    <AdminSidebar />
-    <div className="h-screen flex-1">
-      <div className="sticky top-0 z-50 w-full">
-        <DBHeader />
-      </div>
-
-      <Outlet />
-
+    <div>
+      <p>Header</p>
+      <Outlet></Outlet>
+      <p>Footer</p>
     </div>
-  </div>
   );
 }
 

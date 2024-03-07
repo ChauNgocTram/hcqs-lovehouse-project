@@ -9,7 +9,6 @@ import { MdDelete } from "react-icons/md";
 
 import { LuUpload } from "react-icons/lu";
 import { alert } from "../../../components/Alert/Alert";
-import { Button } from "antd";
 
 export default function QuotationForm() {
   const user = useSelector((state) => state?.user?.user);
@@ -22,8 +21,6 @@ export default function QuotationForm() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [address, setAddress] = useState("");
   const [progress, setProgress] = useState(null);
-
-  const [loading, setLoading] =useState(false)
   // const [isLoading, setisLoading] = useState(false);
 
   const [errorsProject, setErrorsProject] = useState({
@@ -63,14 +60,13 @@ export default function QuotationForm() {
 
   const submitRequest = async (e) => {
     e.preventDefault();
-
+    try {
       //   setisLoading(true);
-
 
       if (!validateProjectForm()) {
         return;
       }
-setLoading(true)
+
       const formData = {
         numOfFloor: floor,
         area: area,
@@ -90,12 +86,10 @@ setLoading(true)
       });
 
       if (result.isConfirmed) {
-      setisLoading(true);
-
         const response = await quoteRequest(formData, user?.id);
         console.log("Form Data:", formData);
 
-        if (response.isSuccess) {
+        if (response) {
           alert.alertSuccessWithTime(
             "Request quotation created successfully",
             "",
@@ -103,7 +97,6 @@ setLoading(true)
             "30",
             () => {}
           );
-          setLoading(false)
           navigate("/customer/my-request");
         } else {
           alert.alertFailedWithTime(
@@ -113,12 +106,18 @@ setLoading(true)
             "25",
             () => {}
           );
-          setLoading(false)
-
         }
-
       }
-
+    } catch (error) {
+      console.error("Error creating blog", error);
+      alert.alertFailedWithTime(
+        "Failed to create request",
+        "Please try again",
+        2500,
+        "25",
+        () => {}
+      );
+    }
   };
 
   const validateProjectForm = () => {
@@ -360,13 +359,12 @@ setLoading(true)
                   </div>
 
                   <div className="mt-8 text-right">
-                    <Button
-                      className="inline-block py-1.3 px-4 mb-2 text-xs text-center font-semibold leading-6 text-white bg-baseGreen hover:bg-green-600 rounded-lg transition duration-200"
+                    <button
+                      className="inline-block py-2 px-4 mb-2 text-xs text-center font-semibold leading-6 text-white bg-baseGreen hover:bg-green-600 rounded-lg transition duration-200"
                       onClick={submitRequest}
-                      loading={loading}
                     >
                       Submit
-                    </Button>
+                    </button>
                   </div>
                 </form>
               </div>

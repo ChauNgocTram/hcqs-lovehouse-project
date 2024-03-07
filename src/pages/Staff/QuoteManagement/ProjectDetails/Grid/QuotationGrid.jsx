@@ -10,22 +10,29 @@ import { CgEnter } from "react-icons/cg";
 import CreateDealByStaff from "../../DealQuotationDetail/CreateDealByStaff";
 
 const QuotationGrid = ({ quotations, calculateOriginalPrice }) => {
+  
   const handleReloadContent = () => {
     setReloadContent((prev) => !prev);
   };
   return (
-    <div className="grid grid-cols-1 gap-4 md:hidden mb-2">
+    <div className="grid grid-cols-1 gap-4 md:hidden">
       {quotations &&
         quotations.map((quotation, index) => (
           <div
             key={quotation.id}
-            className="bg-gray-50 border border-gray-300  space-y-4 rounded-lg shadow px-8 py-4"
+            className="bg-gray-50 border border-gray-300  space-y-4 rounded-lg shadow px-2 py-5"
           >
             <div className="flex items-center justify-between space-x-5 text-sm">
-              <div className="flex justify-center items-center">
-                <div className="text-blue-500 font-bold hover:underline mr-4">
+              <div className="flex">
+                <div className="text-blue-500 font-bold hover:underline mr-2">
                   #{index + 1}
                 </div>
+                <div className="text-gray-500">
+                  <DateFormatter dateString={quotation.createDate} />
+                </div>
+              </div>
+
+              <div>
                 <span>
                   <QuotationStatusBadge
                     quotationStatus={quotation.quotationStatus}
@@ -34,21 +41,13 @@ const QuotationGrid = ({ quotations, calculateOriginalPrice }) => {
               </div>
             </div>
 
-            <div className="flex justify-between">
-              <span className=" text-gray-500">Quote creation date:</span>
-              <span className="text-blue-700 font-semibold">
-                <DateFormatter dateString={quotation.createDate} />
-              </span>
-            </div>
-
-            <div className="flex justify-between">
-            <span className=" text-gray-500">Raw Material Price:</span>
-             
+            <div className="flex justify-between text-sm text-gray-700">
+              Raw Material Price:
               <div className="flex">
                 {quotation.rawMaterialPrice ? (
                   <div className="flex items-center justify-center ml-4">
                     <span className="mr-2">
-                      <CurrencyFormatter amount={quotation.rawMaterialPrice} />{" "}VNĐ
+                      <CurrencyFormatter amount={quotation.rawMaterialPrice} />
                     </span>
                     {calculateOriginalPrice(
                       quotation.rawMaterialPrice,
@@ -60,7 +59,7 @@ const QuotationGrid = ({ quotations, calculateOriginalPrice }) => {
                             quotation.rawMaterialPrice,
                             quotation.rawMaterialDiscount
                           )}
-                        />{" "}VNĐ
+                        />
                       </span>
                     )}
                   </div>
@@ -76,13 +75,12 @@ const QuotationGrid = ({ quotations, calculateOriginalPrice }) => {
               </div>
             </div>
 
-            <div className="flex justify-between">
-            <span className=" text-gray-500">Furniture Price:</span>
-              
+            <div className="flex justify-between text-sm text-gray-700">
+              Furniture Price:
               {quotation.furniturePrice ? (
                 <div className="flex items-center justify-center ml-4">
                   <span className="mr-2">
-                    <CurrencyFormatter amount={quotation.furniturePrice} />{" "}VNĐ
+                    <CurrencyFormatter amount={quotation.furniturePrice} />
                   </span>
                   {calculateOriginalPrice(
                     quotation.furniturePrice,
@@ -94,7 +92,7 @@ const QuotationGrid = ({ quotations, calculateOriginalPrice }) => {
                           quotation.furniturePrice,
                           quotation.furnitureDiscount
                         )}
-                      />{" "}VNĐ
+                      />
                     </span>
                   )}
                 </div>
@@ -109,14 +107,13 @@ const QuotationGrid = ({ quotations, calculateOriginalPrice }) => {
                 )}
             </div>
 
-            <div className="flex justify-between">
-            <span className=" text-gray-500">Labor Price:</span>
-              
+            <div className="flex justify-between text-sm text-gray-700">
+              Labor Price:
               <div className="flex">
                 {quotation.laborPrice > 0 ? (
                   <div className="flex items-center justify-center ml-4">
                     <span className="mr-2">
-                      <CurrencyFormatter amount={quotation.laborPrice} />{" "}VNĐ
+                      <CurrencyFormatter amount={quotation.laborPrice} />
                     </span>
                     {calculateOriginalPrice(
                       quotation.laborPrice,
@@ -128,7 +125,7 @@ const QuotationGrid = ({ quotations, calculateOriginalPrice }) => {
                             quotation.laborPrice,
                             quotation.laborDiscount
                           )}
-                        />{" "}VNĐ
+                        />
                       </span>
                     )}
                   </div>
@@ -143,11 +140,11 @@ const QuotationGrid = ({ quotations, calculateOriginalPrice }) => {
               </div>
             </div>
 
-            <div className="flex justify-between">
-              <span className="font-semibold text-gray-500">Total:</span>
+            <div className="flex justify-between text-sm text-gray-700">
+              <span className="font-semibold">Total:</span>
               {quotation.total ? (
                 <div className="text-red-500 font-semibold mr-2">
-                  <CurrencyFormatter amount={quotation.total} />{" "}VNĐ
+                  <CurrencyFormatter amount={quotation.total} />
                 </div>
               ) : (
                 <span className="mx-2 text-gray-400">N/A</span>
@@ -157,8 +154,8 @@ const QuotationGrid = ({ quotations, calculateOriginalPrice }) => {
             <div className="text-sm font-medium text-black text-center mb-3">
               {quotation.quotationStatus === 0 && (
                 <NavLink to={`/staff/manage-material-detail/${quotation.id}`}>
-                  <button className="text-sm bg-green-600 text-white p-2 rounded hover:bg-green-400 my-3">
-                    Create Quotation
+                  <button className="bg-green-600 text-white p-2 rounded hover:bg-green-400 my-3">
+                    Create Quotation Detail
                   </button>
                 </NavLink>
               )}
@@ -174,8 +171,8 @@ const QuotationGrid = ({ quotations, calculateOriginalPrice }) => {
 
               {quotation.quotationStatus !== 0 && (
                 <NavLink to={`/staff/quotation-detail/${quotation.id}`}>
-                  <div className="flex items-center justify-center text-green-600 hover:text-black italic">
-                    View details <CgEnter size={25} className="ml-2" />
+                  <div className="flex items-center justify-center text-green-600 hover:text-baseGreen">
+                    View Quotation Detail <CgEnter size={25} className="ml-2" />
                   </div>
                 </NavLink>
               )}

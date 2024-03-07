@@ -125,9 +125,7 @@ export default function Contract() {
                       </div>
                       {projectDetail?.contract != null && projectDetail?.contract.contractStatus == 1 && (
                         // <button>Sign Contract</button>
-
-                        <SignContractForm onModalClose={handleReloadContent} id={projectDetail?.contract?.id}  projectDetail={projectDetail} fetchData={fetchProjectDetail}/>
-
+                        <SignContractForm onModalClose={handleReloadContent} id={projectDetail?.contract?.id} />
                       )}
                     </td>
                   </tr>

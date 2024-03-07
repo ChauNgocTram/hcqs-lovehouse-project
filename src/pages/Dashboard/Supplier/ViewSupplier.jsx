@@ -213,7 +213,7 @@ const ViewSupplier = () => {
           <MutatingDots />
         </div>
       ) : (
-        <div className="relative flex flex-col p-8 text-gray-900 h-screen overflow-y-auto mb-8 pb-12">
+        <div className="relative flex flex-col p-8 text-gray-900">
           {/* title */}
           <div>
             <div className="flex items-center space-x-2 text-xl">
