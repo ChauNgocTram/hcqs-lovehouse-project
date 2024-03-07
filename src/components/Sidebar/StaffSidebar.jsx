@@ -15,6 +15,7 @@ import {
   AiOutlineLineChart,
   AiOutlineDown,
   AiOutlineUp,
+  AiOutlineShop,
 } from "react-icons/ai";
 
 import control from "../../assets/images/control.png";
@@ -69,7 +70,21 @@ export default function StaffSidebar() {
         { title: "Blog List", path: "/dashboard/list-blog" },
       ],
     },
-
+    {
+      label: "SUPPLIER",
+    },
+    {
+      title: "Supplier Management",
+      icon: <AiOutlineShop />,
+      submenu: [
+        {
+          title: "View Supplier Price",
+          path: "/staff/view-supplier-price",
+        },
+        { title: "Import Quotation", path: "/staff/import-quotation" },
+        { title: "Quotation List", path: "/staff/list-quotation" },
+      ],
+    },
     {
       label: "IMPORT EXPORT",
     },
@@ -81,6 +96,7 @@ export default function StaffSidebar() {
         { title: "Export Inventory", path: "/dashboard/export-inventory" },
       ],
     },
+    
     {
       title: "Material",
       icon: <AiOutlineUngroup />,
@@ -97,19 +113,6 @@ export default function StaffSidebar() {
       icon: <AiOutlineApartment />,
       path: "/staff/worker-management",
     },
-    {
-      title: "User Management",
-      icon: <AiOutlineContacts />,
-      path: "/dashboard/users-list",
-    },
-
-    {
-      label: "OTHER",
-    },
-    { title: "Transaction ", icon: <AiOutlineLineChart /> },
-    // { title: "Go to Home page", icon: <RiHome4Line />, path: "/" },
-    // { title: "Setting ", icon: <RiWallet3Line /> },
-    //{ title: "Log out", icon: <RiLogoutCircleRLine /> },
   ];
 
   const toggleSubMenu = (index) => {
