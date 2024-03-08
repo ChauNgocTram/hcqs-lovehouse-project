@@ -107,7 +107,7 @@ export default function Contract() {
                       />
                     </td>
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap text-center flex-col">
-                      {projectDetail?.contract?.contractStatus === 2 ? (
+                      {projectDetail?.contract?.contractStatus === 1 || projectDetail?.contract?.contractStatus === 2 ? (
                         <NavLink
                           to={projectDetail?.contract?.contractUrl}
                           className="text-blue-500 hover:underline"

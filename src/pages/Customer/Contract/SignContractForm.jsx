@@ -137,7 +137,7 @@ export default function SignContractForm({ onModalClose, id, projectDetail,fetch
         "25",
         () => {}
       );
-      fetchData
+      fetchData()
     } else {
       for (var i = 0; i < result.messages.length; i++) {
         toast.error(result.messages[i]);
