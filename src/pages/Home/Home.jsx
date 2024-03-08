@@ -13,11 +13,13 @@ function Home() {
         <Hero/>
         {/* <Slider /> */}
         {/* <Slider2 /> */}
-        <IntroSection />
+        {/* <IntroSection /> */}
+       
+        {/* <QuoteSection /> */}
+       
+        <ProjectsSection/>
         <Parallax />
-        <QuoteSection />
-        <ProjectsSection />
-        <WhySection />
+        {/* <WhySection /> */}
         <NewsSection />
 
         <Footer />

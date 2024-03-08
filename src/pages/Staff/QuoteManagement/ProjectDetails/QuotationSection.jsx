@@ -24,7 +24,7 @@ export default function QuotationSection({ projectDetail }) {
       <div className="flex-1 p-5">
         <div className="px-2 mb-4 pb-6 -mt-4">
           <div className="font-semibold border-b-2 mb-4 flex space-x-4">
-            <h4 className="pb-2 uppercase">III. Quotation</h4>
+            <h4 className="pb-2 uppercase">Quotation</h4>
             {/* <div>
               <QuotationStatusBadge
                 quotationStatus={projectDetail?.quotations.quotationStatus}
@@ -186,7 +186,7 @@ export default function QuotationSection({ projectDetail }) {
                           />
                         </span>
                       </td>
-                      <td className="p-3 text-sm text-gray-700 text-center">
+                      <td className="flex flex-col justify-center items-center space-y-2 p-3 text-sm text-gray-700 text-center">
                         {quotation.quotationStatus === 0 && (
                           <NavLink
                             to={`/staff/manage-material-detail/${quotation.id}`}
