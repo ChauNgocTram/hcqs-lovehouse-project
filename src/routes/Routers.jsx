@@ -174,7 +174,7 @@ export default function Routers() {
       element: isStaff ? <Dashboard /> : <Navigate to="/404" replace />,
       children: [
         { path: "home", element: <DBHome /> },
-        // { path: "users-list", element: <UsersList /> },
+         { path: "users-list", element: <UsersList /> },
 
         // { path: "create-news", element: <NewsCreate /> },
         // { path: "list-news", element: <NewsList /> },
@@ -226,6 +226,7 @@ export default function Routers() {
         { path: "profile", element: <Profile /> },
         { path: "password", element: <Password /> },
         { path: "account", element: <Account /> },
+        
       ],
     },
     {

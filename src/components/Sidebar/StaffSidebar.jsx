@@ -14,7 +14,7 @@ import {
   AiOutlineContacts,
   AiOutlineLineChart,
   AiOutlineDown,
-  AiOutlineUp,
+  AiOutlineUp,AiOutlineSwap
 } from "react-icons/ai";
 
 import control from "../../assets/images/control.png";
@@ -106,10 +106,9 @@ export default function StaffSidebar() {
     {
       label: "OTHER",
     },
-    { title: "Transaction ", icon: <AiOutlineLineChart /> },
     // { title: "Go to Home page", icon: <RiHome4Line />, path: "/" },
     // { title: "Setting ", icon: <RiWallet3Line /> },
-    //{ title: "Log out", icon: <RiLogoutCircleRLine /> },
+    { title: "Log out", icon: <AiOutlineSwap /> },
   ];
 
   const toggleSubMenu = (index) => {

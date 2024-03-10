@@ -22,10 +22,8 @@ export default function CustomerSidebar() {
     {
       title: "Accounts",
       icon: <AiOutlineIdcard />,
-      gap: true,
       path: "/customer/account/profile",
     },
-    { title: "Transaction ", icon: <AiOutlineSwap /> },
 
     { title: "Go to Home page", icon: <AiOutlineHome />, gap: true, path: "/" },
     { title: "Log out", icon: <AiOutlineLogout /> },
