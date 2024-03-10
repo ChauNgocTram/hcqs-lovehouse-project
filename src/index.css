@@ -24,6 +24,7 @@ input[type="password"]::-ms-clear {
   z-index: 10;
   overflow: hidden;
 } */
+
 .item{
   @apply relative text-gray-500 font-mono font-bold tracking-[1px] hover:text-black
 }
@@ -63,3 +64,13 @@ input[type="password"]::-ms-clear {
   border-color: #e53e3e;
 } */
 
+.responsive-type-animation {
+  font-size: 56px;
+}
+
+/* Media query cho màn hình md trở xuống */
+@media (max-width: 768px) {
+  .responsive-type-animation {
+    font-size: 32px;
+  }
+}

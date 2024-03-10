@@ -27,10 +27,6 @@ import {
   ProjectDetail,
   CreateSampleProject,
   HouseProject,
-  HouseRoofList,
-  HouseRoofDetail,
-  TownHouseList,
-  TownHouseDetail,
   News,
   NewsDetail,
   Blog,
@@ -68,6 +64,7 @@ import ConstructionConfigManagement from "../pages/Staff/ConstructionConfig/Cons
 import PaymentNotification from "../pages/Customer/Payment/PaymentNotification.jsx";
 import AdminDashboard from "../pages/Admin/AdminDashboard/AdminDashboard"
 import WorkerManagement from "../pages/Staff/WorkerManagement/WorkerManagement";
+import HouseProjectDetails from "../pages/HouseProjects/HouseProjectDetails/HouseProjectDetails";
 
 export default function Routers() {
   const auth = useSelector((state) => state?.auth);
@@ -86,16 +83,10 @@ export default function Routers() {
         { path: "/", element: <Home /> },
         { path: "/aboutus", element: <AboutUs /> },
         { path: "/houseProject", element: <HouseProject /> },
-        { path: "/house-roof-projects", element: <HouseRoofList /> },
         {
-          path: "/house-roof-projects/details/:id",
-          element: <HouseRoofDetail />,
-        },
-        { path: "/town-house-projects", element: <TownHouseList /> },
-        {
-          path: "/town-house-projects/details/:id",
-          element: <TownHouseDetail />,
-        },
+          path: "/house-projects/details/:id",
+          element: <HouseProjectDetails />,
+        },        
         { path: "/news", element: <News /> },
         { path: "/news/newsDetail/:id", element: <NewsDetail /> },
         { path: "/blog", element: <Blog /> },
