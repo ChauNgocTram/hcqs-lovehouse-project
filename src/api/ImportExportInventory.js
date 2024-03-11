@@ -9,12 +9,12 @@ export const getAllInventory = async (pageIndex, pageSize) => {
     const res = await axios.post(
       `${baseURL}/import-export-inventory/get-all?pageIndex=${pageIndex}&pageSize=${pageSize}`,
       [], {
-      headers: {
-        Authorization: `Bearer ${usertoken}`,
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    }
+        headers: {
+          Authorization: `Bearer ${usertoken}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
     );
     return res.data;
   } catch (err) {
@@ -27,12 +27,12 @@ export const getAllImportInventory = async (pageIndex, pageSize) => {
     const res = await axios.post(
       `${baseURL}/import-export-inventory/get-all-import?pageIndex=${pageIndex}&pageSize=${pageSize}`,
       [], {
-      headers: {
-        Authorization: `Bearer ${usertoken}`,
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    }
+        headers: {
+          Authorization: `Bearer ${usertoken}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
     );
     return res.data;
   } catch (err) {
@@ -44,12 +44,12 @@ export const getAllExportByQuotationDetailId = async (id) => {
   try {
     const res = await axios.get(
       `${baseURL}/import-export-inventory/get-all-export-by-quotation-detail-id/${id}`, {
-      headers: {
-        Authorization: `Bearer ${usertoken}`,
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    }
+        headers: {
+          Authorization: `Bearer ${usertoken}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
     );
     return res.data;
   } catch (err) {
@@ -63,12 +63,12 @@ export const getAllExportInventory = async (pageIndex, pageSize) => {
     const res = await axios.post(
       `${baseURL}/import-export-inventory/get-all-export?pageIndex=${pageIndex}&pageSize=${pageSize}`,
       [], {
-      headers: {
-        Authorization: `Bearer ${usertoken}`,
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    }
+        headers: {
+          Authorization: `Bearer ${usertoken}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
     );
     return res.data;
   } catch (err) {
@@ -153,6 +153,27 @@ export const validInventoryExcelFile = async (excelData) => {
       withCredentials: true,
     });
 
+    return res.data;
+  } catch (err) {
+    return null;
+  }
+};
+
+export const importMaterial = async (quantity, supplierPriceDetailId) => {
+  try {
+    const res = await axios.post(
+      `${baseURL}/import-export-inventory/import-material`,
+      [{
+        quantity,
+        supplierPriceDetailId
+      }], {
+        headers: {
+          Authorization: `Bearer ${usertoken}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
     return res.data;
   } catch (err) {
     return null;
