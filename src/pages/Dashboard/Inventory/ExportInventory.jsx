@@ -77,29 +77,31 @@ const ExportInventory = () => {
 
   return (
     <>
-     <div className="flex flex-col py-8 pb-32 mb-12 h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
-      <div>
-        <div className="flex items-center space-x-2 text-xl">
-          <MdInventory />
-          <div>Import Export</div>
-          <FaChevronRight />
-          <div>Inventory</div>
-          <FaChevronRight />
-        </div>
-        <div className="text-2xl text-green-400 font-semibold py-4">
-          Export Inventory
-        </div>
+      <div className="flex flex-col py-8 pb-32 mb-12 h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
+        <div>
+          <div className="flex items-center space-x-2 text-xl">
+            <MdInventory />
+            <div>Import Export</div>
+            <FaChevronRight />
+            <div>Inventory</div>
+            <FaChevronRight />
+          </div>
+          <div className="text-2xl text-green-400 font-semibold py-4">
+            Export Inventory
+          </div>
 
-        {/* Display the Ant Design Table */}
-        <Table
-          dataSource={projects}
-          columns={columns}
-          pagination={{ pageSize: 6 }}
-        />
+          {/* Display the Ant Design Table */}
+          <Table
+            dataSource={projects.map((project) => ({
+              ...project,
+              key: project.id,
+            }))}
+            columns={columns}
+            pagination={{ pageSize: 6 }}
+          />
+        </div>
       </div>
-    </div>
     </>
-   
   );
 };
 
