@@ -49,8 +49,8 @@ export default function StaffSidebar() {
       title: "Project Page",
       icon: <AiOutlineBook />,
       submenu: [
-        { title: "Create Project", path: "/dashboard/create-sample-project" },
-        { title: "Project List", path: "/dashboard/list-project" },
+        { title: "Create Project", path: "/staff/create-sample-project" },
+        { title: "Project List", path: "/staff/list-project" },
       ],
     },
     {
@@ -65,8 +65,8 @@ export default function StaffSidebar() {
       title: "Blogs Page",
       icon: <AiOutlineRead />,
       submenu: [
-        { title: "Create Blog", path: "/dashboard/create-blog" },
-        { title: "Blog List", path: "/dashboard/list-blog" },
+        { title: "Create Blog", path: "/staff/create-blog" },
+        { title: "Blog List", path: "/staff/list-blog" },
       ],
     },
 
@@ -77,19 +77,19 @@ export default function StaffSidebar() {
       title: "Inventory",
       icon: <AiOutlineHdd />,
       submenu: [
-        { title: "List Inventory", path: "/dashboard/import-inventory" },
-        { title: "Export Inventory", path: "/dashboard/export-inventory" },
+        { title: "List Inventory", path: "/staff/import-inventory" },
+        { title: "Export Inventory", path: "/staff/export-inventory" },
       ],
     },
     {
       title: "Material",
       icon: <AiOutlineUngroup />,
-      path: "/dashboard/list-material",
+      path: "/staff/list-material",
     },
     {
       title: "Sale Price",
       icon: <AiOutlineTags />,
-      path: "/dashboard/export-price-material",
+      path: "/staff/export-price-material",
     },
 
     {
@@ -100,7 +100,7 @@ export default function StaffSidebar() {
     {
       title: "User Management",
       icon: <AiOutlineContacts />,
-      path: "/dashboard/users-list",
+      path: "/staff/users-list",
     },
 
     {
@@ -173,10 +173,10 @@ export default function StaffSidebar() {
                       //   index === 0 && "bg-baseGreen text-white"
                       // } `}
 
-                      className={`flex rounded-md p-2 cursor-pointer ${
+                      className={`flex rounded-md p-2 my-2 cursor-pointer ${
                         isActive(menu.path)
                           ? "bg-baseGreen text-white"
-                          : "hover:bg-baseGreen text-black hover:text-white"
+                          : "hover:bg-base4 text-black hover:text-white"
                       } text-sm items-center gap-x-4`}
                     >
                       <span style={{ fontSize: "22px" }}>{menu.icon}</span>
@@ -210,10 +210,10 @@ export default function StaffSidebar() {
                           className="text-decoration-none"
                         >
                           <li
-                            className={`flex rounded-md p-2 cursor-pointer ${
+                            className={`flex rounded-md p-2 my-2 cursor-pointer ${
                               location.pathname === submenu.path
                                 ? "bg-baseGreen text-white"
-                                : "hover:bg-baseGreen text-black hover:text-white"
+                                : "hover:bg-base3 text-black hover:text-white"
                             } text-sm items-center gap-x-4`}
                           >
                             <span style={{ fontSize: "24px" }}>&nbsp;</span>
