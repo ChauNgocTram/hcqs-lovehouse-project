@@ -193,6 +193,11 @@ export default function Routers() {
         { path: "export-price-material", element: <ExportPrice /> },
 
         { path: "users-list", element: <UsersList /> },
+           { path: "view-supplier-price", element: <ViewSupplierPrice /> },
+
+        { path: "import-quotation", element: <ImportQuotation /> },
+        { path: "import-quotation", element: <ImportQuotation /> },
+        { path: "list-quotation", element: <ListQuotation /> },
 
       ],
     },
