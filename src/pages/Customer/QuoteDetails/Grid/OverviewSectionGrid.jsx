@@ -6,7 +6,7 @@ import {
 
   import DealForm from '../../DealQuotation/DealForm'
 
-function OverviewSectionGrid({ quoteDetail, calculateOriginalPrice }) {
+function OverviewSectionGrid({ quoteDetail, calculateOriginalPrice , handleCancelQuotation,handleConfirmQuotation }) {
     const [reloadContent, setReloadContent] = useState(false);
 
     const handleReloadContent = () => {

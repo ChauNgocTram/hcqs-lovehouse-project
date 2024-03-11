@@ -17,6 +17,7 @@ import {
 
 import DealForm from "../DealQuotation/DealForm";
 import { toast } from "react-toastify";
+import OverviewSectionGrid from "./Grid/OverviewSectionGrid";
 
 export default function OverviewSection({ quoteDetail, projectDetail }) {
   const navigate = useNavigate();
@@ -319,7 +320,7 @@ export default function OverviewSection({ quoteDetail, projectDetail }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:hidden">
+      {/* <div className="grid grid-cols-1 gap-4 md:hidden">
         <div
           key={quoteDetail?.quotation?.id}
           className="bg-gray-50 border border-gray-300 space-y-4 rounded-lg shadow px-8 py-5"
@@ -484,7 +485,9 @@ export default function OverviewSection({ quoteDetail, projectDetail }) {
             </>
           </div>
         </div>
-      </div>
+      </div> */}
+      <OverviewSectionGrid quoteDetail={quoteDetail} handleConfirmQuotation={handleConfirmQuotation}
+        handleCancelQuotation={handleCancelQuotation}  calculateOriginalPrice={calculateOriginalPrice}/>
     </>
   );
 }
