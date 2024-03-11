@@ -22,15 +22,16 @@ export default function QuotationForm() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [address, setAddress] = useState("");
   const [progress, setProgress] = useState(null);
-   const [isLoading, setisLoading] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
 
   const [errorsProject, setErrorsProject] = useState({
     floor: "",
     area: "",
     constructionType: "",
     selectedImage: "",
-    address:""
-
+    address: "",
   });
 
   const uploadImage = (e) => {
@@ -61,56 +62,56 @@ export default function QuotationForm() {
 
   const submitRequest = async (e) => {
     e.preventDefault();
-   
 
-      if (!validateProjectForm()) {
-        return;
-      }
+    //   setisLoading(true);
 
-      const formData = {
-        numOfFloor: floor,
-        area: area,
-        landDrawingFileUrl: selectedImage ? selectedImage : null,
-        constructionType: constructionType,
-        address: address,
-      };
-      const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "Do you want to submit the request?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, submit it",
-        cancelButtonText: "No, cancel",
-        reverseButtons: true,
-        focusConfirm: false,
-      });
+    if (!validateProjectForm()) {
+      return;
+    }
+    const formData = {
+      numOfFloor: floor,
+      area: area,
+      landDrawingFileUrl: selectedImage ? selectedImage : null,
+      constructionType: constructionType,
+      address: address,
+    };
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to submit the request?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, submit it",
+      cancelButtonText: "No, cancel",
+      reverseButtons: true,
+      focusConfirm: false,
+    });
 
-      if (result.isConfirmed) {
+    if (result.isConfirmed) {
       setisLoading(true);
+      const response = await quoteRequest(formData, user?.id);
+      console.log("Form Data:", formData);
 
-        const response = await quoteRequest(formData, user?.id);
-        console.log("Form Data:", formData);
-
-        if (response) {
-          alert.alertSuccessWithTime(
-            "Request quotation created successfully",
-            "",
-            2000,
-            "30",
-            () => {}
-          );
-          navigate("/customer/my-request");
-        } else {
-          alert.alertFailedWithTime(
-            "Failed to create request",
-            "Please try again",
-            2500,
-            "25",
-            () => {}
-          );
-        }
-      
-    } 
+      if (response.isSuccess) {
+        alert.alertSuccessWithTime(
+          "Request quotation created successfully",
+          "",
+          2000,
+          "30",
+          () => {}
+        );
+        setLoading(false);
+        navigate("/customer/my-request");
+      } else {
+        alert.alertFailedWithTime(
+          "Failed to create request",
+          "Please try again",
+          2500,
+          "25",
+          () => {}
+        );
+        setLoading(false);
+      }
+    }
   };
 
   const validateProjectForm = () => {
@@ -119,7 +120,7 @@ export default function QuotationForm() {
       area: "",
       constructionType: "",
       selectedImage: "",
-      address:"",
+      address: "",
     };
 
     if (!floor) {
@@ -236,7 +237,7 @@ export default function QuotationForm() {
                     <div className="w-full  px-4 mb-10">
                       <div className="relative w-full h-14 py-4 px-3 border border-gray-400 hover:border-white focus-within:border-green-500 rounded-lg">
                         <span className="absolute bottom-full left-0 ml-3 -mb-1 transform translate-y-0.5 text-xs font-semibold text-gray-500 px-1  bg-white ">
-                          Address 
+                          Address
                         </span>
                         <input
                           type="text"
@@ -258,7 +259,6 @@ export default function QuotationForm() {
                         </div>
                       )}
                     </div>
-
 
                     <div className="w-full px-4 mb-10">
                       <div className="relative w-full h-14 py-4 px-3 border border-gray-400 hover:border-white focus-within:border-green-500 rounded-lg">
@@ -355,8 +355,7 @@ export default function QuotationForm() {
                     <Button
                       className="inline-block  px-4  text-xs text-center font-semibold leading-6 text-white bg-baseGreen hover:bg-green-600 rounded-lg transition duration-200"
                       onClick={submitRequest}
-                      loading={isLoading}
-                      
+                      loading={loading}
                     >
                       Submit
                     </Button>

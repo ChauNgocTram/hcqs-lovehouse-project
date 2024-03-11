@@ -81,6 +81,7 @@ export default function Routers() {
   const routing = useRoutes([
     { path: "/payment/*", element: <PaymentNotification /> },
 
+
     {
       path: "/",
       element: <HomeLayout />,
@@ -136,6 +137,7 @@ export default function Routers() {
     },
     {
       path: "/staff",
+      element: isStaff ? <StaffLayout /> : <Navigate to="/404" replace />,
       element: isStaff ? <StaffLayout /> : <Navigate to="/404" replace />,
       children: [
         { path: "all-request", element: <AllRequest /> },
@@ -215,19 +217,21 @@ export default function Routers() {
         // { path: "view-supplier-price", element: <ViewSupplierPrice /> },
 
         // { path: "import-quotation", element: <ImportQuotation /> },
+        // { path: "import-quotation", element: <ImportQuotation /> },
         // { path: "list-quotation", element: <ListQuotation /> },
       ],
     },
     {
       path: "/admin",
       element: isAdmin ? <AdminLayout /> : <Navigate to="/404" replace />,
+      element: isAdmin ? <AdminLayout /> : <Navigate to="/404" replace />,
       children: [
+        { path: "dashboard", element: <AdminDashboard /> },
         { path: "dashboard", element: <AdminDashboard /> },
         { path: "users-list", element: <UsersList /> },
         { path: "view-supplier", element: <ViewSupplier /> },
-        { path: "view-supplier-price", element: <ViewSupplierPrice /> },
-        { path: "import-quotation", element: <ImportQuotation /> },
-        { path: "list-quotation", element: <ListQuotation /> },
+        { path: "view-supplier-price", element: <ViewSupplierPrice /> }
+       
       ],
     },
     {

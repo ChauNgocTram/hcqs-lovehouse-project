@@ -1,14 +1,18 @@
 import React from "react";
-import { ReactSpreadsheetImport } from "react-spreadsheet-import";
+import { ReactSpreadsheetImport, StepType } from "react-spreadsheet-import";
 
-function DataTable({ isOpen, onClose, onSubmit, fields }) {
+function DataTableFalse({ isOpen, onClose, onSubmit, fields, excelData }) {
   return (
     <div>
       <ReactSpreadsheetImport
         isOpen={isOpen}
+        initialStepState={{
+          type: StepType.validateData,
+          data: excelData,
+        }}
+        fields={fields}
         onClose={onClose}
         onSubmit={onSubmit}
-        fields={fields}
         customTheme={{
           components: {
             Button: {
@@ -23,4 +27,4 @@ function DataTable({ isOpen, onClose, onSubmit, fields }) {
   );
 }
 
-export default DataTable;
+export default DataTableFalse;

@@ -121,7 +121,7 @@ function ListQuotation() {
           <MutatingDots />
         </div>
       ) : (
-        <div className="flex flex-col p-8 text-gray-900 h-screen overflow-y-auto mb-8 pb-12">
+        <div className="flex flex-col p-8 text-gray-900">
           <div>
             <div className="flex items-center space-x-2 text-xl">
               <IoPricetagsSharp />
@@ -130,7 +130,7 @@ function ListQuotation() {
               <div>Price Quotation</div>
               <FaChevronRight />
             </div>
-            <div className="text-2xl text-orange-400 font-semibold py-4">
+            <div className="text-2xl text-green-400 font-semibold py-4">
               Quotation List
             </div>
           </div>

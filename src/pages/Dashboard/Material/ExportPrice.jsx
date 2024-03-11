@@ -74,9 +74,11 @@ const ExportPrice = () => {
   console.log("allExportPriceMaterialsData: ", allExportPriceMaterialsData);
   const columns = [
     {
-      title: "ID",
+      title: "No",
       dataIndex: "id",
-      key: "id",
+      key: "no",
+      render: (text, record) =>
+        exportPriceData.findIndex((item) => item.id === record.id) + 1,
     },
     {
       title: "Price",
@@ -229,7 +231,7 @@ const ExportPrice = () => {
           <div>Material</div>
           <FaChevronRight />
         </div>
-        <div className="text-2xl text-orange-400 font-semibold py-4">
+        <div className="text-2xl text-green-400 font-semibold py-4">
           Export Price
         </div>
       </div>

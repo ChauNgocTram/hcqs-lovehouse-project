@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Tag } from "antd";
+import { LoadingOverlay } from "../../../../components";
 
 export default function ProjectInfo({ projectDetail }) {
+  const[isLoading,setIsLoading] = useState(true)
+  useEffect(()=>{
+if(projectDetail !== null){
+  setIsLoading(false)
+}
+
+  },[projectDetail])
   return (
+    <>
+    <LoadingOverlay loading={isLoading}/>
     <div className="md:w-1/2 p-4 order-1 md:order-1">
       <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-6">
         <img
@@ -44,5 +54,6 @@ export default function ProjectInfo({ projectDetail }) {
         </div>
       </div>
     </div>
+    </>
   );
 }

@@ -16,7 +16,9 @@ import {
 } from "../../../constants/apiContract";
 import { toast } from "react-toastify";
 
+
 export default function SignContractForm({ onModalClose, id, projectDetail,fetchData }) {
+
   const user = useSelector((state) => state?.user?.user);
 
   const [showModal, setShowModal] = useState(false);
@@ -108,6 +110,7 @@ export default function SignContractForm({ onModalClose, id, projectDetail,fetch
         2500,
         "25",
         () => {}
+
       );
       
       setShowModal(false);
@@ -134,13 +137,15 @@ export default function SignContractForm({ onModalClose, id, projectDetail,fetch
         "25",
         () => {}
       );
-      fetchData
+      fetchData()
     } else {
       for (var i = 0; i < result.messages.length; i++) {
         toast.error(result.messages[i]);
       }
     }
+
     setIsLoading(false)
+
     setShowModal(false);
     onModalClose();
 
@@ -164,6 +169,7 @@ export default function SignContractForm({ onModalClose, id, projectDetail,fetch
             <h3 className="text-xl font-semibold text-gray-900 mb-5">
               Sign Contract
             </h3>
+
             <Button
               className="text-white bg-green-600 hover:bg-green-800  "
               style={{ cursor: "pointer" }}
@@ -172,6 +178,8 @@ export default function SignContractForm({ onModalClose, id, projectDetail,fetch
             >
               Resend verification code
             </Button>
+
+
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}

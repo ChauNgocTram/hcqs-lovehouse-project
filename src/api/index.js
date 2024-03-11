@@ -83,7 +83,8 @@ export {
   getAllSupplierQuotationsByMonth,
   getSupplierQuotationTemplate,
   uploadSupplierQuotationWithExcelFile,
-  getUploadSupplierQuotationWithExcelFileError
+  getUploadSupplierQuotationWithExcelFileError,
+  validExcelFile
 }
 from "./SupplierPriceQuotation.js";
 
@@ -119,7 +120,8 @@ export {
   getAllInventory,
   getImportMaterialTemplate,
   importMaterialWithExcel,
-  getImportMaterialWithExcelError
+  getImportMaterialWithExcelError,
+  validInventoryExcelFile
 }
 from "./ImportExportInventory.js";
 

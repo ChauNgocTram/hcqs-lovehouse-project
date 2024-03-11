@@ -203,11 +203,8 @@ export default function CreateProgressForm() {
         </div>
 
         <div className="total w-1/3">
-          <div className="flex">
-            Total:
-            <p className="text-red-500 font-semibold ml-4">
-              <CurrencyFormatter amount={contract.total} /> VNĐ
-            </p>
+          <div className="flex">Total:
+            <p className="text-red-500 font-semibold ml-4"><CurrencyFormatter amount={contract.total} /> VNĐ</p>
           </div>
           {/* <p>Remaining amounts:</p> */}
         </div>
