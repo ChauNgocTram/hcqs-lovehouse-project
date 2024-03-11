@@ -107,10 +107,10 @@ export default function AdminSidebar() {
                       //   index === 0 && "bg-baseGreen text-white"
                       // } `}
 
-                      className={`flex rounded-md p-2 cursor-pointer ${
+                      className={`flex rounded-md p-2 my-2 cursor-pointer ${
                         isActive(menu.path)
                           ? "bg-baseGreen text-white"
-                          : "hover:bg-baseGreen text-black hover:text-white"
+                          : "hover:bg-base4 text-black hover:text-white"
                       } text-sm items-center gap-x-4`}
                     >
                       <span style={{ fontSize: "22px" }}>{menu.icon}</span>
@@ -144,10 +144,10 @@ export default function AdminSidebar() {
                           className="text-decoration-none"
                         >
                           <li
-                            className={`flex rounded-md p-2 cursor-pointer ${
+                            className={`flex rounded-md p-2 my-2 cursor-pointer ${
                               location.pathname === submenu.path
                                 ? "bg-baseGreen text-white"
-                                : "hover:bg-baseGreen text-black hover:text-white"
+                                : "hover:bg-base3 text-black hover:text-white"
                             } text-sm items-center gap-x-4`}
                           >
                             <span style={{ fontSize: "24px" }}>&nbsp;</span>

@@ -39,6 +39,7 @@
     "react-scripts": "^5.0.1",
     "react-spreadsheet-import": "^4.6.1",
     "react-toastify": "^10.0.1",
+    "react-type-animation": "^3.2.0",
     "recharts": "^2.12.2",
     "redux": "^5.0.1",
     "sweetalert2": "^11.10.3",

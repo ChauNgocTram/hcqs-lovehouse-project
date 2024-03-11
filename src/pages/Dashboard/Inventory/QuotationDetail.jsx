@@ -155,7 +155,7 @@ const QuotationDetail = () => {
   ];
 
   return (
-    <div className="relative flex flex-col p-8">
+    <div className="relative flex flex-col p-8 pb-32 mb-12 h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
       <div className="flex items-center space-x-2 text-xl">
         <MdInventory />
         <div>Import Export</div>
@@ -170,7 +170,7 @@ const QuotationDetail = () => {
           Quotation Detail
         </div>
         <Link
-          to={"/dashboard/export-inventory"}
+          to={"/staff/export-inventory"}
           className="inline-flex items-center px-4 py-2 bg-indigo-500 cursor-pointer 
         hover:bg-indigo-600 text-white text-sm font-medium rounded-md space-x-2"
         >
