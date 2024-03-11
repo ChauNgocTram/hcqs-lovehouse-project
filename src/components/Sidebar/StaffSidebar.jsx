@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import {
   AiOutlineSetting,
@@ -11,22 +12,31 @@ import {
   AiOutlineHdd,
   AiOutlineUngroup,
   AiOutlineApartment,
-  AiOutlineContacts,
-  AiOutlineLineChart,
   AiOutlineDown,
-  AiOutlineUp,AiOutlineSwap, AiOutlineShop
+  AiOutlineUp,
+  AiOutlineShop,
+  AiOutlineLogout,
 } from "react-icons/ai";
 
 import control from "../../assets/images/control.png";
 import HouseLogo from "../../assets/images/HouseLogo.png";
+import { logout } from "../../context/actions/authActions";
+import { SET_USER_NULL } from "../../context/actions/userActions";
 
 export default function StaffSidebar() {
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const isActive = (path) => location.pathname === path;
+
   const [open, setOpen] = useState(true);
   const [activeSubMenu, setActiveSubMenu] = useState(null);
-  const location = useLocation();
+
+  const handleSignout = () => {
+    dispatch(logout());
+    dispatch(SET_USER_NULL());
+  };
 
   const Menus = [
-   
     {
       label: "QUOTATION",
     },
@@ -95,7 +105,7 @@ export default function StaffSidebar() {
         { title: "Export Inventory", path: "/staff/export-inventory" },
       ],
     },
-    
+
     {
       title: "Material",
       icon: <AiOutlineUngroup />,
@@ -117,8 +127,6 @@ export default function StaffSidebar() {
   const toggleSubMenu = (index) => {
     setActiveSubMenu(activeSubMenu === index ? null : index);
   };
-
-  const isActive = (path) => location.pathname === path;
 
   return (
     <div className=" flex w-72.5 overflow-y-auto duration-300 ease-linear scrollbar-thin scrollbar-none scrollbar-track-gray-100 border-r shadow-sm">
@@ -236,6 +244,18 @@ export default function StaffSidebar() {
               ) : null}
             </React.Fragment>
           ))}
+          <NavLink
+            to={"/auth"}
+            onClick={handleSignout}
+            className="text-decoration-none"
+          >
+            <li className="flex my-2 rounded-md p-2 cursor-pointer hover:bg-baseGreen text-black hover:text-white text-sm items-center gap-x-4 mt-2">
+              <span className="text-2xl">
+                <AiOutlineLogout />
+              </span>
+              <span>Logout</span>
+            </li>
+          </NavLink>
         </ul>
       </div>
     </div>

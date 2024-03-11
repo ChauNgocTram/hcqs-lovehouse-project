@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import control from "../../assets/images/control.png";
-import HouseLogo from "../../assets/images/HouseLogo.png";
+import { useDispatch } from "react-redux";
 
 import {
   AiOutlinePieChart,
@@ -13,10 +12,22 @@ import {
   AiOutlineUp,
 } from "react-icons/ai";
 
+import control from "../../assets/images/control.png";
+import HouseLogo from "../../assets/images/HouseLogo.png";
+import { logout } from "../../context/actions/authActions";
+import { SET_USER_NULL } from "../../context/actions/userActions";
+
 export default function AdminSidebar() {
+  const location = useLocation();
+  const dispatch = useDispatch();
+
   const [open, setOpen] = useState(true);
   const [activeSubMenu, setActiveSubMenu] = useState(null);
-  const location = useLocation();
+
+  const handleSignout = () => {
+    dispatch(logout());
+    dispatch(SET_USER_NULL());
+  };
 
   const Menus = [
     {
@@ -38,11 +49,10 @@ export default function AdminSidebar() {
         {
           title: "View Supplier Price",
           path: "/admin/view-supplier-price",
-        }
+        },
       ],
     },
     { title: "Go to Home page", icon: <AiOutlineHome />, gap: true, path: "/" },
-    { title: "Log out", icon: <AiOutlineLogout /> },
   ];
 
   const toggleSubMenu = (index) => {
@@ -167,6 +177,18 @@ export default function AdminSidebar() {
               ) : null}
             </React.Fragment>
           ))}
+          <NavLink
+            to={"/auth"}
+            onClick={handleSignout}
+            className="text-decoration-none"
+          >
+            <li className="flex my-2 rounded-md p-2 cursor-pointer hover:bg-baseGreen text-black hover:text-white text-sm items-center gap-x-4 mt-2">
+              <span className="text-2xl">
+                <AiOutlineLogout />
+              </span>
+              <span>Logout</span>
+            </li>
+          </NavLink>
         </ul>
       </div>
     </div>
