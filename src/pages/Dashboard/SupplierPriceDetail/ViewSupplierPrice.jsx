@@ -49,6 +49,10 @@ const ViewSupplierPrice = () => {
 
   const handleSortSubmit = async () => {
     try {
+      if (!selectedSupplier || !selectedDate) {
+        toast.error("Please select both supplier and date");
+        return;
+      }
       console.log("selectedSupplier: ", selectedSupplier);
       setIsLoading(true);
       const result = await getLatestQuotationPriceBySupplierName(
@@ -58,7 +62,13 @@ const ViewSupplierPrice = () => {
       );
 
       if (result.isSuccess) {
-        setSortedData(result.result.data);
+        const filteredData = result.result.data.filter((item) => {
+          const itemDate = moment(item.supplierPriceQuotation.date).format(
+            "YYYY-MM-DD"
+          );
+          return itemDate === selectedDate.format("YYYY-MM-DD");
+        });
+        setSortedData(filteredData);
       }
     } finally {
       setIsLoading(false);
