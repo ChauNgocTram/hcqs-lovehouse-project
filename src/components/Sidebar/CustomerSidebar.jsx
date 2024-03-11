@@ -22,10 +22,8 @@ export default function CustomerSidebar() {
     {
       title: "Accounts",
       icon: <AiOutlineIdcard />,
-      gap: true,
       path: "/customer/account/profile",
     },
-    { title: "Transaction ", icon: <AiOutlineSwap /> },
 
     { title: "Go to Home page", icon: <AiOutlineHome />, gap: true, path: "/" },
     { title: "Log out", icon: <AiOutlineLogout /> },
@@ -69,7 +67,7 @@ export default function CustomerSidebar() {
             >
               <li
                 key={index}
-                className={`flex  rounded-md p-2 cursor-pointer hover:bg-baseGreen text-black hover:text-white text-sm items-center gap-x-4 
+                className={`flex my-2 rounded-md p-2 cursor-pointer hover:bg-baseGreen text-black hover:text-white text-sm items-center gap-x-4 
               ${Menu.gap ? "mt-9" : "mt-2"} ${
                   index === 0 && "bg-baseGreen text-white"
                 } `}
