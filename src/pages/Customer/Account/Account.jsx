@@ -7,7 +7,6 @@ function Account() {
   const user = useSelector((state) => state?.user?.user);
   return (
     <div className="flex">
-      <CustomerSidebar />
       <div className="w-full">
         <div className="flex flex-col">
           <div className="bg-white flex-grow">
