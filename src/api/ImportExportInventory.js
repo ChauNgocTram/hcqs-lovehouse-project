@@ -40,6 +40,27 @@ export const getAllImportInventory = async (pageIndex, pageSize) => {
   }
 };
 
+export const getAllExportByQuotationDetailId = async (id) => {
+  try {
+    const res = await axios.get(
+      `${baseURL}/import-export-inventory/get-all-export-by-quotation-detail-id`, {
+        params: {
+          id
+        },
+        headers: {
+          Authorization: `Bearer ${usertoken}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+    return res.data;
+  } catch (err) {
+    return null;
+  }
+};
+
+
 export const getAllExportInventory = async (pageIndex, pageSize) => {
   try {
     const res = await axios.post(
@@ -75,7 +96,7 @@ export const getImportMaterialTemplate = async () => {
     // Create a link element and trigger a download
     const link = document.createElement("a");
     link.href = window.URL.createObjectURL(blob);
-    link.download = "SupplierPriceQuotationTemplate.xlsx";
+    link.download = "ImportInventoryTemplate.xlsx";
     link.click();
 
     return "Success";
@@ -118,8 +139,24 @@ export const getImportMaterialWithExcelError = async (excelData) => {
     // Create a link element and trigger a download
     const link = document.createElement("a");
     link.href = window.URL.createObjectURL(blob);
-    link.download = "SupplierPriceQuotationTemplate.xlsx";
+    link.download = "ImportInventoryError.xlsx";
     link.click();
+  } catch (err) {
+    return null;
+  }
+};
+
+export const validInventoryExcelFile = async (excelData) => {
+  try {
+    const res = await axios.post(`${baseURL}/import-export-inventory/valid-excel-file`, excelData, {
+      headers: {
+        Authorization: `Bearer ${usertoken}`,
+        "Content-Type": "multipart/form-data",
+      },
+      withCredentials: true,
+    });
+
+    return res.data;
   } catch (err) {
     return null;
   }
