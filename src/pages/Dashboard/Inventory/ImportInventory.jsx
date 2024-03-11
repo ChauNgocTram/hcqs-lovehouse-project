@@ -149,7 +149,7 @@ const ImportInventory = () => {
       },
     },
     {
-      title: "Name",
+      title: "Material Name",
       dataIndex: "name",
       key: "name",
       render: (text, record) => {
