@@ -135,7 +135,7 @@ export default function AllRequest() {
                       <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                         <DateFormatter dateString={item.createDate} />
                       </td>
-                      <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                      <td className="p-3 text-sm text-gray-700 whitespace-wrap">
                         <ProjectStatusBadge projectStatus={item.status} />
                       </td>
                       <td className="p-3 text-sm text-gray-700 whitespace-wrap flex items-center">

@@ -81,7 +81,7 @@ export default function ContractSection2({ projectDetail }) {
                         />
                       </td>
                      
-                      <td className="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
+                      <td className="p-3 text-sm text-gray-700 whitespace-wrap text-center">
                         {projectDetail?.contract?.contractUrl ? (
                           <>
                             <NavLink
