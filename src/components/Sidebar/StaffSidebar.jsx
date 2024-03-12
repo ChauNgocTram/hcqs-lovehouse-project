@@ -132,7 +132,7 @@ export default function StaffSidebar() {
     <div className=" flex w-72.5 overflow-y-auto duration-300 ease-linear scrollbar-thin scrollbar-none scrollbar-track-gray-100 border-r shadow-sm">
       <div
         className={`${
-          open ? "w-64" : "w-28"
+          open ? "w-64" : "w-24"
         } bg-white h-screen p-5 pt-7 relative duration-300`}
       >
         <div className="flex items-center justify-between">
