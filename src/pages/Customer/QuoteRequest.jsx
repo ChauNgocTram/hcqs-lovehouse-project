@@ -118,11 +118,9 @@ export default function QuoteRequest() {
                       <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                         <ProjectStatusBadge projectStatus={item?.status} />
                       </td>
-                      <td className="p-3 text-sm text-blue-500 hover:text-gray-700 whitespace-nowrap">
+                      <td className="p-3 text-sm text-blue-500 hover:text-gray-700 whitespace-wrap">
                       {item.status === 0 && (
-                         
                             <ViewRequestDetail details={item} />
-                         
                         )}
                         {item.status !== 0 && (
                           <>
