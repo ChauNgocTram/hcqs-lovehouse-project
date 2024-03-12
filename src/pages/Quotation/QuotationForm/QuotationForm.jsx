@@ -183,7 +183,7 @@ export default function QuotationForm() {
                 <form onSubmit={(e) => submitRequest(e, formData)}>
                   <div className="flex flex-wrap -mx-4 -mb-10">
                     <div className="w-full md:w-1/2 px-4 mb-10">
-                      <div className="relative w-full h-14 py-4 px-3 border border-gray-400 hover:border-white focus-within:border-green-500 rounded-lg">
+                      <div className="relative w-full h-14 py-4 px-3 border border-gray-400  focus-within:border-green-500 rounded-lg">
                         <span className="absolute bottom-full left-0 ml-3 -mb-1 transform translate-y-0.5 text-xs font-semibold text-gray-500 px-1 bg-white ">
                           Number of floor
                         </span>
@@ -209,7 +209,7 @@ export default function QuotationForm() {
                     </div>
 
                     <div className="w-full md:w-1/2 px-4 mb-10">
-                      <div className="relative w-full h-14 py-4 px-3 border border-gray-400 hover:border-white focus-within:border-green-500 rounded-lg">
+                      <div className="relative w-full h-14 py-4 px-3 border border-gray-400 focus-within:border-green-500 rounded-lg">
                         <span className="absolute bottom-full left-0 ml-3 -mb-1 transform translate-y-0.5 text-xs font-semibold text-gray-500 px-1  bg-white ">
                           Total area (m²)
                         </span>
@@ -235,7 +235,7 @@ export default function QuotationForm() {
                     </div>
 
                     <div className="w-full  px-4 mb-10">
-                      <div className="relative w-full h-14 py-4 px-3 border border-gray-400 hover:border-white focus-within:border-green-500 rounded-lg">
+                      <div className="relative w-full h-14 py-4 px-3 border border-gray-400 focus-within:border-green-500 rounded-lg">
                         <span className="absolute bottom-full left-0 ml-3 -mb-1 transform translate-y-0.5 text-xs font-semibold text-gray-500 px-1  bg-white ">
                           Address
                         </span>
@@ -261,7 +261,7 @@ export default function QuotationForm() {
                     </div>
 
                     <div className="w-full px-4 mb-10">
-                      <div className="relative w-full h-14 py-4 px-3 border border-gray-400 hover:border-white focus-within:border-green-500 rounded-lg">
+                      <div className="relative w-full h-14 py-4 px-3 border border-gray-400 focus-within:border-green-500 rounded-lg">
                         <label
                           htmlFor="constructionType"
                           className="absolute bottom-full left-0 ml-3 -mb-1 transform translate-y-0.5 text-xs font-semibold text-gray-500 px-1  bg-white "
@@ -300,7 +300,7 @@ export default function QuotationForm() {
                           <>
                             <label>
                               <div className="flex flex-wrap sm:flex-nowrap">
-                                <div className="w-full py-8 px-4 text-center border-dashed border border-gray-400 hover:border-white rounded-lg">
+                                <div className="w-full py-8 px-4 text-center border-dashed border border-gray-400 rounded-lg">
                                   <div className="relative group h-14 w-14 mx-auto mb-4">
                                     <div className="flex items-center justify-center h-14 w-14  rounded-full cursor-pointer">
                                       <LuUpload
