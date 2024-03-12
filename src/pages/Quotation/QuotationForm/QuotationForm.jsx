@@ -23,7 +23,6 @@ export default function QuotationForm() {
   const [address, setAddress] = useState("");
   const [progress, setProgress] = useState(null);
 
-  const [loading, setLoading] = useState(false);
   const [isLoading, setisLoading] = useState(false);
 
   const [errorsProject, setErrorsProject] = useState({
@@ -75,42 +74,29 @@ export default function QuotationForm() {
       constructionType: constructionType,
       address: address,
     };
-    const result = await Swal.fire({
-      title: "Are you sure?",
-      text: "Do you want to submit the request?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, submit it",
-      cancelButtonText: "No, cancel",
-      reverseButtons: true,
-      focusConfirm: false,
-    });
+    setisLoading(true);
+    const response = await quoteRequest(formData, user?.id);
+    console.log("Form Data:", formData);
 
-    if (result.isConfirmed) {
-      setisLoading(true);
-      const response = await quoteRequest(formData, user?.id);
-      console.log("Form Data:", formData);
-
-      if (response.isSuccess) {
-        alert.alertSuccessWithTime(
-          "Request quotation created successfully",
-          "",
-          2000,
-          "30",
-          () => {}
-        );
-        setLoading(false);
-        navigate("/customer/my-request");
-      } else {
-        alert.alertFailedWithTime(
-          "Failed to create request",
-          "Please try again",
-          2500,
-          "25",
-          () => {}
-        );
-        setLoading(false);
-      }
+    if (response.isSuccess) {
+      alert.alertSuccessWithTime(
+        "Request quotation created successfully",
+        "",
+        2000,
+        "30",
+        () => {}
+      );
+      setisLoading(false);
+      navigate("/customer/my-request");
+    } else {
+      alert.alertFailedWithTime(
+        "Failed to create request",
+        "Please try again",
+        2500,
+        "25",
+        () => {}
+      );
+      setisLoading(false);
     }
   };
 
@@ -355,7 +341,7 @@ export default function QuotationForm() {
                     <Button
                       className="inline-block  px-4  text-xs text-center font-semibold leading-6 text-white bg-baseGreen hover:bg-green-600 rounded-lg transition duration-200"
                       onClick={submitRequest}
-                      loading={loading}
+                      loading={isLoading}
                     >
                       Submit
                     </Button>

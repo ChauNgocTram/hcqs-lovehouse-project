@@ -9,6 +9,7 @@ import {
 import { getAllRequest } from "../../constants/apiQuotationOfCustomer";
 import { Tabs } from "antd";
 import QuoteRequestGrid from "./QuoteRequestGrid";
+import ViewRequestDetail from "../Staff/QuoteManagement/ViewRequestDetail";
 
 export default function QuoteRequest() {
   const [loading, setLoading] = useState(true);
@@ -118,6 +119,11 @@ export default function QuoteRequest() {
                         <ProjectStatusBadge projectStatus={item?.status} />
                       </td>
                       <td className="p-3 text-sm text-blue-500 hover:text-gray-700 whitespace-nowrap">
+                      {item.status === 0 && (
+                         
+                            <ViewRequestDetail details={item} />
+                         
+                        )}
                         {item.status !== 0 && (
                           <>
                             <NavLink to={`/customer/project-detail/${item.id}`}>
