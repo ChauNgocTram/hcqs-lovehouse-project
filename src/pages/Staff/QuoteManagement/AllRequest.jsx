@@ -138,7 +138,7 @@ export default function AllRequest() {
                       <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                         <ProjectStatusBadge projectStatus={item.status} />
                       </td>
-                      <td className="p-3 text-sm text-gray-700 whitespace-nowrap flex items-center">
+                      <td className="p-3 text-sm text-gray-700 whitespace-wrap flex items-center">
                         {item.status === 0 && (
                           <>
                             <NavLink
