@@ -14,11 +14,11 @@ const ProjectStatusBadge = ({ projectStatus }) => {
       );
     case 2:
       return (
-         <Tag color="green" >UNDER <br></br> CONSTRUCTION</Tag>
+         <Tag color="green" >UNDER CONSTRUCTION</Tag>
       );
     case 3:
       return (
-        <Tag color="magenta">COMPLETE <br></br> CONSTRUCTION</Tag>
+        <Tag color="magenta">COMPLETE CONSTRUCTION</Tag>
       );
     default:
       return null;
