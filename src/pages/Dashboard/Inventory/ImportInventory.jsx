@@ -134,7 +134,6 @@ const ImportInventory = () => {
       key: "date",
       render: (text) => moment(text).format("DD-MM-YYYY"),
     },
-
     {
       title: "Supplier Name",
       dataIndex: "supplierName",
@@ -150,6 +149,20 @@ const ImportInventory = () => {
       key: "name",
       render: (text, record) => {
         return record.supplierPriceDetail.material.name;
+      },
+    },
+    {
+      title: "Unit Material",
+      dataIndex: "unitMaterial",
+      key: "unitMaterial",
+      render: (text, record) => {
+        return record.supplierPriceDetail.material.unitMaterial === 0
+          ? "KG"
+          : record.supplierPriceDetail.material.unitMaterial === 1
+          ? "M3"
+          : record.supplierPriceDetail.material.unitMaterial === 2
+          ? "BAR"
+          : "ITEM";
       },
     },
     {
