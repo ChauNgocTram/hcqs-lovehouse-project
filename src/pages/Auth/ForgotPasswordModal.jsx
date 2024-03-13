@@ -104,6 +104,12 @@ const ForgotPasswordModal = ({ visible, onCancel, onSubmit }) => {
           >
             Next
           </Button>
+          <span
+            style={{ position: "absolute", bottom: "2.2rem", right: "1rem" }}
+            onClick={handleEmailSubmit}
+          >
+            <Button type="link">Resend OTP Code</Button>
+          </span>
         </Form>
       )}
       {step === 3 && (
