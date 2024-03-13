@@ -25,6 +25,11 @@ const ExportInventory = () => {
 
   const columns = [
     {
+      title: "No",
+      render: (_, __, index) => index + 1,
+      key: "index",
+    },
+    {
       title: "Number Of Floors",
       dataIndex: "numOfFloor",
       key: "numOfFloor",
@@ -56,6 +61,11 @@ const ExportInventory = () => {
       key: "name",
     },
     {
+      title: "Phone",
+      render: (record) => `${record.account.phoneNumber}`,
+      key: "name",
+    },
+    {
       title: "Actions",
       key: "actions",
       render: (text, record) => (
@@ -77,7 +87,7 @@ const ExportInventory = () => {
 
   return (
     <>
-      <div className="flex flex-col py-8 pb-32 mb-12 h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
+      <div className="flex flex-col py-8 pb-32 mb-12 h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent p-8">
         <div>
           <div className="flex items-center space-x-2 text-xl">
             <MdInventory />
