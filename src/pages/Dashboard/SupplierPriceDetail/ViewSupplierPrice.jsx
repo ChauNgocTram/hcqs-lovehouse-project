@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Select, DatePicker, Button, Table, Modal, Input } from "antd";
+import { Select, DatePicker, Button, Table, Input } from "antd";
 import { toast } from "react-toastify";
 import moment from "moment";
 
@@ -268,27 +268,41 @@ const ViewSupplierPrice = () => {
           />
         </div>
 
-        <Modal
-          title="Import Material"
-          open={importModalVisible}
-          onOk={handleImportSubmit}
-          onCancel={closeImportModal}
-        >
-          <div className="mb-4">
-            <label
-              htmlFor="quantity"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Quantity
-            </label>
-            <Input
-              id="quantity"
-              type="number"
-              value={importQuantity}
-              onChange={handleQuantityChange}
-            />
+        {importModalVisible && (
+          <div className="fixed inset-0 flex items-center justify-center shadow-xl border">
+            <div className="bg-white p-8 rounded shadow-md">
+              <h2 className="text-lg font-semibold mb-4">Import Material</h2>
+              <div className="mb-4">
+                <label
+                  htmlFor="quantity"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Quantity
+                </label>
+                <Input
+                  id="quantity"
+                  type="number"
+                  value={importQuantity}
+                  onChange={handleQuantityChange}
+                />
+              </div>
+              <div className="flex justify-end">
+                <Button
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 rounded mr-2"
+                  onClick={handleImportSubmit}
+                >
+                  Import
+                </Button>
+                <Button
+                  className="bg-gray-500 hover:bg-gray-700 text-white font-bold px-4 rounded"
+                  onClick={closeImportModal}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
           </div>
-        </Modal>
+        )}
       </div>
     </div>
   );
