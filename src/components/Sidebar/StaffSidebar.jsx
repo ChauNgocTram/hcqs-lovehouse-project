@@ -90,7 +90,6 @@ export default function StaffSidebar() {
           title: "View Supplier Price",
           path: "/staff/view-supplier-price",
         },
-        { title: "Import Quotation", path: "/staff/import-quotation" },
         { title: "Quotation List", path: "/staff/list-quotation" },
       ],
     },
@@ -253,7 +252,7 @@ export default function StaffSidebar() {
               <span className="text-2xl">
                 <AiOutlineLogout />
               </span>
-              <span className={open ? "inline-block" :"hidden"}>Logout</span>
+              <span className={open ? "inline-block" : "hidden"}>Logout</span>
             </li>
           </NavLink>
         </ul>
