@@ -21,6 +21,7 @@ import {
   getImportExportPriceMaterialFromExcelSheetError,
 } from "../../../api/ExportPriceMaterial";
 import ExportPriceHistoryPopup from "./ExportPriceHistoryPopup";
+import moment from "moment";
 
 const ExportPrice = () => {
   const [exportPriceData, setExportPriceData] = useState([]);
@@ -89,11 +90,7 @@ const ExportPrice = () => {
       title: "Date",
       dataIndex: "date",
       key: "date",
-    },
-    {
-      title: "Material ID",
-      dataIndex: "materialId",
-      key: "materialId",
+      render: (text) => moment(text).format("DD-MM-YYYY"),
     },
     {
       title: "Material Name",
@@ -221,7 +218,7 @@ const ExportPrice = () => {
   };
 
   return (
-    <div className="flex flex-col pb-32 mb-12 h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
+    <div className="flex flex-col pb-32 mb-12 h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent p-8">
       {/* title */}
       <div>
         <div className="flex items-center space-x-2 text-xl">
