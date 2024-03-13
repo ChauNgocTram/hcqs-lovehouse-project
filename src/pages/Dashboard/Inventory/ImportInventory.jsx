@@ -19,6 +19,7 @@ import {
   validInventoryExcelFile,
 } from "../../../api";
 import DataTableFalse from "../../../components/Dashboard/DataTableFalse";
+import moment from "moment";
 
 const ImportInventory = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -128,17 +129,12 @@ const ImportInventory = () => {
         inventoryData.findIndex((item) => item.id === record.id) + 1,
     },
     {
-      title: "Quantity",
-      dataIndex: "quantity",
-      key: "quantity",
-      ...getColumnSearchProps("quantity"),
-    },
-    {
       title: "Date",
       dataIndex: "date",
       key: "date",
-      ...getColumnSearchProps("date"),
+      render: (text) => moment(text).format("DD-MM-YYYY"),
     },
+
     {
       title: "Supplier Name",
       dataIndex: "supplierName",
@@ -155,6 +151,12 @@ const ImportInventory = () => {
       render: (text, record) => {
         return record.supplierPriceDetail.material.name;
       },
+    },
+    {
+      title: "Quantity",
+      dataIndex: "quantity",
+      key: "quantity",
+      ...getColumnSearchProps("quantity"),
     },
   ];
 
