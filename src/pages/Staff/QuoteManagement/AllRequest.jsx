@@ -129,8 +129,8 @@ export default function AllRequest() {
                       <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                         {item.addressProject}
                       </td>
-                      <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                        Floors: {item.numOfFloor}, Area: {item.area} m&#178;
+                      <td className="p-3 text-sm text-gray-700 whitespace-wrap">
+                        Floors: {item.numOfFloor},<br /> Area: {item.area} m&#178;
                       </td>
                       <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                         <DateFormatter dateString={item.createDate} />
