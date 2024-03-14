@@ -281,14 +281,14 @@ const Login2 = () => {
                                             </div>
                                         )}
                                     </div>
-                                    <button
+                                    <Button
                                         htmlType="submit"
                                         className="w-full mb-3 inline-block  px-4 py-2 text-xs text-center font-semibold leading-6 text-white bg-baseGreen hover:bg-base4 rounded-lg transition duration-200"
                                         disabled={isSubmitting}
                                         loading={isLoading}
                                     >
                                         Sign Up
-                                    </button>
+                                    </Button>
                                     <div className="text-center text-gray-400">
                                         I have an account? 
                                         <a style={{ cursor: 'pointer' }} onClick={() => setIsSignUp(false)} className="font-bold text-black hover:text-baseGreen"> Login</a>
