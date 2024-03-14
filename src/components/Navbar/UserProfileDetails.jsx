@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
@@ -18,10 +18,6 @@ function UserProfileDetails() {
   //const role = useSelector((state) => state.user?.role);
   const auth = useSelector((state) => state?.auth);
 
-  const isAdmin = auth?.userRole?.includes("ADMIN");
-
-  const isStaff = auth?.userRole?.includes("STAFF");
-
   const [isMenu, setIsMenu] = useState(false);
 
   const handleSignout = () => {
@@ -29,6 +25,23 @@ function UserProfileDetails() {
     dispatch(SET_USER_NULL());
     navigate("/auth");
   };
+
+  const assignRole = () => {
+    if (auth?.userRole.includes("ADMIN")) {
+      return "isAdmin";
+    } else if (auth?.userRole.includes("STAFF")) {
+      return "isStaff";
+    } else if (
+      !auth?.userRole.includes("ADMIN") &&
+      !auth?.userRole.includes("STAFF")
+    ) {
+      return "isUser";
+    }
+  };
+
+  useEffect(() => {
+   assignRole();
+  }, [auth]);
 
   return (
     <div
@@ -54,18 +67,20 @@ function UserProfileDetails() {
       <AnimatePresence>
         {isMenu && (
           <motion.div className="absolute top-16 right-8 px-4 py-3 rounded-xl shadow-md z-50 flex flex-col items-start justify-start gap-4 bg-white">
-            <motion.div
-              whileTap={{ scale: 0.9 }}
-              className="flex items-center justify-between text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 
-                w-full px-2 py-1 rounded-md cursor-pointer text-nowrap"
-            >
-              <Link to={"/customer/my-request"}>Customer Dashboard</Link>
-              <div className="text-xs pl-2">
-                <FaChevronRight />
-              </div>
-            </motion.div>
+            {assignRole() === "isUser" && (
+              <motion.div
+                whileTap={{ scale: 0.9 }}
+                className="flex items-center justify-between text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 
+              w-full px-2 py-1 rounded-md cursor-pointer text-nowrap"
+              >
+                <Link to={"/customer/my-request"}>Customer Dashboard</Link>
+                <div className="text-xs pl-2">
+                  <FaChevronRight />
+                </div>
+              </motion.div>
+            )}
 
-            {isAdmin && (
+            {assignRole() === "isAdmin" && (
               <motion.div
                 whileTap={{ scale: 0.9 }}
                 className="flex items-center justify-between text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 
@@ -78,7 +93,7 @@ function UserProfileDetails() {
               </motion.div>
             )}
 
-            {isStaff && (
+            {assignRole() === "isStaff" && (
               <motion.div
                 whileTap={{ scale: 0.9 }}
                 className="flex items-center justify-between text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 
