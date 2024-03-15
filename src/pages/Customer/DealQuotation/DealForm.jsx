@@ -8,12 +8,15 @@ const { TextArea } = Input;
 
 import { Modal } from "../../../components";
 import { alert } from "../../../components/Alert/Alert";
-import { createQuotationDealRequest } from "../../../constants/apiQuotationOfCustomer";
+import {
+  createQuotationDealRequest,
+  getQuoteDetailForCustomer,
+} from "../../../constants/apiQuotationOfCustomer";
 import { toast } from "react-toastify";
 
 export default function DealForm({ onModalClose, id }) {
   const [showModal, setShowModal] = useState(false);
-
+  const [isRough, setIsRough] = useState(null);
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
@@ -33,16 +36,15 @@ export default function DealForm({ onModalClose, id }) {
       .required("Required")
       .positive("Must be positive")
       .integer("Must be an integer"),
-    furnitureDiscount: Yup.number()
-      .required("Required")
-      .integer("Must be an integer"),
+    furnitureDiscount: Yup.number().integer("Must be an integer"),
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     const formattedData = {
       quotationId: id,
-      materialDiscount: values.materialDiscount,
-      furnitureDiscount: values.furnitureDiscount,
+      materialDiscount: Number(values.materialDiscount),
+      furnitureDiscount:
+        isRough === true ? 0 : Number(values.furnitureDiscount),
       laborDiscount: 0,
       description: values.description,
     };
@@ -62,6 +64,24 @@ export default function DealForm({ onModalClose, id }) {
     onModalClose();
     setSubmitting(false);
   };
+
+  const fetchData = async () => {
+    const result = await getQuoteDetailForCustomer(id);
+    console.log(result?.result?.data?.quotation?.project?.constructionType);
+    if (result.isSuccess) {
+      if (result?.result?.data?.quotation?.project?.constructionType === 0) {
+        setIsRough(true);
+      } else if (
+        result?.result?.data?.quotation?.project?.constructionType === 1
+      ) {
+        setIsRough(false);
+      }
+    }
+  };
+  useEffect(() => {
+    fetchData();
+    console.log(isRough);
+  }, [id]);
 
   return (
     <>
@@ -101,17 +121,26 @@ export default function DealForm({ onModalClose, id }) {
                     </div>
                   )}
 
-                  <label htmlFor="furnitureDiscount">Furniture Discount</label>
-                  <Field
-                    name="furnitureDiscount"
-                    as={Input}
-                    type="number"
-                    className="mb-3"
-                  />
-                  {errors.furnitureDiscount && touched.furnitureDiscount && (
-                    <div style={{ color: "red", marginBottom: "12px" }}>
-                      {errors.furnitureDiscount}
-                    </div>
+                  {isRough === false ? (
+                    <>
+                      <label htmlFor="furnitureDiscount">
+                        Furniture Discount
+                      </label>
+                      <Field
+                        name="furnitureDiscount"
+                        as={Input}
+                        type="number"
+                        className="mb-3"
+                      />
+                      {errors.furnitureDiscount &&
+                        touched.furnitureDiscount && (
+                          <div style={{ color: "red", marginBottom: "12px" }}>
+                            {errors.furnitureDiscount}
+                          </div>
+                        )}
+                    </>
+                  ) : (
+                    <></>
                   )}
 
                   {/* <label htmlFor="laborDiscount" className="">

@@ -18,32 +18,12 @@ const ConstructionConfigForProject = ({
   const handleButtonClick = () => {
     setShowModal(true);
   };
-  const [maxData, setMaxData] = useState({});
   const [isLoading, setIsLoading] = useState(false); // Initialize loading state
-  const [constructionType, setConstructionType] = useState(0); // State to store constructionType
 
-  const fetchMax = async () => {
-    const result = await getMaxConfig(0);
-    console.log(result);
-    if (result.isSuccess) {
-      setMaxData(result.result.data);
-    }
-  };
-  const handleChange = async (e) => {
-    const selectedConstructionType = e.target.value;
-    setConstructionType(selectedConstructionType);
-    try {
-      console.log(e.target.value);
-      const maxConfig = await getMaxConfig(selectedConstructionType);
-      setMaxData(maxConfig.result.data);
-    } catch (error) {
-      console.error("Error fetching min area data:", error);
-    }
-  };
 
-  useEffect(() => {
-    fetchMax();
-  }, []);
+
+
+
 
   const validationSchema = Yup.object().shape({
     sandMixingRatio: Yup.number()
@@ -83,12 +63,12 @@ const ConstructionConfigForProject = ({
     sandMixingRatio: 0,
     cementMixingRatio: 0,
     stoneMixingRatio: 0,
-    constructionType: constructionType,
-    numOfFloorMin: maxData.numOfFloorMax,
+    constructionType: 0,
+    numOfFloorMin: 0,
     numOfFloorMax: 0,
-    areaMin: maxData.areaMax,
+    areaMin:0,
     areaMax: 0,
-    tiledAreaMin: maxData.tiledAreaMax,
+    tiledAreaMin: 0,
     tiledAreaMax: 0,
   };
 
@@ -107,7 +87,7 @@ const ConstructionConfigForProject = ({
                     sandMixingRatio: values.sandMixingRatio,
                     cementMixingRatio: values.cementMixingRatio,
                     stoneMixingRatio: values.stoneMixingRatio,
-                    constructionType: Number(constructionType),
+                    constructionType: Number(values.constructionType),
                     numOfFloorMin: values.numOfFloorMin,
                     numOfFloorMax: values.numOfFloorMax,
                     areaMin: values.areaMin,
@@ -136,7 +116,7 @@ const ConstructionConfigForProject = ({
                 }
               }}
             >
-              {({ errors, touched }) => (
+              {({ values, errors, touched }) => (
                 <Form>
                   <div className="flex flex-col my-3 mx-2">
                     <h2 className="text-lg font-semibold mb-4 text-center uppercase">
@@ -192,8 +172,6 @@ const ConstructionConfigForProject = ({
                       as="select"
                       name="constructionType"
                       className="border border-gray-300 p-2 rounded-md"
-                      onChange={handleChange} // Call handleChange when constructionType changes
-                      value={constructionType}
                     >
                       <option value={0}>Rough Construction</option>
                       <option value={1}>Complete Construction</option>
@@ -211,7 +189,7 @@ const ConstructionConfigForProject = ({
                       name="numOfFloorMin"
                       type="number"
                       className="border border-gray-300 p-2 rounded-md"
-                      value={initialValues.numOfFloorMin}
+                    
                     />
                     <ErrorMessage
                       name="numOfFloorMin"
@@ -240,7 +218,6 @@ const ConstructionConfigForProject = ({
                       name="areaMin"
                       type="number"
                       className="border border-gray-300 p-2 rounded-md"
-                      value={initialValues.areaMin}
                     />
                     <ErrorMessage
                       name="areaMin"
@@ -269,7 +246,6 @@ const ConstructionConfigForProject = ({
                       name="tiledAreaMin"
                       type="number"
                       className="border border-gray-300 p-2 rounded-md"
-                      value={initialValues.tiledAreaMin}
                     />
                     <ErrorMessage
                       name="tiledAreaMin"
@@ -290,13 +266,13 @@ const ConstructionConfigForProject = ({
                       component="div"
                       className="text-red-600"
                     />
-                    <button
+                    <Button
                       htmlType="submit"
                       className="text-white bg-green-600 rounded font-semibold p-2 mt-5 hover:bg-green-400"
                       loading={isLoading}
                     >
                       Submit
-                    </button>
+                    </Button>
                   </div>
                 </Form>
               )}
