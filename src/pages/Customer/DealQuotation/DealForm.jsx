@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik, Form, FieldArray, Field, ErrorMessage } from "formik";
 import { Input, Button } from "antd";
+const { TextArea } = Input;
 
 import { Modal } from "../../../components";
 import { alert } from "../../../components/Alert/Alert";
@@ -85,14 +86,7 @@ export default function DealForm({ onModalClose, id }) {
             >
               {({ values, errors, touched, setFieldValue }) => (
                 <Form>
-                  <label htmlFor="quotationId">Quotation ID</label>
-                  <Field
-                    name="quotationId"
-                    as={Input}
-                    type="text"
-                    readOnly
-                    className="mb-3"
-                  />
+                  
 
                   <label htmlFor="materialDiscount">Material Discount</label>
                   <Field
@@ -133,7 +127,7 @@ export default function DealForm({ onModalClose, id }) {
                   <label htmlFor="description" className="">
                     Description
                   </label>
-                  <Field name="description" as={Input} type="text" />
+                  <Field name="description" as={TextArea} type="text" rows={4}/>
                   {errors.description && touched.description && (
                     <div style={{ color: "red", marginBottom: "12px" }}>
                       {errors.description}

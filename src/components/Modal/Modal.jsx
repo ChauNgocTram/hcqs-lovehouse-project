@@ -5,7 +5,10 @@ function Modal({ isVisible, onClose, children }) {
   if (!isVisible) return null;
 
   const handleClose = (e) => {
-    if (e.target.id === "wrapper") onClose();
+    const wrapper = document.getElementById("wrapper");
+    if (wrapper && e.target === wrapper) {
+      onClose();
+    }
   };
   return (
     <div

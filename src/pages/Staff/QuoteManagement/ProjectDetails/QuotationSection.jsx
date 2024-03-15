@@ -212,6 +212,7 @@ export default function QuotationSection({ projectDetail }) {
                           <CreateDealByStaff
                             onModalClose={handleReloadContent}
                             quotationId={quotation.id}
+                            constructionType={quotation.project.constructionType}
                           />
                         )}
                       </td>

@@ -13,10 +13,14 @@ import {
 } from "../../../../constants/apiQuotationOfStaff";
 import { toast } from "react-toastify";
 
-export default function CreateDealByStaff({ onModalClose, quotationId }) {
+export default function CreateDealByStaff({
+  onModalClose,
+  quotationId,
+  constructionType,
+}) {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-  //const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const handleButtonClick = () => {
     setShowModal(true);
@@ -25,16 +29,12 @@ export default function CreateDealByStaff({ onModalClose, quotationId }) {
   const initialValues = {
     quotationId: quotationId,
     rawMaterialDiscount: "",
-    furnitureDiscount: "",
+    furnitureDiscount: 0,
     laborDiscount: 0,
   };
 
   const validationSchema = Yup.object().shape({
     rawMaterialDiscount: Yup.number()
-      .required("Required")
-      .positive("Must be positive")
-      .integer("Must be an integer"),
-    furnitureDiscount: Yup.number()
       .required("Required")
       .positive("Must be positive")
       .integer("Must be an integer"),
@@ -93,9 +93,11 @@ export default function CreateDealByStaff({ onModalClose, quotationId }) {
               validationSchema={validationSchema}
               onSubmit={handleSubmit}
             >
-              {({ values, errors, touched, setFieldValue }) => (
+              {({ isSubmitting, values, errors, touched, setFieldValue }) => (
                 <Form>
-                  <label htmlFor="rawMaterialDiscount">Material Discount (%)</label>
+                  <label htmlFor="rawMaterialDiscount">
+                    Material Discount (%)
+                  </label>
                   <Field
                     name="rawMaterialDiscount"
                     as={Input}
@@ -109,25 +111,35 @@ export default function CreateDealByStaff({ onModalClose, quotationId }) {
                       </div>
                     )}
 
-                  <label htmlFor="furnitureDiscount">Furniture Discount (%)</label>
-                  <Field
-                    name="furnitureDiscount"
-                    as={Input}
-                    type="number"
-                    className="mb-3"
-                  />
-                  {errors.furnitureDiscount && touched.furnitureDiscount && (
-                    <div style={{ color: "red", marginBottom: "12px" }}>
-                      {errors.furnitureDiscount}
-                    </div>
+                  {constructionType === 1 && (
+                    <>
+                      <label htmlFor="furnitureDiscount">
+                        Furniture Discount (%)
+                      </label>
+                      <Field
+                        name="furnitureDiscount"
+                        as={Input}
+                        type="number"
+                        className="mb-3"
+                      />
+                      {errors.furnitureDiscount &&
+                        touched.furnitureDiscount && (
+                          <div style={{ color: "red", marginBottom: "12px" }}>
+                            {errors.furnitureDiscount}
+                          </div>
+                        )}
+                    </>
                   )}
+
                   <div className="text-right">
-                    <button
+                    <Button
                       htmlType="submit"
-                      className="text-white bg-baseGreen hover:bg-base3 font-semibold mx-auto  py-2 px-4 rounded"
+                      className="text-white bg-baseGreen hover:bg-base3 font-semibold mx-auto  px-4 rounded"
+                      // disabled={isSubmitting}
+                      // loading={loading}
                     >
                       Create
-                    </button>
+                    </Button>
                   </div>
                 </Form>
               )}
