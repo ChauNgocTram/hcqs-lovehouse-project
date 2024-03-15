@@ -13,7 +13,7 @@ import {
 } from "../../../constants/apiQuotationOfCustomer";
 import { toast } from "react-toastify";
 
-export default function DealForm({ onModalClose, id}) {
+export default function DealForm({ onModalClose, id }) {
   const [showModal, setShowModal] = useState(false);
   const [isRough, setIsRough] = useState(null);
   const navigate = useNavigate();
@@ -35,8 +35,7 @@ export default function DealForm({ onModalClose, id}) {
       .required("Required")
       .positive("Must be positive")
       .integer("Must be an integer"),
-    furnitureDiscount: Yup.number()
-      .integer("Must be an integer"),
+    furnitureDiscount: Yup.number().integer("Must be an integer"),
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
@@ -67,14 +66,20 @@ export default function DealForm({ onModalClose, id}) {
 
   const fetchData = async () => {
     const result = await getQuoteDetailForCustomer(id);
+    console.log(result?.result?.data?.quotation?.project?.constructionType);
     if (result.isSuccess) {
       if (result?.result?.data?.quotation?.project?.constructionType === 0) {
         setIsRough(true);
+      } else if (
+        result?.result?.data?.quotation?.project?.constructionType === 1
+      ) {
+        setIsRough(false);
       }
     }
   };
   useEffect(() => {
     fetchData();
+    console.log(isRough);
   }, [id]);
 
   return (
@@ -124,10 +129,7 @@ export default function DealForm({ onModalClose, id}) {
 
                   {isRough === false ? (
                     <>
-                    </>
-                  ) : (
-                    <>
-                     <label htmlFor="furnitureDiscount">
+                      <label htmlFor="furnitureDiscount">
                         Furniture Discount
                       </label>
                       <Field
@@ -143,6 +145,8 @@ export default function DealForm({ onModalClose, id}) {
                           </div>
                         )}
                     </>
+                  ) : (
+                    <></>
                   )}
 
                   {/* <label htmlFor="laborDiscount" className="">
