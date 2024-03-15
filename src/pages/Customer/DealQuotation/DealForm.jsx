@@ -13,7 +13,7 @@ import {
 } from "../../../constants/apiQuotationOfCustomer";
 import { toast } from "react-toastify";
 
-export default function DealForm({ onModalClose, id}) {
+export default function DealForm({ onModalClose, id }) {
   const [showModal, setShowModal] = useState(false);
   const [isRough, setIsRough] = useState(null);
   const navigate = useNavigate();
@@ -35,8 +35,7 @@ export default function DealForm({ onModalClose, id}) {
       .required("Required")
       .positive("Must be positive")
       .integer("Must be an integer"),
-    furnitureDiscount: Yup.number()
-      .integer("Must be an integer"),
+    furnitureDiscount: Yup.number().integer("Must be an integer"),
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
@@ -122,12 +121,9 @@ export default function DealForm({ onModalClose, id}) {
                     </div>
                   )}
 
-                  {isRough === false ? (
+                  {isRough === true ? (
                     <>
-                    </>
-                  ) : (
-                    <>
-                     <label htmlFor="furnitureDiscount">
+                      <label htmlFor="furnitureDiscount">
                         Furniture Discount
                       </label>
                       <Field
@@ -143,6 +139,8 @@ export default function DealForm({ onModalClose, id}) {
                           </div>
                         )}
                     </>
+                  ) : (
+                    <></>
                   )}
 
                   {/* <label htmlFor="laborDiscount" className="">
