@@ -6,11 +6,11 @@ import { useEffect, useState } from "react";
 export default function QuotationDealing({ quotationDealing }) {
   const dataSource = quotationDealing;
   const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-    },
+    // {
+    //   title: "ID",
+    //   dataIndex: "id",
+    //   key: "id",
+    // },
     {
       title: "Material Discount",
       dataIndex: "materialDiscount",
@@ -32,13 +32,14 @@ export default function QuotationDealing({ quotationDealing }) {
       <h1 className="text-xl font-semibold py-5 uppercase pl-5">
         Quotation Dealing Request
       </h1>
-
-      <Table
-        dataSource={dataSource}
-        columns={columns}
-        rowKey="id"
-        className="mx-5"
-      />
+      {quotationDealing && quotationDealing.length > 0 && (
+        <Table
+          dataSource={dataSource}
+          columns={columns}
+          rowKey="id"
+          className="mx-5"
+        />
+      )}
     </>
   );
 }
