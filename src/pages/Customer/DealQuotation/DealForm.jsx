@@ -66,14 +66,20 @@ export default function DealForm({ onModalClose, id }) {
 
   const fetchData = async () => {
     const result = await getQuoteDetailForCustomer(id);
+    console.log(result?.result?.data?.quotation?.project?.constructionType);
     if (result.isSuccess) {
       if (result?.result?.data?.quotation?.project?.constructionType === 0) {
         setIsRough(true);
+      } else if (
+        result?.result?.data?.quotation?.project?.constructionType === 1
+      ) {
+        setIsRough(false);
       }
     }
   };
   useEffect(() => {
     fetchData();
+    console.log(isRough);
   }, [id]);
 
   return (
@@ -121,7 +127,7 @@ export default function DealForm({ onModalClose, id }) {
                     </div>
                   )}
 
-                  {isRough === true ? (
+                  {isRough === false ? (
                     <>
                       <label htmlFor="furnitureDiscount">
                         Furniture Discount
