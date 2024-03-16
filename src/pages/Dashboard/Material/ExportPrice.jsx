@@ -345,8 +345,14 @@ const fields = [
     example: "1",
     validations: [
       {
-        rule: "required",
-        errorMessage: "No is required",
+        rule: "unique",
+        errorMessage: "No is unique",
+        level: "error",
+      },
+      {
+        rule: "regex",
+        value: "^[0-9]+$",
+        errorMessage: "No is a number",
         level: "error",
       },
     ],
@@ -364,6 +370,12 @@ const fields = [
         errorMessage: "Material Name is required",
         level: "error",
       },
+      {
+        rule: "regex",
+        value: "^[a-zA-Z]+$",
+        errorMessage: "Material is a text",
+        level: "error",
+      },
     ],
   },
   {
@@ -372,11 +384,33 @@ const fields = [
     fieldType: {
       type: "input",
     },
-    example: "1000",
+    example: "9",
     validations: [
       {
         rule: "required",
-        errorMessage: "Quantity is required",
+        errorMessage: "Price is required",
+        level: "error",
+      },
+      {
+        rule: "regex",
+        value: "^(?!0+(\\.0*)?$)([1-9]\\d*|0)(\\.\\d+)?$",
+        errorMessage: "Price > 0",
+        level: "error",
+      },
+    ],
+  },
+  {
+    label: "Error",
+    key: "Error",
+    fieldType: {
+      type: "input",
+    },
+    example: " ",
+    validations: [
+      {
+        rule: "regex",
+        value: "^$",
+        errorMessage: "Check the error row",
         level: "error",
       },
     ],

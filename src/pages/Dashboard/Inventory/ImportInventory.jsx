@@ -402,7 +402,7 @@ const fields = [
     validations: [
       {
         rule: "regex",
-        value: "^ *$",
+        value: "^$",
         errorMessage: "Check the error row",
         level: "error",
       },
