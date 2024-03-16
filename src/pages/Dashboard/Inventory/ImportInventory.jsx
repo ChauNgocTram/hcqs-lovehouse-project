@@ -227,6 +227,55 @@ const ImportInventory = () => {
         const uploadResponse2 = await importMaterialWithExcel(formData);
         toast.success("Upload successful: " + uploadResponse2.date);
       } else {
+        toast.error("Upload Fail: Please check again! ");
+      }
+      console.log("uploadResponse: ", uploadResponse.result.data.isValidated);
+    } catch (error) {
+      toast.error("Error during upload:", error);
+    }
+  };
+
+  const handleSubmit2 = async (data, file) => {
+    const validData = data.validData;
+    const sheetData = [
+      Object.keys(validData[0]),
+      ...validData.map((item) => Object.values(item)),
+    ];
+    const ws = XLSX.utils.aoa_to_sheet(sheetData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet 1");
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+
+    const formData = new FormData();
+    const currentDate = new Date();
+    const day = currentDate.getDate().toString().padStart(2, "0");
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, "0"); // Note: Months are zero-based
+    const year = currentDate.getFullYear().toString();
+
+    const formattedDate = `${day}${month}${year}`;
+    formData.append("file", blob, `${formattedDate}.xlsx`);
+
+    console.log("formattedDate: ", formattedDate);
+
+    try {
+      const uploadResponse = await validInventoryExcelFile(formData);
+      if (!uploadResponse.result.data.isValidated) {
+        const errors = uploadResponse.result.data.errors;
+        const updatedExcelData = validData.map((item, index) => ({
+          ...item,
+          Error: errors[index] || "",
+        }));
+        setIsError(true);
+        setExcelData(updatedExcelData);
+        console.log("excelData", updatedExcelData);
+      }
+      if (uploadResponse.result.data.isValidated) {
+        const uploadResponse2 = await importMaterialWithExcel(formData);
+        toast.success("Upload successful: " + uploadResponse2.date);
+      } else {
         toast.error("Upload Fail: Please check file error ");
         getImportMaterialWithExcelError(formData);
       }
@@ -235,7 +284,6 @@ const ImportInventory = () => {
       toast.error("Error during upload:", error);
     }
   };
-
   return (
     <>
       {isLoading ? (
@@ -288,7 +336,7 @@ const ImportInventory = () => {
           <DataTableFalse
             isOpen={isError}
             onClose={() => setIsError(false)}
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit2}
             excelData={excelData}
             fields={fields}
           />

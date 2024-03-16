@@ -172,22 +172,12 @@ function ListQuotation() {
                 key="date"
               />
               <Column
-                title="MOQ"
-                dataIndex={["supplierPriceDetails", 0, "moq"]}
-                key="moq"
-              />
-              <Column
-                title="Price"
-                dataIndex={["supplierPriceDetails", 0, "price"]}
-                key="price"
-              />
-              <Column
-                title="Edit"
-                key="edit"
+                title="Delete"
+                key="delete"
                 render={(text, record) => (
                   <Space size="middle">
                     <MdDelete
-                      className="cursor-pointer text-xl hover:text-red-500"
+                      className="cursor-pointer text-xl text-red-500 hover:text-red-700"
                       onClick={() =>
                         openDeleteConfirmation(record.supplierPriceQuotation.id)
                       }
