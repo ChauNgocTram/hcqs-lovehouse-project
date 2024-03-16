@@ -28,7 +28,8 @@ const ConfigForm = ({ projectDetail }) => {
   const [workers, setWorkers] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedWorkerCost, setSelectedWorkerCost] = useState(0);
+  // const [selectedWorkerCost, setSelectedWorkerCost] = useState(0);
+  const [selectedWorkerCost, setSelectedWorkerCost] = useState([]);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -64,7 +65,7 @@ const ConfigForm = ({ projectDetail }) => {
   };
 
   const [showModal, setShowModal] = useState(false);
-
+console.log(selectedWorkerCost)
   return (
     <>
 
@@ -176,13 +177,16 @@ const ConfigForm = ({ projectDetail }) => {
                           name={`laborRequests[${index}].workerPriceId`}
                           onChange={(e) => {
                             const selectedWorkerId = e.target.value;
+                            console.log(`laborRequests[${index}].workerPriceId`, selectedWorkerId)
+                            console.log(`values`,values.laborRequests[index])
                             const selectedWorker = workers.find(
                               (worker) => worker.id === selectedWorkerId
                             );
+                            
                             setSelectedWorkerCost(
-                              selectedWorker ? selectedWorker.laborCost : 0
-                            );
-
+                              selectedWorkers => [...selectedWorkers,  selectedWorker] 
+                            )
+                              // console.log("electedWorkerCost[index].laborCost" , selectedWorkerCost, index)
                             values.laborRequests[index].workerPriceId =
                               selectedWorkerId;
                           }}
@@ -198,12 +202,13 @@ const ConfigForm = ({ projectDetail }) => {
                           ))}
                         </Field>
                         <div>
-                          {selectedWorkerCost > 0 && (
+                          {selectedWorkerCost&& (
+                            
                             <div>
                               <label className="text-blue-400 ml-4">
                                 Worker's Labor Cost:{" "}
                                 <CurrencyFormatter
-                                  amount={selectedWorkerCost}
+                                  amount={selectedWorkerCost?.[index]?.laborCost}
                                 />
                               </label>
                             </div>
