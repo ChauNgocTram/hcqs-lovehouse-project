@@ -347,13 +347,13 @@ const fields = [
       {
         rule: "unique",
         errorMessage: "No is unique",
-        level: "error",
+        level: "warning",
       },
       {
         rule: "regex",
         value: "^[0-9]+$",
         errorMessage: "No is a number",
-        level: "error",
+        level: "warning",
       },
     ],
   },
@@ -368,13 +368,13 @@ const fields = [
       {
         rule: "required",
         errorMessage: "Material Name is required",
-        level: "error",
+        level: "warning",
       },
       {
         rule: "regex",
         value: "^[a-zA-Z]+$",
         errorMessage: "Material is a text",
-        level: "error",
+        level: "warning",
       },
     ],
   },
@@ -389,13 +389,13 @@ const fields = [
       {
         rule: "required",
         errorMessage: "Price is required",
-        level: "error",
+        level: "warning",
       },
       {
         rule: "regex",
         value: "^(?!0+(\\.0*)?$)([1-9]\\d*|0)(\\.\\d+)?$",
         errorMessage: "Price > 0",
-        level: "error",
+        level: "warning",
       },
     ],
   },
