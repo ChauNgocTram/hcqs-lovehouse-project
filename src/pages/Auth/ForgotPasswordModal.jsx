@@ -46,7 +46,7 @@ const ForgotPasswordModal = ({ visible, onCancel, onSubmit }) => {
           ? "Step 2: Enter Verification Code"
           : "Step 3: Enter new password"
       }
-      visible={visible}
+      open={visible}
       onCancel={onCancel}
       footer={null}
       centered

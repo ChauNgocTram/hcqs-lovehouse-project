@@ -11,6 +11,9 @@ const ExportPriceHistoryPopup = ({
   const [historyData, setHistoryData] = useState([]);
 
   useEffect(() => {
+    // Guard clause to check if exportPrices exists
+    if (!exportPrices) return;
+
     // Filter exportPrices based on materialId
     const filteredData = exportPrices.filter(
       (item) => item.materialId === materialId

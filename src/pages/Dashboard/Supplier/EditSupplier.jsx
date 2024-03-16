@@ -32,9 +32,10 @@ const EditSupplier = ({ setIsEdit, refreshData, selectedSupplierId }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    const parsedValue = name === "type" ? parseInt(value, 10) : value;
     setSupplierData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: parsedValue,
     }));
   };
 
@@ -95,7 +96,9 @@ const EditSupplier = ({ setIsEdit, refreshData, selectedSupplierId }) => {
             onChange={handleChange}
             className="w-full border rounded-md py-2 px-3 focus:outline-none focus:ring focus:border-blue-300 mt-2"
           >
-            <option value="0">Type 0</option>
+            <option value="0">Construction Material</option>
+            <option value="1">Furniture</option>
+            <option value="2">Both</option>
             {/* Add other options as needed */}
           </select>
         </div>
