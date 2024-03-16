@@ -135,7 +135,7 @@ export default function ListPaymentProgress() {
                           </td>
                           <td className="p-3 text-sm text-gray-700 whitespace-nowrap text-right">
                             <CurrencyFormatter amount={item.payment.price} />
-                            {item.payment.price}
+                            {/* {item.payment.price} */}
                           </td>
                           <td className="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
                             <DateFormatter dateString={item.date} />
