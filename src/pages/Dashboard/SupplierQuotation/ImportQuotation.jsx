@@ -101,6 +101,61 @@ const ImportQuotation = () => {
         );
         toast.success("Upload successful: " + uploadResponse2.date);
       } else {
+        toast.error("Upload Fail: Please check again!");
+      }
+      console.log("uploadResponse: ", uploadResponse.result.data.isValidated);
+    } catch (error) {
+      toast.error("Error during upload:", error);
+    }
+  };
+  const handleSubmit2 = async (data, file) => {
+    const validData = data.validData.map(
+      ({ No, MaterialName, Unit, MOQ, Price }) => ({
+        No,
+        MaterialName,
+        Unit,
+        MOQ,
+        Price,
+      })
+    );
+
+    const sheetData = [
+      Object.keys(validData[0]),
+      ...validData.map((item) => Object.values(item)),
+    ];
+    const ws = XLSX.utils.aoa_to_sheet(sheetData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet 1");
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+
+    const formData = new FormData();
+    const formattedDate = selectedDate ? selectedDate.format("DDMMYYYY") : "";
+    const filename = `${supplierName}_${formattedDate}.xlsx`;
+
+    formData.append("file", blob, filename);
+    console.log("data: ", data);
+
+    try {
+      const uploadResponse = await validExcelFile(formData);
+      if (!uploadResponse.result.data.isValidated) {
+        const errors = uploadResponse.result.data.errors;
+        const updatedExcelData = validData.map((item, index) => ({
+          ...item,
+          Error: errors[index] || "",
+        }));
+        setIsError(true);
+        setExcelData(updatedExcelData);
+        console.log("excelData", updatedExcelData);
+      }
+      if (uploadResponse.result.data.isValidated) {
+        const uploadResponse2 = await uploadSupplierQuotationWithExcelFile(
+          formData
+        );
+        toast.success("Upload successful: " + uploadResponse2.date);
+      } else {
         toast.error("Upload Fail: Please check file error ");
         getUploadSupplierQuotationWithExcelFileError(formData);
       }
@@ -109,7 +164,6 @@ const ImportQuotation = () => {
       toast.error("Error during upload:", error);
     }
   };
-
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
@@ -149,7 +203,7 @@ const ImportQuotation = () => {
       <DataTableFalse
         isOpen={isError}
         onClose={() => setIsError(false)}
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit2}
         excelData={excelData}
         fields={fields}
       />
@@ -234,13 +288,13 @@ const fields = [
       {
         rule: "unique",
         errorMessage: "No is unique",
-        level: "error",
+        level: "warning",
       },
       {
         rule: "regex",
         value: "^[0-9]+$",
         errorMessage: "No is a number",
-        level: "error",
+        level: "warning",
       },
     ],
   },
@@ -255,13 +309,13 @@ const fields = [
       {
         rule: "required",
         errorMessage: "Material Name is required",
-        level: "error",
+        level: "warning",
       },
       {
         rule: "regex",
         value: "^[a-zA-Z]+$",
         errorMessage: "Material is a text",
-        level: "error",
+        level: "warning",
       },
     ],
   },
@@ -276,13 +330,13 @@ const fields = [
       {
         rule: "required",
         errorMessage: "Unit is required",
-        level: "error",
+        level: "warning",
       },
       {
         rule: "regex",
         value: "^(Kg|M3|Bar|Item)$",
         errorMessage: "Unit include Kg|M3|Bar|Item",
-        level: "error",
+        level: "warning",
       },
     ],
   },
@@ -297,13 +351,13 @@ const fields = [
       {
         rule: "required",
         errorMessage: "MOQ is required",
-        level: "error",
+        level: "warning",
       },
       {
         rule: "regex",
         value: "^[1-9]\\d*$",
         errorMessage: "MOQ > 0",
-        level: "error",
+        level: "warning",
       },
     ],
   },
@@ -318,13 +372,13 @@ const fields = [
       {
         rule: "required",
         errorMessage: "Price is required",
-        level: "error",
+        level: "warning",
       },
       {
         rule: "regex",
         value: "^(?!0+(\\.0*)?$)([1-9]\\d*|0)(\\.\\d+)?$",
         errorMessage: "Price > 0",
-        level: "error",
+        level: "warning",
       },
     ],
   },
@@ -338,7 +392,7 @@ const fields = [
     validations: [
       {
         rule: "regex",
-        value: " ",
+        value: "^$",
         errorMessage: "Check the error row",
         level: "error",
       },

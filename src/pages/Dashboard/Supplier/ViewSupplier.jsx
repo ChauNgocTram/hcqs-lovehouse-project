@@ -192,12 +192,16 @@ const ViewSupplier = () => {
             okText="Yes"
             cancelText="No"
           >
-            <Button type="danger" size="small" icon={<MdDelete />} />
+            <Button
+              type="danger"
+              size="large"
+              icon={<MdDelete className="text-xl text-red-500" />}
+            />
           </Popconfirm>
           <Button
-            style={{ backgroundColor: "#1890ff", color: "#fff" }}
-            size="small"
-            icon={<FaRegEdit />}
+            type="danger"
+            size="large"
+            icon={<FaRegEdit className="text-xl text-blue-500" />}
             onClick={() => openEditSupplier(record.id)}
           />
         </Space>
@@ -239,7 +243,7 @@ const ViewSupplier = () => {
                 onChange={handleSearchChange}
               />
             </div>
-            <div className="flex flex-wrap space-x-2">
+            <div className="flex flex-wrap space-x-2 py-2">
               <motion.div
                 {...buttonClick}
                 onClick={downloadExample}

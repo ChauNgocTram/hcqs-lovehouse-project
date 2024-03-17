@@ -172,7 +172,7 @@ export const getExportPriceMaterialTemplate = async () => {
         // Create a link element and trigger a download
         const link = document.createElement("a");
         link.href = window.URL.createObjectURL(blob);
-        link.download = "SupplierPriceQuotationTemplate.xlsx";
+        link.download = "ExportPrice.xlsx";
         link.click();
     } catch (err) {
         return null;

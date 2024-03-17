@@ -141,24 +141,25 @@ const QuotationDetail = () => {
       key: "remain",
       render: (remain) => remain.result.data,
     },
-
     {
       title: "Actions",
       key: "actions",
       render: (text, record) => (
         <Space size="middle">
           <button
-            onClick={() => handleFulfill(record)}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
-            FulFill
-          </button>
-          <button
             onClick={() => handleViewHistory(record)}
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
           >
             View History
           </button>
+          {record.remain.result.data !== 0 && (
+            <button
+              onClick={() => handleFulfill(record)}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              FulFill
+            </button>
+          )}
         </Space>
       ),
     },
