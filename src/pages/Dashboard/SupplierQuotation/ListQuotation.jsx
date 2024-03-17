@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
-import { Input, Table, Space, Pagination as AntPagination } from "antd";
+import { Input, Table, Space, Pagination as AntPagination, Modal } from "antd";
 
 import { FaChevronRight } from "react-icons/fa6";
 import { IoPricetagsSharp } from "react-icons/io5";
@@ -9,10 +9,13 @@ import { MdDelete } from "react-icons/md";
 import {
   deleteSupplierQuotationById,
   getAllSupplierQuotations,
+  getQuotationPriceBySupplierQuotationId,
 } from "../../../api";
 import { MutatingDots } from "../../../components";
 import ConfirmPopup from "../../../components/Dashboard/ConfirmPopup";
 import ImportQuotation from "./ImportQuotation";
+import { toast } from "react-toastify";
+import moment from "moment";
 
 const { Column } = Table;
 
@@ -25,6 +28,10 @@ function ListQuotation() {
   const [totalItems, setTotalItems] = useState();
   const [searchTerm, setSearchTerm] = useState("");
   const [deleteConfirmation, setDeleteConfirmation] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isDelete, setIsDelete] = useState(1);
+  const [selectedQuotationDetail, setSelectedQuotationDetail] = useState(null);
+  const [isDetailModalVisible, setIsDetailModalVisible] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -51,7 +58,7 @@ function ListQuotation() {
     }
 
     fetchData();
-  }, []);
+  }, [isOpen, isDelete]);
 
   useEffect(() => {
     if (quotations) {
@@ -102,16 +109,40 @@ function ListQuotation() {
       try {
         const response = await deleteSupplierQuotationById(deleteConfirmation);
         if (response && response.isSuccess) {
-          // Refresh data or update state after successful deletion
-          console.log("Quotation deleted successfully");
+          toast.success("Quotation deleted successfully");
+          setIsDelete(isDelete + 1);
         } else {
-          console.error("Error deleting quotation");
+          if (response && response.messages && response.messages.length > 0) {
+            toast.error(response.messages[0]);
+          } else {
+            toast.error("Error deleting quotation");
+          }
         }
       } catch (error) {
-        console.error("Error deleting quotation:", error);
+        toast.error("Error deleting quotation:", error);
       } finally {
         closeDeleteConfirmation();
       }
+    }
+  };
+
+  const fetchQuotationDetail = async (quotationId) => {
+    try {
+      const response = await getQuotationPriceBySupplierQuotationId(
+        quotationId
+      );
+      if (response && response.isSuccess) {
+        setSelectedQuotationDetail(response.result.data);
+
+        if (response && response.isSuccess) {
+          setSelectedQuotationDetail(response.result.data);
+          setIsDetailModalVisible(true);
+        }
+      } else {
+        // Xử lý khi có lỗi
+      }
+    } catch (error) {
+      // Xử lý khi có lỗi
     }
   };
 
@@ -148,7 +179,7 @@ function ListQuotation() {
                   />
                 </div>
               </div>
-              <ImportQuotation />
+              <ImportQuotation isOpen={isOpen} setIsOpen={setIsOpen} />
             </div>
             <Table
               dataSource={currentQuotations}
@@ -172,16 +203,26 @@ function ListQuotation() {
                 key="date"
               />
               <Column
-                title="Delete"
-                key="delete"
+                title="Operation"
+                key="operation"
                 render={(text, record) => (
                   <Space size="middle">
-                    <MdDelete
-                      className="cursor-pointer text-xl text-red-500 hover:text-red-700"
+                    <div
+                      className="cursor-pointer text-xl bg-red-400 hover:bg-red-500 px-4 py-1 rounded-md text-white"
                       onClick={() =>
                         openDeleteConfirmation(record.supplierPriceQuotation.id)
                       }
-                    />
+                    >
+                      Delete
+                    </div>
+                    <div
+                      onClick={() =>
+                        fetchQuotationDetail(record.supplierPriceQuotation.id)
+                      }
+                      className="cursor-pointer text-xl bg-blue-400 hover:bg-blue-500 px-4 py-1 rounded-md text-white"
+                    >
+                      View detail
+                    </div>
                   </Space>
                 )}
               />
@@ -208,6 +249,34 @@ function ListQuotation() {
           onCancel={closeDeleteConfirmation}
         />
       )}
+      <Modal
+        title="Quotation Detail"
+        open={isDetailModalVisible}
+        onCancel={() => setIsDetailModalVisible(false)}
+        footer={null}
+      >
+        {selectedQuotationDetail && (
+          <Table
+            dataSource={selectedQuotationDetail}
+            pagination={{ pageSize: 5 }}
+          >
+            <Column
+              title="No"
+              dataIndex="id"
+              key="id"
+              render={(text, record, index) => index + 1}
+            />
+            <Column title="MOQ" dataIndex="moq" key="moq" />
+            <Column title="Price" dataIndex="price" key="price" />
+            <Column
+              title="Date"
+              dataIndex="supplierPriceQuotation.date"
+              key="date"
+              render={(date) => moment(date).format("DD/MM/YYYY")}
+            />
+          </Table>
+        )}
+      </Modal>
     </>
   );
 }

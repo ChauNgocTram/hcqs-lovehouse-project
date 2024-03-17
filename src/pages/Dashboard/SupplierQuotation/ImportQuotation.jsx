@@ -14,9 +14,9 @@ import {
 import { DataTable } from "../../../components";
 import { buttonClick } from "../../../assets/animations";
 import DataTableFalse from "../../../components/Dashboard/DataTableFalse";
+import moment from "moment";
 
-const ImportQuotation = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const ImportQuotation = ({ isOpen, setIsOpen }) => {
   const [isError, setIsError] = useState(false);
   const [excelData, setExcelData] = useState([]);
   const [supplierName, setSupplierName] = useState("");
@@ -180,6 +180,9 @@ const ImportQuotation = () => {
     console.log("selectedDate: ", selectedDate);
   };
 
+  const disabledDate = (current) => {
+    return current && current > moment().endOf("day");
+  };
   return (
     <div className="flex flex-col">
       <div className="flex flex-wrap justify-start">
@@ -267,6 +270,7 @@ const ImportQuotation = () => {
             value={selectedDate}
             onChange={handleDateChange}
             className="mt-1 w-full"
+            disabledDate={disabledDate}
           />
         </div>
       </Modal>

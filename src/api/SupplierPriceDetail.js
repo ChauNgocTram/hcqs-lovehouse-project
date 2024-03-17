@@ -174,3 +174,22 @@ export const getAllQuotationPrices = async (pageIndex, pageSize) => {
         return null;
     }
 };
+
+// Function to get quotation price by supplier quotation id
+export const getQuotationPriceBySupplierQuotationId = async (quotationId) => {
+    try {
+        const res = await axios.post(
+            `${baseURL}/supplier-price-detail/get-quotation-price-by-supplier-quotation-id/${quotationId}`,
+            [], {
+                headers: {
+                    Authorization: `Bearer ${usertoken}`,
+                    "Content-Type": "application/json",
+                },
+                withCredentials: true,
+            }
+        );
+        return res.data;
+    } catch (err) {
+        return null;
+    }
+};

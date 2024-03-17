@@ -37,6 +37,7 @@ const ExportPrice = () => {
   });
   const [historyPopupVisible, setHistoryPopupVisible] = useState(false);
   const [selectedMaterialId, setSelectedMaterialId] = useState(null);
+  const [fetchData, setFetchData] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,7 +71,7 @@ const ExportPrice = () => {
     fetchAllExportPriceMaterialData();
     fetchData();
     fetchMaterialsData();
-  }, []);
+  }, [fetchData]);
 
   console.log("allExportPriceMaterialsData: ", allExportPriceMaterialsData);
   const columns = [
@@ -198,6 +199,7 @@ const ExportPrice = () => {
       setExportPriceData(response.result.data);
       // Close the update modal
       setIsUpdateModalVisible(false);
+      setFetchData(fetchData + 1);
       toast.success("Update successful");
     } catch (error) {
       console.error("Error updating export price:", error);

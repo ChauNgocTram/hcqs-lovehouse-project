@@ -166,16 +166,18 @@ const ViewSupplierPrice = () => {
     },
   ];
 
-  const data = sortedData.map((item, index) => ({
-    key: item.id,
-    index,
-    date: moment(item.supplierPriceQuotation.date).format("DD-MM-YYYY"),
-    moq: item.moq,
-    materialName: item.material.name,
-    price: item.price,
-    unitMaterial: item.material.unitMaterial,
-    materialType: item.material.materialType,
-  }));
+  const data =
+    sortedData &&
+    sortedData.map((item, index) => ({
+      key: item.id,
+      index,
+      date: moment(item.supplierPriceQuotation.date).format("DD-MM-YYYY"),
+      moq: item.moq,
+      materialName: item.material.name,
+      price: item.price,
+      unitMaterial: item.material.unitMaterial,
+      materialType: item.material.materialType,
+    }));
 
   const handleImportSubmit = async () => {
     try {

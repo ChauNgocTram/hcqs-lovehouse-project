@@ -29,6 +29,7 @@ const ImportInventory = () => {
   const [searchedColumn, setSearchedColumn] = useState("");
   const [isError, setIsError] = useState(false);
   const [excelData, setExcelData] = useState([]);
+  const [fetchAPi, setFetchAPi] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,7 +49,7 @@ const ImportInventory = () => {
     };
 
     fetchData();
-  }, []);
+  }, [fetchAPi]);
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -226,6 +227,7 @@ const ImportInventory = () => {
       if (uploadResponse.result.data.isValidated) {
         const uploadResponse2 = await importMaterialWithExcel(formData);
         toast.success("Upload successful: " + uploadResponse2.date);
+        setFetchAPi(fetchAPi + 1);
       } else {
         toast.error("Upload Fail: Please check again! ");
       }
@@ -273,8 +275,13 @@ const ImportInventory = () => {
         console.log("excelData", updatedExcelData);
       }
       if (uploadResponse.result.data.isValidated) {
-        const uploadResponse2 = await importMaterialWithExcel(formData);
-        toast.success("Upload successful: " + uploadResponse2.date);
+        console.log(
+          "uploadResponse.result.data.isValidated: ",
+          uploadResponse.result.data.isValidated
+        );
+        const uploadResponse = await importMaterialWithExcel(formData);
+        toast.success("Upload successful: " + uploadResponse.date);
+        setFetchAPi(fetchAPi + 1);
       } else {
         toast.error("Upload Fail: Please check file error ");
         getImportMaterialWithExcelError(formData);
@@ -435,7 +442,7 @@ const fields = [
       {
         rule: "regex",
         value: "^[1-9]\\d*$",
-        errorMessage: "MOQ > 0",
+        errorMessage: "Quantity > 0",
         level: "error",
       },
     ],

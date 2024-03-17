@@ -98,7 +98,8 @@ export {
   getQuotationPriceByMaterialId,
   getQuotationPriceByMaterialName,
   getQuotationPriceBySupplierId,
-  getQuotationPriceBySupplierName
+  getQuotationPriceBySupplierName,
+  getQuotationPriceBySupplierQuotationId
 }
 from "./SupplierPriceDetail.js";
 
