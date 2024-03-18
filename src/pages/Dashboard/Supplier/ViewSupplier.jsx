@@ -244,7 +244,7 @@ const ViewSupplier = () => {
               />
             </div>
             <div className="flex flex-wrap space-x-2 py-2">
-              <motion.div
+              {/* <motion.div
                 {...buttonClick}
                 onClick={downloadExample}
                 className="px-4 py-2 border rounded-md text-white bg-green-500 hover:bg-green-600 font-semibold shadow-md cursor-pointer"
@@ -257,7 +257,7 @@ const ViewSupplier = () => {
                 className="px-4 py-2 border rounded-md text-white bg-green-500 hover:bg-green-600 font-semibold shadow-md cursor-pointer"
               >
                 Import Supplier
-              </motion.div>
+              </motion.div> */}
               <motion.div
                 {...buttonClick}
                 onClick={() => setIsCreate(true)}

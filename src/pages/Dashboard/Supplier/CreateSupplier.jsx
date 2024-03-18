@@ -11,14 +11,15 @@ import { createSupplier } from "../../../api";
 const CreateSupplier = ({ setIsCreate, refreshData }) => {
   const [supplierData, setSupplierData] = useState({
     supplierName: "",
-    type: 0, // Default value for the type
+    type: 0,
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    const newValue = name === "type" ? parseInt(value, 10) : value;
     setSupplierData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: newValue,
     }));
   };
 
