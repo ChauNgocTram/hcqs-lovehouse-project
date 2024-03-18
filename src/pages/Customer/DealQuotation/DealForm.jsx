@@ -108,7 +108,7 @@ export default function DealForm({ onModalClose, id }) {
                 <Form>
                   
 
-                  <label htmlFor="materialDiscount">Material Discount</label>
+                  <label htmlFor="materialDiscount">Material Discount (%)</label>
                   <Field
                     name="materialDiscount"
                     as={Input}
@@ -124,7 +124,7 @@ export default function DealForm({ onModalClose, id }) {
                   {isRough === false ? (
                     <>
                       <label htmlFor="furnitureDiscount">
-                        Furniture Discount
+                        Furniture Discount (%)
                       </label>
                       <Field
                         name="furnitureDiscount"

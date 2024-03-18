@@ -109,7 +109,7 @@ export default function ListPaymentProgress() {
                       Description
                     </th>
                     <th className="p-3 text-sm font-semibold tracking-wide text-right">
-                      Price
+                      Price (VNĐ)
                     </th>
                     <th className="p-3 text-sm font-semibold tracking-wide">
                       Date
@@ -184,7 +184,7 @@ export default function ListPaymentProgress() {
                     <div>
                       Price:
                       <span className="ml-2 text-red-500 font-semibold">
-                        <CurrencyFormatter amount={item.payment.price} />
+                        <CurrencyFormatter amount={item.payment.price} />{" "}VNĐ
                       </span>
                     </div>
                     <div>

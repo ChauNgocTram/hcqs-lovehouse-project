@@ -106,8 +106,8 @@ export default function CreateProgressForm() {
   return (
     <>
       <LoadingOverlay loading={isLoading} />
-      <div className="flex justify-between gap-x-10">
-        <div className="w-2/3">
+      <div className="flex justify-between gap-x-10 pb-24 mb-24">
+        <div className="w-2/3 h-[680px] pb-24 mb-24 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -206,7 +206,7 @@ export default function CreateProgressForm() {
           <div className="flex">Total:
             <p className="text-red-500 font-semibold ml-4"><CurrencyFormatter amount={contract.total} /> VNĐ</p>
           </div>
-          {/* <p>Remaining amounts:</p> */}
+          
         </div>
       </div>
     </>

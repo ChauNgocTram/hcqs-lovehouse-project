@@ -69,7 +69,7 @@ console.log(selectedWorkerCost)
   return (
     <>
 
-      <div className="h-[680px] md:w-1/2 p-4 mb-24 order-2 md:order-2 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
+      <div className="h-[680px] md:w-1/2 p-4 pb-24 mb-24 order-2 md:order-2 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
         <Formik
           initialValues={initialValues}
           validationSchema={projectConfigValidationSchema}
