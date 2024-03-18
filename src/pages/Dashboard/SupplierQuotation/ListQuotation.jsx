@@ -145,6 +145,20 @@ function ListQuotation() {
       // Xử lý khi có lỗi
     }
   };
+  const getUnitName = (unitMaterial) => {
+    switch (unitMaterial) {
+      case 0:
+        return "Kg";
+      case 1:
+        return "M3";
+      case 2:
+        return "Bar";
+      case 3:
+        return "Item";
+      default:
+        return "";
+    }
+  };
 
   return (
     <>
@@ -259,6 +273,7 @@ function ListQuotation() {
           <Table
             dataSource={selectedQuotationDetail}
             pagination={{ pageSize: 5 }}
+            rowKey={(record) => record.id}
           >
             <Column
               title="No"
@@ -267,6 +282,18 @@ function ListQuotation() {
               render={(text, record, index) => index + 1}
             />
             <Column title="MOQ" dataIndex="moq" key="moq" />
+            <Column
+              title="Material"
+              key="material"
+              render={(text, record) => <span>{record.material.name}</span>}
+            />
+            <Column
+              title="Unit"
+              key="unit"
+              render={(text, record) => (
+                <span>{getUnitName(record.material.unitMaterial)}</span>
+              )}
+            />
             <Column title="Price" dataIndex="price" key="price" />
             <Column
               title="Date"
