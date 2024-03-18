@@ -32,6 +32,7 @@ function ListQuotation() {
   const [isDelete, setIsDelete] = useState(1);
   const [selectedQuotationDetail, setSelectedQuotationDetail] = useState(null);
   const [isDetailModalVisible, setIsDetailModalVisible] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -58,7 +59,7 @@ function ListQuotation() {
     }
 
     fetchData();
-  }, [isOpen, isDelete]);
+  }, [isOpen, isDelete, isError]);
 
   useEffect(() => {
     if (quotations) {
@@ -193,7 +194,12 @@ function ListQuotation() {
                   />
                 </div>
               </div>
-              <ImportQuotation isOpen={isOpen} setIsOpen={setIsOpen} />
+              <ImportQuotation
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                isError={isError}
+                setIsError={setIsError}
+              />
             </div>
             <Table
               dataSource={currentQuotations}

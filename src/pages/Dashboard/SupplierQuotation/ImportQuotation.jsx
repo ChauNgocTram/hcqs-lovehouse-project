@@ -16,8 +16,7 @@ import { buttonClick } from "../../../assets/animations";
 import DataTableFalse from "../../../components/Dashboard/DataTableFalse";
 import moment from "moment";
 
-const ImportQuotation = ({ isOpen, setIsOpen }) => {
-  const [isError, setIsError] = useState(false);
+const ImportQuotation = ({ isOpen, setIsOpen, isError, setIsError }) => {
   const [excelData, setExcelData] = useState([]);
   const [supplierName, setSupplierName] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
